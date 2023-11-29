@@ -32,8 +32,6 @@ namespace PhilipTheMechanic
         {
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
-
-            Logger?.Log("Philip Loaded!");
         }
 
         public void LoadManifest(ISpriteRegistry artRegistry)
