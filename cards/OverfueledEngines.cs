@@ -35,8 +35,8 @@ namespace PhilipTheMechanic.cards
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AReplay() { card = c });
 
-                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCard() { card = new TrashFumes(), destination = CardDestination.Hand });
-                    else                      overridenCardActions.Add(new AAddCard() { card = new Toxic(),      destination = CardDestination.Deck });
+                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCard() { card = new TrashFumes(), destination = CardDestination.Deck });
+                    else                      overridenCardActions.Add(new AAddCard() { card = new Toxic(),      destination = CardDestination.Hand });
 
                     return overridenCardActions;
                 },
@@ -60,7 +60,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = false,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a 0 cost Trash to your deck."
+                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Fumes to your deck."
                     };
                 case Upgrade.B:
                     return new()
@@ -71,6 +71,18 @@ namespace PhilipTheMechanic.cards
                         description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Toxic to your hand."
                     };
             }
+        }
+
+        //public override IEnumerable<Tooltip> GetAllTooltips(G g, State s, bool showCardTraits = true)
+        //{
+
+        //}
+
+        // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
+        public override List<CardAction> GetActions(State s, Combat c) 
+        {
+            if (upgrade == Upgrade.A) return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new TrashFumes() } } } };
+            else                      return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new Toxic()      } } } };
         }
     }
 }
