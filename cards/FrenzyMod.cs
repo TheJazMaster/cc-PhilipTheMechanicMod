@@ -1,5 +1,4 @@
-﻿using PhilipTheMechanic.actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +7,11 @@ using System.Threading.Tasks;
 namespace PhilipTheMechanic.cards
 {
     [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class OverfueledEngines : ModifierCard
+    public class FrenzyMod : ModifierCard
     {
         public override string Name()
         {
-            return "Overfueled Engines";
+            return "Frenzy Mod";
         }
 
         public override TargetLocation GetTargetLocation()
@@ -21,26 +20,23 @@ namespace PhilipTheMechanic.cards
             {
                 default: return TargetLocation.SINGLE_LEFT;
                 case Upgrade.A: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.B: return TargetLocation.SINGLE_LEFT;
+                case Upgrade.B: return TargetLocation.ALL_LEFT;
             }
         }
 
         public override void ApplyMod(Card c)
         {
             ModifiedCardsRegistry.RegisterMod(
-                this,
-                c,
+                this, 
+                c, 
                 (List<CardAction> cardActions) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
-                    overridenCardActions.Add(new AReplay() { card = c });
-
-                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCard() { card = new TrashFumes(), destination = CardDestination.Hand });
-                    else                      overridenCardActions.Add(new AAddCard() { card = new Toxic(),      destination = CardDestination.Deck });
-
+                    overridenCardActions.Add(new AAttack() { damage = 1 });
+                    if (upgrade == Upgrade.A) { overridenCardActions.Add(new AAttack() { damage = 1 }); }
                     return overridenCardActions;
                 },
-                null
+                (int energy) => Math.Max(0, energy-1)
             );
         }
 
@@ -53,22 +49,21 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Toxic to your hand."
+                        description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
-                        unplayable = false,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a 0 cost Trash to your deck."
+                        unplayable = true,
+                        description = $"Add two additional 1 damage attacks to {GetTargetLocationString()}."
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
-                        unplayable = false,
-                        flippable = true,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Toxic to your hand."
+                        unplayable = true,
+                        description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
                     };
             }
         }

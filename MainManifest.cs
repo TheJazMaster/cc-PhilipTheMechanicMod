@@ -57,6 +57,7 @@ namespace PhilipTheMechanic
                 "philip_neutral_1",
                 "philip_surprise_0",
                 "philip_surprise_1",
+                "icon_play_twice"
             };
 
             foreach (var filename in filenames) {
@@ -73,6 +74,7 @@ namespace PhilipTheMechanic
             var cardDefinitions = new ExternalCard[]
             {
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overdrive Mod", typeof(OverdriveMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Frenzy Mod", typeof(FrenzyMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
             };
@@ -104,13 +106,13 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
-            var realStartingCards = new Type[] { typeof(OverdriveMod) };
+            var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(FrenzyMod) };
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews) }, // TODO: give starting cards for Philip
+                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines) }, // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
