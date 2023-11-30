@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CobaltCoreModding.Definitions;
@@ -8,12 +9,15 @@ using CobaltCoreModding.Definitions.ExternalItems;
 using CobaltCoreModding.Definitions.ModContactPoints;
 using CobaltCoreModding.Definitions.ModManifests;
 using HarmonyLib;
+using Microsoft.Extensions.Logging;
 using PhilipTheMechanic.cards;
 
 namespace PhilipTheMechanic
 {
-    public class MainManifest : ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest
+    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest
     {
+        public static MainManifest Instance;
+
         public IEnumerable<DependencyEntry> Dependencies => new DependencyEntry[0];
 
         public DirectoryInfo? GameRootFolder { get; set; }
@@ -30,6 +34,7 @@ namespace PhilipTheMechanic
 
         public void BootMod(IModLoaderContact contact)
         {
+            Instance = this;
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
         }
