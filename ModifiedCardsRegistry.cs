@@ -53,6 +53,7 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
+            if (c.routeOverride != null && !c.eyeballPeek) { return; }
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
 
             List<CardAction> overridenCardActions = __result;
@@ -69,6 +70,7 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Card.GetCurrentCost))]
         public static void HarmonyPostfix_Card_GetCurrentCost(Card __instance, ref int __result, State s)
         {
+            if (s.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
 
             int cost = __result;
