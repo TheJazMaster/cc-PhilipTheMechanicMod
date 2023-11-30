@@ -21,7 +21,7 @@ namespace PhilipTheMechanic.cards
             switch (upgrade)
             {
                 default: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.A: return TargetLocation.SINGLE_RIGHT;
+                case Upgrade.A: return TargetLocation.SINGLE_LEFT;
                 case Upgrade.B: return TargetLocation.ALL_LEFT;
             }
         }
@@ -62,6 +62,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
+                        flippable = true,
                         description = $"Increases the damage of every attack on {GetTargetLocationString()}."
                     };
                 case Upgrade.B:
