@@ -39,6 +39,15 @@
     <None Update="sprites\card_philip_default_mid_light.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="sprites\icon_play_twice.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\philip_neutral_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\philip_neutral_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\philip_standard_0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

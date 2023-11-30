@@ -1,0 +1,76 @@
+﻿using PhilipTheMechanic.actions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PhilipTheMechanic.cards
+{
+    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class OverfueledEngines : ModifierCard
+    {
+        public override string Name()
+        {
+            return "Overfueled Engines";
+        }
+
+        public override TargetLocation GetTargetLocation()
+        {
+            switch (upgrade)
+            {
+                default: return TargetLocation.SINGLE_LEFT;
+                case Upgrade.A: return TargetLocation.SINGLE_LEFT;
+                case Upgrade.B: return TargetLocation.SINGLE_LEFT;
+            }
+        }
+
+        public override void ApplyMod(Card c)
+        {
+            ModifiedCardsRegistry.RegisterMod(
+                this,
+                c,
+                (List<CardAction> cardActions) =>
+                {
+                    List<CardAction> overridenCardActions = new(cardActions);
+                    overridenCardActions.Add(new AReplay() { card = c });
+
+                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCard() { card = new Toxic(),      destination = CardDestination.Hand });
+                    else                      overridenCardActions.Add(new AAddCard() { card = new TrashFumes(), destination = CardDestination.Deck });
+
+                    return overridenCardActions;
+                },
+                null
+            );
+        }
+
+        public override CardData GetData(State state)
+        {
+            switch (upgrade)
+            {
+                default:
+                    return new()
+                    {
+                        cost = 0,
+                        unplayable = true,
+                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Wizbo Toxic to your hand."
+                    };
+                case Upgrade.A:
+                    return new()
+                    {
+                        cost = 0,
+                        unplayable = false,
+                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a 0 cost Trash to your deck."
+                    };
+                case Upgrade.B:
+                    return new()
+                    {
+                        cost = 0,
+                        unplayable = false,
+                        flippable = true,
+                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Wizbo Toxic to your hand."
+                    };
+            }
+        }
+    }
+}

@@ -14,7 +14,7 @@ using PhilipTheMechanic.cards;
 
 namespace PhilipTheMechanic
 {
-    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest
+    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest, IGlossaryManifest
     {
         public static MainManifest Instance;
 
@@ -26,17 +26,20 @@ namespace PhilipTheMechanic
 
         public string Name => "clay.PhilipTheEngineer";
 
-        internal static Dictionary<string, ExternalSprite> sprites = new Dictionary<string, ExternalSprite>();
-        internal static Dictionary<string, ExternalAnimation> animations = new Dictionary<string, ExternalAnimation>();
-        internal static Dictionary<string, ExternalCard> cards = new Dictionary<string, ExternalCard>();
-        internal static ExternalCharacter character;
-        internal static ExternalDeck deck;
+        public static Dictionary<string, ExternalSprite> sprites = new Dictionary<string, ExternalSprite>();
+        public static Dictionary<string, ExternalAnimation> animations = new Dictionary<string, ExternalAnimation>();
+        public static Dictionary<string, ExternalCard> cards = new Dictionary<string, ExternalCard>();
+        public static Dictionary<string, ExternalGlossary> glossary = new Dictionary<string, ExternalGlossary>();
+        public static ExternalCharacter character;
+        public static ExternalDeck deck;
 
         public void BootMod(IModLoaderContact contact)
         {
             Instance = this;
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
+
+            Logger.LogCritical("I'm still directly referencing enums - make sure to use that reflection method to reference them instead before publishing this mod!");
         }
 
         public void LoadManifest(ISpriteRegistry artRegistry)
@@ -67,15 +70,20 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICardRegistry registry)
         {
-            var overdriveMod = new ExternalCard("clay.PhilipTheMechanic.cards.OverdriveMod", typeof(OverdriveMod), sprites["card_philip_default"], deck);
-            overdriveMod.AddLocalisation("Overdrive Mod");
-            registry.RegisterCard(overdriveMod);
-            cards["Overdrive Mod"] = overdriveMod;
+            var cardDefinitions = new ExternalCard[]
+            {
+                new ExternalCard("clay.PhilipTheMechanic.cards.Overdrive Mod", typeof(OverdriveMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
+            };
 
-            var loosenScrews = new ExternalCard("clay.PhilipTheMechanic.cards.LoosenScrews", typeof(LoosenScrews), sprites["card_philip_default"], deck);
-            loosenScrews.AddLocalisation("Loosen Screws");
-            registry.RegisterCard(loosenScrews);
-            cards["Loosen Screws"] = loosenScrews;
+            foreach(var card in cardDefinitions)
+            {
+                var name = card.GlobalName.Split('.').LastOrDefault() ?? "FAILED TO FIND NAME";
+                card.AddLocalisation(name);
+                registry.RegisterCard(card);
+                cards[name] = card;
+            }
         }
 
         public void LoadManifest(IDeckRegistry registry)
@@ -135,6 +143,14 @@ namespace PhilipTheMechanic
 
                 if (!registry.RegisterAnimation(animation)) throw new Exception("Error registering animation " + kvp.Key);
             }
+        }
+
+        public void LoadManifest(IGlossaryRegisty registry)
+        {
+            var aReplayGlossary = new ExternalGlossary("clay.PhilipTheMechanic.Glossary", "AReplay", false, ExternalGlossary.GlossayType.action, sprites["icon_play_twice"]);
+            aReplayGlossary.AddLocalisation("en", "play twice", "Play all actions prior to the Play Twice action twice.");
+            registry.RegisterGlossary(aReplayGlossary);
+            glossary["AReplay"] = aReplayGlossary;
         }
     }
 }
