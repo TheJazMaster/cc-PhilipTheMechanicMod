@@ -45,5 +45,11 @@ namespace PhilipTheMechanic
                 if (element is not null)
                     yield return element.Value;
         }
+
+        public static string Capitalize(this string str) 
+        {
+            if (string.IsNullOrEmpty(str)) return str;
+            return string.Concat(str[0].ToString().ToUpper(), str.AsSpan(1));
+        }
     }
 }
