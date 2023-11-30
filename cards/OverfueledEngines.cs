@@ -53,14 +53,14 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Toxic to your hand."
+                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
                         unplayable = false,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Fumes to your deck."
+                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Fumes to your deck."
                     };
                 case Upgrade.B:
                     return new()
@@ -68,15 +68,10 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = false,
                         flippable = true,
-                        description = $"{GetTargetLocationString().Capitalize()} plays twice, then adds a Toxic to your hand."
+                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
                     };
             }
         }
-
-        //public override IEnumerable<Tooltip> GetAllTooltips(G g, State s, bool showCardTraits = true)
-        //{
-
-        //}
 
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c) 

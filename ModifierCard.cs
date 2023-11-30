@@ -17,6 +17,8 @@ namespace PhilipTheMechanic
             SINGLE_RIGHT,
             ALL_LEFT,
             ALL_RIGHT,
+            NEIGHBORS,
+            ALL
         }
 
         private List<Card> currentlyModifiedCards = new();
@@ -103,6 +105,20 @@ namespace PhilipTheMechanic
                         currentlyModifiedCards = rightCards;
                         break;
                     }
+                case TargetLocation.NEIGHBORS:
+                    {
+                        var cards = (new List<Card>() { leftCards.LastOrDefault(), rightCards.FirstOrDefault() } ).WhereNotNull().ToList();
+                        foreach (Card card in cards) { this.ApplyMod(card); }
+                        currentlyModifiedCards = cards;
+                        break;
+                    }
+                case TargetLocation.ALL:
+                    {
+                        foreach (Card card in hand) { this.ApplyMod(card); }
+                        currentlyModifiedCards = new(hand);
+                        break;
+                    }
+
                 default:
                     throw new Exception("Unknown target location " + targetLocation);
             }
@@ -118,21 +134,26 @@ namespace PhilipTheMechanic
                 case TargetLocation.SINGLE_RIGHT: return TargetLocation.SINGLE_LEFT;
                 case TargetLocation.ALL_LEFT: return TargetLocation.ALL_RIGHT;
                 case TargetLocation.ALL_RIGHT: return TargetLocation.ALL_LEFT;
+                case TargetLocation.NEIGHBORS: return TargetLocation.NEIGHBORS;
+                case TargetLocation.ALL: return TargetLocation.ALL;
             }
 
             throw new Exception("Unknown target location " + targetLocation);
         }
 
-        public string GetTargetLocationString()
+        public string GetTargetLocationString(bool anyInsteadOfEvery = false)
         {
             var targetLocation = ApplyFlip(GetTargetLocation());
+            var anyEvery = anyInsteadOfEvery ? "any" : "every";
 
             switch (targetLocation)
             {
                 case TargetLocation.SINGLE_LEFT: return "the card to the left";
                 case TargetLocation.SINGLE_RIGHT: return "the card to the right";
-                case TargetLocation.ALL_LEFT: return "every card to the left";
-                case TargetLocation.ALL_RIGHT: return "every card to the right";
+                case TargetLocation.ALL_LEFT: return $"${anyEvery} card to the left";
+                case TargetLocation.ALL_RIGHT: return $"${anyEvery} card to the right";
+                case TargetLocation.NEIGHBORS: return "the card to the left and the card to the right";
+                case TargetLocation.ALL: return "every card in your hand";
             }
 
             throw new Exception("Unknown target location " + targetLocation);
