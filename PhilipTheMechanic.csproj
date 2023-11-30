@@ -55,7 +55,7 @@
     <None Update="sprites\icon_card_to_the_right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sprites\icon_extra_attack.png">
+    <None Update="sprites\icon_attack_buff.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sprites\icon_play_twice.png">

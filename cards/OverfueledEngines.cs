@@ -106,9 +106,9 @@ namespace PhilipTheMechanic.cards
                         addCardToolTips[1],
                     },
                     icons = new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                        new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_addCard"), 1, Colors.heal)
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_addCard"), 1, Colors.textMain)
                     }
                 }
             };

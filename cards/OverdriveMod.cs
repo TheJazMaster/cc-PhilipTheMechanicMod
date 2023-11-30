@@ -95,8 +95,8 @@ namespace PhilipTheMechanic.cards
                         new TTGlossary("status.overdrive", "1")
                     },
                     icons = new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_overdrive"), 1, Colors.heal)
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, 1, Colors.textMain)
                     }
                 }
             };

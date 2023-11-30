@@ -66,7 +66,8 @@ namespace PhilipTheMechanic
                 "icon_all_cards_to_the_right",
                 "icon_card_to_the_left",
                 "icon_card_to_the_right",
-                "icon_extra_attack"
+                "icon_attack_buff",
+                "icon_screw"
             };
 
             foreach (var filename in filenames) {
@@ -183,19 +184,9 @@ namespace PhilipTheMechanic
                 "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
             );
 
-            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
-                "extra attack",
-                "Add an additional attack to the target card."
-            );
-
-            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
-                "extra attack",
-                "Add an additional attack to the target card."
-            );
-
-            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
-                "extra attack",
-                "Add an additional attack to the target card."
+            RegisterGlossaryEntry(registry, "AAttackBuff", sprites["icon_attack_buff"],
+                "attack buff",
+                "Increases the power of attacks on the target card."
             );
 
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);

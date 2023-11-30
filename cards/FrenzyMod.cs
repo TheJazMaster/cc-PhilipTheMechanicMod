@@ -84,16 +84,16 @@ namespace PhilipTheMechanic.cards
 
             List<Icon> icons = upgrade == Upgrade.A
                 ? new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal),
                         //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal)
-                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal)
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt),
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt)
                     }
                 : new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal)
-                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal)
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt)
                     };
 
             return new List<CardAction>() {

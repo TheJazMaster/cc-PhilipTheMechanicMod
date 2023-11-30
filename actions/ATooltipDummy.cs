@@ -46,14 +46,14 @@ namespace PhilipTheMechanic.actions
 
                 foreach (var icon in aTooltipDummy.icons)
                 {
-                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, true, amount: icon.number);
+                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, true, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path).Width);
                 }
 
                 w = -w / 2;
                 isFirst = true;
                 foreach (var icon in aTooltipDummy.icons)
                 {
-                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number, textColor: icon.color);
+                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path).Width, textColor: icon.color);
                 }
             } 
             else
