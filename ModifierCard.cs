@@ -57,21 +57,35 @@ namespace PhilipTheMechanic
             switch(GetTargetLocation())
             {
                 case TargetLocation.SINGLE_LEFT:
-                    this.ApplyMod(leftCards.Last());
-                    currentlyModifiedCards = new() { leftCards.Last() };
-                    break;
+                    {
+                        var card = leftCards.LastOrDefault();
+                        if (card == null) break;
+
+                        this.ApplyMod(card);
+                        currentlyModifiedCards = new() { card };
+                        break;
+                    }
                 case TargetLocation.SINGLE_RIGHT:
-                    this.ApplyMod(rightCards.First());
-                    currentlyModifiedCards = new() { rightCards.First() };
-                    break;
+                    {
+                        var card = rightCards.FirstOrDefault();
+                        if (card == null) break;
+
+                        this.ApplyMod(card);
+                        currentlyModifiedCards = new() { card };
+                        break;
+                    }
                 case TargetLocation.ALL_LEFT:
-                    foreach (Card card in leftCards) { this.ApplyMod(card); }
-                    currentlyModifiedCards = leftCards;
-                    break;
+                    {
+                        foreach (Card card in leftCards) { this.ApplyMod(card); }
+                        currentlyModifiedCards = leftCards;
+                        break;
+                    }
                 case TargetLocation.ALL_RIGHT:
-                    foreach (Card card in rightCards) {  this.ApplyMod(card); }
-                    currentlyModifiedCards = rightCards;
-                    break;
+                    {
+                        foreach (Card card in rightCards) { this.ApplyMod(card); }
+                        currentlyModifiedCards = rightCards;
+                        break;
+                    }
                 default:
                     throw new Exception("Unknown target location " + GetTargetLocation());
             }
