@@ -35,6 +35,15 @@ namespace PhilipTheMechanic
             ModifyTargetCards(c.hand);
         }
 
+        public override void OnFlip(G g)
+        {
+            if (g.state.route is Combat c)
+            {
+                foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
+                ModifyTargetCards(c.hand);
+            }
+        }
+
         public override void OnOtherCardPlayedWhileThisWasInHand(State s, Combat c, int handPosition)
         {
             MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was played.");

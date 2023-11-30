@@ -14,18 +14,24 @@ namespace PhilipTheMechanic
         public struct CardModRegistration
         {
             public Card from;
-            public CardModification mod;
+            public CardActionsModification? actionsModification;
+            public CardEnergyModification? energyModification;
         }
 
-        public delegate List<CardAction> CardModification(List<CardAction> cardActions);
+        public delegate List<CardAction> CardActionsModification(List<CardAction> cardActions);
+        public delegate int CardEnergyModification(int originalEnergy);
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
 
-        public static void RegisterMod(Card self, Card modifiedCard, CardModification mod)
+        public static void RegisterMod(Card self, Card modifiedCard, CardActionsModification? actionsModification, CardEnergyModification? energyModification)
         {
             MainManifest.Instance.Logger.LogInformation($"Card modification being registered for {modifiedCard.uuid}:`{modifiedCard.GetFullDisplayName()}` by {self.uuid}:`{self.GetFullDisplayName()}`");
 
             if (!cardMods.ContainsKey(modifiedCard.uuid)) { cardMods[modifiedCard.uuid] = new List<CardModRegistration>(); }
-            cardMods[modifiedCard.uuid].Add(new CardModRegistration() { from = self, mod = mod });
+            cardMods[modifiedCard.uuid].Add(new CardModRegistration() { 
+                from = self, 
+                actionsModification = actionsModification,
+                energyModification = energyModification
+            });
         }
 
         public static void DeregisterMods(Card moddingCard, Card moddedCard)
@@ -45,19 +51,36 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
-            if (!cardMods.ContainsKey(__instance.uuid)) {  return; }
+            if (!cardMods.ContainsKey(__instance.uuid)) { return; }
 
             List<CardAction> overridenCardActions = __result;
-            foreach(var action in __result)
+            foreach (var registration in cardMods[__instance.uuid])
             {
-                foreach (var registration in cardMods[__instance.uuid])
-                {
-                    MainManifest.Instance?.Logger?.LogInformation($"Applying card modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
-                    overridenCardActions = registration.mod(overridenCardActions);
-                }
+                if (registration.actionsModification == null) continue;
+
+                MainManifest.Instance?.Logger?.LogInformation($"Applying card modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                overridenCardActions = registration.actionsModification(overridenCardActions);
             }
 
             __result = overridenCardActions;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Card.GetCurrentCost))]
+        public static void HarmonyPostfix_Card_GetCurrentCost(Card __instance, ref int __result, State s)
+        {
+            if (!cardMods.ContainsKey(__instance.uuid)) { return; }
+
+            int cost = __result;
+            foreach (var registration in cardMods[__instance.uuid])
+            {
+                if (registration.energyModification == null) continue;
+
+                MainManifest.Instance?.Logger?.LogInformation($"Applying energy modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                cost = registration.energyModification(cost);
+            }
+
+            __result = cost;
         }
 
         //[HarmonyPostfix]

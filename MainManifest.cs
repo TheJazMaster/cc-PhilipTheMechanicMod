@@ -71,6 +71,11 @@ namespace PhilipTheMechanic
             overdriveMod.AddLocalisation("Overdrive Mod");
             registry.RegisterCard(overdriveMod);
             cards["Overdrive Mod"] = overdriveMod;
+
+            var loosenScrews = new ExternalCard("clay.PhilipTheMechanic.cards.LoosenScrews", typeof(LoosenScrews), sprites["card_philip_default"], deck);
+            loosenScrews.AddLocalisation("Loosen Screws");
+            registry.RegisterCard(loosenScrews);
+            cards["Loosen Screws"] = loosenScrews;
         }
 
         public void LoadManifest(IDeckRegistry registry)
@@ -91,11 +96,13 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
+            var realStartingCards = new Type[] { typeof(OverdriveMod) };
+
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod) }, // TODO: give starting cards for Philip
+                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews) }, // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]

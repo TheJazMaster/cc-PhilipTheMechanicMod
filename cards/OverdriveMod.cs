@@ -28,22 +28,27 @@ namespace PhilipTheMechanic.cards
 
         public override void ApplyMod(Card c)
         {
-            ModifiedCardsRegistry.RegisterMod(this, c, (List<CardAction> cardActions) =>
-            {
-                List<CardAction> overridenCardActions = new();
-                foreach (var action in cardActions)
+            ModifiedCardsRegistry.RegisterMod(
+                this, 
+                c, 
+                (List<CardAction> cardActions) =>
                 {
-                    if (action is AAttack attack)
+                    List<CardAction> overridenCardActions = new();
+                    foreach (var action in cardActions)
                     {
-                        overridenCardActions.Add(new AAttack() { damage = attack.damage + 1 });
+                        if (action is AAttack attack)
+                        {
+                            overridenCardActions.Add(new AAttack() { damage = attack.damage + 1 });
+                        }
+                        else
+                        {
+                            overridenCardActions.Add(action);
+                        }
                     }
-                    else
-                    {
-                        overridenCardActions.Add(action);
-                    }
-                }
-                return overridenCardActions;
-            });
+                    return overridenCardActions;
+                },
+                null
+            );
         }
 
         public override CardData GetData(State state)
