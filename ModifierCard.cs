@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,7 +55,9 @@ namespace PhilipTheMechanic
                 else              leftCards.Add(card);
             }
 
-            switch(GetTargetLocation())
+            var targetLocation = ApplyFlip(GetTargetLocation());
+
+            switch(targetLocation)
             {
                 case TargetLocation.SINGLE_LEFT:
                     {
@@ -87,8 +90,38 @@ namespace PhilipTheMechanic
                         break;
                     }
                 default:
-                    throw new Exception("Unknown target location " + GetTargetLocation());
+                    throw new Exception("Unknown target location " + targetLocation);
             }
+        }
+
+        public TargetLocation ApplyFlip(TargetLocation targetLocation)
+        {
+            if (!base.flipped) return targetLocation;
+
+            switch(targetLocation)
+            {
+                case TargetLocation.SINGLE_LEFT: return TargetLocation.SINGLE_RIGHT;
+                case TargetLocation.SINGLE_RIGHT: return TargetLocation.SINGLE_LEFT;
+                case TargetLocation.ALL_LEFT: return TargetLocation.ALL_RIGHT;
+                case TargetLocation.ALL_RIGHT: return TargetLocation.ALL_LEFT;
+            }
+
+            throw new Exception("Unknown target location " + targetLocation);
+        }
+
+        public string GetTargetLocationString()
+        {
+            var targetLocation = ApplyFlip(GetTargetLocation());
+
+            switch (targetLocation)
+            {
+                case TargetLocation.SINGLE_LEFT: return "the card to the left";
+                case TargetLocation.SINGLE_RIGHT: return "the card to the right";
+                case TargetLocation.ALL_LEFT: return "every card to the left";
+                case TargetLocation.ALL_RIGHT: return "every card to the right";
+            }
+
+            throw new Exception("Unknown target location " + targetLocation);
         }
 
         public virtual void ApplyMod(Card c) { }

@@ -55,21 +55,21 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = "Increases the damage of every attack on the card to the left."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = "Increases the damage of every attack on the card to the right."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = "Increases the damage of every attack on every card to the left."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
                     };
             }
         }
