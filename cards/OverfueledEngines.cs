@@ -15,7 +15,7 @@ namespace PhilipTheMechanic.cards
             return "Overfueled Engines";
         }
 
-        public override TargetLocation GetTargetLocation()
+        public override TargetLocation GetBaseTargetLocation()
         {
             switch (upgrade)
             {
@@ -76,18 +76,41 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c) 
         {
-            //if (upgrade == Upgrade.A) return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new TrashFumes() } } } };
-            //else                      return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new Toxic()      } } } };
+            List<Tooltip>? addCardToolTips;
+            string cardName;
+            string cardDestination;
 
-            return new List<CardAction>() { 
-                new ATooltipDummy() { 
-                    tooltips = new() { new TTCard() { card = new TrashFumes() } },
+            if (upgrade == Upgrade.A)
+            {
+                addCardToolTips = (new AAddCard() { card = new TrashFumes(), destination = CardDestination.Deck }).GetTooltips(s);
+                cardName = "Fumes";
+                cardDestination = "deck";
+            }
+            else
+            {
+                addCardToolTips = (new AAddCard() { card = new Toxic(), destination = CardDestination.Deck }).GetTooltips(s);
+                cardName = "Toxic";
+                cardDestination = "hand";
+            }
+
+            return new List<CardAction>() {
+                new ATooltipDummy() {
+                    tooltips = new() {
+                        new TTText()
+                        {
+                            text = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a {cardName} to your {cardDestination}."
+                        },
+                        new TTGlossary(GetGlossaryForTargetLocation().Head, null),
+                        new TTGlossary(MainManifest.glossary["AReplay"].Head, null),
+                        addCardToolTips[0],
+                        addCardToolTips[1],
+                    },
                     icons = new() {
-                        new Icon((Spr)MainManifest.sprites["icon_all_cards_to_the_left"].Id, null, Colors.heal),
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                         new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.heal),
-                        new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.heal)
+                        new Icon(Enum.Parse<Spr>("icons_addCard"), 1, Colors.heal)
                     }
-                },
+                }
             };
         }
     }

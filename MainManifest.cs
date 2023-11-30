@@ -30,6 +30,7 @@ namespace PhilipTheMechanic
         public static Dictionary<string, ExternalAnimation> animations = new Dictionary<string, ExternalAnimation>();
         public static Dictionary<string, ExternalCard> cards = new Dictionary<string, ExternalCard>();
         public static Dictionary<string, ExternalGlossary> glossary = new Dictionary<string, ExternalGlossary>();
+        public static Dictionary<string, CustomTTGlossary> vanillaSpritesGlossary = new Dictionary<string, CustomTTGlossary>();
         public static ExternalCharacter character;
         public static ExternalDeck deck;
 
@@ -38,12 +39,15 @@ namespace PhilipTheMechanic
             Instance = this;
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
+            CustomTTGlossary.Apply(harmony);
 
             Logger.LogCritical("I'm still directly referencing enums - make sure to use that reflection method to reference them instead before publishing this mod!");
+            // List of enums still used: Upgrade
         }
 
         public void LoadManifest(ISpriteRegistry artRegistry)
         {
+            // TODO: explore sprites folder instead of manually listing the contents
             var filenames = new string[] { 
                 "char_frame_philip", 
                 "frame_philip",
@@ -62,6 +66,7 @@ namespace PhilipTheMechanic
                 "icon_all_cards_to_the_right",
                 "icon_card_to_the_left",
                 "icon_card_to_the_right",
+                "icon_extra_attack"
             };
 
             foreach (var filename in filenames) {
@@ -153,10 +158,55 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(IGlossaryRegisty registry)
         {
-            var aReplayGlossary = new ExternalGlossary("clay.PhilipTheMechanic.Glossary", "AReplay", false, ExternalGlossary.GlossayType.action, sprites["icon_play_twice"]);
-            aReplayGlossary.AddLocalisation("en", "play twice", "Play all actions prior to the Play Twice action twice.");
-            registry.RegisterGlossary(aReplayGlossary);
-            glossary["AReplay"] = aReplayGlossary;
+            RegisterGlossaryEntry(registry, "AReplay", sprites["icon_play_twice"],
+                "play twice",
+                "Play all actions prior to the Play Twice action twice."
+            );
+
+            RegisterGlossaryEntry(registry, "ACardToTheLeft", sprites["icon_card_to_the_left"],
+                "modify card to the left",
+                "Add the following effects to the card to the left. They do NOT trigger when this card is played."
+            );
+
+            RegisterGlossaryEntry(registry, "AAllCardsToTheLeft", sprites["icon_all_cards_to_the_left"],
+                "modify all cards to the left",
+                "Add the following effects to all cards to the left. They do NOT trigger when this card is played."
+            );
+
+            RegisterGlossaryEntry(registry, "ACardToTheRight", sprites["icon_card_to_the_right"],
+                "modify card to the right",
+                "Add the following effects to the card to the right. They do NOT trigger when this card is played."
+            );
+
+            RegisterGlossaryEntry(registry, "AAllCardsToTheRight", sprites["icon_all_cards_to_the_right"],
+                "modify all cards to the right",
+                "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
+            );
+
+            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
+                "extra attack",
+                "Add an additional attack to the target card."
+            );
+
+            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
+                "extra attack",
+                "Add an additional attack to the target card."
+            );
+
+            RegisterGlossaryEntry(registry, "AExtraAttack", sprites["icon_extra_attack"],
+                "extra attack",
+                "Add an additional attack to the target card."
+            );
+
+            vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);
+            vanillaSpritesGlossary["ASetEnergy"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_energy"), "set energy cost", "Changes the energy cost of this card. Overrides all other effects.", null);
+        }
+        private void RegisterGlossaryEntry(IGlossaryRegisty registry, string itemName, ExternalSprite sprite, string displayName, string description)
+        {
+            var entry = new ExternalGlossary("clay.PhilipTheMechanic.Glossary", itemName, false, ExternalGlossary.GlossayType.action, sprite);
+            entry.AddLocalisation("en", displayName, description);
+            registry.RegisterGlossary(entry);
+            glossary[entry.ItemName] = entry;
         }
     }
 }

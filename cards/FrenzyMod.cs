@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhilipTheMechanic.actions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace PhilipTheMechanic.cards
             return "Frenzy Mod";
         }
 
-        public override TargetLocation GetTargetLocation()
+        public override TargetLocation GetBaseTargetLocation()
         {
             switch (upgrade)
             {
@@ -49,23 +50,63 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
+                        //description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Add two additional 1 damage attacks to {GetTargetLocationString()}."
+                        flippable = true,
+                        //description = $"Add two additional 1 damage attacks to {GetTargetLocationString()}."
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
+                        flippable = true,
+                        //description = $"Add an additional 1 damage attack to {GetTargetLocationString()}."
                     };
             }
+        }
+        // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
+        public override List<CardAction> GetActions(State s, Combat c)
+        {
+            string desc;
+
+            switch (upgrade)
+            {
+                default:        desc = $"Add an additional 1 damage attack to {GetTargetLocationString()}."; break;
+                case Upgrade.A: desc = $"Add two additional 1 damage attacks to {GetTargetLocationString()}."; break;
+                case Upgrade.B: desc = $"Add an additional 1 damage attack to {GetTargetLocationString()}."; break;
+            }
+
+            List<Icon> icons = upgrade == Upgrade.A
+                ? new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
+                        //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal),
+                        //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal)
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal),
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal)
+                    }
+                : new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
+                        //new Icon((Spr)MainManifest.sprites["icon_extra_attack"].Id, 1, Colors.heal)
+                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.heal)
+                    };
+
+            return new List<CardAction>() {
+                new ATooltipDummy() {
+                    tooltips = new() {
+                        new TTText() { text = desc },
+                        new TTGlossary(GetGlossaryForTargetLocation().Head),
+                        //new TTGlossary(MainManifest.glossary["AExtraAttack"].Head),
+                        //new TTGlossary("action.attack.name")
+                    },
+                    icons = icons
+                }
+            };
         }
     }
 }

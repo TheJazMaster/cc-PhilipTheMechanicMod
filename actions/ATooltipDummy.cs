@@ -53,7 +53,7 @@ namespace PhilipTheMechanic.actions
                 isFirst = true;
                 foreach (var icon in aTooltipDummy.icons)
                 {
-                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number);
+                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number, textColor: icon.color);
                 }
             } 
             else
@@ -105,7 +105,7 @@ namespace PhilipTheMechanic.actions
                         Rect? rect = new Rect(w - 2);
                         Vec xy = g.Push(null, rect).rect.xy;
                         Color? color14 = (action.disabled ? new Color?(spriteColor) : textColor);
-                        Draw.Sprite(Spr.icons_minus, xy.x, xy.y - 1.0, flipX: false, flipY: false, 0.0, null, null, null, null, color14);
+                        Draw.Sprite(Enum.Parse<Spr>("icons_minus"), xy.x, xy.y - 1.0, flipX: false, flipY: false, 0.0, null, null, null, null, color14);
                         g.Pop();
                     }
                     w += 3;
@@ -129,7 +129,7 @@ namespace PhilipTheMechanic.actions
                     G g19 = g;
                     Rect? rect12 = new Rect(w);
                     Vec xy17 = g19.Push(null, rect12).rect.xy;
-                    Spr? id13 = Spr.icons_x_white;
+                    Spr? id13 = Enum.Parse<Spr>("icons_x_white");
                     double x17 = xy17.x;
                     double y16 = xy17.y - 1.0;
                     Color? color14 = action.GetIcon(state)?.color;

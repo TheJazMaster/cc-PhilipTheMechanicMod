@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using CobaltCoreModding.Definitions.ExternalItems;
+using HarmonyLib;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic
 {
     public class ModifierCard : Card
     {
+
         public enum TargetLocation
         {
             SINGLE_LEFT,
@@ -71,7 +74,7 @@ namespace PhilipTheMechanic
                 else              leftCards.Add(card);
             }
 
-            var targetLocation = ApplyFlip(GetTargetLocation());
+            var targetLocation = GetTargetLocation();
 
             switch(targetLocation)
             {
@@ -124,8 +127,9 @@ namespace PhilipTheMechanic
             }
         }
 
-        public TargetLocation ApplyFlip(TargetLocation targetLocation)
+        public TargetLocation GetTargetLocation()
         {
+            TargetLocation targetLocation = GetBaseTargetLocation();
             if (!base.flipped) return targetLocation;
 
             switch(targetLocation)
@@ -143,7 +147,7 @@ namespace PhilipTheMechanic
 
         public string GetTargetLocationString(bool anyInsteadOfEvery = false)
         {
-            var targetLocation = ApplyFlip(GetTargetLocation());
+            var targetLocation = GetTargetLocation();
             var anyEvery = anyInsteadOfEvery ? "any" : "every";
 
             switch (targetLocation)
@@ -159,7 +163,34 @@ namespace PhilipTheMechanic
             throw new Exception("Unknown target location " + targetLocation);
         }
 
+        public ExternalGlossary GetGlossaryForTargetLocation()
+        {
+            var targetLocation = GetTargetLocation();
+            switch (targetLocation)
+            {
+                case TargetLocation.SINGLE_LEFT: return MainManifest.glossary["ACardToTheLeft"];
+                case TargetLocation.SINGLE_RIGHT: return MainManifest.glossary["ACardToTheRight"];
+                case TargetLocation.ALL_LEFT: return MainManifest.glossary["AAllCardsToTheLeft"];
+                case TargetLocation.ALL_RIGHT: return MainManifest.glossary["AAllCardsToTheRight"];
+            }
+
+            throw new Exception("Unknown target location " + targetLocation);
+        }
+        public ExternalSprite GetIconSpriteForTargetLocation()
+        {
+            var targetLocation = GetTargetLocation();
+            switch (targetLocation)
+            {
+                case TargetLocation.SINGLE_LEFT: return MainManifest.sprites["icon_card_to_the_left"];
+                case TargetLocation.SINGLE_RIGHT: return MainManifest.sprites["icon_card_to_the_right"];
+                case TargetLocation.ALL_LEFT: return MainManifest.sprites["icon_all_cards_to_the_left"];
+                case TargetLocation.ALL_RIGHT: return MainManifest.sprites["icon_all_cards_to_the_right"];
+            }
+
+            throw new Exception("Unknown target location " + targetLocation);
+        }
+
         public virtual void ApplyMod(Card c) { }
-        public virtual TargetLocation GetTargetLocation() { return TargetLocation.SINGLE_LEFT; }
+        public virtual TargetLocation GetBaseTargetLocation() { return TargetLocation.SINGLE_LEFT; }
     }
 }

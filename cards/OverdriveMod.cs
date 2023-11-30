@@ -1,4 +1,5 @@
 ﻿using CobaltCoreModding.Definitions.ExternalItems;
+using PhilipTheMechanic.actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace PhilipTheMechanic.cards
             return "Overdrive Mod";
         }
 
-        public override TargetLocation GetTargetLocation() 
+        public override TargetLocation GetBaseTargetLocation() 
         {
             switch (upgrade)
             {
@@ -60,7 +61,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.A:
                     return new()
@@ -68,16 +69,37 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = true,
                         flippable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
             }
+        }
+
+        // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
+        public override List<CardAction> GetActions(State s, Combat c)
+        {
+            return new List<CardAction>() {
+                new ATooltipDummy() {
+                    tooltips = new() {
+                        new TTText()
+                        {
+                            text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        },
+                        new TTGlossary(GetGlossaryForTargetLocation().Head),
+                        new TTGlossary("status.overdrive", "1")
+                    },
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
+                        new Icon(Enum.Parse<Spr>("icons_overdrive"), 1, Colors.heal)
+                    }
+                }
+            };
         }
     }
 }
