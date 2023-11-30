@@ -37,6 +37,8 @@ namespace PhilipTheMechanic
         public static void DeregisterMods(Card moddingCard, Card moddedCard)
         {
             if (!cardMods.ContainsKey(moddedCard.uuid)) { return; }
+            MainManifest.Instance.Logger.LogInformation($"Deregistering card modification for {moddedCard.uuid}:`{moddedCard.GetFullDisplayName()}` by {moddingCard.uuid}:`{moddingCard.GetFullDisplayName()}`");
+
             for (int i = 0; i < cardMods[moddedCard.uuid].Count; i++)
             {
                 if (cardMods[moddedCard.uuid][i].from == moddingCard)
@@ -57,8 +59,6 @@ namespace PhilipTheMechanic
             foreach (var registration in cardMods[__instance.uuid])
             {
                 if (registration.actionsModification == null) continue;
-
-                MainManifest.Instance?.Logger?.LogInformation($"Applying card modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
                 overridenCardActions = registration.actionsModification(overridenCardActions);
             }
 

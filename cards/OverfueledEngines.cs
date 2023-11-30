@@ -53,14 +53,14 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
+                        //description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
                         unplayable = false,
-                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Fumes to your deck."
+                        //description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Fumes to your deck."
                     };
                 case Upgrade.B:
                     return new()
@@ -68,7 +68,7 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = false,
                         flippable = true,
-                        description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
+                        //description = $"When {GetTargetLocationString(true)} is played, repeat its effects and add a Toxic to your hand."
                     };
             }
         }
@@ -76,8 +76,19 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c) 
         {
-            if (upgrade == Upgrade.A) return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new TrashFumes() } } } };
-            else                      return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new Toxic()      } } } };
+            //if (upgrade == Upgrade.A) return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new TrashFumes() } } } };
+            //else                      return new List<CardAction>() { new ATooltipDummy() { tooltips = new() { new TTCard() { card = new Toxic()      } } } };
+
+            return new List<CardAction>() { 
+                new ATooltipDummy() { 
+                    tooltips = new() { new TTCard() { card = new TrashFumes() } },
+                    icons = new() {
+                        new Icon((Spr)MainManifest.sprites["icon_all_cards_to_the_left"].Id, null, Colors.heal),
+                        new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.heal),
+                        new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.heal)
+                    }
+                },
+            };
         }
     }
 }

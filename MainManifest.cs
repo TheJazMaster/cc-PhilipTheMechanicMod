@@ -57,7 +57,11 @@ namespace PhilipTheMechanic
                 "philip_neutral_1",
                 "philip_surprise_0",
                 "philip_surprise_1",
-                "icon_play_twice"
+                "icon_play_twice",
+                "icon_all_cards_to_the_left",
+                "icon_all_cards_to_the_right",
+                "icon_card_to_the_left",
+                "icon_card_to_the_right",
             };
 
             foreach (var filename in filenames) {
