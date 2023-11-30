@@ -55,7 +55,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.A:
                     return new()
@@ -63,14 +63,14 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = true,
                         flippable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
                         unplayable = true,
-                        description = $"Increases the damage of every attack on {GetTargetLocationString()}."
+                        description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
             }
         }

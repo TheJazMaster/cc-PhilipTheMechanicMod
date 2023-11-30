@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HarmonyLib;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -29,11 +31,14 @@ namespace PhilipTheMechanic
 
         public override void OnDraw(State s, Combat c)
         {
+            MainManifest.Instance.Logger.LogInformation($"Drew a modifier card! {uuid}:{GetFullDisplayName()}");
             ModifyTargetCards(c.hand);
         }
 
         public override void OnOtherCardPlayedWhileThisWasInHand(State s, Combat c, int handPosition)
         {
+            MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was played.");
+
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
             ModifyTargetCards(c.hand);
         }
