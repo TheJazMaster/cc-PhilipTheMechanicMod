@@ -67,7 +67,8 @@ namespace PhilipTheMechanic
                 "icon_card_to_the_left",
                 "icon_card_to_the_right",
                 "icon_attack_buff",
-                "icon_screw"
+                "icon_screw",
+                "icon_2x_sticker"
             };
 
             foreach (var filename in filenames) {
