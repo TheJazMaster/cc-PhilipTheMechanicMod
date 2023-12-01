@@ -124,7 +124,7 @@ namespace PhilipTheMechanic
 
             // sticker goes at (50, 8) - 0.5*sticker.dimensions
             //var DEG_60 = 1.0472;
-            MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
+            //MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
             var DEG_30 = 0.5236;
             int stickerCount = 0;
             double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
@@ -139,7 +139,7 @@ namespace PhilipTheMechanic
                     var yRandOff = uuidToRandRange(seed + 37, -3, 10);
                     var randRotation = uuidToRandRange(seed, -DEG_30, DEG_30);
                     Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
-                    MainManifest.Instance?.Logger?.LogInformation($"seed={seed} xRandOff={xRandOff} yRandOff={yRandOff} rotation={randRotation}");
+                    //MainManifest.Instance?.Logger?.LogInformation($"seed={seed} xRandOff={xRandOff} yRandOff={yRandOff} rotation={randRotation}");
                     stickerCount++;
                 }
             }
