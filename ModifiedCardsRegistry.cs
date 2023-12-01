@@ -119,8 +119,8 @@ namespace PhilipTheMechanic
             Box box = g.Push(flag2 ? new UIKey?(keyOverride ?? __instance.UIKey()) : null, rect, value, depth: (!ignoreHover && __instance.isForeground) ? 1 : 0, onMouseDown: flag2 ? onMouseDown : null, onMouseDownRight: flag2 ? onMouseDownRight : null, onInputPhase: ignoreHover ? null : onInputPhase, onAfterUI: __instance, autoFocus: flag2 && autoFocus, noHoverSound: false, gamepadUntargetable: false, rightHint: rightHint, leftHint: leftHint, upHint: upHint, downHint: downHint, reticleMode: (isInCombatHand && g.state.hideCardTooltips) ? ReticleMode.QuadCardHint : ReticleMode.Quad);
             Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
 
-            Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
-            Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
+            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
+            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
 
             // sticker goes at (50, 8) - 0.5*sticker.dimensions
             //var DEG_60 = 1.0472;
