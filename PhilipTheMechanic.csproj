@@ -67,6 +67,9 @@
     <None Update="sprites\icon_play_twice.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="sprites\icon_redraw.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\icon_screw.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

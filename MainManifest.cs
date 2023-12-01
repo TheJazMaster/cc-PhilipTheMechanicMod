@@ -10,11 +10,12 @@ using CobaltCoreModding.Definitions.ModContactPoints;
 using CobaltCoreModding.Definitions.ModManifests;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
+using Microsoft.Xna.Framework.Graphics;
 using PhilipTheMechanic.cards;
 
 namespace PhilipTheMechanic
 {
-    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest, IGlossaryManifest
+    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest, IGlossaryManifest, IStatusManifest
     {
         public static MainManifest Instance;
 
@@ -29,6 +30,7 @@ namespace PhilipTheMechanic
         public static Dictionary<string, ExternalSprite> sprites = new Dictionary<string, ExternalSprite>();
         public static Dictionary<string, ExternalAnimation> animations = new Dictionary<string, ExternalAnimation>();
         public static Dictionary<string, ExternalCard> cards = new Dictionary<string, ExternalCard>();
+        public static Dictionary<string, ExternalStatus> statuses = new Dictionary<string, ExternalStatus>();
         public static Dictionary<string, ExternalGlossary> glossary = new Dictionary<string, ExternalGlossary>();
         public static Dictionary<string, CustomTTGlossary> vanillaSpritesGlossary = new Dictionary<string, CustomTTGlossary>();
         public static ExternalCharacter character;
@@ -69,6 +71,7 @@ namespace PhilipTheMechanic
                 "icon_attack_buff",
                 "icon_screw",
                 "icon_equal",
+                "icon_redraw",
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
                 "icon_sticker_buff_attack",
@@ -98,6 +101,7 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Shielding Mod", typeof(ShieldingMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Recycle Parts", typeof(RecycleParts), sprites["card_philip_default"], deck),
             };
 
             foreach(var card in cardDefinitions)
@@ -128,13 +132,13 @@ namespace PhilipTheMechanic
         public void LoadManifest(ICharacterRegistry registry)
         {
             //var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(FrenzyMod) };
-            var realStartingCards = new Type[] { typeof(OverdriveMod) }; // add a redraw card
+            var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines), typeof(ShieldingMod) }, // TODO: give starting cards for Philip
+                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines), typeof(RecycleParts) }, // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
@@ -200,7 +204,7 @@ namespace PhilipTheMechanic
 
             RegisterGlossaryEntry(registry, "AAttackBuff", sprites["icon_attack_buff"],
                 "attack buff",
-                "Increases the power of attacks on the target card."
+                "Increases the power of attacks on the target card by {0}."
             );
 
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);
@@ -212,6 +216,14 @@ namespace PhilipTheMechanic
             entry.AddLocalisation("en", displayName, description);
             registry.RegisterGlossary(entry);
             glossary[entry.ItemName] = entry;
+        }
+
+        public void LoadManifest(IStatusRegistry statusRegistry)
+        {
+            var redraw = new ExternalStatus("clay.PhilipTheMechanic.Statuses.Redraw", true, System.Drawing.Color.Red, null, sprites["icon_redraw"], false);
+            statusRegistry.RegisterStatus(redraw);
+            redraw.AddLocalisation("Redraw", "Enables you to discard a card of your choice and draw a new one. You may do this up to {0} times.");
+            statuses["redraw"] = redraw;
         }
     }
 }
