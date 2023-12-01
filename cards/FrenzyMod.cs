@@ -37,7 +37,6 @@ namespace PhilipTheMechanic.cards
                     if (upgrade == Upgrade.A) { overridenCardActions.Add(new AAttack() { damage = 1 }); }
                     return overridenCardActions;
                 },
-                energyModification: (int energy) => Math.Max(0, energy-1),
                 stickers: upgrade == Upgrade.A 
                     ? new() { (Spr)MainManifest.sprites["icon_sticker_attack"].Id, (Spr)MainManifest.sprites["icon_sticker_attack"].Id }
                     : new() { (Spr)MainManifest.sprites["icon_sticker_attack"].Id }
