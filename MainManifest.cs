@@ -68,13 +68,16 @@ namespace PhilipTheMechanic
                 "icon_card_to_the_right",
                 "icon_attack_buff",
                 "icon_screw",
+                "icon_equal",
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
                 "icon_sticker_buff_attack",
                 "icon_sticker_hull_damage",
                 "icon_sticker_energy_discount",
                 "icon_sticker_0_energy",
-                "icon_sticker_attack"
+                "icon_sticker_attack",
+                "icon_sticker_temp_shield_attack",
+                "icon_sticker_shield_attack",
             };
 
             foreach (var filename in filenames) {
@@ -94,6 +97,7 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Frenzy Mod", typeof(FrenzyMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Shielding Mod", typeof(ShieldingMod), sprites["card_philip_default"], deck),
             };
 
             foreach(var card in cardDefinitions)
@@ -123,13 +127,14 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
-            var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(FrenzyMod) };
+            //var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(FrenzyMod) };
+            var realStartingCards = new Type[] { typeof(OverdriveMod) }; // add a redraw card
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines) }, // TODO: give starting cards for Philip
+                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines), typeof(ShieldingMod) }, // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
@@ -137,6 +142,8 @@ namespace PhilipTheMechanic
 
             character.AddNameLocalisation("Philip");
             character.AddDescLocalisation("<c=c9f000>PHILIP</c>\nYour mechanic. His cards modify other cards in your hand, and are typically unplayable.");
+            // TODO: update desc
+            // His cards modify other cards in your hand, provide redraw, or modify your ship.
 
             if (!registry.RegisterCharacter(character)) throw new Exception("Philip is lost! Could not register Philip!");
         }
