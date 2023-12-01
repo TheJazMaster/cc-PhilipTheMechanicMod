@@ -119,7 +119,8 @@ namespace PhilipTheMechanic
             var DEG_30 = 0.5236;
             var xRandOff = uuidToRandRange(__instance.uuid, -3, 3);
             var yRandOff = uuidToRandRange(__instance.uuid+37, -3, 3);
-            Draw.Sprite((Spr)MainManifest.sprites["icon_2x_sticker"].Id, vec2.x + 50-7 + xRandOff,  vec2.y + 8-7 + yRandOff, rotation: uuidToRandRange(__instance.uuid, 0, DEG_30), originPx: new Vec() { x=7, y=7 });
+            var randRotation = uuidToRandRange(__instance.uuid, -DEG_30, DEG_30);
+            Draw.Sprite((Spr)MainManifest.sprites["icon_2x_sticker"].Id, vec2.x + 50-7 + xRandOff,  vec2.y + 8-7 + yRandOff, rotation: randRotation, originPx: new Vec() { x=7, y=7 });
 
             g.Pop();
         }
@@ -127,7 +128,7 @@ namespace PhilipTheMechanic
         public static double uuidToRandRange(double uuid, double min, double max)
         {
             //return (0.5f * Math.Sin(uuid) + 0.5f) * (max-min) + min;
-            return (uuid / 10.0) * (max-min) + min;
+            return (uuid / 100.0) % Math.Abs(max-min) + min;
         }
 
         //[HarmonyPostfix]
