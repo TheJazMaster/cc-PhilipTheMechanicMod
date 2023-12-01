@@ -92,7 +92,7 @@ namespace PhilipTheMechanic.cards
                             text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary("status.overdrive", "1")
+                        new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "1")
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
