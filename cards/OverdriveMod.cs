@@ -32,7 +32,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c, 
-                (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions) =>
                 {
                     List<CardAction> overridenCardActions = new();
                     foreach (var action in cardActions)
@@ -48,7 +48,7 @@ namespace PhilipTheMechanic.cards
                     }
                     return overridenCardActions;
                 },
-                null
+                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_buff_attack"].Id }
             );
         }
 

@@ -16,21 +16,28 @@ namespace PhilipTheMechanic
             public Card from;
             public CardActionsModification? actionsModification;
             public CardEnergyModification? energyModification;
+            public List<Spr>? stickers;
         }
 
         public delegate List<CardAction> CardActionsModification(List<CardAction> cardActions);
         public delegate int CardEnergyModification(int originalEnergy);
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
 
-        public static void RegisterMod(Card self, Card modifiedCard, CardActionsModification? actionsModification, CardEnergyModification? energyModification)
-        {
+        public static void RegisterMod(
+            Card self, 
+            Card modifiedCard, 
+            CardActionsModification? actionsModification = null, 
+            CardEnergyModification? energyModification = null, 
+            List<Spr>? stickers = null
+        ) {
             MainManifest.Instance.Logger.LogInformation($"Card modification being registered for {modifiedCard.uuid}:`{modifiedCard.GetFullDisplayName()}` by {self.uuid}:`{self.GetFullDisplayName()}`");
 
             if (!cardMods.ContainsKey(modifiedCard.uuid)) { cardMods[modifiedCard.uuid] = new List<CardModRegistration>(); }
             cardMods[modifiedCard.uuid].Add(new CardModRegistration() { 
                 from = self, 
                 actionsModification = actionsModification,
-                energyModification = energyModification
+                energyModification = energyModification,
+                stickers = stickers
             });
         }
 
@@ -56,6 +63,7 @@ namespace PhilipTheMechanic
             if (s.route is Combat combat && combat.routeOverride != null && !combat.eyeballPeek) { return; }
             if (s.route is not Combat) { return; } // should never hit this case
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
+            if (cardMods[__instance.uuid].Count <= 0) { return; }
 
             List<CardAction> overridenCardActions = __result;
             foreach (var registration in cardMods[__instance.uuid])
@@ -116,19 +124,33 @@ namespace PhilipTheMechanic
 
             // sticker goes at (50, 8) - 0.5*sticker.dimensions
             //var DEG_60 = 1.0472;
+            MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
             var DEG_30 = 0.5236;
-            var xRandOff = uuidToRandRange(__instance.uuid, -3, 3);
-            var yRandOff = uuidToRandRange(__instance.uuid+37, -3, 3);
-            var randRotation = uuidToRandRange(__instance.uuid, -DEG_30, DEG_30);
-            Draw.Sprite((Spr)MainManifest.sprites["icon_2x_sticker"].Id, vec2.x + 50-7 + xRandOff,  vec2.y + 8-7 + yRandOff, rotation: randRotation, originPx: new Vec() { x=7, y=7 });
-
+            int stickerCount = 0;
+            double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
+            double stickerOriginY = 8 - 7.5 + 5;
+            foreach (var registration in cardMods[__instance.uuid])
+            {
+                if (registration.stickers == null) continue;
+                foreach (var sticker in registration.stickers)
+                {
+                    var seed = __instance.uuid + stickerCount*700;
+                    var xRandOff = uuidToRandRange(seed, -6, 6);
+                    var yRandOff = uuidToRandRange(seed + 37, -3, 10);
+                    var randRotation = uuidToRandRange(seed, -DEG_30, DEG_30);
+                    Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
+                    MainManifest.Instance?.Logger?.LogInformation($"seed={seed} xRandOff={xRandOff} yRandOff={yRandOff} rotation={randRotation}");
+                    stickerCount++;
+                }
+            }
+            
             g.Pop();
         }
 
         public static double uuidToRandRange(double uuid, double min, double max)
         {
             //return (0.5f * Math.Sin(uuid) + 0.5f) * (max-min) + min;
-            return (uuid / 100.0) % Math.Abs(max-min) + min;
+            return (Math.Abs(uuid / 100.0) % Math.Abs(max - min)) + min;
         }
 
         //[HarmonyPostfix]

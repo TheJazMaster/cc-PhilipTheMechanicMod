@@ -30,17 +30,19 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this,
                 c,
-                (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AReplay() { card = c });
 
-                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCard() { card = new TrashFumes(), destination = CardDestination.Deck });
-                    else                      overridenCardActions.Add(new AAddCard() { card = new Toxic(),      destination = CardDestination.Hand });
+                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCardNoIcon() { card = new TrashFumes(), destination = CardDestination.Deck });
+                    else                      overridenCardActions.Add(new AAddCardNoIcon() { card = new Toxic(),      destination = CardDestination.Hand });
 
+                    overridenCardActions.Insert(0, new ADummyAction() { });
+                    overridenCardActions.Insert(0, new ADummyAction() { });
                     return overridenCardActions;
                 },
-                null
+                stickers: new List<Spr>() { (Spr)MainManifest.sprites["icon_2x_sticker"].Id, (Spr)MainManifest.sprites["icon_sticker_add_card"].Id }
             );
         }
 

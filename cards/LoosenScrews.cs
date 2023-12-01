@@ -30,16 +30,19 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c, 
-                (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AHurt() { hurtAmount = (upgrade == Upgrade.B ? 2 : 1), hurtShieldsFirst = false, targetPlayer = true });
                     return overridenCardActions;
                 },
-                (int energy) => {
+                energyModification: (int energy) => {
                     if (upgrade == Upgrade.B) return 0;
                     return Math.Max(0, energy - 1);
-                }
+                },
+                stickers: upgrade == Upgrade.B
+                    ? new() { (Spr)MainManifest.sprites["icon_sticker_0_energy"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id }
+                    : new() { (Spr)MainManifest.sprites["icon_sticker_energy_discount"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id }
             );
         }
 
