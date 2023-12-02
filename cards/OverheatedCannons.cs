@@ -63,14 +63,28 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"{GetTargetLocationString().Capitalize()} deal two extra (1 damage) attacks, and apply 1 heat to self."
+                            text = $"{GetTargetLocationString().Capitalize()} deals two extra (1 damage) attacks, and applies 1 heat to self."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head)
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                         new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt),
+                    }
+                },
+
+                new ATooltipDummy() {
+                    tooltips = new() {},
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                         new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt),
+                    }
+                },
+
+                new ATooltipDummy() {
+                    tooltips = new() {},
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                         new Icon(Enum.Parse<Spr>("icons_heat"), 1, Colors.hurt)
                     }
                 }
