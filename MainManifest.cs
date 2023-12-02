@@ -161,9 +161,7 @@ namespace PhilipTheMechanic
             );
 
             character.AddNameLocalisation("Philip");
-            character.AddDescLocalisation("<c=c9f000>PHILIP</c>\nYour mechanic. His cards modify other cards in your hand, and are typically unplayable.");
-            // TODO: update desc
-            // His cards modify other cards in your hand, provide redraw, or modify your ship.
+            character.AddDescLocalisation("<c=c9f000>PHILIP</c>\nYour mechanic. His cards modify other cards in your hand, provide <c=d6525f>redraw</c>, and are often unplayable.");
 
             if (!registry.RegisterCharacter(character)) throw new Exception("Philip is lost! Could not register Philip!");
         }
