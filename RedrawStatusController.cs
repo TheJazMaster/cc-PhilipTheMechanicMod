@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 namespace PhilipTheMechanic
 {
     [HarmonyPatch(typeof(Card))]
-    public class RedrawStatus
+    public class RedrawStatusController
     {
         private static void HandleRedraw(G g, Card card)
         {
+
             if (g.state.route is Combat c)
             {
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
@@ -21,6 +22,11 @@ namespace PhilipTheMechanic
 
                 DiscardFromHand(g.state, card);
                 c.DrawCards(g.state, 1);
+
+                foreach (Card otherCard in c.hand)
+                {
+                    if (otherCard is ModifierCard mc) { mc.OnOtherCardDiscardedWhileThisWasInHand(g.state, c); }
+                }
             }
         }
 
@@ -58,6 +64,9 @@ namespace PhilipTheMechanic
             if (state.route is not Combat) { return; } // should never hit this case
             
             if (state.ship.Get((Status)MainManifest.statuses["redraw"].Id) <= 0) { return; }
+            //MainManifest.Instance.Logger.LogInformation($"~~~~~`````~~~~~ drawing redraw on card {__instance.uuid}:{__instance.Name()}");
+
+            int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
 
             Vec vec = posOverride ?? __instance.pos;
             Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
@@ -78,16 +87,17 @@ namespace PhilipTheMechanic
             //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
 
             var cardHalfWidth = 59.0 / 2.0;
-            var cardHalfHeight = 82.0 / 2.0;
-            Rect rect2 = new(vec2.x + cardHalfHeight, vec2.y + cardHalfWidth, 33, 24);
+            var cardHeight = 82.0;
+            //Rect rect2 = new(vec2.x + cardHalfHeight, vec2.y + cardHalfWidth, 33, 24);
+            Rect rect2 = new(cardHalfWidth-33.0/2.0, cardHeight-24.0/2.0, 33, 24);
             OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance));
-            RotatedButtonSprite(g, rect2, Enum.Parse<UK>("btn_move_right"), Enum.Parse<Spr>("buttons_move"), Enum.Parse<Spr>("buttons_move_on"), null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
+            RotatedButtonSprite(g, rect2, (UK)(100+cardIndex), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
 
             g.Pop();
         }
 
         // from https://github.com/Shockah/Cobalt-Core-Mods/blob/master/CrewSelectionHelper/Patches/NewRunOptionsPatches.cs
-        private static SharedArt.ButtonResult RotatedButtonSprite(G g, Rect rect, UIKey key, Spr sprite, Spr spriteHover, Spr? spriteDown = null, Color? boxColor = null, bool inactive = false, bool flipX = false, bool flipY = false, OnMouseDown? onMouseDown = null, bool autoFocus = false, bool noHover = false, bool showAsPressed = false, bool gamepadUntargetable = false, UIKey? leftHint = null, UIKey? rightHint = null)
+        public static SharedArt.ButtonResult RotatedButtonSprite(G g, Rect rect, UIKey key, Spr sprite, Spr spriteHover, Spr? spriteDown = null, Color? boxColor = null, bool inactive = false, bool flipX = false, bool flipY = false, OnMouseDown? onMouseDown = null, bool autoFocus = false, bool noHover = false, bool showAsPressed = false, bool gamepadUntargetable = false, UIKey? leftHint = null, UIKey? rightHint = null)
         {
             bool gamepadUntargetable2 = gamepadUntargetable;
             Box box = g.Push(key, rect, null, autoFocus, inactive, gamepadUntargetable2, ReticleMode.Quad, onMouseDown, null, null, null, 0, rightHint, leftHint);

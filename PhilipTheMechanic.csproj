@@ -31,6 +31,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="sprites\button_move_red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\button_move_red_on.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\button_redraw.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\button_redraw_on.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\card_philip_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -81,6 +81,8 @@ namespace PhilipTheMechanic
                 "icon_sticker_attack",
                 "icon_sticker_temp_shield_attack",
                 "icon_sticker_shield_attack",
+                "button_redraw",
+                "button_redraw_on"
             };
 
             foreach (var filename in filenames) {

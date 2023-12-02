@@ -143,7 +143,7 @@ namespace PhilipTheMechanic
                     stickerCount++;
                 }
             }
-            
+
             g.Pop();
         }
 
