@@ -90,7 +90,7 @@ namespace PhilipTheMechanic.cards
             }
             else
             {
-                addCardToolTips = (new AAddCard() { card = new Toxic(), destination = CardDestination.Deck }).GetTooltips(s);
+                addCardToolTips = (new AAddCard() { card = new Toxic(), destination = CardDestination.Hand }).GetTooltips(s);
                 cardName = "Toxic";
                 cardDestination = "hand";
             }
