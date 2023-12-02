@@ -144,6 +144,14 @@ namespace PhilipTheMechanic
                 }
             }
 
+var cardHalfWidth = 59.0 / 2.0;
+var cardHalfHeight = 82.0 / 2.0;
+//Rect rect2 = new(vec2.x + cardHalfHeight, vec2.y + cardHalfWidth, 33, 24);
+Rect rect2 = new(vec2.x, vec2.y, 33, 24);
+OnMouseDown omd = new MouseDownHandler(() => { });
+RedrawStatusController.RotatedButtonSprite(g, rect2, Enum.Parse<UK>("btn_move_right"), Enum.Parse<Spr>("buttons_move"), Enum.Parse<Spr>("buttons_move_on"), null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
+
+
             g.Pop();
         }
 
