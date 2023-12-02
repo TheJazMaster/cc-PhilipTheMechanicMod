@@ -94,7 +94,7 @@ namespace PhilipTheMechanic.cards
                             text = $"Makes every attack on {GetTargetLocationString()} piercing."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "1")
+                        new TTGlossary("action.attackPiercing")
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
