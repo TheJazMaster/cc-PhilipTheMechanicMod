@@ -6,24 +6,20 @@ using System.Threading.Tasks;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class RecycleParts : Card
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class DisableSafties : Card
     {
         public override string Name()
         {
-            return "Recycle Parts";
+            return "Disable Safties";
         }
 
         public override List<CardAction> GetActions(State s, Combat c)
         {
             return new()
             {
-                new AStatus() {
-                    status = (Status)MainManifest.statuses["redraw"].Id,
-                    targetPlayer = true,
-                    statusAmount = upgrade == Upgrade.B ? 2 : 1,
-                    mode = AStatusMode.Add,
-                }
+                new AAddCard() { card = new Fear(), destination = Enum.Parse<CardDestination>("Hand") },
+                new AAddCard() { card = new OverheatedCannons(), destination = Enum.Parse<CardDestination>("Hand") }
             };
         }
 

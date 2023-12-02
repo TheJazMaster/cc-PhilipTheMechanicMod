@@ -35,8 +35,8 @@ namespace PhilipTheMechanic.cards
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AReplay() { card = c });
 
-                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCardNoIcon() { card = new TrashFumes(), destination = CardDestination.Deck });
-                    else                      overridenCardActions.Add(new AAddCardNoIcon() { card = new Toxic(),      destination = CardDestination.Hand });
+                    if (upgrade == Upgrade.A) overridenCardActions.Add(new AAddCardNoIcon() { card = new TrashFumes(), destination = Enum.Parse<CardDestination>("Deck") });
+                    else                      overridenCardActions.Add(new AAddCardNoIcon() { card = new Toxic(),      destination = Enum.Parse<CardDestination>("Hand") });
 
                     overridenCardActions.Insert(0, new ADummyAction() { });
                     overridenCardActions.Insert(0, new ADummyAction() { });
@@ -84,13 +84,13 @@ namespace PhilipTheMechanic.cards
 
             if (upgrade == Upgrade.A)
             {
-                addCardToolTips = (new AAddCard() { card = new TrashFumes(), destination = CardDestination.Deck }).GetTooltips(s);
+                addCardToolTips = (new AAddCard() { card = new TrashFumes(), destination = Enum.Parse<CardDestination>("Deck") }).GetTooltips(s);
                 cardName = "Fumes";
                 cardDestination = "deck";
             }
             else
             {
-                addCardToolTips = (new AAddCard() { card = new Toxic(), destination = CardDestination.Hand }).GetTooltips(s);
+                addCardToolTips = (new AAddCard() { card = new Toxic(), destination = Enum.Parse<CardDestination>("Hand") }).GetTooltips(s);
                 cardName = "Toxic";
                 cardDestination = "hand";
             }

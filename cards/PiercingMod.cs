@@ -9,12 +9,12 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class OverdriveMod : ModifierCard
+    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class PiercingMod : ModifierCard
     {
         public override string Name()
         {
-            return "Overdrive Mod";
+            return "Piercing Mod";
         }
 
         public override TargetLocation GetBaseTargetLocation() 
@@ -40,7 +40,7 @@ namespace PhilipTheMechanic.cards
                         if (action is AAttack attack)
                         {
                             var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.damage += 1;
+                            newAttack.piercing = true;
                             overridenCardActions.Add(newAttack);
                         }
                         else
@@ -91,14 +91,14 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                            text = $"Makes every attack on {GetTargetLocationString()} piercing."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "1")
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, 1, Colors.textMain)
+                        new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain)
                     }
                 }
             };

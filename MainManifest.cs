@@ -72,6 +72,7 @@ namespace PhilipTheMechanic
                 "icon_screw",
                 "icon_equal",
                 "icon_redraw",
+                "icon_customParts",
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
                 "icon_sticker_buff_attack",
@@ -81,8 +82,12 @@ namespace PhilipTheMechanic
                 "icon_sticker_attack",
                 "icon_sticker_temp_shield_attack",
                 "icon_sticker_shield_attack",
+                "icon_sticker_temp_shield",
+                "icon_sticker_shield",
+                "icon_sticker_piercing",
+                "icon_sticker_heat",
                 "button_redraw",
-                "button_redraw_on"
+                "button_redraw_on",
             };
 
             foreach (var filename in filenames) {
@@ -96,6 +101,9 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICardRegistry registry)
         {
+            // GOALL:
+            // 21 cards
+            // 9 common, 7 uncommon, 5 rare
             var cardDefinitions = new ExternalCard[]
             {
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overdrive Mod", typeof(OverdriveMod), sprites["card_philip_default"], deck),
@@ -104,6 +112,12 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Shielding Mod", typeof(ShieldingMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Recycle Parts", typeof(RecycleParts), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Emergency Training", typeof(EmergencyTraining), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Permanence Mod", typeof(PermanenceMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Didable Safties", typeof(DisableSafties), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Overheated Cannons", typeof(OverheatedCannons), sprites["card_philip_default"], deck),
             };
 
             foreach(var card in cardDefinitions)
@@ -133,14 +147,13 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
-            //var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(FrenzyMod) };
             var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod), typeof(LoosenScrews), typeof(FrenzyMod), typeof(OverfueledEngines), typeof(RecycleParts) }, // TODO: give starting cards for Philip
+                cards.Values.Select(card => card.CardType).ToArray(), // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
@@ -226,6 +239,11 @@ namespace PhilipTheMechanic
             statusRegistry.RegisterStatus(redraw);
             redraw.AddLocalisation("Redraw", "Enables you to discard a card of your choice and draw a new one. You may do this up to {0} times.");
             statuses["redraw"] = redraw;
+
+            var customParts = new ExternalStatus("clay.PhilipTheMechanic.Statuses.CustomParts", true, System.Drawing.Color.Red, null, sprites["icon_customParts"], false);
+            statusRegistry.RegisterStatus(customParts);
+            customParts.AddLocalisation("Custom Parts", "Gives you {0} redraw at the start of each turn.");
+            statuses["customParts"] = customParts;
         }
     }
 }

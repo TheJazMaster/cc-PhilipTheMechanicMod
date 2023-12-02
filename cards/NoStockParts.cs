@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class RecycleParts : Card
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class NoStockParts : Card
     {
         public override string Name()
         {
-            return "Recycle Parts";
+            return "No Stock Parts";
         }
 
         public override List<CardAction> GetActions(State s, Combat c)
@@ -19,14 +19,17 @@ namespace PhilipTheMechanic.cards
             return new()
             {
                 new AStatus() {
-                    status = (Status)MainManifest.statuses["redraw"].Id,
+                    status = (Status)MainManifest.statuses["customParts"].Id,
                     targetPlayer = true,
-                    statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                    statusAmount = 1,
                     mode = AStatusMode.Add,
-                }
+                },
             };
         }
 
-        public override CardData GetData(State state) => new() { cost = upgrade == Upgrade.A ? 0 : 1 };
+        public override CardData GetData(State state) => new() { 
+            cost = upgrade == Upgrade.A ? 2 : 3,
+            exhaust = upgrade == Upgrade.B ? false : true
+        };
     }
 }
