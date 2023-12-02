@@ -84,20 +84,19 @@ namespace PhilipTheMechanic
 
             // card height is 82, width is 59
             //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
-            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
+            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4, vec2.y + 69);
 
             var cardHalfWidth = 59.0 / 2.0;
             var cardHeight = 82.0;
-            //Rect rect2 = new(vec2.x + cardHalfHeight, vec2.y + cardHalfWidth, 33, 24);
-            Rect rect2 = new(cardHalfWidth-33.0/2.0, cardHeight-24.0/2.0, 33, 24);
+            Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0, 19, 13);
             OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance));
-            RotatedButtonSprite(g, rect2, (UK)(100+cardIndex), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
+            ButtonSprite(g, vec2, rect2, (UK)(100 + cardIndex), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
 
             g.Pop();
         }
 
         // from https://github.com/Shockah/Cobalt-Core-Mods/blob/master/CrewSelectionHelper/Patches/NewRunOptionsPatches.cs
-        public static SharedArt.ButtonResult RotatedButtonSprite(G g, Rect rect, UIKey key, Spr sprite, Spr spriteHover, Spr? spriteDown = null, Color? boxColor = null, bool inactive = false, bool flipX = false, bool flipY = false, OnMouseDown? onMouseDown = null, bool autoFocus = false, bool noHover = false, bool showAsPressed = false, bool gamepadUntargetable = false, UIKey? leftHint = null, UIKey? rightHint = null)
+        public static SharedArt.ButtonResult ButtonSprite(G g, Vec vec2, Rect rect, UIKey key, Spr sprite, Spr spriteHover, Spr? spriteDown = null, Color? boxColor = null, bool inactive = false, bool flipX = false, bool flipY = false, OnMouseDown? onMouseDown = null, bool autoFocus = false, bool noHover = false, bool showAsPressed = false, bool gamepadUntargetable = false, UIKey? leftHint = null, UIKey? rightHint = null)
         {
             bool gamepadUntargetable2 = gamepadUntargetable;
             Box box = g.Push(key, rect, null, autoFocus, inactive, gamepadUntargetable2, ReticleMode.Quad, onMouseDown, null, null, null, 0, rightHint, leftHint);
@@ -105,15 +104,17 @@ namespace PhilipTheMechanic
             bool flag = !noHover && (box.IsHover() || showAsPressed) && !inactive;
             if (spriteDown.HasValue && box.IsHover() && Input.mouseLeft)
                 showAsPressed = true;
-            double rotation = Math.PI / 2;
-            Draw.Sprite(!showAsPressed ? flag ? spriteHover : sprite : spriteDown ?? spriteHover, xy.x + Math.Sin(rotation) * rect.w, xy.y - Math.Cos(rotation) * rect.h, flipX, flipY, rotation, null, null, null, null, boxColor);
+            
+            g.Pop();
+
+            Draw.Sprite(!showAsPressed ? flag ? spriteHover : sprite : spriteDown ?? spriteHover, xy.x, xy.y, flipX, flipY, 0, null, null, null, null, boxColor);
             SharedArt.ButtonResult buttonResult = default;
             buttonResult.isHover = flag;
             buttonResult.FIXME_isHoverForTooltip = !noHover && box.IsHover();
             buttonResult.v = xy;
             buttonResult.innerOffset = new Vec(0.0, showAsPressed ? 2 : flag ? 1 : 0);
             SharedArt.ButtonResult result = buttonResult;
-            g.Pop();
+
             return result;
         }
     }
