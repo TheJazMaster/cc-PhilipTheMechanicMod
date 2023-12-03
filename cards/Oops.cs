@@ -48,6 +48,15 @@ namespace PhilipTheMechanic.cards
                             overridenCardActions.Add(action);
                         }
                     }
+                    overridenCardActions.Add(
+                        new AStatus()
+                        {
+                            status = (Status)MainManifest.statuses["redraw"].Id,
+                            targetPlayer = true,
+                            statusAmount = 1,
+                            mode = AStatusMode.Add,
+                        }
+                    );
                     return overridenCardActions;
                 },
                 stickers: new() { (Spr)MainManifest.sprites["icon_sticker_buff_attack"].Id, (Spr)MainManifest.sprites["icon_sticker_redraw"].Id }
