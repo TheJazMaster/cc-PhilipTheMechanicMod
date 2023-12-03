@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace PhilipTheMechanic.cards
 {
     [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class PlanC : Card
+    public class PlanWAF : Card
     {
         public override string Name()
         {
-            return "No Stock Parts";
+            return "Plan WAF";
         }
 
         public override List<CardAction> GetActions(State s, Combat c)

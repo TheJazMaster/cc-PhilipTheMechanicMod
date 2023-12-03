@@ -100,6 +100,12 @@ namespace PhilipTheMechanic.cards
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, -1, Colors.textMain),
+                    }
+                },
+                new ATooltipDummy() {
+                    tooltips = new() {},
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, 1, Colors.textMain)
                     }
                 }

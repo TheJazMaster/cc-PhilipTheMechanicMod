@@ -131,11 +131,11 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Duct Tape and Dreams", typeof(DuctTapeAndDreams), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Jettison Parts", typeof(JettisonParts), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobot Infestation", typeof(NanobotInfestation), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_philip_default"], deck), // TODO: how to add a custom trash card?
                 new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Plan C", typeof(PlanC), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Plan WAF", typeof(PlanWAF), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Precision Machining", typeof(PrecisionMachining), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Reduce Reuse", typeof(ReduceReuse), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Stun Mod", typeof(StunMod), sprites["card_philip_default"], deck),
@@ -170,12 +170,15 @@ namespace PhilipTheMechanic
         public void LoadManifest(ICharacterRegistry registry)
         {
             var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
+            var testStartCards = cards.Values.Select(card => card.CardType).ToList();
+            testStartCards.Add(typeof(UraniumRound));
+            testStartCards.Add(typeof(OverheatedCannons));
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                cards.Values.Select(card => card.CardType).ToArray(), // TODO: give starting cards for Philip
+                testStartCards.ToArray(), // TODO: give starting cards for Philip
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]

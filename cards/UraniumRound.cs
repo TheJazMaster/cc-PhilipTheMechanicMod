@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhilipTheMechanic.cards
 {
+    // TODO: missing
     [CardMeta(rarity = Rarity.rare, dontOffer = true, upgradesTo = new[] { Upgrade.B })]
     public class UraniumRound : Card
     {

@@ -90,7 +90,7 @@ namespace PhilipTheMechanic.cards
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_play_twice"].Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_exhaust"), 1, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
                     }
                 },
 
