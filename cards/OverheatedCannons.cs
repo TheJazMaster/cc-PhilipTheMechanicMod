@@ -76,7 +76,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {},
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_attack"), 1, Colors.hurt),
+                        new Icon(Enum.Parse<Spr>("icons_attack"), (upgrade == Upgrade.B ? 2 : 1), Colors.hurt),
                     }
                 },
 
@@ -84,7 +84,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {},
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_heat"), 1, Colors.hurt)
+                        new Icon(Enum.Parse<Spr>("icons_heat"), (upgrade == Upgrade.B ? 2 : 1), Colors.hurt)
                     }
                 }
             };

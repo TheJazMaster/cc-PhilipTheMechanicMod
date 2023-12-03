@@ -23,6 +23,6 @@ namespace PhilipTheMechanic.cards
             };
         }
 
-        public override CardData GetData(State state) => new() { cost = upgrade == Upgrade.A ? 0 : 1 };
+        public override CardData GetData(State state) => new() { cost = upgrade == Upgrade.A ? 0 : 1, exhaust = true };
     }
 }

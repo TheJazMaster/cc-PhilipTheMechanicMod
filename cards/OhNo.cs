@@ -102,7 +102,7 @@ namespace PhilipTheMechanic.cards
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 2 : 1, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
                     }
                 }
