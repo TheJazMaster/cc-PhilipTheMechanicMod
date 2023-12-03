@@ -191,7 +191,7 @@ namespace PhilipTheMechanic
                 deck,
                 sprites["char_frame_philip"],
                 realStartingCards,
-                new Type[] { typeof(SelfPropellingCannons) },
+                new Type[0],
                 animations["neutral"],
                 animations["mini"]
             );
