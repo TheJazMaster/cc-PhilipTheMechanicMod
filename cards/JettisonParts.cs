@@ -145,7 +145,7 @@ namespace PhilipTheMechanic.cards
             }
             if (upgrade == Upgrade.B)
             {
-                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile"), 1, Colors.textMain));
+                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile_normal"), 1, Colors.textMain));
                 str = "have their effects replaced by \"gain 2 evade and launch a missile\", and gain exhaust.";
             }
 

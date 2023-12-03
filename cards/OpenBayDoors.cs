@@ -99,7 +99,7 @@ namespace PhilipTheMechanic.cards
             if (upgrade == Upgrade.B)
             {
                 upgradeText = " and launch a missile.";
-                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile"), null, Colors.textMain));
+                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile_normal"), null, Colors.textMain));
             }
 
             return new List<CardAction>() {
