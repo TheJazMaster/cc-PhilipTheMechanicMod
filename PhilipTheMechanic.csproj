@@ -61,6 +61,12 @@
     <None Update="sprites\card_Black_Market_Parts.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="sprites\card_Last_Resort.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\card_Overdrive_Mod.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\card_philip_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -71,6 +77,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sprites\card_philip_default_mid_light.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\card_Precise_Machining.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sprites\frame_philip_old.png">
