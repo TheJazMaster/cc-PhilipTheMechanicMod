@@ -93,13 +93,13 @@ namespace PhilipTheMechanic.cards
             var upgradeText = ".";
             List<Icon> icons = new() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                new Icon(Enum.Parse<Spr>("icon_exhaust"), null, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
             };
 
             if (upgrade == Upgrade.B)
             {
                 upgradeText = " and launch a missile.";
-                icons.Add(new Icon(Enum.Parse<Spr>("icon_missile"), null, Colors.textMain));
+                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile"), null, Colors.textMain));
             }
 
             return new List<CardAction>() {

@@ -132,20 +132,20 @@ namespace PhilipTheMechanic.cards
             var icons = new List<Icon>() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                 new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
-                new Icon(Enum.Parse<Spr>("icon_evade"), 1, Colors.textMain),
-                new Icon(Enum.Parse<Spr>("icon_exhaust"), null, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_evade"), 1, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
             };
 
             var str = "have their effects replaced by \"gain 2 evade\" and gain exhaust.";
 
             if (upgrade == Upgrade.A)
             {
-                icons.Add(new Icon(Enum.Parse<Spr>("icon_hermes"), 1, Colors.textMain));
+                icons.Add(new Icon(Enum.Parse<Spr>("icons_hermes"), 1, Colors.textMain));
                 str = "have their effects replaced by \"gain 2 evade and 1 hermes boots\", and gain exhaust.";
             }
             if (upgrade == Upgrade.B)
             {
-                icons.Add(new Icon(Enum.Parse<Spr>("icon_missile"), 1, Colors.textMain));
+                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile"), 1, Colors.textMain));
                 str = "have their effects replaced by \"gain 2 evade and launch a missile\", and gain exhaust.";
             }
 

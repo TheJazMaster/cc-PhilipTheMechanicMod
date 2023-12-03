@@ -98,7 +98,7 @@ namespace PhilipTheMechanic.cards
             var icons = new List<Icon>() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                 new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
-                new Icon(Enum.Parse<Spr>("icon_addCard"), null, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_addCard"), null, Colors.textMain),
             };
 
             return new List<CardAction>() {

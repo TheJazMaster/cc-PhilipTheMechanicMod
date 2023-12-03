@@ -101,8 +101,8 @@ namespace PhilipTheMechanic.cards
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icon_redraw"), null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icon_no_action"), null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
                     }
                 }
             };
