@@ -97,6 +97,7 @@ namespace PhilipTheMechanic
                 "icon_sticker_stun",
                 "icon_sticker_recycle",
                 "icon_sticker_redraw",
+                "icon_sticker_retain",
                 "icon_sticker_no_action",
 
                 "button_redraw",
