@@ -70,6 +70,14 @@ namespace PhilipTheMechanic
             ModifyTargetCards(c.hand);
         }
 
+        public void OnOtherCardDrawnWhileThisWasInHand(State s, Combat c)
+        {
+            MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
+
+            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
+            ModifyTargetCards(c.hand);
+        }
+
         private void ModifyTargetCards(List<Card> hand)
         {
             List<Card> leftCards = new List<Card>();
