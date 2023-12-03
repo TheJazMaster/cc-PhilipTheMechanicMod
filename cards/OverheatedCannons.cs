@@ -9,7 +9,7 @@ using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B }, dontOffer = true)]
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.B }, dontOffer = true)]
     public class OverheatedCannons : ModifierCard
     {
         public override string Name()
@@ -31,8 +31,8 @@ namespace PhilipTheMechanic.cards
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AAttack() { damage = 1 });
-                    overridenCardActions.Add(new AAttack() { damage = 1 });
-                    overridenCardActions.Add(new AStatus() { targetPlayer = true, status = Enum.Parse<Status>("heat"), statusAmount = 1 });
+                    overridenCardActions.Add(new AAttack() { damage = (upgrade == Upgrade.B ? 2 : 1) });
+                    overridenCardActions.Add(new AStatus() { targetPlayer = true, status = Enum.Parse<Status>("heat"), statusAmount = (upgrade == Upgrade.B ? 2 : 1) });
                     return overridenCardActions;
                 },
                 stickers: new() { 

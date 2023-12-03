@@ -3,18 +3,20 @@ using PhilipTheMechanic.actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class PiercingMod : ModifierCard
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class BlackMarketParts : ModifierCard
     {
         public override string Name()
         {
-            return "Piercing Mod";
+            return "Black Market Parts";
         }
 
         public override TargetLocation GetBaseTargetLocation() 
@@ -23,34 +25,41 @@ namespace PhilipTheMechanic.cards
             {
                 default: return TargetLocation.SINGLE_LEFT;
                 case Upgrade.A: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.B: return TargetLocation.ALL_LEFT;
+                case Upgrade.B: return TargetLocation.SINGLE_RIGHT;
             }
         }
 
         public override void ApplyMod(Card c)
         {
+            var stickers = new List<Spr>() {
+                (Spr)MainManifest.sprites["icon_sticker_no_action"].Id,
+                (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id,
+                (Spr)MainManifest.sprites["icon_sticker_add_card"].Id,
+            };
+
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c, 
                 actionsModification: (List<CardAction> cardActions) =>
                 {
-                    List<CardAction> overridenCardActions = new();
-                    foreach (var action in cardActions)
+                    List<CardAction> actions = new()
                     {
-                        if (action is AAttack attack)
+                        new AAddCard()
                         {
-                            var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.piercing = true;
-                            overridenCardActions.Add(newAttack);
+                            card = new UraniumRound() { upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )},
+                            destination = Enum.Parse<CardDestination>("Hand")
                         }
-                        else
-                        {
-                            overridenCardActions.Add(action);
-                        }
-                    }
-                    return overridenCardActions;
+                    };
+
+                    return actions;
                 },
-                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_piercing"].Id }
+                dataModification: (CardData data) =>
+                {
+                    // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
+                    data.exhaust = true;
+                    return data;
+                },
+                stickers: stickers
             );
         }
 
@@ -61,14 +70,14 @@ namespace PhilipTheMechanic.cards
                 default:
                     return new()
                     {
-                        cost = 0,
+                        cost = 1,
                         unplayable = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.A:
                     return new()
                     {
-                        cost = 0,
+                        cost = 1,
                         unplayable = true,
                         flippable = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
@@ -76,7 +85,7 @@ namespace PhilipTheMechanic.cards
                 case Upgrade.B:
                     return new()
                     {
-                        cost = 0,
+                        cost = 1,
                         unplayable = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
@@ -86,20 +95,23 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {
+            var icons = new List<Icon>() {
+                new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icon_addCard"), null, Colors.textMain),
+            };
+
             return new List<CardAction>() {
                 new ATooltipDummy() {
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Makes every attack on {GetTargetLocationString()} piercing."
+                            text = $"{GetTargetLocationString().Capitalize()} gains exhaust, removes all actions, and adds 1 Uranium Round{(upgrade == Upgrade.B ? " B" : "")} to your hand."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary("action.attackPiercing")
+                        // TODO: add glossary for no action
                     },
-                    icons = new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain)
-                    }
+                    icons = icons
                 }
             };
         }

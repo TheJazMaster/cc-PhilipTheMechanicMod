@@ -19,7 +19,7 @@ namespace PhilipTheMechanic.cards
             return new()
             {
                 new AAddCard() { card = new Fear(), destination = Enum.Parse<CardDestination>("Hand") },
-                new AAddCard() { card = new OverheatedCannons(), destination = Enum.Parse<CardDestination>("Hand") }
+                new AAddCard() { card = new OverheatedCannons() { upgrade = (upgrade == Upgrade.B ? Upgrade.B : Upgrade.None)}, destination = Enum.Parse<CardDestination>("Hand") }
             };
         }
 

@@ -9,12 +9,12 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class PiercingMod : ModifierCard
+    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class StunMod : ModifierCard
     {
         public override string Name()
         {
-            return "Piercing Mod";
+            return "Stun Mod";
         }
 
         public override TargetLocation GetBaseTargetLocation() 
@@ -40,7 +40,7 @@ namespace PhilipTheMechanic.cards
                         if (action is AAttack attack)
                         {
                             var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.piercing = true;
+                            newAttack.stunEnemy = true;
                             overridenCardActions.Add(newAttack);
                         }
                         else
@@ -50,7 +50,7 @@ namespace PhilipTheMechanic.cards
                     }
                     return overridenCardActions;
                 },
-                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_piercing"].Id }
+                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_stun"].Id }
             );
         }
 
@@ -91,14 +91,14 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Makes every attack on {GetTargetLocationString()} piercing."
+                            text = $"Adds stun to every attack on {GetTargetLocationString()}."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary("action.attackPiercing")
+                        new TTGlossary("action.stun")
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain)
+                        new Icon(Enum.Parse<Spr>("icons_stun"), null, Colors.textMain)
                     }
                 }
             };

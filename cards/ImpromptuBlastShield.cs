@@ -9,7 +9,7 @@ using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B }, dontOffer = true)]
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.B }, dontOffer = true)]
     public class ImpromptuBlastShield : ModifierCard
     {
         public override string Name()

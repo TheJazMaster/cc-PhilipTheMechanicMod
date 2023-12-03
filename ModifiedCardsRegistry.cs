@@ -16,11 +16,13 @@ namespace PhilipTheMechanic
             public Card from;
             public CardActionsModification? actionsModification;
             public CardEnergyModification? energyModification;
+            public CardDataModification? dataModification;
             public List<Spr>? stickers;
         }
 
         public delegate List<CardAction> CardActionsModification(List<CardAction> cardActions);
         public delegate int CardEnergyModification(int originalEnergy);
+        public delegate CardData CardDataModification(CardData cardData);
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
 
         public static void RegisterMod(
@@ -28,6 +30,7 @@ namespace PhilipTheMechanic
             Card modifiedCard, 
             CardActionsModification? actionsModification = null, 
             CardEnergyModification? energyModification = null, 
+            CardDataModification? dataModification = null,
             List<Spr>? stickers = null
         ) {
             MainManifest.Instance.Logger.LogInformation($"Card modification being registered for {modifiedCard.uuid}:`{modifiedCard.GetFullDisplayName()}` by {self.uuid}:`{self.GetFullDisplayName()}`");
@@ -37,6 +40,7 @@ namespace PhilipTheMechanic
                 from = self, 
                 actionsModification = actionsModification,
                 energyModification = energyModification,
+                dataModification = dataModification,
                 stickers = stickers
             });
         }
@@ -88,11 +92,32 @@ namespace PhilipTheMechanic
             {
                 if (registration.energyModification == null) continue;
 
-                MainManifest.Instance?.Logger?.LogInformation($"Applying energy modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                //MainManifest.Instance?.Logger?.LogInformation($"Applying energy modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
                 cost = registration.energyModification(cost);
             }
 
             __result = cost;
+        }
+
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Card.GetData))]
+        public static void HarmonyPostfix_Card_GetData(Card __instance, ref CardData __result, State s)
+        {
+            if (s.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
+            if (s.route is not Combat) { return; } // should never hit this case
+            if (!cardMods.ContainsKey(__instance.uuid)) { return; }
+
+            CardData data = __result;
+            foreach (var registration in cardMods[__instance.uuid])
+            {
+                if (registration.dataModification == null) continue;
+
+                //MainManifest.Instance?.Logger?.LogInformation($"Applying data modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                data = registration.dataModification(data);
+            }
+
+            __result = data;
         }
 
         [HarmonyPostfix]

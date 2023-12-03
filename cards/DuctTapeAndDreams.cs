@@ -9,12 +9,12 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class PiercingMod : ModifierCard
+    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    public class DuctTapeAndDreams : ModifierCard
     {
         public override string Name()
         {
-            return "Piercing Mod";
+            return "Duct Tape and Dreams";
         }
 
         public override TargetLocation GetBaseTargetLocation() 
@@ -31,26 +31,14 @@ namespace PhilipTheMechanic.cards
         {
             ModifiedCardsRegistry.RegisterMod(
                 this, 
-                c, 
-                actionsModification: (List<CardAction> cardActions) =>
+                c,
+                dataModification: (CardData data) =>
                 {
-                    List<CardAction> overridenCardActions = new();
-                    foreach (var action in cardActions)
-                    {
-                        if (action is AAttack attack)
-                        {
-                            var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.piercing = true;
-                            overridenCardActions.Add(newAttack);
-                        }
-                        else
-                        {
-                            overridenCardActions.Add(action);
-                        }
-                    }
-                    return overridenCardActions;
+                    // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
+                    data.retain = true;
+                    return data;
                 },
-                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_piercing"].Id }
+                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_retain"].Id }
             );
         }
 
@@ -91,14 +79,14 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Makes every attack on {GetTargetLocationString()} piercing."
+                            text = $"Adds retain to {GetTargetLocationString()}."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary("action.attackPiercing")
+                        new TTGlossary("cardtrait.retain")
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain)
+                        new Icon(Enum.Parse<Spr>("icons_retain"), null, Colors.textMain)
                     }
                 }
             };

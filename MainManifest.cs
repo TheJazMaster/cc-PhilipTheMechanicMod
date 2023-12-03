@@ -73,6 +73,7 @@ namespace PhilipTheMechanic
                 "icon_equal",
                 "icon_redraw",
                 "icon_customParts",
+                "icon_no_action",
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
                 "icon_sticker_buff_attack",
@@ -86,6 +87,12 @@ namespace PhilipTheMechanic
                 "icon_sticker_shield",
                 "icon_sticker_piercing",
                 "icon_sticker_heat",
+                "icon_sticker_evade",
+                "icon_sticker_exhaust",
+                "icon_sticker_missile",
+                "icon_sticker_hermes",
+                "icon_sticker_stun",
+                "icon_sticker_recycle",
                 "button_redraw",
                 "button_redraw_on",
             };
@@ -101,7 +108,7 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICardRegistry registry)
         {
-            // GOALL:
+            // GOAL:
             // 21 cards
             // 9 common, 7 uncommon, 5 rare
             var cardDefinitions = new ExternalCard[]
@@ -119,6 +126,19 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safties", typeof(DisableSafties), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overheated Cannons", typeof(OverheatedCannons), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.No Stock Parts", typeof(NoStockParts), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Black Market Parts", typeof(BlackMarketParts), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Duct Tape and Dreams", typeof(DuctTapeAndDreams), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Jettison Parts", typeof(JettisonParts), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Nanobot Infestation", typeof(NanobotInfestation), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Plan C", typeof(PlanC), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Precision Machining", typeof(PrecisionMachining), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Reduce Reuse", typeof(ReduceReuse), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Stun Mod", typeof(StunMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Uranium Round", typeof(UraniumRound), sprites["card_philip_default"], deck),
             };
 
             foreach(var card in cardDefinitions)
@@ -161,7 +181,7 @@ namespace PhilipTheMechanic
             );
 
             character.AddNameLocalisation("Philip");
-            character.AddDescLocalisation("<c=c9f000>PHILIP</c>\nYour mechanic. His cards modify other cards in your hand, provide <c=d6525f>redraw</c>, and are often unplayable.");
+            character.AddDescLocalisation("<c=c9f000>PHILIP</c>\nYour ship engineering officer. His cards modify other cards in your hand, provide <c=d6525f>redraw</c>, and are often unplayable.");
 
             if (!registry.RegisterCharacter(character)) throw new Exception("Philip is lost! Could not register Philip!");
         }
@@ -219,6 +239,16 @@ namespace PhilipTheMechanic
             RegisterGlossaryEntry(registry, "AAttackBuff", sprites["icon_attack_buff"],
                 "attack buff",
                 "Increases the power of attacks on the target card by {0}."
+            );
+
+            RegisterGlossaryEntry(registry, "SRedraw", sprites["icon_redraw"],
+                "redraw",
+                "Allows you to discard {0} cards and draw a new one for each discarded."
+            );
+
+            RegisterGlossaryEntry(registry, "ANoAction", sprites["icon_no_action"],
+                "no action",
+                "All effects of the target card are erased."
             );
 
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);

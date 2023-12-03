@@ -9,22 +9,17 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class PiercingMod : ModifierCard
+    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.B }, dontOffer = true)]
+    public class OhNo : ModifierCard
     {
         public override string Name()
         {
-            return "Piercing Mod";
+            return "Oh No";
         }
 
         public override TargetLocation GetBaseTargetLocation() 
         {
-            switch (upgrade)
-            {
-                default: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.A: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.B: return TargetLocation.ALL_LEFT;
-            }
+            return TargetLocation.ALL_RIGHT;
         }
 
         public override void ApplyMod(Card c)
@@ -34,23 +29,28 @@ namespace PhilipTheMechanic.cards
                 c, 
                 actionsModification: (List<CardAction> cardActions) =>
                 {
-                    List<CardAction> overridenCardActions = new();
-                    foreach (var action in cardActions)
+                    return new()
                     {
-                        if (action is AAttack attack)
-                        {
-                            var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.piercing = true;
-                            overridenCardActions.Add(newAttack);
+                        new AStatus() {
+                            status = (Status)MainManifest.statuses["redraw"].Id,
+                            targetPlayer = true,
+                            statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                            mode = AStatusMode.Add,
                         }
-                        else
-                        {
-                            overridenCardActions.Add(action);
-                        }
-                    }
-                    return overridenCardActions;
+                    };
                 },
-                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_piercing"].Id }
+                dataModification: (CardData data) =>
+                {
+                    // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
+                    data.exhaust = true;
+                    return data;
+                },
+                stickers: new() 
+                { 
+                    (Spr)MainManifest.sprites["icon_sticker_redraw"].Id, 
+                    (Spr)MainManifest.sprites["icon_sticker_no_action"].Id, 
+                    (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id 
+                }
             );
         }
 
@@ -63,6 +63,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
+                        retain = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.A:
@@ -70,7 +71,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        flippable = true,
+                        retain = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.B:
@@ -78,6 +79,7 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
+                        retain = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
             }
@@ -91,14 +93,16 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Makes every attack on {GetTargetLocationString()} piercing."
+                            text = $"{GetTargetLocationString().Capitalize()} do no actions, gain exhaust, and provide {(upgrade == Upgrade.B ? "2" : "1")} redraw."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary("action.attackPiercing")
+                        new TTGlossary(MainManifest.glossary["SRedraw"].Head),
+                        new TTGlossary(MainManifest.glossary["ANoAction"].Head),
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain)
+                        new Icon(Enum.Parse<Spr>("icon_redraw"), null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icon_no_action"), null, Colors.textMain),
                     }
                 }
             };
