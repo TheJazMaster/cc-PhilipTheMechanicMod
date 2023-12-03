@@ -54,6 +54,7 @@ namespace PhilipTheMechanic.cards
             );
         }
 
+        // TODO: must be temporary, also add the TTCard tooltip
         public override CardData GetData(State state)
         {
             switch (upgrade)
@@ -64,7 +65,7 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = true,
                         retain = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        temporary = true,
                     };
                 case Upgrade.A:
                     return new()
@@ -72,7 +73,7 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = true,
                         retain = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        temporary = true,
                     };
                 case Upgrade.B:
                     return new()
@@ -80,7 +81,7 @@ namespace PhilipTheMechanic.cards
                         cost = 0,
                         unplayable = true,
                         retain = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        temporary = true,
                     };
             }
         }

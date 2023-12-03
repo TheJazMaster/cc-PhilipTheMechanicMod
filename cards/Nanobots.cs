@@ -24,8 +24,10 @@ namespace PhilipTheMechanic.cards
             c.SendCardToDiscard(s, new Nanobots());
         }
 
+        // TODO: must be temporary, also add the TTCard tooltip
         public override CardData GetData(State state) => new() { 
             unplayable = true,
+            temporary = true,
             cost = 1,
             description = "On discard, add one additional Nanobots to your discard pile."
         };

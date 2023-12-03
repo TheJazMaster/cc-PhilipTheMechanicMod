@@ -9,7 +9,6 @@ using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic.cards
 {
-    // TODO: missing
     [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.B }, dontOffer = true)]
     public class OverheatedCannons : ModifierCard
     {
@@ -55,7 +54,6 @@ namespace PhilipTheMechanic.cards
             };
         }
 
-        // TODO: this
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {

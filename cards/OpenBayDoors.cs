@@ -9,7 +9,7 @@ using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B }, dontOffer = true)]
+    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
     public class OpenBayDoors : ModifierCard
     {
         public override string Name()

@@ -129,10 +129,13 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {
-            var icons = new List<Icon>() {
+            var icons1 = new List<Icon>() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                 new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
                 new Icon(Enum.Parse<Spr>("icons_evade"), 1, Colors.textMain),
+            };
+            var icons2 = new List<Icon>() {
+                new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                 new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
             };
 
@@ -140,12 +143,12 @@ namespace PhilipTheMechanic.cards
 
             if (upgrade == Upgrade.A)
             {
-                icons.Add(new Icon(Enum.Parse<Spr>("icons_hermes"), 1, Colors.textMain));
+                icons2.Add(new Icon(Enum.Parse<Spr>("icons_hermes"), 1, Colors.textMain));
                 str = "have their effects replaced by \"gain 2 evade and 1 hermes boots\", and gain exhaust.";
             }
             if (upgrade == Upgrade.B)
             {
-                icons.Add(new Icon(Enum.Parse<Spr>("icons_missile_normal"), 1, Colors.textMain));
+                icons2.Add(new Icon(Enum.Parse<Spr>("icons_missile_normal"), null, Colors.textMain));
                 str = "have their effects replaced by \"gain 2 evade and launch a missile\", and gain exhaust.";
             }
 
@@ -161,7 +164,11 @@ namespace PhilipTheMechanic.cards
                         // TODO: add glossary for evade
                         // TOOD: if upgrade a, hermes, if b, missile
                     },
-                    icons = icons
+                    icons = icons1
+                },
+                new ATooltipDummy() {
+                    tooltips = new() { },
+                    icons = icons2
                 }
             };
         }

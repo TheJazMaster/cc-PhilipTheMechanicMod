@@ -40,6 +40,12 @@ namespace PhilipTheMechanic.cards
                     overridenCardActions.Insert(0, new ADummyAction() { });
                     return overridenCardActions;
                 },
+                dataModification: (CardData data) =>
+                {
+                    // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
+                    data.exhaust = true;
+                    return data;
+                },
                 energyModification: (int energy) => {
                     return 0;
                 },
