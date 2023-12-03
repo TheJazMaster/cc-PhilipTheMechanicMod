@@ -181,16 +181,16 @@ namespace PhilipTheMechanic
         public void LoadManifest(ICharacterRegistry registry)
         {
             var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
-            var testStartCards = cards.Values.Select(card => card.CardType).ToList();
-            testStartCards.Add(typeof(UraniumRound));
-            testStartCards.Add(typeof(OverheatedCannons));
+            //var testStartCards = cards.Values.Select(card => card.CardType).ToList();
+            //testStartCards.Add(typeof(UraniumRound));
+            //testStartCards.Add(typeof(OverheatedCannons));
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                testStartCards.ToArray(), // TODO: give starting cards for Philip
-                new Type[] { typeof(WireClippers), typeof(SturdyPliers), typeof(EndlessToolbox) }, //new Type[0], // TODO: remove debug starter artifacts
+                realStartingCards,
+                new Type[0],
                 animations["neutral"],
                 animations["mini"]
             );
