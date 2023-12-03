@@ -43,9 +43,6 @@ namespace PhilipTheMechanic
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
             CustomTTGlossary.Apply(harmony);
-
-            Logger.LogCritical("I'm still directly referencing enums - make sure to use that reflection method to reference them instead before publishing this mod!");
-            // List of enums still used: Upgrade
         }
 
         public void LoadManifest(ISpriteRegistry artRegistry)
@@ -187,15 +184,15 @@ namespace PhilipTheMechanic
         public void LoadManifest(ICharacterRegistry registry)
         {
             var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
-            var testStartCards = cards.Values.Select(card => card.CardType).ToList();
-            testStartCards.Add(typeof(UraniumRound));
-            testStartCards.Add(typeof(OverheatedCannons));
+            //var testStartCards = cards.Values.Select(card => card.CardType).ToList();
+            //testStartCards.Add(typeof(UraniumRound));
+            //testStartCards.Add(typeof(OverheatedCannons));
 
             character = new ExternalCharacter(
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                testStartCards,
+                realStartingCards,
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
