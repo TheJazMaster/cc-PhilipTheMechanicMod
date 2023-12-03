@@ -101,7 +101,7 @@ namespace PhilipTheMechanic
 
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.GetData))]
+        [HarmonyPatch(nameof(Card.GetDataWithOverrides))]
         public static void HarmonyPostfix_Card_GetData(Card __instance, ref CardData __result, State state)
         {
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
@@ -113,7 +113,7 @@ namespace PhilipTheMechanic
             {
                 if (registration.dataModification == null) continue;
 
-                //MainManifest.Instance?.Logger?.LogInformation($"Applying data modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                MainManifest.Instance?.Logger?.LogInformation($"Applying data modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
                 data = registration.dataModification(data);
             }
 
