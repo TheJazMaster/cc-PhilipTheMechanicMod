@@ -34,6 +34,11 @@ namespace PhilipTheMechanic
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
         }
 
+        public override void OnExitCombat(State s, Combat c)
+        {
+            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
+        }
+
         public override void OnDraw(State s, Combat c)
         {
             MainManifest.Instance.Logger.LogInformation($"Drew a modifier card! {uuid}:{GetFullDisplayName()}");
