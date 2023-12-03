@@ -42,6 +42,8 @@ namespace PhilipTheMechanic.cards
                 },
                 dataModification: (CardData data) =>
                 {
+                    // TODO: this doesn't seem to work....
+
                     // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
                     data.exhaust = true;
                     return data;
@@ -91,7 +93,8 @@ namespace PhilipTheMechanic.cards
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head, null),
                         new TTGlossary(MainManifest.glossary["AReplay"].Head, null),
-                        (new AAddCard() { card = new Nanobots(), destination = Enum.Parse<CardDestination>("Discard") }).GetTooltips(s)[0]
+                        (new AAddCard() { card = new Nanobots(), destination = Enum.Parse<CardDestination>("Discard") }).GetTooltips(s)[0],
+                        new TTCard() { card = new Nanobots() } 
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
