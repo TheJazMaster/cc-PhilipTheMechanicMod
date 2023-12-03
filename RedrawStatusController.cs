@@ -15,14 +15,15 @@ namespace PhilipTheMechanic
     {
         private static void HandleRedraw(G g, Card card)
         {
-
             if (g.state.route is Combat c)
             {
+                var ownsEndlessToolbox = g.state.artifacts.Any((Artifact a) => a.GetType() == typeof(EndlessToolbox));
+
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
                 g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
 
                 DiscardFromHand(g.state, card);
-                c.DrawCards(g.state, EndlessToolbox.owned ? 2 : 1);
+                c.DrawCards(g.state, ownsEndlessToolbox ? 2 : 1);
 
                 foreach (Card otherCard in c.hand)
                 {
