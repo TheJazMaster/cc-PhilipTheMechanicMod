@@ -61,16 +61,6 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.OnDraw))]
-        public static void HarmonyPostfix_Card_OnDraw(State s, Combat c)
-        {
-            foreach (Card otherCard in c.hand)
-            {
-                if (otherCard is ModifierCard mc) { mc.OnOtherCardDrawnWhileThisWasInHand(s, c); }
-            }
-        }
-
-        [HarmonyPostfix]
         [HarmonyPatch(nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {

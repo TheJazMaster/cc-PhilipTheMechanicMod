@@ -62,8 +62,6 @@ namespace PhilipTheMechanic.cards
                     else
                         overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("tempShield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
 
-                    MainManifest.Instance.Logger.LogInformation($"~~~~~~~~~~~~~~~ ShieldingMod: Applying {dmg} shield or temp shield");
-
                     return overridenCardActions;
                 },
                 stickers: upgrade == Upgrade.B 
@@ -101,51 +99,53 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {
-            return new();
+            //return new();
 
-            //var a = new List<CardAction>() {
-            //    new ATooltipDummy() {
-            //        tooltips = new() {
-            //            new TTText()
-            //            {
-            //                text = $"{GetTargetLocationString().Capitalize()} applies shield instead of temp shield."
-            //            },
-            //            new TTGlossary(GetGlossaryForTargetLocation().Head)
-            //        },
-            //        icons = new() {
-            //            new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-            //            new Icon((Spr)MainManifest.sprites["icon_equal"].Id, 1, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_tempShield"), null, Colors.textMain),
-            //        }
-            //    },
-            //    new ATooltipDummy()
-            //    {
-            //        icons = new()
-            //        {
-            //            new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_shield"), null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-            //        }
-            //    }
-            //};
+            var a = new List<CardAction>() {
+                new ATooltipDummy() {
+                    tooltips = new() {
+                        new TTText()
+                        {
+                            text = $"{GetTargetLocationString().Capitalize()} applies shield instead of temp shield."
+                        },
+                        new TTGlossary(GetGlossaryForTargetLocation().Head)
+                    },
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_equal"].Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_tempShield"), null, Colors.textMain),
+                    }
+                },
+                new ATooltipDummy()
+                {
+                    tooltips = new(),
+                    icons = new()
+                    {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_shield"), null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                    }
+                }
+            };
 
-            //if (upgrade == Upgrade.B)
-            //{
-            //    a.Add(
-            //        new ATooltipDummy()
-            //        {
-            //            icons = new()
-            //            {
-            //                new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-            //                new Icon(Enum.Parse<Spr>("icons_maxShield"), null, Colors.textMain),
-            //                new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-            //            }
-            //        }
-            //    );
-            //}
+            if (upgrade == Upgrade.B)
+            {
+                a.Add(
+                    new ATooltipDummy()
+                    {
+                        tooltips = new(),
+                        icons = new()
+                        {
+                            new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                            new Icon(Enum.Parse<Spr>("icons_maxShield"), null, Colors.textMain),
+                            new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                        }
+                    }
+                );
+            }
 
-            //return a;
+            return a;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PhilipTheMechanic.actions
 
         public override List<Tooltip> GetTooltips(State s)
         {
-            return tooltips;
+            return tooltips ?? new();
         }
 
         public override Icon? GetIcon(State s)

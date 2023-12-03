@@ -48,8 +48,6 @@ namespace PhilipTheMechanic.cards
                     else
                         overridenCardActions.Add(new AStatus { targetPlayer = false, status = Enum.Parse<Status>("tempShield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
 
-                    MainManifest.Instance.Logger.LogInformation($"~~~~~~~~~~~~~~~ ShieldingMod: Applying {dmg} shield or temp shield");
-
                     return overridenCardActions;
                 },
                 stickers: upgrade == Upgrade.B 
@@ -89,42 +87,41 @@ namespace PhilipTheMechanic.cards
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {
-            return new();
-            //string icon = "icons_tempShield";
-            //string shieldType = "temp shield";
+            string icon = "icons_tempShield";
+            string shieldType = "temp shield";
 
-            //if (upgrade == Upgrade.B)
-            //{
-            //    icon = "icons_shield";
-            //    shieldType = "shield";
-            //}
+            if (upgrade == Upgrade.B)
+            {
+                icon = "icons_shield";
+                shieldType = "shield";
+            }
 
-            //return new List<CardAction>() {
-            //    new ATooltipDummy() {
-            //        tooltips = new() {
-            //            new TTText()
-            //            {
-            //                text = $"{GetTargetLocationString().Capitalize()} applies {shieldType} equal to its total damage."
-            //            },
-            //            new TTGlossary(GetGlossaryForTargetLocation().Head)
-            //        },
-            //        icons = new() {
-            //            new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-            //            new Icon((Spr)MainManifest.sprites["icon_equal"].Id, 1, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_attack"), null, Colors.textMain),
-            //        }
-            //    },
-            //    new ATooltipDummy()
-            //    {
-            //        icons = new()
-            //        {
-            //            new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>(icon), null, Colors.textMain),
-            //            new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-            //        }
-            //    }
-            //};
+            return new List<CardAction>() {
+                new ATooltipDummy() {
+                    tooltips = new() {
+                        new TTText()
+                        {
+                            text = $"{GetTargetLocationString().Capitalize()} applies {shieldType} equal to its total damage."
+                        },
+                        new TTGlossary(GetGlossaryForTargetLocation().Head)
+                    },
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_equal"].Id, 1, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_attack"), null, Colors.textMain),
+                    }
+                },
+                new ATooltipDummy()
+                {
+                    icons = new()
+                    {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>(icon), null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                    }
+                }
+            };
         }
     }
 }

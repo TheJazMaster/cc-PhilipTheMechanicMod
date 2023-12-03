@@ -72,10 +72,14 @@ namespace PhilipTheMechanic
 
         public void OnOtherCardDrawnWhileThisWasInHand(State s, Combat c)
         {
+            // TODO: it seems like this runs before the card actually gets added to the hand
             MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
 
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
             ModifyTargetCards(c.hand);
+            MainManifest.Instance.Logger.LogInformation($"       Applying to hand {string.Join(", ", c.hand.Select(card => card.GetFullDisplayName()))}");
+            MainManifest.Instance.Logger.LogInformation($"       Applied to {string.Join(", ", currentlyModifiedCards.Select(card => card.GetFullDisplayName()))}");
+
         }
 
         private void ModifyTargetCards(List<Card> hand)
@@ -94,6 +98,8 @@ namespace PhilipTheMechanic
                 if (hasFoundSelf) rightCards.Add(card);
                 else              leftCards.Add(card);
             }
+
+            MainManifest.Instance.Logger.LogInformation($"Processing {this.GetFullDisplayName()} left cards: {string.Join(", ", leftCards.Select(card => card.GetFullDisplayName()))}      right cards: {string.Join(", ", rightCards.Select(card => card.GetFullDisplayName()))}");
 
             var targetLocation = GetTargetLocation();
 

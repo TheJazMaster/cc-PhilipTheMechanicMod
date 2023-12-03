@@ -32,9 +32,9 @@ namespace PhilipTheMechanic.cards
                     List<CardAction> overridenCardActions = new(cardActions);
                     
                     if (upgrade == Upgrade.B)
-                        overridenCardActions.Add(new AStatus { targetPlayer = false, status = Enum.Parse<Status>("shield"), statusAmount = 1, mode = Enum.Parse<AStatusMode>("Add") });
+                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("shield"), statusAmount = 1, mode = Enum.Parse<AStatusMode>("Add") });
                     else
-                        overridenCardActions.Add(new AStatus { targetPlayer = false, status = Enum.Parse<Status>("tempShield"), statusAmount = 1, mode = Enum.Parse<AStatusMode>("Add") });
+                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("tempShield"), statusAmount = 1, mode = Enum.Parse<AStatusMode>("Add") });
 
                     return overridenCardActions;
                 },

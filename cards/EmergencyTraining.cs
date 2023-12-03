@@ -25,7 +25,7 @@ namespace PhilipTheMechanic.cards
                     statusAmount = 5,
                     mode = AStatusMode.Add,
                 },
-                new AAddCard() { card = new ImpromptuBlastShield() { upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None) } },
+                new AAddCard() { card = new ImpromptuBlastShield() { upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None) }, destination = Enum.Parse<CardDestination>("Hand") },
                 new ADrawCard() { count=4 },
             };
         }
