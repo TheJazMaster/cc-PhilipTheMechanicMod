@@ -110,7 +110,8 @@ namespace PhilipTheMechanic.cards
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         // TODO: add glossary for no action
-                        (new AAddCard() { card = new UraniumRound(){upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )}, destination = Enum.Parse<CardDestination>("Hand") }).GetTooltips(s)[0]
+                        (new AAddCard() { card = new UraniumRound(){upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )}, destination = Enum.Parse<CardDestination>("Hand") }).GetTooltips(s)[0],
+                        new TTCard() { card = new UraniumRound(){upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )} }
                     }, 
                     icons = icons
                 }
