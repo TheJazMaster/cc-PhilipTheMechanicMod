@@ -43,6 +43,9 @@
     <None Update="sprites\button_redraw_on.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="sprites\card_Black_Market_Parts.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\card_philip_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
