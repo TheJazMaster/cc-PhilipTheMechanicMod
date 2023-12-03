@@ -104,6 +104,7 @@ namespace PhilipTheMechanic
                 "artifact_wire_clippers",
                 "artifact_sturdy_pliers",
                 "artifact_endless_toolbox",
+                "artifact_self_propelling_cannons",
 
                 "card_philip_default",
                 "card_Black_Market_Parts"
@@ -190,7 +191,7 @@ namespace PhilipTheMechanic
                 deck,
                 sprites["char_frame_philip"],
                 realStartingCards,
-                new Type[0],
+                new Type[] { typeof(SelfPropellingCannons) },
                 animations["neutral"],
                 animations["mini"]
             );
@@ -303,6 +304,10 @@ namespace PhilipTheMechanic
             var endlessToolbox = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.EndlessToolbox", typeof(EndlessToolbox), sprites["artifact_endless_toolbox"], ownerDeck: deck);
             endlessToolbox.AddLocalisation("ENDLESS TOOLBOX", "When you redraw, draw an extra card");
             registry.RegisterArtifact(endlessToolbox);
+
+            var selfPropellingCannons = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SelfPropellingCannons", typeof(SelfPropellingCannons), sprites["artifact_self_propelling_cannons"], ownerDeck: deck);
+            selfPropellingCannons.AddLocalisation("SELF PROPELLING CANNONS", "Your cannons gain brittle. At the end of each turn, launch a missile from each cannon");
+            registry.RegisterArtifact(selfPropellingCannons);
         }
     }
 }
