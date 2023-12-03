@@ -1,6 +1,7 @@
 ﻿using FSPRO;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
+using PhilipTheMechanic.artifacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace PhilipTheMechanic
                 g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
 
                 DiscardFromHand(g.state, card);
-                c.DrawCards(g.state, 1);
+                c.DrawCards(g.state, EndlessToolbox.owned ? 2 : 1);
 
                 foreach (Card otherCard in c.hand)
                 {

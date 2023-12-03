@@ -31,6 +31,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="sprites\artifact_endless_toolbox.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\artifact_remote_detonator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\artifact_self_propelling_cannons.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\artifact_sturdy_pliers.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprites\artifact_wire_clippers.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\button_move_red.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

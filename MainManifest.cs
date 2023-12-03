@@ -11,11 +11,12 @@ using CobaltCoreModding.Definitions.ModManifests;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
 using Microsoft.Xna.Framework.Graphics;
+using PhilipTheMechanic.artifacts;
 using PhilipTheMechanic.cards;
 
 namespace PhilipTheMechanic
 {
-    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest, IGlossaryManifest, IStatusManifest
+    public class MainManifest : IModManifest, ISpriteManifest, ICardManifest, ICharacterManifest, IDeckManifest, IAnimationManifest, IGlossaryManifest, IStatusManifest, IArtifactManifest
     {
         public static MainManifest Instance;
 
@@ -53,7 +54,7 @@ namespace PhilipTheMechanic
             var filenames = new string[] { 
                 "char_frame_philip", 
                 "frame_philip",
-                "card_philip_default",
+
                 "philip_classy",
                 "philip_maniacal",
                 "philip_mini",
@@ -63,6 +64,7 @@ namespace PhilipTheMechanic
                 "philip_neutral_1",
                 "philip_surprise_0",
                 "philip_surprise_1",
+
                 "icon_play_twice",
                 "icon_all_cards_to_the_left",
                 "icon_all_cards_to_the_right",
@@ -74,6 +76,7 @@ namespace PhilipTheMechanic
                 "icon_redraw",
                 "icon_customParts",
                 "icon_no_action",
+
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
                 "icon_sticker_buff_attack",
@@ -94,9 +97,15 @@ namespace PhilipTheMechanic
                 "icon_sticker_stun",
                 "icon_sticker_recycle",
                 "icon_sticker_no_action",
+
                 "button_redraw",
                 "button_redraw_on",
 
+                "artifact_wire_clippers",
+                "artifact_sturdy_pliers",
+                "artifact_endless_toolbox",
+
+                "card_philip_default",
                 "card_Black_Market_Parts"
             };
 
@@ -181,7 +190,7 @@ namespace PhilipTheMechanic
                 deck,
                 sprites["char_frame_philip"],
                 testStartCards.ToArray(), // TODO: give starting cards for Philip
-                new Type[0],
+                new Type[] { typeof(WireClippers), typeof(SturdyPliers), typeof(EndlessToolbox) }, //new Type[0], // TODO: remove debug starter artifacts
                 animations["neutral"],
                 animations["mini"]
             );
@@ -279,6 +288,21 @@ namespace PhilipTheMechanic
             statusRegistry.RegisterStatus(customParts);
             customParts.AddLocalisation("Custom Parts", "Gives you {0} redraw at the start of each turn.");
             statuses["customParts"] = customParts;
+        }
+
+        public void LoadManifest(IArtifactRegistry registry)
+        {
+            var wireClippers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.WireClippers", typeof(WireClippers), sprites["artifact_wire_clippers"], ownerDeck: deck);
+            wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable");
+            registry.RegisterArtifact(wireClippers);
+
+            var sturdyPliers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SturdyPliers", typeof(SturdyPliers), sprites["artifact_sturdy_pliers"], ownerDeck: deck);
+            sturdyPliers.AddLocalisation("STURDY PLIERS", "Gain 3 redraw at the start of combat");
+            registry.RegisterArtifact(sturdyPliers);
+
+            var endlessToolbox = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.EndlessToolbox", typeof(EndlessToolbox), sprites["artifact_endless_toolbox"], ownerDeck: deck);
+            endlessToolbox.AddLocalisation("ENDLESS TOOLBOX", "When you redraw, draw an extra card");
+            registry.RegisterArtifact(endlessToolbox);
         }
     }
 }
