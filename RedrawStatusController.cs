@@ -64,9 +64,10 @@ namespace PhilipTheMechanic
 
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
             if (state.route is not Combat) { return; } // should never hit this case
+            if (__instance.drawAnim != 1) { return; }
             
             if (state.ship.Get((Status)MainManifest.statuses["redraw"].Id) <= 0) { return; }
-            //MainManifest.Instance.Logger.LogInformation($"~~~~~`````~~~~~ drawing redraw on card {__instance.uuid}:{__instance.Name()}");
+
 
             int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
 
@@ -78,10 +79,7 @@ namespace PhilipTheMechanic
                 rect.w = overrideWidth.Value;
             }
 
-            int currentCost = __instance.GetCurrentCost(state);
-            bool flag = !(state.route is Combat combat) || combat.energy >= currentCost;
-            bool flag2 = forceIsInteractible ?? __instance.drawAnim >= 1.0;
-            Box box = g.Push(flag2 ? new UIKey?(keyOverride ?? __instance.UIKey()) : null, rect, value, depth: !ignoreHover && __instance.isForeground ? 1 : 0, onMouseDown: flag2 ? onMouseDown : null, onMouseDownRight: flag2 ? onMouseDownRight : null, onInputPhase: ignoreHover ? null : onInputPhase, onAfterUI: __instance, autoFocus: flag2 && autoFocus, noHoverSound: false, gamepadUntargetable: false, rightHint: rightHint, leftHint: leftHint, upHint: upHint, downHint: downHint, reticleMode: isInCombatHand && g.state.hideCardTooltips ? ReticleMode.QuadCardHint : ReticleMode.Quad);
+            Box box = g.Push(null, rect);
             Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
 
             // card height is 82, width is 59
@@ -92,7 +90,7 @@ namespace PhilipTheMechanic
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0, 19, 13);
             OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance));
-            ButtonSprite(g, vec2, rect2, (UK)(100 + cardIndex), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, null, null, inactive: false, flipX: false, flipY: false, omd, autoFocus: false, noHover: false, gamepadUntargetable: true);
+            ButtonSprite(g, vec2, rect2, new UIKey((UK)855026104, __instance.uuid, $"redraw_button_for_card_{cardIndex}"), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, onMouseDown: omd, gamepadUntargetable: true);
 
             g.Pop();
         }

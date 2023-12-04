@@ -129,19 +129,18 @@ namespace PhilipTheMechanic
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
             if (state.route is not Combat) { return; } // should never hit this case
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
+            if (__instance.drawAnim != 1) { return; }
+
 
             Vec vec = posOverride ?? __instance.pos;
-            Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * (double)Math.Sign(__instance.flopAnim))).round();
+            Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
             Rect value = rect;
             if (overrideWidth.HasValue)
             {
                 rect.w = overrideWidth.Value;
             }
 
-            int currentCost = __instance.GetCurrentCost(state);
-            bool flag = !(state.route is Combat combat) || combat.energy >= currentCost;
-            bool flag2 = forceIsInteractible ?? (__instance.drawAnim >= 1.0);
-            Box box = g.Push(flag2 ? new UIKey?(keyOverride ?? __instance.UIKey()) : null, rect, value, depth: (!ignoreHover && __instance.isForeground) ? 1 : 0, onMouseDown: flag2 ? onMouseDown : null, onMouseDownRight: flag2 ? onMouseDownRight : null, onInputPhase: ignoreHover ? null : onInputPhase, onAfterUI: __instance, autoFocus: flag2 && autoFocus, noHoverSound: false, gamepadUntargetable: false, rightHint: rightHint, leftHint: leftHint, upHint: upHint, downHint: downHint, reticleMode: (isInCombatHand && g.state.hideCardTooltips) ? ReticleMode.QuadCardHint : ReticleMode.Quad);
+            Box box = g.Push(null, rect);
             Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
 
             //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
