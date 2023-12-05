@@ -52,6 +52,7 @@ namespace PhilipTheMechanic.cards
                 {
                     // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
                     data.exhaust = true;
+                    data.unplayable = false;
                     return data;
                 },
                 stickers: upgrade == Upgrade.B
@@ -107,7 +108,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"{GetTargetLocationString().Capitalize()} gain exhaust{upgradeText}"
+                            text = $"{GetTargetLocationString().Capitalize()} gain exhaust{upgradeText} Makes unplayable cards playable."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         // TODO: add glossary for missile

@@ -113,7 +113,7 @@ namespace PhilipTheMechanic
             {
                 if (registration.dataModification == null) continue;
 
-                MainManifest.Instance?.Logger?.LogInformation($"Applying data modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
+                //MainManifest.Instance?.Logger?.LogInformation($"Applying data modification for {__instance.uuid}:`{__instance.GetFullDisplayName()}` from {registration.from.uuid}:`{registration.from.GetFullDisplayName()}`");
                 data = registration.dataModification(data);
             }
 

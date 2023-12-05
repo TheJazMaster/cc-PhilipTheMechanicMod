@@ -56,7 +56,7 @@ namespace PhilipTheMechanic
 
         public override void OnOtherCardPlayedWhileThisWasInHand(State s, Combat c, int handPosition)
         {
-            MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was played.");
+            //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was played.");
 
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
             ModifyTargetCards(c.hand);
@@ -64,7 +64,7 @@ namespace PhilipTheMechanic
 
         public void OnOtherCardDiscardedWhileThisWasInHand(State s, Combat c)
         {
-            MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was discarded.");
+            //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was discarded.");
 
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
             ModifyTargetCards(c.hand);
@@ -73,12 +73,12 @@ namespace PhilipTheMechanic
         public void OnOtherCardDrawnWhileThisWasInHand(State s, Combat c)
         {
             // TODO: it seems like this runs before the card actually gets added to the hand
-            MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
+            //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
 
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
             ModifyTargetCards(c.hand);
-            MainManifest.Instance.Logger.LogInformation($"       Applying to hand {string.Join(", ", c.hand.Select(card => card.GetFullDisplayName()))}");
-            MainManifest.Instance.Logger.LogInformation($"       Applied to {string.Join(", ", currentlyModifiedCards.Select(card => card.GetFullDisplayName()))}");
+            //MainManifest.Instance.Logger.LogInformation($"       Applying to hand {string.Join(", ", c.hand.Select(card => card.GetFullDisplayName()))}");
+            //MainManifest.Instance.Logger.LogInformation($"       Applied to {string.Join(", ", currentlyModifiedCards.Select(card => card.GetFullDisplayName()))}");
 
         }
 
