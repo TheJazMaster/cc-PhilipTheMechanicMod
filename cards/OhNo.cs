@@ -34,8 +34,8 @@ namespace PhilipTheMechanic.cards
                         new AStatus() {
                             status = (Status)MainManifest.statuses["redraw"].Id,
                             targetPlayer = true,
-                            statusAmount = upgrade == Upgrade.B ? 2 : 1,
-                            mode = AStatusMode.Add, // TODO: reference by enum parse
+                            statusAmount = upgrade == Upgrade.B ? 3 : 2,
+                            mode = Enum.Parse<AStatusMode>("Add"),
                         }
                     };
                 },
@@ -63,7 +63,7 @@ namespace PhilipTheMechanic.cards
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
+                        unplayable = false,
                         retain = true,
                         temporary = true,
                     };
@@ -71,7 +71,7 @@ namespace PhilipTheMechanic.cards
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
+                        unplayable = false,
                         retain = true,
                         temporary = true,
                     };
@@ -79,7 +79,7 @@ namespace PhilipTheMechanic.cards
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
+                        unplayable = false,
                         retain = true,
                         temporary = true,
                     };
@@ -94,7 +94,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"{GetTargetLocationString().Capitalize()} do no actions, gain exhaust, and provide {(upgrade == Upgrade.B ? "2" : "1")} redraw."
+                            text = $"{GetTargetLocationString().Capitalize()} do no actions, gain exhaust, and provide {(upgrade == Upgrade.B ? "3" : "2")} redraw."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         new TTGlossary(MainManifest.glossary["SRedraw"].Head),
