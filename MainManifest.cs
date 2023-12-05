@@ -150,7 +150,7 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Permanence Mod", typeof(PermanenceMod), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safties", typeof(DisableSafties), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safeties", typeof(DisableSafties), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overheated Cannons", typeof(OverheatedCannons), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.No Stock Parts", typeof(NoStockParts), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Black Market Parts", typeof(BlackMarketParts), sprites["card_Black_Market_Parts"], deck),
@@ -195,7 +195,6 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
-            var realStartingCards = new Type[] { typeof(FrenzyMod), typeof(RecycleParts) };
             //var testStartCards = cards.Values.Select(card => card.CardType).ToList();
             //testStartCards.Add(typeof(UraniumRound));
             //testStartCards.Add(typeof(OverheatedCannons));
@@ -204,7 +203,7 @@ namespace PhilipTheMechanic
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                realStartingCards,
+                new Type[] { typeof(FrenzyMod), typeof(RecycleParts) },
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
@@ -310,9 +309,9 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(IArtifactRegistry registry)
         {
-            //var wireClippers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.WireClippers", typeof(WireClippers), sprites["artifact_wire_clippers"], ownerDeck: deck);
-            //wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable");
-            //registry.RegisterArtifact(wireClippers);
+            var wireClippers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.WireClippers", typeof(WireClippers), sprites["artifact_wire_clippers"], ownerDeck: deck);
+            wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable");
+            registry.RegisterArtifact(wireClippers);
 
             var sturdyPliers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SturdyPliers", typeof(SturdyPliers), sprites["artifact_sturdy_pliers"], ownerDeck: deck);
             sturdyPliers.AddLocalisation("STURDY PLIERS", "Gain 3 redraw at the start of combat");

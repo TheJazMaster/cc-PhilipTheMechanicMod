@@ -11,7 +11,7 @@ namespace PhilipTheMechanic.cards
     {
         public override string Name()
         {
-            return "Disable Safties";
+            return "Disable Safeties";
         }
 
         public override List<CardAction> GetActions(State s, Combat c)
