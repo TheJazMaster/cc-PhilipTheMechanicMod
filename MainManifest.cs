@@ -284,7 +284,7 @@ namespace PhilipTheMechanic
         {
             var redraw = new ExternalStatus("clay.PhilipTheMechanic.Statuses.Redraw", true, System.Drawing.Color.Red, null, sprites["icon_redraw"], false);
             statusRegistry.RegisterStatus(redraw);
-            redraw.AddLocalisation("Redraw", "Enables you to discard a card of your choice and draw a new one. You may do this up to {0} times.");
+            redraw.AddLocalisation("Redraw", "Enables you to discard a card of your choice and draw a new one.");
             statuses["redraw"] = redraw;
 
             var customParts = new ExternalStatus("clay.PhilipTheMechanic.Statuses.CustomParts", true, System.Drawing.Color.Red, null, sprites["icon_customParts"], false);

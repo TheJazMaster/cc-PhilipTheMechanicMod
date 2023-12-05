@@ -181,8 +181,8 @@ namespace PhilipTheMechanic
             {
                 case TargetLocation.SINGLE_LEFT: return "the card to the left";
                 case TargetLocation.SINGLE_RIGHT: return "the card to the right";
-                case TargetLocation.ALL_LEFT: return $"${anyEvery} card to the left";
-                case TargetLocation.ALL_RIGHT: return $"${anyEvery} card to the right";
+                case TargetLocation.ALL_LEFT: return $"{anyEvery} card to the left";
+                case TargetLocation.ALL_RIGHT: return $"{anyEvery} card to the right";
                 case TargetLocation.NEIGHBORS: return "the card to the left and the card to the right";
                 case TargetLocation.ALL: return "every card in your hand";
             }
