@@ -47,20 +47,30 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ISpriteRegistry artRegistry)
         {
-            // TODO: explore sprites folder instead of manually listing the contents
             var filenames = new string[] { 
                 "char_frame_philip", 
                 "frame_philip",
 
-                "philip_classy",
-                "philip_maniacal",
                 "philip_mini",
+                "philip_classy_0",
+                "philip_classy_1",
+                "philip_classy_3",
+                "philip_maniacal_0",
+                "philip_maniacal_1",
+                "philip_maniacal_3",
                 "philip_squint_0",
                 "philip_squint_1",
+                "philip_squint_3",
                 "philip_neutral_0",
                 "philip_neutral_1",
+                "philip_neutral_3",
                 "philip_surprise_0",
                 "philip_surprise_1",
+                "philip_surprise_3",
+                "philip_sheepish_0",
+                "philip_sheepish_1",
+                "philip_sheepish_3",
+
 
                 "icon_play_twice",
                 "icon_all_cards_to_the_left",
@@ -110,6 +120,8 @@ namespace PhilipTheMechanic
                 "card_Last_Resort",
                 "card_Overdrive_Mod",
                 "card_Precise_Machining",
+                "card_Oops",
+                "card_Oh_No",
             };
 
             foreach (var filename in filenames) {
@@ -146,8 +158,8 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Jettison Parts", typeof(JettisonParts), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobot Infestation", typeof(NanobotInfestation), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_philip_default"], ExternalDeck.GetRaw((int)Enum.Parse<Deck>("trash"))), 
-                new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_Oh_No"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_Oops"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Plan WAF", typeof(PlanWAF), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Precision Machining", typeof(PrecisionMachining), sprites["card_Precise_Machining"], deck),
@@ -207,9 +219,12 @@ namespace PhilipTheMechanic
         public void LoadManifest(IAnimationRegistry registry)
         {
             var animationInfo = new Dictionary<string, IEnumerable<ExternalSprite>>();
-            animationInfo["neutral"] = new ExternalSprite[] { sprites["philip_neutral_0"], sprites["philip_neutral_1"], sprites["philip_neutral_0"], sprites["philip_neutral_1"] };
-            animationInfo["squint"] = new ExternalSprite[] { sprites["philip_squint_0"], sprites["philip_squint_1"], sprites["philip_squint_0"], sprites["philip_squint_1"] };
-            animationInfo["gameover"] = new ExternalSprite[] { sprites["philip_surprise_0"], sprites["philip_surprise_1"], sprites["philip_surprise_0"], sprites["philip_surprise_1"] };
+            animationInfo["neutral"] = new ExternalSprite[] { sprites["philip_neutral_0"], sprites["philip_neutral_1"], sprites["philip_neutral_0"], sprites["philip_neutral_3"] };
+            animationInfo["squint"] = new ExternalSprite[] { sprites["philip_squint_0"], sprites["philip_squint_1"], sprites["philip_squint_0"], sprites["philip_squint_3"] };
+            animationInfo["gameover"] = new ExternalSprite[] { sprites["philip_surprise_0"], sprites["philip_surprise_1"], sprites["philip_surprise_0"], sprites["philip_surprise_3"] };
+            animationInfo["classy"] = new ExternalSprite[] { sprites["philip_classy_0"], sprites["philip_classy_1"], sprites["philip_classy_0"], sprites["philip_classy_3"] };
+            animationInfo["maniacal"] = new ExternalSprite[] { sprites["philip_maniacal_0"], sprites["philip_maniacal_1"], sprites["philip_maniacal_0"], sprites["philip_maniacal_3"] };
+            animationInfo["sheepish"] = new ExternalSprite[] { sprites["philip_sheepish_0"], sprites["philip_sheepish_1"], sprites["philip_sheepish_0"], sprites["philip_sheepish_3"] };
             animationInfo["mini"] = new ExternalSprite[] { sprites["philip_mini"] };
 
             foreach (var kvp in animationInfo)

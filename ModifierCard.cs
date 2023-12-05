@@ -36,6 +36,7 @@ namespace PhilipTheMechanic
 
         public override void OnExitCombat(State s, Combat c)
         {
+            // TODO: why doesn't this work when you die?
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
         }
 
@@ -72,7 +73,6 @@ namespace PhilipTheMechanic
 
         public void OnOtherCardDrawnWhileThisWasInHand(State s, Combat c)
         {
-            // TODO: it seems like this runs before the card actually gets added to the hand
             //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
 
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }

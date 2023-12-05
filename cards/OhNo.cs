@@ -54,7 +54,7 @@ namespace PhilipTheMechanic.cards
             );
         }
 
-        // TODO: must be temporary, also add the TTCard tooltip
+        // TODO: make sure this card appears in WAF's tooltip
         public override CardData GetData(State state)
         {
             switch (upgrade)

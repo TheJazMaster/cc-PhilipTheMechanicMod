@@ -83,7 +83,6 @@ namespace PhilipTheMechanic.cards
             }
         }
 
-        // TODO: this
         // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
         public override List<CardAction> GetActions(State s, Combat c)
         {

@@ -63,7 +63,7 @@ namespace PhilipTheMechanic.cards
             }
         }
 
-        // TODO: must be temporary, also add the TTCard tooltip
+        // TODO: make sure this card appears in Infestation's tooltips
         public override CardData GetData(State state) => new() { 
             unplayable = true,
             temporary = true,

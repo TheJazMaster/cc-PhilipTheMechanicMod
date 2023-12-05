@@ -109,7 +109,7 @@ namespace PhilipTheMechanic.cards
                             text = $"{GetTargetLocationString().Capitalize()} gains exhaust, removes all actions, and adds 1 Uranium Round{(upgrade == Upgrade.B ? " B" : "")} to your hand."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        // TODO: add glossary for no action
+                        new TTGlossary(MainManifest.glossary["ANoAction"].Head),
                         (new AAddCard() { card = new UraniumRound(){upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )}, destination = Enum.Parse<CardDestination>("Hand") }).GetTooltips(s)[0],
                         new TTCard() { card = new UraniumRound(){upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )} }
                     }, 
