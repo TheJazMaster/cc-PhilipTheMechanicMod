@@ -13,7 +13,6 @@ namespace PhilipTheMechanic
 {
     public class ModifierCard : Card
     {
-
         public enum TargetLocation
         {
             SINGLE_LEFT,
@@ -31,13 +30,23 @@ namespace PhilipTheMechanic
 
         public override void OnDiscard(State s, Combat c)
         {
-            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
+            RemoveModifications();
         }
 
         public override void OnExitCombat(State s, Combat c)
         {
-            // TODO: why doesn't this work when you die?
+            RemoveModifications();
+        }
+
+        public void RemoveModifications()
+        {
             foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
+        }
+
+        public void ReapplyModifications(Combat c)
+        {
+            RemoveModifications();
+            ModifyTargetCards(c.hand);
         }
 
         public override void OnDraw(State s, Combat c)
@@ -50,33 +59,26 @@ namespace PhilipTheMechanic
         {
             if (g.state.route is Combat c)
             {
-                foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
-                ModifyTargetCards(c.hand);
+                ReapplyModifications(c);
             }
         }
 
         public override void OnOtherCardPlayedWhileThisWasInHand(State s, Combat c, int handPosition)
         {
-            //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was played.");
-
-            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
-            ModifyTargetCards(c.hand);
+            ReapplyModifications(c);
         }
 
         public void OnOtherCardDiscardedWhileThisWasInHand(State s, Combat c)
         {
-            //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was discarded.");
-
-            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
-            ModifyTargetCards(c.hand);
+            ReapplyModifications(c);
         }
 
         public void OnOtherCardDrawnWhileThisWasInHand(State s, Combat c)
         {
             //MainManifest.Instance.Logger.LogInformation($"Modifier card {uuid}:{GetFullDisplayName()} acknowledges with due respect that another card was drawn.");
 
-            foreach (Card card in currentlyModifiedCards) { ModifiedCardsRegistry.DeregisterMods(this, card); }
-            ModifyTargetCards(c.hand);
+            ReapplyModifications(c);
+
             //MainManifest.Instance.Logger.LogInformation($"       Applying to hand {string.Join(", ", c.hand.Select(card => card.GetFullDisplayName()))}");
             //MainManifest.Instance.Logger.LogInformation($"       Applied to {string.Join(", ", currentlyModifiedCards.Select(card => card.GetFullDisplayName()))}");
 
