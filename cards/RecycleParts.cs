@@ -21,7 +21,13 @@ namespace PhilipTheMechanic.cards
                 new AStatus() {
                     status = (Status)MainManifest.statuses["redraw"].Id,
                     targetPlayer = true,
-                    statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                    statusAmount = upgrade == Upgrade.B ? 3 : 1,
+                    mode = AStatusMode.Add,
+                },
+                new AStatus() {
+                    status = Enum.Parse<Status>("tempShield"),
+                    targetPlayer = true,
+                    statusAmount = 2,
                     mode = AStatusMode.Add,
                 }
             };
