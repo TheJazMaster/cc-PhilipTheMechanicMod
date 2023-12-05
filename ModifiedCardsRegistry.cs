@@ -104,6 +104,11 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Card.GetDataWithOverrides))]
         public static void HarmonyPostfix_Card_GetData(Card __instance, ref CardData __result, State state)
         {
+            if (state.ship.Get(Enum.Parse<Status>("tableFlip")) > 0 && __instance is ModifierCard)
+            {
+                __result.flippable = true;
+            }
+
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
             if (state.route is not Combat) { return; } // should never hit this case
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
