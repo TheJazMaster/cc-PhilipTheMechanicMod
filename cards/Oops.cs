@@ -54,7 +54,7 @@ namespace PhilipTheMechanic.cards
                             status = (Status)MainManifest.statuses["redraw"].Id,
                             targetPlayer = true,
                             statusAmount = 1,
-                            mode = AStatusMode.Add,
+                            mode = Enum.Parse<AStatusMode>("Add"),
                         }
                     );
                     return overridenCardActions;
