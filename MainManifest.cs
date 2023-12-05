@@ -183,7 +183,7 @@ namespace PhilipTheMechanic
 
         public void LoadManifest(ICharacterRegistry registry)
         {
-            var realStartingCards = new Type[] { typeof(OverdriveMod), typeof(RecycleParts) };
+            var realStartingCards = new Type[] { typeof(FrenzyMod), typeof(RecycleParts) };
             //var testStartCards = cards.Values.Select(card => card.CardType).ToList();
             //testStartCards.Add(typeof(UraniumRound));
             //testStartCards.Add(typeof(OverheatedCannons));
