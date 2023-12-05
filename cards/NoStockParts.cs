@@ -22,7 +22,7 @@ namespace PhilipTheMechanic.cards
                     status = (Status)MainManifest.statuses["customParts"].Id,
                     targetPlayer = true,
                     statusAmount = 1,
-                    mode = AStatusMode.Add,
+                    mode = Enum.Parse<AStatusMode>("Add"),
                 },
             };
         }

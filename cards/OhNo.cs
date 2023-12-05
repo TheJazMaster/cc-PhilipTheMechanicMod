@@ -35,7 +35,7 @@ namespace PhilipTheMechanic.cards
                             status = (Status)MainManifest.statuses["redraw"].Id,
                             targetPlayer = true,
                             statusAmount = upgrade == Upgrade.B ? 2 : 1,
-                            mode = AStatusMode.Add,
+                            mode = AStatusMode.Add, // TODO: reference by enum parse
                         }
                     };
                 },

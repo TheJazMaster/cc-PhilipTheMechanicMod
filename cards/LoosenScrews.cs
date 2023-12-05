@@ -33,7 +33,15 @@ namespace PhilipTheMechanic.cards
                 actionsModification: (List<CardAction> cardActions) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
-                    overridenCardActions.Add(new AHurt() { hurtAmount = (upgrade == Upgrade.B ? 2 : 1), hurtShieldsFirst = false, targetPlayer = true });
+                    overridenCardActions.Add(
+                        new AStatus()
+                        {
+                            status = Enum.Parse<Status>("energyLessNextTurn"),
+                            targetPlayer = true,
+                            statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                            mode = Enum.Parse<AStatusMode>("Add"),
+                        }
+                    );
                     return overridenCardActions;
                 },
                 energyModification: (int energy) => {
@@ -41,8 +49,8 @@ namespace PhilipTheMechanic.cards
                     return Math.Max(0, energy - 1);
                 },
                 stickers: upgrade == Upgrade.B
-                    ? new() { (Spr)MainManifest.sprites["icon_sticker_0_energy"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id }
-                    : new() { (Spr)MainManifest.sprites["icon_sticker_energy_discount"].Id, (Spr)MainManifest.sprites["icon_sticker_hull_damage"].Id }
+                    ? new() { (Spr)MainManifest.sprites["icon_sticker_0_energy"].Id, (Spr)MainManifest.sprites["icon_sticker_energyLessNextTurn"].Id }
+                    : new() { (Spr)MainManifest.sprites["icon_sticker_energy_discount"].Id, (Spr)MainManifest.sprites["icon_sticker_energyLessNextTurn"].Id }
             );
         }
 
@@ -55,7 +63,6 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 1,
                         unplayable = true,
-                        //description = $"{GetTargetLocationString().Capitalize()} costs 1 less energy but deals 1 hull damage."
                     };
                 case Upgrade.A:
                     return new()
@@ -63,7 +70,6 @@ namespace PhilipTheMechanic.cards
                         cost = 1,
                         unplayable = false,
                         flippable = true,
-                        //description = $"{GetTargetLocationString().Capitalize()} costs 1 less energy but deals 1 hull damage."
                     };
                 case Upgrade.B:
                     return new()
@@ -71,7 +77,6 @@ namespace PhilipTheMechanic.cards
                         cost = 1,
                         unplayable = false,
                         flippable = true,
-                        //description = $"{GetTargetLocationString().Capitalize()} costs 0 energy but deals 2 hull damage."
                     };
             }
         }
@@ -83,23 +88,34 @@ namespace PhilipTheMechanic.cards
 
             if (upgrade == Upgrade.B)
             {
-                desc = $"{GetTargetLocationString().Capitalize()} costs 0 energy but deals 2 hull damage.";
+                desc = $"{GetTargetLocationString().Capitalize()} costs 0 energy but removes 2 energy next turn.";
             }
             else
             {
-                desc = $"{GetTargetLocationString().Capitalize()} costs 1 less energy but deals 1 hull damage.";
+                desc = $"{GetTargetLocationString().Capitalize()} costs 1 less energy but removes 1 energy next turn.";
             }
+
+            List<Tooltip> tooltips = new() {
+                new TTText() { text = desc },
+                new TTGlossary(GetGlossaryForTargetLocation().Head, null),
+                upgrade == Upgrade.B
+                    ? MainManifest.vanillaSpritesGlossary["ASetEnergy"]
+                    : MainManifest.vanillaSpritesGlossary["AEnergyDiscount"],
+            };
+
+            tooltips.AddRange(
+                new AStatus()
+                {
+                    status = Enum.Parse<Status>("energyLessNextTurn"),
+                    targetPlayer = true,
+                    statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                    mode = Enum.Parse<AStatusMode>("Add"),
+                }.GetTooltips(s)
+            );
 
             return new List<CardAction>() {
                 new ATooltipDummy() {
-                    tooltips = new() {
-                        new TTText() { text = desc },
-                        new TTGlossary(GetGlossaryForTargetLocation().Head, null),
-                        new TTGlossary("action.hurt", (upgrade == Upgrade.B ? 2 : 1)),
-                        upgrade == Upgrade.B 
-                            ? MainManifest.vanillaSpritesGlossary["ASetEnergy"] 
-                            : MainManifest.vanillaSpritesGlossary["AEnergyDiscount"],
-                    },
+                    tooltips = tooltips,
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                         new Icon(Enum.Parse<Spr>("icons_hurt"), (upgrade == Upgrade.B ? 2 : 1), Colors.hurt),

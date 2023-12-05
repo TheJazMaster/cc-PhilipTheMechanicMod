@@ -57,7 +57,7 @@ namespace PhilipTheMechanic.cards
                             status = Enum.Parse<Status>("evade"),
                             targetPlayer = true,
                             statusAmount = 2,
-                            mode = AStatusMode.Add,
+                            mode = Enum.Parse<AStatusMode>("Add"),
                         }
                     };
 
@@ -68,7 +68,7 @@ namespace PhilipTheMechanic.cards
                             status = Enum.Parse<Status>("hermes"),
                             targetPlayer = true,
                             statusAmount = 1,
-                            mode = AStatusMode.Add,
+                            mode = Enum.Parse<AStatusMode>("Add"),
                         });
                     }
                     if (upgrade == Upgrade.B)
