@@ -19,8 +19,8 @@ namespace PhilipTheMechanic.cards
         {
             switch (upgrade)
             {
-                default: return TargetLocation.SINGLE_LEFT;
-                case Upgrade.A: return TargetLocation.SINGLE_LEFT;
+                default: return TargetLocation.SINGLE_RIGHT;
+                case Upgrade.A: return TargetLocation.SINGLE_RIGHT;
                 case Upgrade.B: return TargetLocation.ALL_LEFT;
             }
         }
