@@ -53,7 +53,7 @@ namespace PhilipTheMechanic.cards
                 energyModification: (int energy) => {
                     return 0;
                 },
-                stickers: new List<Spr>() { (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id, (Spr)MainManifest.sprites["icon_2x_sticker"].Id, (Spr)MainManifest.sprites["icon_sticker_add_card"].Id }
+                stickers: new List<Spr>() { (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id, (Spr)MainManifest.sprites["icon_2x_sticker"].Id, (Spr)MainManifest.sprites["icon_sticker_add_card"].Id, (Spr)MainManifest.sprites["icon_sticker_0_energy"].Id }
             );
         }
 
@@ -115,6 +115,14 @@ namespace PhilipTheMechanic.cards
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_addCard"), 1, Colors.textMain)
+                    }
+                },
+
+                new ATooltipDummy() {
+                    tooltips = new() {},
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_energy"), 0, Colors.energy)
                     }
                 }
             };
