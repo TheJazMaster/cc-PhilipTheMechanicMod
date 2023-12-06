@@ -197,10 +197,10 @@ namespace PhilipTheMechanic
             var targetLocation = GetTargetLocation();
             switch (targetLocation)
             {
-                case TargetLocation.SINGLE_LEFT: return MainManifest.glossary["ACardToTheLeft"];
-                case TargetLocation.SINGLE_RIGHT: return MainManifest.glossary["ACardToTheRight"];
-                case TargetLocation.ALL_LEFT: return MainManifest.glossary["AAllCardsToTheLeft"];
-                case TargetLocation.ALL_RIGHT: return MainManifest.glossary["AAllCardsToTheRight"];
+                case TargetLocation.SINGLE_LEFT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}CardToTheLeft"];
+                case TargetLocation.ALL_LEFT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}AllCardsToTheLeft"];
+                case TargetLocation.SINGLE_RIGHT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}CardToTheRight"];
+                case TargetLocation.ALL_RIGHT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}AllCardsToTheRight"];
             }
 
             throw new Exception("Unknown target location " + targetLocation);
@@ -210,10 +210,10 @@ namespace PhilipTheMechanic
             var targetLocation = GetTargetLocation();
             switch (targetLocation)
             {
-                case TargetLocation.SINGLE_LEFT: return MainManifest.sprites["icon_card_to_the_left"];
-                case TargetLocation.SINGLE_RIGHT: return MainManifest.sprites["icon_card_to_the_right"];
-                case TargetLocation.ALL_LEFT: return MainManifest.sprites["icon_all_cards_to_the_left"];
-                case TargetLocation.ALL_RIGHT: return MainManifest.sprites["icon_all_cards_to_the_right"];
+                case TargetLocation.SINGLE_LEFT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_Left_Card_Mod" : "icon_card_to_the_left"];
+                case TargetLocation.ALL_LEFT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_All_Left_Card_Mod" : "icon_all_cards_to_the_left"];
+                case TargetLocation.SINGLE_RIGHT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_Right_Card_Mod" : "icon_card_to_the_right"];
+                case TargetLocation.ALL_RIGHT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_All_Right_Card_Mod" : "icon_all_cards_to_the_right"];
             }
 
             throw new Exception("Unknown target location " + targetLocation);
