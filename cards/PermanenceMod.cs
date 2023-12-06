@@ -38,29 +38,29 @@ namespace PhilipTheMechanic.cards
                     int dmg = 0;
                     foreach (var action in cardActions)
                     {
-                        if (action is AStatus status && status.status == Enum.Parse<Status>("tempShield"))
+                        if (action is AStatus status && status.targetPlayer && status.status == Enum.Parse<Status>("tempShield"))
                         {
-                            var newStatus = Mutil.DeepCopy(status);
-                            newStatus.status = Enum.Parse<Status>("tempShield");
-                            overridenCardActions.Add(newStatus);
-
                             if (upgrade == Upgrade.B)
                             {
-                                var maxStatus = Mutil.DeepCopy(status);
+                                var maxStatus = new AStatus();
                                 maxStatus.status = Enum.Parse<Status>("maxShield");
+                                maxStatus.statusAmount = status.statusAmount;
+                                maxStatus.targetPlayer = true;
                                 overridenCardActions.Add(maxStatus);
                             }
+
+                            var newStatus = new AStatus();
+                            newStatus.status = Enum.Parse<Status>("shield");
+                            newStatus.statusAmount = status.statusAmount;
+                            newStatus.targetPlayer = true;
+                            overridenCardActions.Add(newStatus);
+
                         }
                         else
                         {
                             overridenCardActions.Add(action);
                         }
                     }
-
-                    if (upgrade == Upgrade.B)
-                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("shield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
-                    else
-                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("tempShield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
 
                     return overridenCardActions;
                 },
@@ -116,16 +116,6 @@ namespace PhilipTheMechanic.cards
                         new Icon((Spr)MainManifest.sprites["icon_equal"].Id, null, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_tempShield"), null, Colors.textMain),
                     }
-                },
-                new ATooltipDummy()
-                {
-                    tooltips = new(),
-                    icons = new()
-                    {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_shield"), null, Colors.textMain),
-                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-                    }
                 }
             };
 
@@ -144,6 +134,19 @@ namespace PhilipTheMechanic.cards
                     }
                 );
             }
+
+            a.Add(
+                new ATooltipDummy()
+                {
+                    tooltips = new(),
+                    icons = new()
+                    {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_shield"), null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
+                    }
+                }
+            );
 
             return a;
         }

@@ -44,9 +44,9 @@ namespace PhilipTheMechanic.cards
                     }
 
                     if (upgrade == Upgrade.B)
-                        overridenCardActions.Add(new AStatus { targetPlayer = false, status = Enum.Parse<Status>("shield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
+                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("shield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
                     else
-                        overridenCardActions.Add(new AStatus { targetPlayer = false, status = Enum.Parse<Status>("tempShield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
+                        overridenCardActions.Add(new AStatus { targetPlayer = true, status = Enum.Parse<Status>("tempShield"), statusAmount = dmg, mode = Enum.Parse<AStatusMode>("Add") });
 
                     return overridenCardActions;
                 },
@@ -107,7 +107,7 @@ namespace PhilipTheMechanic.cards
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_x"), null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_equal"].Id, 1, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_equal"].Id, null, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_attack"), null, Colors.textMain),
                     }
                 },
