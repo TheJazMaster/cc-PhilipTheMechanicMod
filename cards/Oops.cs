@@ -22,8 +22,8 @@ namespace PhilipTheMechanic.cards
         {
             switch (upgrade)
             {
-                default: return TargetLocation.SINGLE_RIGHT;
-                case Upgrade.A: return TargetLocation.SINGLE_RIGHT;
+                default: return TargetLocation.NEIGHBORS;
+                case Upgrade.A: return TargetLocation.NEIGHBORS;
                 case Upgrade.B: return TargetLocation.ALL_LEFT;
             }
         }
@@ -42,7 +42,7 @@ namespace PhilipTheMechanic.cards
                         if (action is AAttack attack)
                         {
                             var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.damage = GetDmg(s, Math.Max(0, newAttack.damage-1));
+                            newAttack.damage = GetDmg(s, Math.Max(0, newAttack.damage - (upgrade == Upgrade.A ? 2 : 1)));
                             overridenCardActions.Add(newAttack);
                         }
                         else
@@ -55,7 +55,7 @@ namespace PhilipTheMechanic.cards
                         {
                             status = (Status)MainManifest.statuses["redraw"].Id,
                             targetPlayer = true,
-                            statusAmount = 1,
+                            statusAmount = (upgrade == Upgrade.A ? 2 : 1),
                             mode = Enum.Parse<AStatusMode>("Add"),
                         }
                     );
@@ -81,7 +81,6 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        flippable = true,
                         //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.B:
@@ -102,7 +101,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Decreases the damage of every attack on {GetTargetLocationString()} by 1 and adds \"gain one redraw\"."
+                            text = $"Decreases the damage of every attack on {GetTargetLocationString()} by {(upgrade == Upgrade.A ? 2 : 1)} and adds \"gain {(upgrade == Upgrade.A ? 2 : 1)} redraw\"."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "-1"),
@@ -110,14 +109,14 @@ namespace PhilipTheMechanic.cards
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, -1, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, (upgrade == Upgrade.A ? -2 : -1), Colors.textMain),
                     }
                 },
                 new ATooltipDummy() {
                     tooltips = new() {},
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, 1, Colors.textMain)
+                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, (upgrade == Upgrade.A ? 2 : 1), Colors.textMain)
                     }
                 }
             };
