@@ -11,8 +11,19 @@ namespace PhilipTheMechanic
     [HarmonyPatch(typeof(Card))]
     public static class ModifiedCardsRegistry
     {
+        public enum ModifierPriority
+        {
+            ABSOLUTE_LAST,  // typically for cards that erase all actions
+            LAST,           // typically for cards that modify existing actions
+            LATE,
+            STANDARD,       // typically for cards that modify energy costs or CardData
+            EARLY,
+            FIRST,          // typically for cards that add new actions
+            ABSOLUTE_FIRST
+        }
         public struct CardModRegistration
         {
+            public ModifierPriority priority;
             public Card from;
             public CardActionsModification? actionsModification;
             public CardEnergyModification? energyModification;
@@ -27,22 +38,25 @@ namespace PhilipTheMechanic
 
         public static void RegisterMod(
             Card self, 
-            Card modifiedCard, 
+            Card modifiedCard,
+            ModifierPriority priority,
             CardActionsModification? actionsModification = null, 
             CardEnergyModification? energyModification = null, 
             CardDataModification? dataModification = null,
             List<Spr>? stickers = null
         ) {
-            MainManifest.Instance.Logger.LogInformation($"Card modification being registered for {modifiedCard.uuid}:`{modifiedCard.GetFullDisplayName()}` by {self.uuid}:`{self.GetFullDisplayName()}`");
+            //MainManifest.Instance.Logger.LogInformation($"Card modification being registered for {modifiedCard.uuid}:`{modifiedCard.GetFullDisplayName()}` by {self.uuid}:`{self.GetFullDisplayName()}`");
 
             if (!cardMods.ContainsKey(modifiedCard.uuid)) { cardMods[modifiedCard.uuid] = new List<CardModRegistration>(); }
             cardMods[modifiedCard.uuid].Add(new CardModRegistration() { 
+                priority = priority,
                 from = self, 
                 actionsModification = actionsModification,
                 energyModification = energyModification,
                 dataModification = dataModification,
                 stickers = stickers
             });
+            cardMods[modifiedCard.uuid].Sort((a, b) => b.priority.CompareTo(a.priority));
         }
 
         public static void DeregisterMods(Card moddingCard, Card moddedCard)

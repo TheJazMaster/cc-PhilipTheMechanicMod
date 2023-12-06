@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 
 namespace PhilipTheMechanic.cards
 {
@@ -29,7 +30,8 @@ namespace PhilipTheMechanic.cards
         {
             ModifiedCardsRegistry.RegisterMod(
                 this, 
-                c, 
+                c,
+                ModifierPriority.STANDARD,
                 actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
@@ -118,7 +120,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = tooltips,
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
-                        new Icon(Enum.Parse<Spr>("icons_hurt"), (upgrade == Upgrade.B ? 2 : 1), Colors.hurt),
+                        new Icon(Enum.Parse<Spr>("icons_energyLessNextTurn"), (upgrade == Upgrade.B ? 2 : 1), Colors.hurt),
                         upgrade == Upgrade.B 
                             ? new Icon(Enum.Parse<Spr>("icons_energy"), 0, Colors.energy)
                             : new Icon(Enum.Parse<Spr>("icons_discount"), 1, Colors.energy),

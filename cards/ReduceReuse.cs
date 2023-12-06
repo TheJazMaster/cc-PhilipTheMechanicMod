@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
@@ -32,6 +33,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c,
+                ModifierPriority.STANDARD,
                 dataModification: (CardData data) =>
                 {
                     // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it

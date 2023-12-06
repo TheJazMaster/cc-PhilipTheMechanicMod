@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
@@ -48,7 +49,8 @@ namespace PhilipTheMechanic.cards
 
             ModifiedCardsRegistry.RegisterMod(
                 this, 
-                c, 
+                c,
+                ModifierPriority.ABSOLUTE_LAST,
                 actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> actions = new()

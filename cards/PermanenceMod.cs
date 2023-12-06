@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 
 namespace PhilipTheMechanic.cards
 {
@@ -32,6 +33,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this,
                 c,
+                ModifierPriority.LATE, // depends on other added actions, but adds an action itself - so can't be EARLY, can't be LAST
                 actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> overridenCardActions = new();

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 using static System.Collections.Specialized.BitVector32;
 
 namespace PhilipTheMechanic.cards
@@ -26,7 +27,8 @@ namespace PhilipTheMechanic.cards
         {
             ModifiedCardsRegistry.RegisterMod(
                 this, 
-                c, 
+                c,
+                ModifierPriority.FIRST,
                 actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     return new()

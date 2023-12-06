@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PhilipTheMechanic.ModifiedCardsRegistry;
 
 namespace PhilipTheMechanic.cards
 {
@@ -30,6 +31,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this,
                 c,
+                ModifierPriority.LAST,
                 actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
