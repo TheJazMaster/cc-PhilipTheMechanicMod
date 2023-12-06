@@ -66,6 +66,160 @@ namespace PhilipTheMechanic
                 minDamageDealtToEnemyThisTurn = 5
             });
 
+            //
+            // OUTSIDE OF COMBAT CONVERSATIONS
+            //
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.IsaacHardhat",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    lookup = new HashSet<string>() { "after_any" },
+                    allPresent = new() { Philip, "goat" },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "goat",
+                        What = "Hey Philip, how come I never see you wearing a hardhat? Shouldn't that be required, for safety?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Nothing falls when you've got the gravity off!",
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "goat",
+                        What = "Ah... that makes sense.",
+                        LoopTag = "shy"
+                    },
+                }
+            ));
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.BooksRetain",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    lookup = new HashSet<string>() { "after_any" },
+                    allPresent = new() { Philip, "shard" },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "shard",
+                        What = "Hi Mr. Philip! I heard you have a sticker collection!"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Sure do!",
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "shard",
+                        What = "Can I have one?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Sure! Here take... this one.",
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "shard",
+                        What = "Thank you Mr. Philip!"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "She's adorable. I hope that retain sticker works.",
+                        LoopTag = "proud"
+                    },
+                }
+            ));
+
+            //
+            // SHOP CONVERSATIONS
+            //
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.ShopNanobots",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    lookup = new HashSet<string>() { "shopBefore" },
+                    bg = "BGShop",
+                    allPresent = new() { Philip },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = "nerd",
+                        What = "Hey Philip, you don't have nanobots on you again, do you?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "Ahahahaha.... no?",
+                        LoopTag = "sheepish"
+                    },
+                    new Jump()
+                    {
+                        key = "NewShop"
+                    }
+                }
+            ));
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.ShopIllegalParts",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    lookup = new HashSet<string>() { "shopBefore" },
+                    bg = "BGShop",
+                    allPresent = new() { Philip },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "Hey Cleo! Got any parts for me?",
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = "nerd",
+                        What = "Nothing I can sell you."
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = "nerd",
+                        What = "Legally."
+                    },
+                    new Jump()
+                    {
+                        key = "NewShop"
+                    }
+                }
+            ));
+
+            //
+            // RANDOM MID-COMBAT CONVERSATIONS
+            //
+
             storyRegistry.RegisterStory(new ExternalStory(
                 $"{Name}.SelfPropellingCannons",
                 node: new StoryNode()
