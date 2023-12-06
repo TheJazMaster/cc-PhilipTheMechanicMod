@@ -306,6 +306,13 @@ namespace PhilipTheMechanic
                 "This card is discarded when any card modified by it is played."
             );
 
+            CardTraitManager.RegisterExternalCardTrait(new CardTraitManager.ExternalCardTrait()
+            {
+                sprite = (Spr)sprites["icon_flimsy"].Id,
+                name = "Flimsy",
+                testFunction = (Card card) => card is ModifierCard c && c.IsFlimsy()
+            });
+
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);
             vanillaSpritesGlossary["ASetEnergy"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_energy"), "set energy cost", "Changes the energy cost of this card. Overrides all other effects.", null);
         }

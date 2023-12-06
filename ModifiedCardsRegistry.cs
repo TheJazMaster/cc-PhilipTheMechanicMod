@@ -75,6 +75,43 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
+        [HarmonyPatch(nameof(Card.AfterWasPlayed))]
+        public static void HarmonyPostfix_Card_AfterWasPlayed(Card __instance, State s, Combat c)
+        {
+            // Handle flimsy modifier cards (discard when a card they modify is played)
+            foreach (var registration in cardMods[__instance.uuid])
+            {
+                if (registration.from is ModifierCard mc && mc.IsFlimsy())
+                {
+                    var mcData = mc.GetDataWithOverrides(s);
+                    bool infinite = mcData.infinite && !mcData.exhaust;
+
+                    if (mcData.exhaust)
+                    {
+                        c.hand.Remove(mc);
+                        mc.OnDiscard(s, c);
+
+                        mc.ExhaustFX();
+                        c.SendCardToExhaust(s, mc);
+                        c.QueueImmediate(new ADelay());
+                    }
+                    else if (mcData.recycle && !infinite)
+                    {
+                        c.hand.Remove(mc);
+                        mc.OnDiscard(s, c);
+                        s.SendCardToDeck(mc);
+                    }
+                    else if (!infinite)
+                    {
+                        c.hand.Remove(mc);
+                        mc.OnDiscard(s, c);
+                        c.SendCardToDiscard(s, mc);
+                    }
+                }
+            }
+        }
+
+        [HarmonyPostfix]
         [HarmonyPatch(nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
