@@ -31,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="sprites\artifact_angle_grinder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\artifact_endless_toolbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

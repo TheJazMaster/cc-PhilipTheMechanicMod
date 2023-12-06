@@ -111,7 +111,7 @@ namespace PhilipTheMechanic
                 "button_redraw_on",
 
                 "artifact_wire_clippers",
-                "artifact_sturdy_pliers",
+                "artifact_angle_grinder",
                 "artifact_endless_toolbox",
                 "artifact_self_propelling_cannons",
 
@@ -313,8 +313,8 @@ namespace PhilipTheMechanic
             wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable, and all trash gains exhaust");
             registry.RegisterArtifact(wireClippers);
 
-            var sturdyPliers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SturdyPliers", typeof(SturdyPliers), sprites["artifact_sturdy_pliers"], ownerDeck: deck);
-            sturdyPliers.AddLocalisation("STURDY PLIERS", "Gain 3 redraw at the start of combat");
+            var sturdyPliers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.AngleGrinder", typeof(AngleGrinder), sprites["artifact_angle_grinder"], ownerDeck: deck);
+            sturdyPliers.AddLocalisation("ANGLE GRINDER", "Gain 3 redraw at the start of combat");
             registry.RegisterArtifact(sturdyPliers);
 
             var endlessToolbox = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.EndlessToolbox", typeof(EndlessToolbox), sprites["artifact_endless_toolbox"], ownerDeck: deck);
