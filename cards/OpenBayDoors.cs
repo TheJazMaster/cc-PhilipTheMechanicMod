@@ -57,9 +57,12 @@ namespace PhilipTheMechanic.cards
                     data.unplayable = false;
                     return data;
                 },
+                energyModification: (int energy) => {
+                    return Math.Max(0, energy - 1);
+                },
                 stickers: upgrade == Upgrade.B
-                    ? new() { (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id, (Spr)MainManifest.sprites["icon_sticker_missile"].Id }
-                    : new() { (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id }
+                    ? new() { (Spr)MainManifest.sprites["icon_sticker_energy_discount"].Id, (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id, (Spr)MainManifest.sprites["icon_sticker_missile"].Id }
+                    : new() { (Spr)MainManifest.sprites["icon_sticker_energy_discount"].Id, (Spr)MainManifest.sprites["icon_sticker_exhaust"].Id }
             );
         }
 
@@ -96,6 +99,7 @@ namespace PhilipTheMechanic.cards
             List<Icon> icons = new() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.heal),
                 new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_discount"), 1, Colors.energy)
             };
 
             if (upgrade == Upgrade.B)
