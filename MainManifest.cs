@@ -310,7 +310,7 @@ namespace PhilipTheMechanic
         public void LoadManifest(IArtifactRegistry registry)
         {
             var wireClippers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.WireClippers", typeof(WireClippers), sprites["artifact_wire_clippers"], ownerDeck: deck);
-            wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable");
+            wireClippers.AddLocalisation("WIRE CLIPPERS", "All unplayable cards become playable, and all trash gains exhaust");
             registry.RegisterArtifact(wireClippers);
 
             var sturdyPliers = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SturdyPliers", typeof(SturdyPliers), sprites["artifact_sturdy_pliers"], ownerDeck: deck);
