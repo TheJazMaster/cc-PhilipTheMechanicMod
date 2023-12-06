@@ -10,12 +10,12 @@ using static PhilipTheMechanic.ModifierCard;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.B }, dontOffer = true)]
+    [CardMeta(rarity = Rarity.rare, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
     public class OverheatedCannons : ModifierCard
     {
         public override string Name()
         {
-            return "Overheated Cannons";
+            return "Disable Safeties";
         }
 
         public override TargetLocation GetBaseTargetLocation()
@@ -51,7 +51,7 @@ namespace PhilipTheMechanic.cards
             {
                 cost = 0,
                 unplayable = false,
-                retain = true,
+                retain = (upgrade == Upgrade.A),
                 temporary = true
             };
         }
