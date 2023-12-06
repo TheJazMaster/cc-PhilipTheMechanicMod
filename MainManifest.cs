@@ -310,7 +310,7 @@ namespace PhilipTheMechanic
                 "flimsy modification",
                 "Modify the card to the right. When a card modified by this is played, discard this card."
             );
-            RegisterGlossaryEntry(registry, "AFlimsyNeighborCards", sprites["icon_Flimsy_All_Right_Card_Mod"],
+            RegisterGlossaryEntry(registry, "AFlimsyAllCardsToTheRight", sprites["icon_Flimsy_All_Right_Card_Mod"],
                 "flimsy modification",
                 "Modify all cards to the right. When a card modified by this is played, discard this card."
             );
