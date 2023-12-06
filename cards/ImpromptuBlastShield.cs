@@ -55,7 +55,6 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        retain = true,
                         temporary = true,
                     };
                 case Upgrade.A:
@@ -63,7 +62,6 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = true,
-                        retain = true,
                         temporary = true,
                     };
                 case Upgrade.B:
@@ -71,7 +69,6 @@ namespace PhilipTheMechanic.cards
                     {
                         cost = 0,
                         unplayable = false,
-                        retain = true,
                         temporary = true,
                     };
             }
