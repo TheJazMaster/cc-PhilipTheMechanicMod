@@ -231,7 +231,7 @@ namespace PhilipTheMechanic
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(FrenzyMod), typeof(RecycleParts) },
+                new Type[] { typeof(OverdriveMod), typeof(RecycleParts) },
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
