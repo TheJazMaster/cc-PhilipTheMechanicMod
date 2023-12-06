@@ -25,6 +25,16 @@ namespace PhilipTheMechanic
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Combat.SendCardToHand))]
+        public static void HarmonyPostfix_Combat_SendCardToHand(Combat __instance, State s, Card card)
+        {
+            foreach (Card otherCard in __instance.hand)
+            {
+                if (otherCard is ModifierCard mc2) { mc2.ReapplyModifications(__instance); }
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Combat.SendCardToHand))]
         public static void HarmonyPostfix_Combat_SendCardToHand(Combat __instance, State s, Card card, int? position = null)
         {
             MainManifest.Instance.Logger.LogInformation($"Drew {card.GetFullDisplayName()}");
