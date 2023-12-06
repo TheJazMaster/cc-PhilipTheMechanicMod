@@ -50,6 +50,7 @@ namespace PhilipTheMechanic
             var filenames = new string[] { 
                 "char_frame_philip", 
                 "frame_philip",
+                "floppable_fix_sticky_note",
 
                 "philip_mini",
                 "philip_classy_0",

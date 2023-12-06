@@ -36,6 +36,10 @@ namespace PhilipTheMechanic
         public delegate CardData CardDataModification(CardData cardData);
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
 
+
+        private static bool HackyHack = false;
+
+
         public static void RegisterMod(
             Card self, 
             Card modifiedCard,
@@ -127,7 +131,15 @@ namespace PhilipTheMechanic
                 overridenCardActions = registration.actionsModification(overridenCardActions, s);
             }
 
-            __result = overridenCardActions;
+            if (!HackyHack)
+            {
+                __result = overridenCardActions;
+            }
+            else
+            {
+                // we're trying to draw only the active actions, with icons rn
+                __result = overridenCardActions.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
+            }
         }
 
         [HarmonyPostfix]
@@ -223,6 +235,17 @@ namespace PhilipTheMechanic
                     stickerCount++;
                 }
             }
+
+            // sticky note fix for floppables
+            var actions = __instance.GetActionsOverridden(state, state.route as Combat);
+            if (actions.Where((action) => action.GetIcon(state) == null).Count() > 0)
+            {
+                Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_sticky_note"].Id, vec2.x, vec2.y);
+                HackyHack = true;
+                __instance.MakeAllActionIcons(g, g.state);
+                HackyHack = false;
+            }
+
 
             g.Pop();
         }
