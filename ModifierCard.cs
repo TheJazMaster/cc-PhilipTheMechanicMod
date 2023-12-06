@@ -26,7 +26,7 @@ namespace PhilipTheMechanic
         private List<Card> currentlyModifiedCards = new();
 
         // Explicitly has no actions
-        public override List<CardAction> GetActions(State s, Combat c) { return new List<CardAction>(); 
+        public override List<CardAction> GetActions(State s, Combat c) { return new List<CardAction>(); }
 
         public override void OnDiscard(State s, Combat c)
         {
