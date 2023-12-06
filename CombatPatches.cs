@@ -37,7 +37,7 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Combat.SendCardToHand))]
         public static void HarmonyPostfix_Combat_SendCardToHand(Combat __instance, State s, Card card, int? position = null)
         {
-            MainManifest.Instance.Logger.LogInformation($"Drew {card.GetFullDisplayName()}");
+            //MainManifest.Instance.Logger.LogInformation($"Drew {card.GetFullDisplayName()}");
             foreach (Card otherCard in __instance.hand)
             {
                 if (otherCard is ModifierCard mc) { mc.OnOtherCardDrawnWhileThisWasInHand(s, __instance); }

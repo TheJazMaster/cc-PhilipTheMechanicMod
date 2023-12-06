@@ -19,7 +19,7 @@ namespace PhilipTheMechanic
             {
                 var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault();
                 if (ownedEndlessToolbox != null) { ownedEndlessToolbox.Pulse(); }
-                MainManifest.Instance.Logger.LogInformation($"Has toolbox? {ownedEndlessToolbox != null}");
+                //MainManifest.Instance.Logger.LogInformation($"Has toolbox? {ownedEndlessToolbox != null}");
 
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
                 g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);

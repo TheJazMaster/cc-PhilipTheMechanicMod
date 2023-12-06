@@ -51,7 +51,7 @@ namespace PhilipTheMechanic
 
         public override void OnDraw(State s, Combat c)
         {
-            MainManifest.Instance.Logger.LogInformation($"Drew a modifier card! {uuid}:{GetFullDisplayName()}");
+            //MainManifest.Instance.Logger.LogInformation($"Drew a modifier card! {uuid}:{GetFullDisplayName()}");
             ModifyTargetCards(c.hand);
         }
 
@@ -101,7 +101,7 @@ namespace PhilipTheMechanic
                 else              leftCards.Add(card);
             }
 
-            MainManifest.Instance.Logger.LogInformation($"Processing {this.GetFullDisplayName()} left cards: {string.Join(", ", leftCards.Select(card => card.GetFullDisplayName()))}      right cards: {string.Join(", ", rightCards.Select(card => card.GetFullDisplayName()))}");
+            //MainManifest.Instance.Logger.LogInformation($"Processing {this.GetFullDisplayName()} left cards: {string.Join(", ", leftCards.Select(card => card.GetFullDisplayName()))}      right cards: {string.Join(", ", rightCards.Select(card => card.GetFullDisplayName()))}");
 
             var targetLocation = GetTargetLocation();
 
