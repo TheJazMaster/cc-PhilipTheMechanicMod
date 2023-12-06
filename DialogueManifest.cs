@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace PhilipTheMechanic
 {
-    public class DialogueManifest //: IStoryManifest
+    public class DialogueManifest : IStoryManifest
     {
-        public IEnumerable<DependencyEntry> Dependencies => throw new NotImplementedException();
+        public IEnumerable<DependencyEntry> Dependencies => new DependencyEntry[0];
 
-        public DirectoryInfo? GameRootFolder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ILogger? Logger { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DirectoryInfo? ModRootFolder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DirectoryInfo? GameRootFolder { get; set; }
+        public Microsoft.Extensions.Logging.ILogger? Logger { get; set; }
+        public DirectoryInfo? ModRootFolder { get; set; }
 
         public string Name => "clay.PhilipTheEngineer.Story";
-        public static string Philip = "clay.PhilipTheMechanic.Philip";
+        public static string Philip = "clay.PhilipTheMechanic.PhilipDeck"; // "clay.PhilipTheMechanic.Philip";
 
         public void LoadManifest(IStoryRegistry storyRegistry)
         {
@@ -29,6 +29,7 @@ namespace PhilipTheMechanic
 
         private void LoadShouts(IStoryRegistry storyRegistry)
         {
+            Logger.LogInformation("\n\n\n\nLOADING SHOUTS!\n\n\n\n");
             RegisterSimpleShout(storyRegistry, "New loop, new ship to take apart!", "NewLoopShout", loopTag: "maniacal", zones: new HashSet<string>() { "zone_first" });
             RegisterSimpleShout(storyRegistry, "Man the engines are running horribly, forget the fight, I'm gonna tune them.", "Engines", loopTag: "unhappy");
             //RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "unhappy", storyNode: new StoryNode()
@@ -328,7 +329,7 @@ namespace PhilipTheMechanic
                 {
                     new ExternalStory.ExternalSay()
                     {
-                        Who = "clay.PhilipTheMechanic.Philip",
+                        Who = Philip,
                         What = shout,
                         LoopTag = loopTag
                     },
