@@ -122,6 +122,11 @@ namespace PhilipTheMechanic
                 "card_Precise_Machining",
                 "card_Oops",
                 "card_Oh_No",
+                "card_Uh_Oh",
+                "card_Piercing_Mod",
+                "card_Uranium_Rounds",
+                "card_Impromptu_Blast_Shield",
+                "card_Duct_Tape_and_Dreams",
             };
 
             foreach (var filename in filenames) {
@@ -147,25 +152,25 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Shielding Mod", typeof(ShieldingMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Recycle Parts", typeof(RecycleParts), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Emergency Training", typeof(EmergencyTraining), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_Impromptu_Blast_Shield"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_Piercing_Mod"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Permanence Mod", typeof(PermanenceMod), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safeties", typeof(DisableSafties), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overheated Cannons", typeof(OverheatedCannons), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.No Stock Parts", typeof(NoStockParts), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Black Market Parts", typeof(BlackMarketParts), sprites["card_Black_Market_Parts"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Duct Tape and Dreams", typeof(DuctTapeAndDreams), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Duct Tape and Dreams", typeof(DuctTapeAndDreams), sprites["card_Duct_Tape_and_Dreams"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Jettison Parts", typeof(JettisonParts), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobot Infestation", typeof(NanobotInfestation), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_philip_default"], ExternalDeck.GetRaw((int)Enum.Parse<Deck>("trash"))), 
-                new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_Oh_No"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_Uh_Oh"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_Oops"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Plan WAF", typeof(PlanWAF), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Precision Machining", typeof(PrecisionMachining), sprites["card_Precise_Machining"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Reduce Reuse", typeof(ReduceReuse), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Stun Mod", typeof(StunMod), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Uranium Round", typeof(UraniumRound), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Uranium Round", typeof(UraniumRound), sprites["card_Uranium_Rounds"], deck),
             };
 
             foreach(var card in cardDefinitions)
