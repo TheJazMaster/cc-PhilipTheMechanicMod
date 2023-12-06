@@ -45,7 +45,7 @@ namespace PhilipTheMechanic.cards
                     },
                     icons = new()
                     {
-                        new Icon((Spr)MainManifest.sprites["icon_card_centered"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_card_is_centered"].Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 7 : 5, Colors.textMain)
                     }
                 },
@@ -53,7 +53,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {},
                     icons = new()
                     {
-                        new Icon((Spr)MainManifest.sprites["icon_card_not_centered"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_card_is_not_centered"].Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.A ? 2 : 1, Colors.textMain)
                     }
                 },
