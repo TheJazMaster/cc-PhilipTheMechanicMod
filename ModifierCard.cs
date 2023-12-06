@@ -201,6 +201,7 @@ namespace PhilipTheMechanic
                 case TargetLocation.ALL_LEFT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}AllCardsToTheLeft"];
                 case TargetLocation.SINGLE_RIGHT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}CardToTheRight"];
                 case TargetLocation.ALL_RIGHT: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}AllCardsToTheRight"];
+                case TargetLocation.NEIGHBORS: return MainManifest.glossary[$"A{(this.IsFlimsy() ? "Flimsy" : "" )}NeighborCards"];
             }
 
             throw new Exception("Unknown target location " + targetLocation);
@@ -214,6 +215,7 @@ namespace PhilipTheMechanic
                 case TargetLocation.ALL_LEFT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_All_Left_Card_Mod" : "icon_all_cards_to_the_left"];
                 case TargetLocation.SINGLE_RIGHT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_Right_Card_Mod" : "icon_card_to_the_right"];
                 case TargetLocation.ALL_RIGHT: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_All_Right_Card_Mod" : "icon_all_cards_to_the_right"];
+                case TargetLocation.NEIGHBORS: return MainManifest.sprites[this.IsFlimsy() ? "icon_Flimsy_Neighbors_Card_Mod" : "icon_card_neighbors"];
             }
 
             throw new Exception("Unknown target location " + targetLocation);

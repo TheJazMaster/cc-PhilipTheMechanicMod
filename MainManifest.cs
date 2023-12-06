@@ -84,10 +84,12 @@ namespace PhilipTheMechanic
                 "icon_all_cards_to_the_right",
                 "icon_card_to_the_left",
                 "icon_card_to_the_right",
+                "icon_card_neighbors",
                 "icon_Flimsy_Left_Card_Mod",
                 "icon_Flimsy_Right_Card_Mod",
                 "icon_Flimsy_All_Right_Card_Mod",
                 "icon_Flimsy_All_Left_Card_Mod",
+                "icon_Flimsy_Neighbors_Card_Mod",
                 "icon_attack_buff",
                 "icon_screw",
                 "icon_equal",
@@ -290,6 +292,10 @@ namespace PhilipTheMechanic
                 "modify all cards to the right",
                 "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
             );
+            RegisterGlossaryEntry(registry, "ANeighborCards", sprites["icon_card_neighbors"],
+                "modify all cards to the right",
+                "Add the following effects to both adjacent cards. They do NOT trigger when this card is played."
+            );
 
             RegisterGlossaryEntry(registry, "AFlimsyCardToTheLeft", sprites["icon_Flimsy_Left_Card_Mod"],
                 "flimsy modification",
@@ -303,9 +309,13 @@ namespace PhilipTheMechanic
                 "flimsy modification",
                 "Modify the card to the right. When a card modified by this is played, discard this card."
             );
-            RegisterGlossaryEntry(registry, "AFlimsyAllCardsToTheRight", sprites["icon_Flimsy_All_Right_Card_Mod"],
+            RegisterGlossaryEntry(registry, "AFlimsyNeighborCards", sprites["icon_Flimsy_All_Right_Card_Mod"],
                 "flimsy modification",
                 "Modify all cards to the right. When a card modified by this is played, discard this card."
+            );
+            RegisterGlossaryEntry(registry, "AFlimsyNeighborCards", sprites["icon_Flimsy_Neighbors_Card_Mod"],
+                "flimsy modification",
+                "Modify both adjacent cards. When a card modified by this is played, discard this card."
             );
 
             RegisterGlossaryEntry(registry, "AAttackBuff", sprites["icon_attack_buff"],
