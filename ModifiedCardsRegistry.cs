@@ -37,7 +37,7 @@ namespace PhilipTheMechanic
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
 
 
-        private static bool HackyHack = false;
+        private static bool StickyNoteHack = false;
 
 
         public static void RegisterMod(
@@ -131,7 +131,7 @@ namespace PhilipTheMechanic
                 overridenCardActions = registration.actionsModification(overridenCardActions, s);
             }
 
-            if (!HackyHack)
+            if (!StickyNoteHack)
             {
                 __result = overridenCardActions;
             }
@@ -238,16 +238,36 @@ namespace PhilipTheMechanic
 
             // sticky note fix for floppables
             var actions = __instance.GetActionsOverridden(state, state.route as Combat);
-            if (actions.Where((action) => action.GetIcon(state) == null).Count() > 0)
+            if (ShouldStickyNote(__instance, actions, state))
             {
                 Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_sticky_note"].Id, vec2.x, vec2.y);
-                HackyHack = true;
+                StickyNoteHack = true;
                 __instance.MakeAllActionIcons(g, g.state);
-                HackyHack = false;
+                StickyNoteHack = false;
             }
 
 
             g.Pop();
+        }
+
+        public static bool ShouldStickyNote(Card card, List<CardAction> actions, State s)
+        {
+            bool foundIcon = false;
+            bool foundNoIcon = false;
+            foreach (CardAction action in actions)
+            {
+                bool hasIcon = action.GetIcon(s) != null;
+                if (hasIcon) 
+                {
+                    if (foundIcon && foundNoIcon) return true;
+                    foundIcon = true;
+                }
+                else
+                {
+                    foundNoIcon = true;
+                }
+            }
+            return false;
         }
 
         public static double uuidToRandRange(double uuid, double min, double max)
