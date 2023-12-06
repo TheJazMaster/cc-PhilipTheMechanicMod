@@ -49,7 +49,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c, 
-                actionsModification: (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> actions = new()
                     {

@@ -20,7 +20,7 @@ namespace PhilipTheMechanic
             public List<Spr>? stickers;
         }
 
-        public delegate List<CardAction> CardActionsModification(List<CardAction> cardActions);
+        public delegate List<CardAction> CardActionsModification(List<CardAction> cardActions, State s);
         public delegate int CardEnergyModification(int originalEnergy);
         public delegate CardData CardDataModification(CardData cardData);
         public static Dictionary<int, List<CardModRegistration>> cardMods = new();
@@ -73,7 +73,7 @@ namespace PhilipTheMechanic
             foreach (var registration in cardMods[__instance.uuid])
             {
                 if (registration.actionsModification == null) continue;
-                overridenCardActions = registration.actionsModification(overridenCardActions);
+                overridenCardActions = registration.actionsModification(overridenCardActions, s);
             }
 
             __result = overridenCardActions;

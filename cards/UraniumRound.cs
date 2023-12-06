@@ -20,7 +20,7 @@ namespace PhilipTheMechanic.cards
             {
                 new AAttack()
                 {
-                    damage = 1,
+                    damage = GetDmg(s, 1),
                     piercing = true,
                     stunEnemy = true,
                 }

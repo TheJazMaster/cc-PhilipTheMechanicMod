@@ -32,7 +32,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this, 
                 c, 
-                actionsModification: (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> overridenCardActions = new();
                     foreach (var action in cardActions)
@@ -40,7 +40,7 @@ namespace PhilipTheMechanic.cards
                         if (action is AAttack attack)
                         {
                             var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.damage = Math.Max(0, newAttack.damage-1);
+                            newAttack.damage = GetDmg(s, Math.Max(0, newAttack.damage-1));
                             overridenCardActions.Add(newAttack);
                         }
                         else

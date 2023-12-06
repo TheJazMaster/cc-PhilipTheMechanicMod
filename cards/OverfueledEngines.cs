@@ -30,7 +30,7 @@ namespace PhilipTheMechanic.cards
             ModifiedCardsRegistry.RegisterMod(
                 this,
                 c,
-                actionsModification: (List<CardAction> cardActions) =>
+                actionsModification: (List<CardAction> cardActions, State s) =>
                 {
                     List<CardAction> overridenCardActions = new(cardActions);
                     overridenCardActions.Add(new AReplay() { card = c });
