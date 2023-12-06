@@ -76,40 +76,48 @@ namespace PhilipTheMechanic
                     i--;
                 }
             }
+
+            if (cardMods[moddedCard.uuid].Count() <= 0)
+            {
+                cardMods.Remove(moddedCard.uuid);
+            }
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Card.AfterWasPlayed))]
-        public static void HarmonyPostfix_Card_AfterWasPlayed(Card __instance, State s, Combat c)
+        public static void HarmonyPostfix_Card_AfterWasPlayed(Card __instance, State state, Combat c)
         {
+            if (!cardMods.ContainsKey(__instance.uuid)) return;
+
             // Handle flimsy modifier cards (discard when a card they modify is played)
-            foreach (var registration in cardMods[__instance.uuid])
+            List<CardModRegistration> cardModsEphemeral = new(cardMods[__instance.uuid]);
+            foreach (var registration in cardModsEphemeral)
             {
                 if (registration.from is ModifierCard mc && mc.IsFlimsy())
                 {
-                    var mcData = mc.GetDataWithOverrides(s);
+                    var mcData = mc.GetDataWithOverrides(state);
                     bool infinite = mcData.infinite && !mcData.exhaust;
 
                     if (mcData.exhaust)
                     {
                         c.hand.Remove(mc);
-                        mc.OnDiscard(s, c);
+                        mc.OnDiscard(state, c);
 
                         mc.ExhaustFX();
-                        c.SendCardToExhaust(s, mc);
+                        c.SendCardToExhaust(state, mc);
                         c.QueueImmediate(new ADelay());
                     }
                     else if (mcData.recycle && !infinite)
                     {
                         c.hand.Remove(mc);
-                        mc.OnDiscard(s, c);
-                        s.SendCardToDeck(mc);
+                        mc.OnDiscard(state, c);
+                        state.SendCardToDeck(mc);
                     }
                     else if (!infinite)
                     {
                         c.hand.Remove(mc);
-                        mc.OnDiscard(s, c);
-                        c.SendCardToDiscard(s, mc);
+                        mc.OnDiscard(state, c);
+                        c.SendCardToDiscard(state, mc);
                     }
                 }
             }
@@ -214,6 +222,31 @@ namespace PhilipTheMechanic
             //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
             //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
 
+            //
+            // draw index card / sticky note fix for floppables
+            //
+
+            var actions = __instance.GetActionsOverridden(state, state.route as Combat);
+            if (ShouldStickyNote(__instance, actions, state))
+            {
+                if (actions.Where((action) => action.GetIcon(state) != null && !action.disabled).Count() <= 3)
+                {
+                    Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_sticky_note"].Id, vec2.x, vec2.y);
+                }
+                else
+                {
+                    Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_index_card"].Id, vec2.x, vec2.y);
+                }
+
+                StickyNoteHack = true;
+                __instance.MakeAllActionIcons(g, g.state);
+                StickyNoteHack = false;
+            }
+
+            //
+            // draw stickers
+            //
+
             // sticker goes at (50, 8) - 0.5*sticker.dimensions
             //var DEG_60 = 1.0472;
             //MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
@@ -235,17 +268,6 @@ namespace PhilipTheMechanic
                     stickerCount++;
                 }
             }
-
-            // sticky note fix for floppables
-            var actions = __instance.GetActionsOverridden(state, state.route as Combat);
-            if (ShouldStickyNote(__instance, actions, state))
-            {
-                Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_sticky_note"].Id, vec2.x, vec2.y);
-                StickyNoteHack = true;
-                __instance.MakeAllActionIcons(g, g.state);
-                StickyNoteHack = false;
-            }
-
 
             g.Pop();
         }
