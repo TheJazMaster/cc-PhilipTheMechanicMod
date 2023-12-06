@@ -57,6 +57,11 @@ namespace PhilipTheMechanic.cards
             );
         }
 
+        public override bool IsFlimsy()
+        {
+            return true;
+        }
+
         public override CardData GetData(State state)
         {
             switch (upgrade)
