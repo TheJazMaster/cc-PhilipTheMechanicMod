@@ -52,23 +52,23 @@ namespace PhilipTheMechanic.cards
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        unplayable = false,
+                        retain = true,
                     };
                 case Upgrade.A:
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
+                        unplayable = false,
                         flippable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        retain = true,
                     };
                 case Upgrade.B:
                     return new()
                     {
                         cost = 0,
-                        unplayable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        unplayable = false,
+                        retain = true,
                     };
             }
         }
