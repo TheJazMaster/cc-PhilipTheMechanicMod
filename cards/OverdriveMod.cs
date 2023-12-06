@@ -63,24 +63,18 @@ namespace PhilipTheMechanic.cards
                 default:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        cost = 1,
                     };
                 case Upgrade.A:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
+                        cost = 1,
                         flippable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
                     };
                 case Upgrade.B:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
-                        //description = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                        cost = 1,
                     };
             }
         }
@@ -93,7 +87,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1."
+                            text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1. On play, attack for 1 damage."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "1")
@@ -102,6 +96,12 @@ namespace PhilipTheMechanic.cards
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, 1, Colors.textMain)
                     }
+                },
+
+                new AAttack()
+                {
+                    targetPlayer = false,
+                    damage = GetDmg(s, 1)
                 }
             };
         }

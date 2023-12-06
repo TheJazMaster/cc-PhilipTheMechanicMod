@@ -51,21 +51,18 @@ namespace PhilipTheMechanic.cards
                 default:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
+                        cost = 1,
                     };
                 case Upgrade.A:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
+                        cost = 1,
                         flippable = true,
                     };
                 case Upgrade.B:
                     return new()
                     {
-                        cost = 0,
-                        unplayable = true,
+                        cost = 1,
                     };
             }
         }
@@ -78,7 +75,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"Adds recycle to {GetTargetLocationString()}."
+                            text = $"Adds recycle to {GetTargetLocationString()}. Draw 1 on play."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
                         new TTGlossary("cardtrait.recycle")
@@ -87,6 +84,11 @@ namespace PhilipTheMechanic.cards
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_recycle"), null, Colors.textMain)
                     }
+                },
+
+                new ADrawCard()
+                {
+                    count = 1
                 }
             };
         }

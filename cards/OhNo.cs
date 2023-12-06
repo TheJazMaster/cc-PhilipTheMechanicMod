@@ -38,6 +38,12 @@ namespace PhilipTheMechanic.cards
                             targetPlayer = true,
                             statusAmount = upgrade == Upgrade.B ? 3 : 2,
                             mode = Enum.Parse<AStatusMode>("Add"),
+                        },
+                        new AStatus() {
+                            status = Enum.Parse<Status>("evade"),
+                            targetPlayer = true,
+                            statusAmount = 1,
+                            mode = Enum.Parse<AStatusMode>("Add"),
                         }
                     };
                 },
@@ -45,6 +51,7 @@ namespace PhilipTheMechanic.cards
                 {
                     // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
                     data.exhaust = true;
+                    data.infinite = false; // Prevent Dice Roll from being a one card infinite
                     return data;
                 },
                 stickers: new() 
@@ -68,6 +75,7 @@ namespace PhilipTheMechanic.cards
                         unplayable = false,
                         retain = true,
                         temporary = true,
+                        exhaust = true,
                     };
                 case Upgrade.A:
                     return new()
@@ -76,6 +84,7 @@ namespace PhilipTheMechanic.cards
                         unplayable = false,
                         retain = true,
                         temporary = true,
+                        exhaust = true,
                     };
                 case Upgrade.B:
                     return new()
@@ -84,6 +93,7 @@ namespace PhilipTheMechanic.cards
                         unplayable = false,
                         retain = true,
                         temporary = true,
+                        exhaust = true,
                     };
             }
         }
@@ -104,7 +114,7 @@ namespace PhilipTheMechanic.cards
                     },
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 2 : 1, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 3 : 2, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
                     }
                 },
@@ -112,6 +122,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {},
                     icons = new() {
                         new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_evade"), 1, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
                     }
                 }

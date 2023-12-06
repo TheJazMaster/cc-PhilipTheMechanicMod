@@ -22,7 +22,17 @@ namespace PhilipTheMechanic.cards
                 {
                     card = new OhNo() { upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None )},
                     destination = Enum.Parse<CardDestination>("Hand")
-                }
+                },
+                new ADrawCard()
+                {
+                    count = 1,
+                },
+                new AStatus() {
+                    status = (Status)MainManifest.statuses["redraw"].Id,
+                    targetPlayer = true,
+                    statusAmount = 1,
+                    mode = Enum.Parse<AStatusMode>("Add"),
+                },
             };
         }
 
