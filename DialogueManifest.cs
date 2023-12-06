@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PhilipTheMechanic
 {
-    public class DialogueManifest : IStoryManifest
+    public class DialogueManifest //: IStoryManifest
     {
         public IEnumerable<DependencyEntry> Dependencies => throw new NotImplementedException();
 

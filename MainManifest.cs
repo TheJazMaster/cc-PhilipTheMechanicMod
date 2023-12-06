@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Xna.Framework.Graphics;
 using PhilipTheMechanic.artifacts;
 using PhilipTheMechanic.cards;
+using Shockah.Shared;
 
 namespace PhilipTheMechanic
 {
@@ -40,6 +41,9 @@ namespace PhilipTheMechanic
         public void BootMod(IModLoaderContact contact)
         {
             Instance = this;
+            ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.dll"));
+            ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.Harmony.dll"));
+
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
             CustomTTGlossary.Apply(harmony);
@@ -71,6 +75,7 @@ namespace PhilipTheMechanic
                 "philip_sheepish_0",
                 "philip_sheepish_1",
                 "philip_sheepish_3",
+                "philip_proud",
 
 
                 "icon_play_twice",
@@ -218,7 +223,7 @@ namespace PhilipTheMechanic
                 "clay.PhilipTheMechanic.Philip",
                 deck,
                 sprites["char_frame_philip"],
-                new Type[] { typeof(OverdriveMod), typeof(RecycleParts) },
+                new Type[] { typeof(FrenzyMod), typeof(RecycleParts) },
                 new Type[0],
                 animations["neutral"],
                 animations["mini"]
@@ -239,6 +244,7 @@ namespace PhilipTheMechanic
             animationInfo["classy"] = new ExternalSprite[] { sprites["philip_classy_0"], sprites["philip_classy_1"], sprites["philip_classy_0"], sprites["philip_classy_3"] };
             animationInfo["maniacal"] = new ExternalSprite[] { sprites["philip_maniacal_0"], sprites["philip_maniacal_1"], sprites["philip_maniacal_0"], sprites["philip_maniacal_3"] };
             animationInfo["sheepish"] = new ExternalSprite[] { sprites["philip_sheepish_0"], sprites["philip_sheepish_1"], sprites["philip_sheepish_0"], sprites["philip_sheepish_3"] };
+            animationInfo["proud"] = new ExternalSprite[] { sprites["philip_proud"] };
             animationInfo["mini"] = new ExternalSprite[] { sprites["philip_mini"] };
 
             foreach (var kvp in animationInfo)
