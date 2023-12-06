@@ -104,7 +104,7 @@ namespace PhilipTheMechanic
         public static SharedArt.ButtonResult ButtonSprite(G g, Vec vec2, Rect rect, UIKey key, Spr sprite, Spr spriteHover, Spr? spriteDown = null, Color? boxColor = null, bool inactive = false, bool flipX = false, bool flipY = false, OnMouseDown? onMouseDown = null, bool autoFocus = false, bool noHover = false, bool showAsPressed = false, bool gamepadUntargetable = false, UIKey? leftHint = null, UIKey? rightHint = null)
         {
             bool gamepadUntargetable2 = gamepadUntargetable;
-            Box box = g.Push(key, rect, null, autoFocus, inactive, gamepadUntargetable2, ReticleMode.Quad, onMouseDown, null, null, null, 0, rightHint, leftHint);
+            Box box = g.Push(key, rect, null, autoFocus, inactive, gamepadUntargetable2, ReticleMode.Quad, onMouseDown, null, null, null, 3, rightHint, leftHint);
             Vec xy = box.rect.xy;
             bool flag = !noHover && (box.IsHover() || showAsPressed) && !inactive;
             if (spriteDown.HasValue && box.IsHover() && Input.mouseLeft)
