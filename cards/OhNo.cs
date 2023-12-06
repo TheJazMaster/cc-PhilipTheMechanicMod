@@ -107,6 +107,13 @@ namespace PhilipTheMechanic.cards
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 2 : 1, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
                     }
+                },
+                new ATooltipDummy() {
+                    tooltips = new() {},
+                    icons = new() {
+                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain),
+                    }
                 }
             };
         }
