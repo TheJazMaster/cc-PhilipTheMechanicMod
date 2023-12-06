@@ -135,7 +135,7 @@ namespace PhilipTheMechanic.cards
             var icons1 = new List<Icon>() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
                 new Icon((Spr)MainManifest.sprites["icon_no_action"].Id, null, Colors.textMain),
-                new Icon(Enum.Parse<Spr>("icons_evade"), 1, Colors.textMain),
+                new Icon(Enum.Parse<Spr>("icons_evade"), 2, Colors.textMain),
             };
             var icons2 = new List<Icon>() {
                 new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
