@@ -83,6 +83,8 @@ namespace PhilipTheMechanic
                 "icon_redraw",
                 "icon_customParts",
                 "icon_no_action",
+                "icon_card_is_centered",
+                "icon_card_is_not_centered",
 
                 "icon_2x_sticker",
                 "icon_sticker_add_card",
@@ -286,6 +288,16 @@ namespace PhilipTheMechanic
             RegisterGlossaryEntry(registry, "ANoAction", sprites["icon_no_action"],
                 "no action",
                 "All effects of the target card are erased."
+            );
+
+            RegisterGlossaryEntry(registry, "CCardCentered", sprites["icon_card_is_centered"], // Condition CardCentered
+                "card centered",
+                "The following effects trigger if this card is at the center of your hand."
+            );
+
+            RegisterGlossaryEntry(registry, "CCardNotCentered", sprites["icon_card_is_not_centered"], // Condition CardNotCentered
+                "card not centered",
+                "The following effects trigger if this card is not at the center of your hand."
             );
 
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);
