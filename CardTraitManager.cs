@@ -14,6 +14,7 @@ namespace PhilipTheMechanic
 {
     // CODE MODIFIED FROM
     // https://github.com/Shockah/Cobalt-Core-Mods/blob/dev/soggins/Soggins/FrogproofManager.cs#L54-L136
+    [HarmonyPatch(typeof(Card))]
     public static class CardTraitManager
     {
         public class ExternalCardTrait
@@ -29,6 +30,8 @@ namespace PhilipTheMechanic
 
         public static void RegisterExternalCardTrait(ExternalCardTrait trait) { externalCardTraits.Add(trait); }
 
+        [HarmonyTranspiler]
+        [HarmonyPatch(nameof(Card.Render))]
         private static IEnumerable<CodeInstruction> Card_Render_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase originalMethod)
         {
             try
@@ -86,7 +89,9 @@ namespace PhilipTheMechanic
             }
         }
 
-        private static void Card_GetAllTooltips_Postfix(Card __instance, G g, State s, bool showCardTraits, ref IEnumerable<Tooltip> __result)
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Card.GetAllTooltips))]
+        private static void HarmonyPostfix_Card_GetAllTooltips(Card __instance, G g, State s, bool showCardTraits, ref IEnumerable<Tooltip> __result)
         {
             if (!showCardTraits)
                 return;
