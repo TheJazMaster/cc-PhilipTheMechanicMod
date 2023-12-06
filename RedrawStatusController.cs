@@ -73,8 +73,10 @@ namespace PhilipTheMechanic
 
             int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
 
+            double hoverAnim = 0; //__instance.hoverAnim;
+
             Vec vec = posOverride ?? __instance.pos;
-            Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
+            Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
             Rect value = rect;
             if (overrideWidth.HasValue)
             {
@@ -92,6 +94,7 @@ namespace PhilipTheMechanic
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0, 19, 13);
             OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance));
+            // 855026104 is a random int chosen to not overlap with custom button IDs from other mods
             ButtonSprite(g, vec2, rect2, new UIKey((UK)855026104, __instance.uuid, $"redraw_button_for_card_{cardIndex}"), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, onMouseDown: omd, gamepadUntargetable: true);
 
             g.Pop();
