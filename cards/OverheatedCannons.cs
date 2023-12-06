@@ -56,8 +56,7 @@ namespace PhilipTheMechanic.cards
             {
                 cost = 0,
                 unplayable = false,
-                retain = (upgrade == Upgrade.A),
-                temporary = true
+                retain = (upgrade == Upgrade.A)
             };
         }
 
