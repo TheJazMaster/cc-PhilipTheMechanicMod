@@ -41,8 +41,8 @@ namespace PhilipTheMechanic
         public void BootMod(IModLoaderContact contact)
         {
             Instance = this;
-            ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.dll"));
-            ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.Harmony.dll"));
+            //ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.dll"));
+            //ReflectionExt.CurrentAssemblyLoadContext.LoadFromAssemblyPath(Path.Combine(ModRootFolder!.FullName, "Shrike.Harmony.dll"));
 
             var harmony = new Harmony("PhilipTheMechanic");
             harmony.PatchAll();
@@ -55,6 +55,7 @@ namespace PhilipTheMechanic
                 "char_frame_philip", 
                 "frame_philip",
                 "floppable_fix_sticky_note",
+                "floppable_fix_index_card",
 
                 "philip_mini",
                 "philip_classy_0",
@@ -83,6 +84,10 @@ namespace PhilipTheMechanic
                 "icon_all_cards_to_the_right",
                 "icon_card_to_the_left",
                 "icon_card_to_the_right",
+                "icon_Flimsy_Left_Card_Mod",
+                "icon_Flimsy_Right_Card_Mod",
+                "icon_Flimsy_All_Right_Card_Mod",
+                "icon_Flimsy_All_Left_Card_Mod",
                 "icon_attack_buff",
                 "icon_screw",
                 "icon_equal",
@@ -171,7 +176,7 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_Impromptu_Blast_Shield"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_Piercing_Mod"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Permanence Mod", typeof(PermanenceMod), sprites["card_Permanence_Mod"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safeties", typeof(OverheatedCannons), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Disable Safeties", typeof(OverheatedCannons), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.No Stock Parts", typeof(NoStockParts), sprites["card_philip_default"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Black Market Parts", typeof(BlackMarketParts), sprites["card_Black_Market_Parts"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Duct Tape and Dreams", typeof(DuctTapeAndDreams), sprites["card_Duct_Tape_and_Dreams"], deck),
@@ -273,20 +278,34 @@ namespace PhilipTheMechanic
                 "modify card to the left",
                 "Add the following effects to the card to the left. They do NOT trigger when this card is played."
             );
-
             RegisterGlossaryEntry(registry, "AAllCardsToTheLeft", sprites["icon_all_cards_to_the_left"],
                 "modify all cards to the left",
                 "Add the following effects to all cards to the left. They do NOT trigger when this card is played."
             );
-
             RegisterGlossaryEntry(registry, "ACardToTheRight", sprites["icon_card_to_the_right"],
                 "modify card to the right",
                 "Add the following effects to the card to the right. They do NOT trigger when this card is played."
             );
-
             RegisterGlossaryEntry(registry, "AAllCardsToTheRight", sprites["icon_all_cards_to_the_right"],
                 "modify all cards to the right",
                 "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
+            );
+
+            RegisterGlossaryEntry(registry, "AFlimsyCardToTheLeft", sprites["icon_Flimsy_Left_Card_Mod"],
+                "flimsy modification",
+                "Modify the card to the left. When a card modified by this is played, discard this card."
+            );
+            RegisterGlossaryEntry(registry, "AFlimsyAllCardsToTheLeft", sprites["icon_Flimsy_All_Left_Card_Mod"],
+                "flimsy modification",
+                "Modify all cards to the left. When a card modified by this is played, discard this card."
+            );
+            RegisterGlossaryEntry(registry, "AFlimsyCardToTheRight", sprites["icon_Flimsy_Right_Card_Mod"],
+                "flimsy modification",
+                "Modify the card to the right. When a card modified by this is played, discard this card."
+            );
+            RegisterGlossaryEntry(registry, "AFlimsyAllCardsToTheRight", sprites["icon_Flimsy_All_Right_Card_Mod"],
+                "flimsy modification",
+                "Modify all cards to the right. When a card modified by this is played, discard this card."
             );
 
             RegisterGlossaryEntry(registry, "AAttackBuff", sprites["icon_attack_buff"],
@@ -319,12 +338,12 @@ namespace PhilipTheMechanic
                 "This card is discarded when any card modified by it is played."
             );
 
-            CardTraitManager.RegisterExternalCardTrait(new CardTraitManager.ExternalCardTrait()
-            {
-                sprite = (Spr)sprites["icon_flimsy"].Id,
-                name = "Flimsy",
-                testFunction = (Card card) => card is ModifierCard c && c.IsFlimsy()
-            });
+            //CardTraitManager.RegisterExternalCardTrait(new CardTraitManager.ExternalCardTrait()
+            //{
+            //    sprite = (Spr)sprites["icon_flimsy"].Id,
+            //    name = "Flimsy",
+            //    testFunction = (Card card) => card is ModifierCard c && c.IsFlimsy()
+            //});
 
             vanillaSpritesGlossary["AEnergyDiscount"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_discount"), "energy discount", "Discounts the energy cost of this card.", null);
             vanillaSpritesGlossary["ASetEnergy"] = new CustomTTGlossary(CustomTTGlossary.GlossaryType.cardtrait, Enum.Parse<Spr>("icons_energy"), "set energy cost", "Changes the energy cost of this card. Overrides all other effects.", null);
