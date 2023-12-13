@@ -31,41 +31,23 @@ namespace PhilipTheMechanic
         {
             Logger.LogInformation("\n\n\n\nLOADING SHOUTS!\n\n\n\n");
             RegisterSimpleShout(storyRegistry, "New loop, new ship to take apart!", "NewLoopShout", loopTag: "maniacal", zones: new HashSet<string>() { "zone_first" });
-            RegisterSimpleShout(storyRegistry, "Man the engines are running horribly, forget the fight, I'm gonna tune them.", "Engines", loopTag: "unhappy");
-            //RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "unhappy", storyNode: new StoryNode()
-            //{
-            //    zones = new HashSet<string>() { "zone_first" },
-            //    hasWeakPart = true
-            //});
-            RegisterSimpleShout(storyRegistry, "Tsk, you really should've armored that weak point.", "EnemyWeakPoint", storyNode: new StoryNode()
-            {
-                enemyHasWeakPart = true
-            });
-            RegisterSimpleShout(storyRegistry, "Woah your ship, uh... That brittle part needs to be replaced.", "EnemyBrittlePart", storyNode: new StoryNode()
-            {
-                enemyHasBrittlePart = true
-            });
-            RegisterSimpleShout(storyRegistry, "Yeeeeeaaah we don't have enough spare parts to fix that.", "DamageTaken", storyNode: new StoryNode()
-            {
-                minDamageDealtToPlayerThisTurn = 5
-            });
-            RegisterSimpleShout(storyRegistry, "I hear whirring. Why do I hear whirring?", "HullLow", loopTag: "gameover", storyNode: new StoryNode()
-            {
-                maxHull = 3,
-                maxHullPercent = 0.5
-            });
+            RegisterSimpleShout(storyRegistry, "Man the engines are running horribly, forget the fight, I'm gonna tune them.", "Engines", loopTag: "gone");
+            RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "unhappy", storyNode: StandardShoutHooks.Relevance3.ArtifactHardmode);
+            RegisterSimpleShout(storyRegistry, "Tsk, you really should've armored that weak point.", "EnemyWeakPoint", storyNode: StandardShoutHooks.Relevance7.EnemyHasWeakness);
+            RegisterSimpleShout(storyRegistry, "Woah your ship, uh... That brittle part needs to be replaced.", "EnemyBrittlePart", storyNode: StandardShoutHooks.Relevance7.EnemyHasBrittle);
+            RegisterSimpleShout(storyRegistry, "Yeeeeeaaah we don't have enough spare parts to fix that.", "DamageTaken", storyNode: StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs);
+            RegisterSimpleShout(storyRegistry, "I hear whirring. Why do I hear whirring?", "HullLow", loopTag: "gameover", storyNode: StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop);
             RegisterSimpleShout(storyRegistry, "Don't worry! I've got a tiny fire extinguisher!", "Heat", storyNode: new StoryNode()
             {
                 goingToOverheat = true
             });
-            RegisterSimpleShout(storyRegistry, "I knew that fire extinguisher would help.", "DidntHeat", loopTag: "classy", storyNode: new StoryNode()
+            RegisterSimpleShout(storyRegistry, "I knew that fire extinguisher would help.", "OverheatAnyoneFix", loopTag: "classy", storyNode: new StoryNode()
             {
                 wasGoingToOverheatButStopped = true
             });
-            RegisterSimpleShout(storyRegistry, "Woah ho!!", "LotsOfDamage", storyNode: new StoryNode()
-            {
-                minDamageDealtToEnemyThisTurn = 5
-            });
+            RegisterSimpleShout(storyRegistry, "Woah ho!!", "LotsOfDamage", storyNode: StandardShoutHooks.Relevance6.WeDidOverThreeDamage);
+            RegisterSimpleShout(storyRegistry, "Thank you shields!", "PlayerCompletelyBlocked", storyNode: StandardShoutHooks.Relevance6.WeGotShotButTookNoDamage);
+            RegisterSimpleShout(storyRegistry, "Man, these engines are so good.", "PlayerEscaped", storyNode: StandardShoutHooks.Relevance6.WeDontOverlapWithEnemyAtAll);
 
             //
             // OUTSIDE OF COMBAT CONVERSATIONS

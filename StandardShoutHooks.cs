@@ -78,21 +78,19 @@ namespace PhilipTheMechanic
                 maxHull = 2,
                 oncePerCombatTags = new() { "aboutToDie" },
                 oncePerRun = true,
-                allPresent = new() { "peri", "eunice" }
             };
             public static StoryNode EmptyHandWithEnergy => new StoryNode()
             {
                 type = NodeTypeCombat,
                 handEmpty = true,
                 minEnergy = 1,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode JustHitGeneric => new StoryNode()
             {
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                allPresent = new() { "riggs" }
             };
             public static StoryNode OverheatDrakeFix => new StoryNode()
             {
@@ -118,7 +116,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "veryManyTurns" },
                 oncePerRun = true,
                 turnStart = true,
-                allPresent = new() { "eunice" }
+               
             };
         }
 
@@ -129,7 +127,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 hasArtifacts = new() { "GeminiCore" },
                 oncePerRunTags = new() { "GeminiCore" },
-                allPresent = new() { "dizzy" }
+               
             };
             public static StoryNode ArtifactTiderunner => new StoryNode()
             {
@@ -139,7 +137,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "TideRunner" },
                 oncePerCombatTags = new() { "TideRunner" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode ArtifactTridimensionalCockpit => new StoryNode()
             {
@@ -149,28 +147,28 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "TridimensionalCockpit" },
                 hasArtifacts = new() { "TridimensionalCockpit" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode EnemyHasBrittle => new StoryNode()
             {
                 type = NodeTypeCombat,
                 enemyHasBrittlePart = true,
                 oncePerRunTags = new() { "yelledAboutBrittle" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode EnemyHasWeakness => new StoryNode()
             {
                 type = NodeTypeCombat,
                 enemyHasWeakPart = true,
                 oncePerRunTags = new() { "yelledAboutWeakness" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode JustPlayedADraculaCard => new StoryNode()
             {
                 type = NodeTypeCombat,
                 whoDidThat = NameToDeck("dracula"),
                 oncePerRun = true,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ManyTurns => new StoryNode()
             {
@@ -179,7 +177,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "manyTurns" },
                 oncePerRun = true,
                 turnStart = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode OneHitPointThisIsFine => new StoryNode()
             {
@@ -188,7 +186,7 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 enemyShotJustHit = true,
                 maxHull = 1,
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode SogginsEscapeIntent_1 => new StoryNode()
             {
@@ -214,14 +212,14 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 enemyShotJustHit = true,
                 minDamageDealtToPlayerThisTurn = 3,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode WeDidOverFiveDamage => new StoryNode()
             {
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 6,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode WeJustGainedHeatAndDrakeIsHere => new StoryNode()
             {
@@ -239,7 +237,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustMissed = true,
                 hasArtifacts = new() { "Recalibrator" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode BooksWentMissing => new StoryNode()
             {
@@ -248,7 +246,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "booksWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode CatWentMissing => new StoryNode()
             {
@@ -257,7 +255,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "CatWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode HandOnlyHasTrashCards => new StoryNode()
             {
@@ -265,14 +263,14 @@ namespace PhilipTheMechanic
                 handFullOfTrash = true,
                 oncePerCombatTags = new() { "handOnlyHasTrashCards" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode OverheatGeneric => new StoryNode()
             {
                 type = NodeTypeCombat,
                 goingToOverheat = true,
                 oncePerCombatTags = new() { "OverheatGeneric" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode RiggsWentMissing => new StoryNode()
             {
@@ -281,14 +279,14 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "riggsWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ThatsALotOfDamageToThem => new StoryNode()
             {
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisTurn = 10,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode TheyHaveAutoDodgeLeft => new StoryNode()
             {
@@ -296,7 +294,7 @@ namespace PhilipTheMechanic
                 lastTurnEnemyStatuses = NamesToStatuses(new() { "autododgeLeft" }),
                 oncePerCombatTags = new() { "aboutAutododge" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode TheyHaveAutoDodgeRight => new StoryNode()
             {
@@ -304,21 +302,21 @@ namespace PhilipTheMechanic
                 lastTurnEnemyStatuses = NamesToStatuses(new() { "autododgeRight" }),
                 oncePerCombatTags = new() { "aboutAutododge" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode WeAreCorroded => new StoryNode()
             {
                 type = NodeTypeCombat,
                 lastTurnPlayerStatuses = NamesToStatuses(new() { "corrode" }),
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode WeDidOverThreeDamage => new StoryNode()
             {
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 4,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode WeDontOverlapWithEnemyAtAll => new StoryNode()
             {
@@ -328,7 +326,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "NoOverlapBetweenShips" },
                 oncePerRun = true,
                 nonePresent = new() { "crab", "scrap" },
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode WeGotHurtButNotTooBad => new StoryNode()
             {
@@ -336,14 +334,14 @@ namespace PhilipTheMechanic
                 enemyShotJustHit = true,
                 minDamageDealtToPlayerThisTurn = 1,
                 maxDamageDealtToPlayerThisTurn = 1,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode WeGotShotButTookNoDamage => new StoryNode()
             {
                 type = NodeTypeCombat,
                 enemyShotJustHit = true,
                 maxDamageDealtToPlayerThisTurn = 0,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode WeMissedOopsie => new StoryNode()
             {
@@ -351,7 +349,7 @@ namespace PhilipTheMechanic
                 playerShotJustMissed = true,
                 oncePerCombat = true,
                 doesNotHaveArtifacts = new() { "Recalibrator", "GrazerBeam" },
-                allPresent = new() { "riggs" }
+               
             };
         }
 
@@ -365,7 +363,7 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 enemyHasPart = "cockpit",
                 hasArtifacts = new() { "CockpitTarget" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactCrosslink => new StoryNode()
             {
@@ -374,7 +372,7 @@ namespace PhilipTheMechanic
                 lookup = new() { "CrosslinkTrigger" },
                 oncePerRun = true,
                 oncePerCombatTags = new() { "CrosslinkTriggerTag" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactFractureDetection => new StoryNode()
             {
@@ -384,7 +382,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "FractureDetection" },
                 oncePerCombatTags = new() { "FractureDetectionBarks" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactJetThrusters => new StoryNode()
             {
@@ -393,7 +391,7 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 hasArtifacts = new() { "JetThrusters" },
                 oncePerRun = true,
-                allPresent = new() { "peri", "riggs" }
+               
             };
             public static StoryNode ArtifactNanofiberHull1 => new StoryNode()
             {
@@ -402,7 +400,7 @@ namespace PhilipTheMechanic
                 maxDamageDealtToPlayerThisTurn = 1,
                 hasArtifacts = new() { "NanofiberHull" },
                 oncePerRunTags = new() { "NanofiberHull" },
-                allPresent = new() { "goat" }
+               
             };
             public static StoryNode BlockedAnEnemyAttackWithArmor => new StoryNode()
             {
@@ -411,7 +409,7 @@ namespace PhilipTheMechanic
                 minDamageBlockedByPlayerArmorThisTurn = 1,
                 oncePerCombatTags = new() { "WowArmorISPrettyCoolHuh" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode DizzyWentMissing => new StoryNode()
             {
@@ -419,7 +417,7 @@ namespace PhilipTheMechanic
                 lastTurnPlayerStatuses = NamesToStatuses(new() { "missingDizzy" }),
                 priority = true,
                 oncePerCombatTags = new() { "dizzyWentMissing" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode DrakeWentMissing => new StoryNode()
             {
@@ -428,7 +426,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "drakeWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode EnemyArmorHit => new StoryNode()
             {
@@ -437,7 +435,7 @@ namespace PhilipTheMechanic
                 minDamageBlockedByEnemyArmorThisTurn = 1,
                 oncePerCombat = true,
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode IsaacWentMissing => new StoryNode()
             {
@@ -446,7 +444,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "isaacWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode LookOutMissile => new StoryNode()
             {
@@ -455,7 +453,7 @@ namespace PhilipTheMechanic
                 once = true,
                 oncePerRunTags = new() { "goodMissileAdvice" },
                 anyDronesHostile = new() { "missile_normal", "missile_heavy", "missile_corrode", "missile_seeker", "missile_breacher" },
-                allPresent = new() { "eunice", "goat" }
+               
             };
             public static StoryNode MaxWentMissing => new StoryNode()
             {
@@ -464,7 +462,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "maxWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode OverheatDrakesFault => new StoryNode()
             {
@@ -481,7 +479,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "periWentMissing" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode SpikeGetsChatty => new StoryNode()
             {
@@ -497,14 +495,14 @@ namespace PhilipTheMechanic
                 minDamageDealtToEnemyThisAction = 1,
                 playerShotWasFromStrafe = true,
                 oncePerCombat = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode TheyGotCorroded => new StoryNode()
             {
                 type = NodeTypeCombat,
                 lastTurnEnemyStatuses = NamesToStatuses(new() { "corrode" }),
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
         }
 
@@ -517,7 +515,7 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 hasArtifacts = new() { "AresCannon" },
                 oncePerRunTags = new() { "AresCannon" },
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ArtifactBrokenGlasses => new StoryNode()
             {
@@ -526,7 +524,7 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 oncePerRun = true,
                 hasArtifacts = new() { "BrokenGlasses" },
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode ArtifactEnergyRefund => new StoryNode()
             {
@@ -535,7 +533,7 @@ namespace PhilipTheMechanic
                 minCostOfCardJustPlayed = 3,
                 oncePerCombatTags = new() { "EnergyRefund" },
                 oncePerRun = true,
-                allPresent = new() { "comp" }
+               
             };
             public static StoryNode ArtifactNanofiberHull2 => new StoryNode()
             {
@@ -543,7 +541,7 @@ namespace PhilipTheMechanic
                 minDamageDealtToPlayerThisTurn = 2,
                 hasArtifacts = new() { "NanofiberHull" },
                 oncePerRunTags = new() { "NanofiberHull2" },
-                allPresent = new() { "comp" }
+               
             };
             public static StoryNode ArtifactOverclockedGeneratorSeenMaxMemory3 => new StoryNode()
             {
@@ -553,7 +551,7 @@ namespace PhilipTheMechanic
                 oncePerRunTags = new() { "OverclockedGeneratorTag" },
                 lookup = new() { "OverclockedGeneratorTrigger" },
                 requiredScenes = new() { "Hacker_Memory_3" },
-                allPresent = new() { "dizzy" }
+               
             };
             public static StoryNode ArtifactShieldPrepIsGone => new StoryNode()
             {
@@ -562,7 +560,7 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 oncePerRunTags = new() { "ShieldPrepIsGoneYouFool" },
                 doesNotHaveArtifacts = new() { "ShieldPrep", "WarpMastery" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactWarpMastery => new StoryNode()
             {
@@ -571,7 +569,7 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 oncePerRunTags = new() { "WarpMastery" },
                 hasArtifacts = new() { "WarpMastery" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode BatboyKeepsTalking => new StoryNode()
             {
@@ -587,7 +585,7 @@ namespace PhilipTheMechanic
                 minDamageBlockedByPlayerArmorThisTurn = 3,
                 oncePerCombatTags = new() { "YowzaThatWasALOTofArmorBlock" },
                 oncePerRun = true,
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode JustPlayedASashaCard => new StoryNode()
             {
@@ -614,7 +612,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "NoOverlapBetweenShipsSeeker" },
                 anyDronesHostile = new() { "missile_seeker" },
                 nonePresent = new() { "crab" },
-                allPresent = new() { "dizzy" }
+               
             };
         }
 
@@ -627,7 +625,7 @@ namespace PhilipTheMechanic
                 minDamageBlockedByPlayerArmorThisTurn = 1,
                 oncePerCombatTags = new() { "ArmoredBae" },
                 hasArtifacts = new() { "ArmoredBay" },
-                allPresent = new() { "goat" }
+               
             };
             public static StoryNode ArtifactCockpitTargetIsNotRelevant => new StoryNode()
             {
@@ -637,7 +635,7 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 enemyDoesNotHavePart = "cockpit",
                 hasArtifacts = new() { "CockpitTarget" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactDizzyBoost => new StoryNode()
             {
@@ -655,14 +653,14 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 hasArtifacts = new() { "EnergyPrep" },
                 oncePerRun = true,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ArtifactGeminiCoreBooster => new StoryNode()
             {
                 type = NodeTypeCombat,
                 hasArtifacts = new() { "GeminiCoreBooster" },
                 oncePerRunTags = new() { "GeminiCoreBooster" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactHardmode => new StoryNode()
             {
@@ -671,7 +669,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "HARDMODE" },
                 oncePerRunTags = new() { "HARDMODE" },
                 once = true,
-                allPresent = new() { "comp" }
+               
             };
             public static StoryNode ArtifactHullPlatingWhenShot => new StoryNode()
             {
@@ -679,7 +677,7 @@ namespace PhilipTheMechanic
                 enemyShotJustHit = true,
                 oncePerRun = true,
                 hasArtifacts = new() { "HullPlating" },
-                allPresent = new() { "riggs", "dizzy" }
+               
             };
             public static StoryNode ArtifactIonConverter => new StoryNode()
             {
@@ -689,7 +687,7 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 priority = true,
                 oncePerCombatTags = new() { "IonConverterTag" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactOverclockedGenerator => new StoryNode()
             {
@@ -697,7 +695,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "OverclockedGenerator" },
                 oncePerRunTags = new() { "OverclockedGeneratorTag" },
                 lookup = new() { "OverclockedGeneratorTrigger" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode ArtifactPiercer => new StoryNode()
             {
@@ -707,7 +705,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "Piercer" },
                 oncePerCombatTags = new() { "PiercerShouts" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactPowerDiversionMadeDizzyAttackFail => new StoryNode()
             {
@@ -724,14 +722,14 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 maxTurnsThisCombat = 1,
                 hasArtifacts = new() { "Quickdraw" },
-                allPresent = new() { "dizzy", "riggs" }
+               
             };
             public static StoryNode ArtifactSimplicity => new StoryNode()
             {
                 type = NodeTypeCombat,
                 oncePerRunTags = new() { "SimplicityShouts" },
                 hasArtifacts = new() { "Simplicity" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode BooksJustHit => new StoryNode()
             {
@@ -739,7 +737,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("shard"),
-                allPresent = new() { "shard", "eunice" },
+               
                 oncePerCombatTags = new() { "BooksShotThatGuy" }
             };
             public static StoryNode CATJustHit => new StoryNode()
@@ -748,7 +746,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("colorless"),
-                allPresent = new() { "comp" }
+               
             };
             public static StoryNode CheapCardPlayed => new StoryNode()
             {
@@ -756,7 +754,7 @@ namespace PhilipTheMechanic
                 maxCostOfCardJustPlayed = 0,
                 oncePerCombatTags = new() { "CheapCardPlayed" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode DizzyJustHit => new StoryNode()
             {
@@ -764,7 +762,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("dizzy"),
-                allPresent = new() { "dizzy", "riggs" }
+               
             };
             public static StoryNode EvadeLastsBetweenTurns => new StoryNode()
             {
@@ -774,7 +772,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "goodEvadeAdvice" },
                 lastTurnPlayerStatuses = NamesToStatuses(new() { "evade" }),
                 minRuns = 1,
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ExpensiveCardPlayed => new StoryNode()
             {
@@ -782,7 +780,7 @@ namespace PhilipTheMechanic
                 minCostOfCardJustPlayed = 4,
                 oncePerCombatTags = new() { "ExpensiveCardPlayed" },
                 oncePerRun = true,
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode HackerJustHit => new StoryNode()
             {
@@ -790,7 +788,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("hacker"),
-                allPresent = new() { "hacker", "peri" }
+               
             };
             public static StoryNode HandOnlyHasUnplayableCards => new StoryNode()
             {
@@ -798,14 +796,14 @@ namespace PhilipTheMechanic
                 handFullOfUnplayableCards = true,
                 oncePerCombatTags = new() { "handFullOfUnplayableCards" },
                 oncePerRun = true,
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode JustPlayedASogginsCard => new StoryNode()
             {
                 type = NodeTypeCombat,
                 whoDidThat = NameToDeck("soggins"),
                 oncePerRun = true,
-                allPresent = new() { "comp" }
+               
             };
             public static StoryNode PeriJustHit => new StoryNode()
             {
@@ -815,20 +813,20 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 oncePerCombatTags = new() { "PeriHitEmYo" },
                 whoDidThat = NameToDeck("peri"),
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode PlayedManyCards => new StoryNode()
             {
                 type = NodeTypeCombat,
                 handEmpty = true,
                 minCardsPlayedThisTurn = 6,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode StardogGetsChatty => new StoryNode()
             {
                 type = NodeTypeCombat,
                 turnStart = true,
-                allPresent = new() { "wolf", "goat" },
+                allPresent = new() { "wolf" },
                 oncePerCombatTags = new() { "StardogLeaveUsAlone" }
             };
             public static StoryNode TookDamageHave2HP => new StoryNode()
@@ -838,7 +836,7 @@ namespace PhilipTheMechanic
                 minHull = 2,
                 maxHull = 2,
                 oncePerRunTags = new() { "TookDamageHave2HP" },
-                allPresent = new() { "dizzy" }
+               
             };
             public static StoryNode TookZeroDamageAtLowHealth => new StoryNode()
             {
@@ -846,7 +844,7 @@ namespace PhilipTheMechanic
                 enemyShotJustHit = true,
                 maxDamageDealtToPlayerThisTurn = 0,
                 maxHull = 2,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode WizardGeneralShouts => new StoryNode()
             {
@@ -866,21 +864,21 @@ namespace PhilipTheMechanic
                 maxTurnsThisCombat = 1,
                 hasArtifacts = new() { "AresCannonV2" },
                 oncePerRunTags = new() { "AresCannonV2" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode ArtifactDirtyEngines => new StoryNode()
             {
                 type = NodeTypeCombat,
                 oncePerRun = true,
                 hasArtifacts = new() { "DirtyEngines" },
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ArtifactFlywheel => new StoryNode()
             {
                 type = NodeTypeCombat,
                 hasArtifacts = new() { "Flywheel" },
                 oncePerRunTags = new() { "Flywheel" },
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ArtifactGravelRecyclerGeode => new StoryNode()
             {
@@ -888,7 +886,7 @@ namespace PhilipTheMechanic
                 anyDrones = new() { "asteroidShard" },
                 hasArtifacts = new() { "GravelRecycler" },
                 oncePerCombatTags = new() { "GravelRecyclerGeode" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactGravelRecycler => new StoryNode()
             {
@@ -896,7 +894,7 @@ namespace PhilipTheMechanic
                 anyDrones = new() { "asteroid" },
                 hasArtifacts = new() { "GravelRecycler" },
                 oncePerCombatTags = new() { "GravelRecycler" },
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode ArtifactJetThrustersNoRiggs => new StoryNode()
             {
@@ -906,7 +904,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "JetThrusters" },
                 nonePresent = new() { "riggs" },
                 oncePerRunTags = new() { "OncePerRunThrusterJokesAboutRiggsICanMakeTheseTagsStupidlyLongIfIWant" },
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode ArtifactNanofiberHullHealBooster => new StoryNode()
             {
@@ -915,7 +913,7 @@ namespace PhilipTheMechanic
                 maxDamageDealtToPlayerThisTurn = 2,
                 hasArtifacts = new() { "NanofiberHull", "HealBooster" },
                 oncePerRunTags = new() { "NanofiberHull3" },
-                allPresent = new() { "dizzy" }
+               
             };
             public static StoryNode CATsummonedIsaacCard => new StoryNode()
             {
@@ -923,7 +921,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonIsaac" },
                 oncePerCombatTags = new() { "summonIsaacTag" },
                 oncePerRun = true,
-                allPresent = new() { "goat", "comp" }
             };
             public static StoryNode CATsummonedPeriCard => new StoryNode()
             {
@@ -931,7 +928,7 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonPeri" },
                 oncePerCombatTags = new() { "summonPeriTag" },
                 oncePerRun = true,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode CATsummonedRiggsCard => new StoryNode()
             {
@@ -939,7 +936,7 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonRiggs" },
                 oncePerCombatTags = new() { "summonRiggsTag" },
                 oncePerRun = true,
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode Crystal_1_2 => new StoryNode()
             {
@@ -947,7 +944,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "crystal", "dizzy", "riggs" },
+                allPresent = new() { "crystal" },
                 requiredScenes = new() { "Crystal_1", "Crystal_1_1" },
                 excludedScenes = new() { "Crystal_2" }
             };
@@ -958,7 +955,7 @@ namespace PhilipTheMechanic
                 minDamageBlockedByEnemyArmorThisTurn = 3,
                 oncePerCombat = true,
                 oncePerRun = true,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode EnemyArmorPierced => new StoryNode()
             {
@@ -967,7 +964,7 @@ namespace PhilipTheMechanic
                 playerJustPiercedEnemyArmor = true,
                 oncePerCombatTags = new() { "EnemyArmorPierced" },
                 oncePerRun = true,
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode EuniceJustHit => new StoryNode()
             {
@@ -975,7 +972,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("eunice"),
-                allPresent = new() { "eunice", "peri" }
+               
             };
             public static StoryNode GoatJustHit => new StoryNode()
             {
@@ -983,28 +980,28 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("goat"),
-                allPresent = new() { "goat", "peri" }
+               
             };
             public static StoryNode JustPlayedAToothCard => new StoryNode()
             {
                 type = NodeTypeCombat,
                 whoDidThat = NameToDeck("tooth"),
                 oncePerRunTags = new() { "usedAToothCard" },
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ManyFlips => new StoryNode()
             {
                 type = NodeTypeCombat,
                 minTimesYouFlippedACardThisTurn = 4,
                 oncePerCombat = true,
-                allPresent = new() { "shard" }
+               
             };
             public static StoryNode OverheatCatFix => new StoryNode()
             {
                 type = NodeTypeCombat,
                 wasGoingToOverheatButStopped = true,
                 whoDidThat = NameToDeck("colorless"),
-                allPresent = new() { "comp", "eunice" },
+               
                 oncePerCombatTags = new() { "OverheatCatFix" }
             };
             public static StoryNode PeriJustHitAndDidBigDamage => new StoryNode()
@@ -1013,7 +1010,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 3,
                 whoDidThat = NameToDeck("peri"),
-                allPresent = new() { "peri", "eunice" }
+               
             };
             public static StoryNode RiggsJustHit => new StoryNode()
             {
@@ -1021,7 +1018,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
                 whoDidThat = NameToDeck("riggs"),
-                allPresent = new() { "riggs", "peri" }
+               
             };
             public static StoryNode RiggsSeesDrakesCoolCard => new StoryNode()
             {
@@ -1038,7 +1035,7 @@ namespace PhilipTheMechanic
                 playerShotWasFromStrafe = true,
                 hasArtifacts = new() { "Recalibrator", "GrazerBeam" },
                 oncePerCombat = true,
-                allPresent = new() { "peri", "riggs" }
+               
             };
             public static StoryNode TheCobalt_1_1 => new StoryNode()
             {
@@ -1046,7 +1043,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "theCobalt", "peri", "dizzy" },
+                allPresent = new() { "theCobalt" },
                 requiredScenes = new() { "TheCobalt_1" },
                 excludedScenes = new() { "TheCobalt_2" }
             };
@@ -1056,7 +1053,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "theCobalt", "riggs", "dizzy" },
+                allPresent = new() { "theCobalt" },
                 requiredScenes = new() { "TheCobalt_1", "TheCobalt_1_1" },
                 excludedScenes = new() { "TheCobalt_2" }
             };
@@ -1066,7 +1063,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "theCobalt", "dizzy", "peri" },
+                allPresent = new() { "theCobalt" },
                 requiredScenes = new() { "TheCobalt_1", "TheCobalt_1_2" },
                 excludedScenes = new() { "TheCobalt_2" }
             };
@@ -1075,7 +1072,6 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 justOverheated = true,
                 oncePerCombatTags = new() { "WeJustOverheated" },
-                allPresent = new() { "hacker" }
             };
         }
 
@@ -1088,7 +1084,7 @@ namespace PhilipTheMechanic
                 minDamageDealtToEnemyThisTurn = 8,
                 oncePerRun = true,
                 hasArtifacts = new() { "BerserkerDrive" },
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ArtifactDemonThrusters => new StoryNode()
             {
@@ -1096,7 +1092,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 hasArtifacts = new() { "DemonThrusters" },
                 oncePerRunTags = new() { "ArtifactDemonThrusters" },
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ArtifactHullPlatingWhenMissed => new StoryNode()
             {
@@ -1104,7 +1100,7 @@ namespace PhilipTheMechanic
                 enemyShotJustHit = true,
                 oncePerRun = true,
                 hasArtifacts = new() { "HullPlating" },
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ArtifactJumperCablesUseless => new StoryNode()
             {
@@ -1113,7 +1109,7 @@ namespace PhilipTheMechanic
                 minHullPercent = 1,
                 hasArtifacts = new() { "JumperCables" },
                 oncePerRunTags = new() { "ArtifactJumperCablesUnneeded" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode ArtifactJumperCables => new StoryNode()
             {
@@ -1122,7 +1118,7 @@ namespace PhilipTheMechanic
                 maxHullPercent = 0.5,
                 hasArtifacts = new() { "JumperCables" },
                 oncePerRunTags = new() { "ArtifactJumperCablesReady" },
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode ArtifactPiercerStrafe => new StoryNode()
             {
@@ -1133,7 +1129,7 @@ namespace PhilipTheMechanic
                 hasArtifacts = new() { "Piercer" },
                 oncePerCombatTags = new() { "PiercerShoutsStrafe" },
                 oncePerRun = true,
-                allPresent = new() { "riggs" }
+               
             };
             public static StoryNode ArtifactPressureFuseFail => new StoryNode()
             {
@@ -1141,7 +1137,7 @@ namespace PhilipTheMechanic
                 minHullPercent = 0.51,
                 oncePerCombatTags = new() { "PressureFuseFail" },
                 hasArtifacts = new() { "PressureFuse" },
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode ArtifactPressureFuse => new StoryNode()
             {
@@ -1150,7 +1146,7 @@ namespace PhilipTheMechanic
                 oncePerCombatTags = new() { "PressureFuse" },
                 hasArtifacts = new() { "PressureFuse" },
                 oncePerRun = true,
-                allPresent = new() { "eunice" }
+               
             };
             public static StoryNode ArtifactRevengeDriveBig => new StoryNode()
             {
@@ -1159,7 +1155,7 @@ namespace PhilipTheMechanic
                 oncePerCombat = true,
                 enemyShotJustHit = true,
                 hasArtifacts = new() { "RevengeDrive" },
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ArtifactRevengeDrive => new StoryNode()
             {
@@ -1168,7 +1164,7 @@ namespace PhilipTheMechanic
                 enemyShotJustHit = true,
                 hasArtifacts = new() { "RevengeDrive" },
                 oncePerCombatTags = new() { "RevengeDriveShouts" },
-                allPresent = new() { "peri" }
+               
             };
             public static StoryNode ArtifactSalvageArmDanger => new StoryNode()
             {
@@ -1176,7 +1172,7 @@ namespace PhilipTheMechanic
                 anyDronesHostile = new() { "missile_normal", "missile_heavy", "missile_corrode", "missile_seeker", "missile_breacher" },
                 oncePerCombatTags = new() { "SalvageMissileAdvice" },
                 hasArtifacts = new() { "SalvageArm" },
-                allPresent = new() { "goat" }
+               
             };
             public static StoryNode ArtifactSalvageArm => new StoryNode()
             {
@@ -1184,7 +1180,7 @@ namespace PhilipTheMechanic
                 anyDrones = new() { "asteroid" },
                 hasArtifacts = new() { "SalvageArm" },
                 oncePerCombatTags = new() { "salvageAsteroidAdvice" },
-                allPresent = new() { "goat" }
+               
             };
             public static StoryNode ArtifactSharpEdges => new StoryNode()
             {
@@ -1193,13 +1189,13 @@ namespace PhilipTheMechanic
                 playerJustShuffledDiscardIntoDrawPile = true,
                 hasArtifacts = new() { "SharpEdges" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
+               
             };
             public static StoryNode BatboyThreats => new StoryNode()
             {
                 type = NodeTypeCombat,
                 turnStart = true,
-                allPresent = new() { "batboy", "eunice" },
+               
                 maxTurnsThisCombat = 1
             };
             public static StoryNode CATsummonedBooksCard => new StoryNode()
@@ -1208,7 +1204,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonBooks" },
                 oncePerCombatTags = new() { "summonBooksTag" },
                 oncePerRun = true,
-                allPresent = new() { "shard" }
             };
             public static StoryNode CATsummonedCATCard => new StoryNode()
             {
@@ -1216,7 +1211,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonCAT" },
                 oncePerCombatTags = new() { "summonCATTag" },
                 oncePerRun = true,
-                allPresent = new() { "comp" }
             };
             public static StoryNode CATsummonedDizzyCard => new StoryNode()
             {
@@ -1224,7 +1218,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonDizzy" },
                 oncePerCombatTags = new() { "summonDizzyTag" },
                 oncePerRun = true,
-                allPresent = new() { "comp" }
             };
             public static StoryNode CATsummonedDrakeCard => new StoryNode()
             {
@@ -1232,7 +1225,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonDrake" },
                 oncePerCombatTags = new() { "summonDrakeTag" },
                 oncePerRun = true,
-                allPresent = new() { "comp" }
             };
             public static StoryNode CATsummonedMaxCard => new StoryNode()
             {
@@ -1240,7 +1232,6 @@ namespace PhilipTheMechanic
                 lookup = new() { "summonMax" },
                 oncePerCombatTags = new() { "summonMaxTag" },
                 oncePerRun = true,
-                allPresent = new() { "hacker" }
             };
             public static StoryNode Crystal_1_1 => new StoryNode()
             {
@@ -1248,7 +1239,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "crystal", "peri" },
+                allPresent = new() { "crystal" },
                 requiredScenes = new() { "Crystal_1" },
                 excludedScenes = new() { "Crystal_2" }
             };
@@ -1258,7 +1249,7 @@ namespace PhilipTheMechanic
                 turnStart = true,
                 priority = true,
                 oncePerRun = true,
-                allPresent = new() { "crystal", "peri" },
+                allPresent = new() { "crystal" },
                 requiredScenes = new() { "Crystal_1", "Crystal_1_2" },
                 excludedScenes = new() { "Crystal_2" }
             };
@@ -1781,7 +1772,6 @@ namespace PhilipTheMechanic
                 priority = true,
                 whoDidThat = NameToDeck("ephemeral"),
                 oncePerRunTags = new() { "usedAnEphemeralCard" },
-                allPresent = new() { "shard" }
             };
             public static StoryNode MaxIsSuperIntoTheBandit => new StoryNode()
             {
@@ -1795,7 +1785,7 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 turnStart = true,
-                allPresent = new() { "miner", "riggs" },
+                allPresent = new() { "miner" },
                 enemyIntent = "wideBigAttack",
                 oncePerCombatTags = new() { "MinerGonnaSmackYa4X" }
             };
@@ -1814,7 +1804,6 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 oncePerCombatTags = new() { "backwardsJupiterDrone" },
                 anyDronesHostile = new() { "cannonDrone" },
-                allPresent = new() { "goat" }
             };
             public static StoryNode PirateBoss_1_1 => new StoryNode()
             {
@@ -1831,7 +1820,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 turnStart = true,
                 priority = true,
-                allPresent = new() { "pirate", "peri" },
+                allPresent = new() { "pirate" },
                 enemyIntent = "tauntPeri"
             };
             public static StoryNode RiggsHandCannon => new StoryNode()
@@ -1847,7 +1836,7 @@ namespace PhilipTheMechanic
             public static StoryNode SogginsEscapeIntent_2 => new StoryNode()
             {
                 type = NodeTypeCombat,
-                allPresent = new() { "soggins", "riggs" },
+                allPresent = new() { "soggins" },
                 enemyIntent = "sogginsEscapeIntentPlease",
                 turnStart = true,
                 priority = true,
@@ -1858,13 +1847,13 @@ namespace PhilipTheMechanic
             public static StoryNode StoneNervous => new StoryNode()
             {
                 type = NodeTypeCombat,
-                allPresent = new() { "stone", "dizzy" },
+                allPresent = new() { "stone" },
                 lookup = new() { "stoneNervous" }
             };
             public static StoryNode StoneReverse => new StoryNode()
             {
                 type = NodeTypeCombat,
-                allPresent = new() { "stone", "dizzy" },
+                allPresent = new() { "stone" },
                 lookup = new() { "stoneReverse" }
             };
             public static StoryNode StrafeMissed => new StoryNode()
@@ -1874,21 +1863,18 @@ namespace PhilipTheMechanic
                 playerShotWasFromStrafe = true,
                 oncePerCombat = true,
                 doesNotHaveArtifacts = new() { "Recalibrator", "GrazerBeam" },
-                allPresent = new() { "riggs" }
             };
             public static StoryNode WeAreMovingAroundALot => new StoryNode()
             {
                 type = NodeTypeCombat,
                 minMovesThisTurn = 3,
                 oncePerRun = true,
-                allPresent = new() { "peri" }
             };
             public static StoryNode WeGotShard => new StoryNode()
             {
                 type = NodeTypeCombat,
                 lastTurnPlayerStatuses = NamesToStatuses(new() { "shard" }),
                 oncePerCombat = true,
-                allPresent = new() { "shard" }
             };
         }
 

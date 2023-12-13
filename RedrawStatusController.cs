@@ -13,7 +13,7 @@ namespace PhilipTheMechanic
     [HarmonyPatch(typeof(Card))]
     public class RedrawStatusController
     {
-        private static void HandleRedraw(G g, Card card)
+        private static void HandleRedraw(G g, Card card, bool free = false)
         {
             if (g.state.route is Combat c)
             {
@@ -22,7 +22,7 @@ namespace PhilipTheMechanic
                 //MainManifest.Instance.Logger.LogInformation($"Has toolbox? {ownedEndlessToolbox != null}");
 
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
-                g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
+                if (!free) g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
 
                 DiscardFromHand(g.state, card);
                 c.DrawCards(g.state, (ownedEndlessToolbox != null) ? 2 : 1);
@@ -67,8 +67,14 @@ namespace PhilipTheMechanic
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
             if (state.route is not Combat) { return; } // should never hit this case
             if (__instance.drawAnim != 1) { return; }
-            
-            if (state.ship.Get((Status)MainManifest.statuses["redraw"].Id) <= 0) { return; }
+
+            bool hasRedraw = state.ship.Get((Status)MainManifest.statuses["redraw"].Id) > 0;
+            bool isUnplayableModCard = __instance is ModifierCard && __instance.GetDataWithOverrides(state).unplayable;
+            if (!hasRedraw && !isUnplayableModCard) { return; }
+
+            int unplayableModCardCount = (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
+            bool redrawsForFree = !isUnplayableModCard && unplayableModCardCount < 3; // if you have 3 or more unplayable mod cards in your hand, they redraw for free
+            if (!hasRedraw && !redrawsForFree) { return; }
 
 
             int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
@@ -94,7 +100,7 @@ namespace PhilipTheMechanic
             var cardHalfWidth = 59.0 / 2.0;
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0 - hoverAnimOffset, 19, 13);
-            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance));
+            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance, redrawsForFree));
             // 855026104 is a random int chosen to not overlap with custom button IDs from other mods
             ButtonSprite(g, vec2, rect2, new UIKey((UK)855026104, __instance.uuid, $"redraw_button_for_card_{cardIndex}"), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, onMouseDown: omd, gamepadUntargetable: true);
 
