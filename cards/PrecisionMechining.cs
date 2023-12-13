@@ -20,13 +20,14 @@ namespace PhilipTheMechanic.cards
         {
             int index = c.hand.IndexOf(this);
             int redrawAmount = upgrade == Upgrade.A ? 2 : 1;
+            bool centered = c.hand.Count % 2 == 1 && index == c.hand.Count / 2;
 
-            if (c.hand.Count % 2 == 1 && index == c.hand.Count/2)
+            if (centered)
             {
                 redrawAmount = upgrade == Upgrade.B ? 5 : 3;
             }
 
-            return new()
+            List<CardAction> actions = new()
             {
                 new AStatusNoIcon() {
                     status = (Status)MainManifest.statuses["redraw"].Id,
@@ -34,11 +35,12 @@ namespace PhilipTheMechanic.cards
                     statusAmount = redrawAmount,
                     mode = Enum.Parse<AStatusMode>("Add"),
                 },
+                new ADummyAction(),
                 new ATooltipDummy() {
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"If this card is in the center of your hand, add {(upgrade == Upgrade.B ? 7 : 5)} redraw, otherwise, add 1."
+                            text = $"If this card is in the center of your hand, add {(upgrade == Upgrade.B ? 7 : 5)} redraw and draw 2 cards, otherwise, add 1 redraw."
                         },
                         new TTGlossary(MainManifest.glossary["CCardCentered"].Head),
                         new TTGlossary(MainManifest.glossary["CCardNotCentered"].Head),
@@ -46,7 +48,8 @@ namespace PhilipTheMechanic.cards
                     icons = new()
                     {
                         new Icon((Spr)MainManifest.sprites["icon_card_is_centered"].Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 7 : 5, Colors.textMain)
+                        new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 7 : 5, Colors.textMain),
+                        new Icon(Enum.Parse<Spr>("icons_drawCard"), 2, Colors.textMain)
                     }
                 },
                 new ATooltipDummy() {
@@ -57,8 +60,22 @@ namespace PhilipTheMechanic.cards
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.A ? 2 : 1, Colors.textMain)
                     }
                 },
-                new ADummyAction()
+                new ADummyAction(),
             };
+
+            if (centered)
+            {
+                actions.Add(new ADrawNoIcon()
+                {
+                    count = 2
+                });
+            }
+            else
+            {
+                actions.Add(new ADummyAction());
+            }
+
+            return actions;
         }
 
         public override CardData GetData(State state) => new() { 
