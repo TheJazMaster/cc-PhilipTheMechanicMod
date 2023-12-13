@@ -148,6 +148,9 @@ namespace PhilipTheMechanic
                 // we're trying to draw only the active actions, with icons rn
                 __result = overridenCardActions.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
             }
+
+            __result.Add(new ADummyAction() { dialogueSelector = $"{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip" });
+            overridenCardActions.Insert(0, new ADummyAction() { });
         }
 
         [HarmonyPostfix]

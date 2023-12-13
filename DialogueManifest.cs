@@ -3,6 +3,7 @@ using CobaltCoreModding.Definitions.ExternalItems;
 using CobaltCoreModding.Definitions.ModContactPoints;
 using CobaltCoreModding.Definitions.ModManifests;
 using Microsoft.Extensions.Logging;
+using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -212,6 +213,53 @@ namespace PhilipTheMechanic
             RegisterSimpleShout(storyRegistry, "And that's why you should always install armor on your ship.", "BlockedALotOfAttacksWithArmor", loopTag: "classy", storyNode: StandardShoutHooks.Relevance4.BlockedALotOfAttacksWithArmor);
             RegisterSimpleShout(storyRegistry, "That... cannot be a good noise I just heard.", "WeJustOverheated", loopTag: "squint", storyNode: StandardShoutHooks.Relevance2.WeJustOverheated);
 
+
+            RegisterModifiedCardShout(storyRegistry, "shard",
+                characterText: "The power of friendship!",
+                characterLooptag: "paws",
+                philipText: "Get 'em Books!!",
+                philipLoopTag: "excited");
+            RegisterModifiedCardShout(storyRegistry, "riggs",
+                characterText: "Woah! That was cool!",
+                philipText: "There's more where that came from!");
+            RegisterModifiedCardShout(storyRegistry, "hacker",
+                characterText: "Hey, how'd you bypass my security?",
+                characterLooptag: "squint",
+                philipText: "I have my ways.",
+                philipLoopTag: "classy");
+            RegisterModifiedCardShout(storyRegistry, "dizzy",
+                characterText: "How'd you do that?",
+                characterLooptag: "surprised",
+                philipText: "Hopes, dreams, and a screwdriver.");
+            RegisterModifiedCardShout(storyRegistry, "peri",
+                characterText: "Good work, Philip.");
+            RegisterModifiedCardShout(storyRegistry, "comp",
+                characterText: "I don't remember giving you write privlidges...",
+                characterLooptag: "squint",
+                philipText: "Please don't eject me.",
+                philipLoopTag: "sheepish");
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.peri_crewCard_ModifiedByPhilip",
+                node: new StoryNode()
+                {
+                    type = NodeType.@combat,
+                    priority = false,
+                    allPresent = new() { Philip, "peri" },
+                    oncePerRun = true,
+                    lookup = new() { "shardCard_ModifiedByPhilip", "riggsCard_ModifiedByPhilip", "dizzyCard_ModifiedByPhilip", "hackerCard_ModifiedByPhilip", "goatCard_ModifiedByPhilip", "euniceCard_ModifiedByPhilip" }
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "peri",
+                        What = "Good teamwork you two!",
+                    }
+                }
+            ));
+
+
             DBPatches.RegisterStoryNodeModification("ShopKeepBattleInsult", (node) =>
             {
                 (node.lines[0] as SaySwitch).lines.Add(new Say()
@@ -401,6 +449,39 @@ namespace PhilipTheMechanic
                         LoopTag = "squint",
                     },
                 }
+            ));
+        }
+
+        private void RegisterModifiedCardShout(IStoryRegistry storyRegistry, string character, string? characterText = null, string? characterLooptag = null, string? philipText = null, string? philipLoopTag = null)
+        {
+            List<object> instructions = new();
+            if (characterText != null) 
+                instructions.Add(new ExternalStory.ExternalSay()
+                {
+                    Who = character,
+                    What = characterText,
+                    LoopTag = characterLooptag,
+                });
+
+            if (philipText != null)
+                instructions.Add(new ExternalStory.ExternalSay()
+                {
+                    Who = Philip,
+                    What = philipText,
+                    LoopTag = philipLoopTag
+                });
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.shardCard_ModifiedByPhilip",
+                node: new StoryNode()
+                {
+                    type = NodeType.@combat,
+                    priority = false,
+                    allPresent = new() { Philip, character },
+                    oncePerRun = true,
+                    lookup = new() { $"{character}Card_ModifiedByPhilip" }
+                },
+                instructions: instructions
             ));
         }
 
