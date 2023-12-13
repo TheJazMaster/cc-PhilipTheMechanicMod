@@ -77,6 +77,14 @@ namespace PhilipTheMechanic
                 "philip_sheepish_1",
                 "philip_sheepish_3",
                 "philip_proud",
+                "philip_whatisthat",
+                "philip_unhappy",
+                "philip_excited_0",
+                "philip_excited_1",
+                "philip_excited_3",
+                "philip_laugh_0",
+                "philip_laugh_1",
+
 
 
                 "icon_play_twice",
