@@ -84,7 +84,7 @@ namespace PhilipTheMechanic
                 "philip_excited_3",
                 "philip_laugh_0",
                 "philip_laugh_1",
-
+                "philip_hot_chocolate",
 
 
                 "icon_play_twice",
@@ -138,6 +138,8 @@ namespace PhilipTheMechanic
                 "artifact_angle_grinder",
                 "artifact_endless_toolbox",
                 "artifact_self_propelling_cannons",
+                "artifact_hot_chocolate",
+                "artifact_electromagnet",
 
                 "card_philip_default",
                 "card_Black_Market_Parts",
@@ -267,6 +269,7 @@ namespace PhilipTheMechanic
             animationInfo["proud"] = new ExternalSprite[] { sprites["philip_proud"] };
             animationInfo["mini"] = new ExternalSprite[] { sprites["philip_mini"] };
             animationInfo["whatisthat"] = new ExternalSprite[] { sprites["philip_whatisthat"] };
+            animationInfo["hotchocolate"] = new ExternalSprite[] { sprites["philip_hot_chocolate"] };
             animationInfo["unhappy"] = new ExternalSprite[] { sprites["philip_unhappy"] };
             animationInfo["excited"] = new ExternalSprite[] { sprites["philip_excited_0"], sprites["philip_excited_1"], sprites["philip_excited_0"], sprites["philip_excited_3"] };
             animationInfo["laugh"] = new ExternalSprite[] { sprites["philip_laugh_0"], sprites["philip_laugh_1"], sprites["philip_laugh_0"], sprites["philip_laugh_1"] };
@@ -413,6 +416,15 @@ namespace PhilipTheMechanic
             var selfPropellingCannons = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SelfPropellingCannons", typeof(SelfPropellingCannons), sprites["artifact_self_propelling_cannons"], ownerDeck: deck);
             selfPropellingCannons.AddLocalisation("SELF PROPELLING CANNONS", "Your cannons gain brittle. At the end of each turn, launch a missile from each cannon");
             registry.RegisterArtifact(selfPropellingCannons);
+
+            var hotChocolate = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.HotChocolate", typeof(HotChocolate), sprites["artifact_hot_chocolate"], ownerDeck: deck);
+            hotChocolate.AddLocalisation("HOT CHOCOLATE", "If you have 3 or more unplayable mod cards in your hand, they redraw for free.");
+            registry.RegisterArtifact(hotChocolate);
+
+            // boss artifact
+            var scrapMagnet = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.ScrapMagnet", typeof(ScrapMagnet), sprites["artifact_electromagnet"], ownerDeck: deck);
+            scrapMagnet.AddLocalisation("SCRAP MAGNET", "If you have at least 1 redraw, at the start of your turn draw an extra card and lose 1 redraw.");
+            registry.RegisterArtifact(scrapMagnet);
         }
     }
 }
