@@ -180,9 +180,8 @@ namespace PhilipTheMechanic
 
         private void LoadShouts(IStoryRegistry storyRegistry)
         {
-            RegisterSimpleShout(storyRegistry, "New loop, new ship to take apart!", "NewLoopShout", loopTag: "maniacal", zones: new HashSet<string>() { "zone_first" });
-            RegisterSimpleShout(storyRegistry, "Man the engines are running horribly, forget the fight, I'm gonna tune them.", "Engines", loopTag: "gone");
-            RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "squint", storyNode: StandardShoutHooks.Relevance3.ArtifactHardmode);
+            RegisterSimpleShout(storyRegistry, "New loop, new ship to take apart!", "NewLoopShout", loopTag: "maniacal", zones: new HashSet<string>() { "zone_first" }, oncePerRun: true);
+            RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "squint", storyNode: StandardShoutHooks.Relevance3.ArtifactHardmode, oncePerRun: true);
             RegisterSimpleShout(storyRegistry, "Tsk, you really should've armored that weak point.", "EnemyWeakPoint", loopTag: "classy", storyNode: StandardShoutHooks.Relevance7.EnemyHasWeakness);
             RegisterSimpleShout(storyRegistry, "Woah your ship, uh... That brittle part needs to be replaced.", "EnemyBrittlePart", storyNode: StandardShoutHooks.Relevance7.EnemyHasBrittle);
             RegisterSimpleShout(storyRegistry, "Yeeeeeaaah we don't have enough spare parts to fix that.", "DamageTaken", loopTag: "squint", storyNode: StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs);
@@ -239,22 +238,29 @@ namespace PhilipTheMechanic
                 philipText: "Please don't eject me.",
                 philipLoopTag: "sheepish");
 
+            
             storyRegistry.RegisterStory(new ExternalStory(
-                $"{Name}.peri_crewCard_ModifiedByPhilip",
+                $"{Name}.Engines",
                 node: new StoryNode()
                 {
                     type = NodeType.@combat,
                     priority = false,
-                    allPresent = new() { Philip, "peri" },
+                    allPresent = new() { Philip },
                     oncePerRun = true,
-                    lookup = new() { "shardCard_ModifiedByPhilip", "riggsCard_ModifiedByPhilip", "dizzyCard_ModifiedByPhilip", "hackerCard_ModifiedByPhilip", "goatCard_ModifiedByPhilip", "euniceCard_ModifiedByPhilip" }
                 },
                 instructions: new List<object>()
                 {
                     new ExternalStory.ExternalSay()
                     {
-                        Who = "peri",
-                        What = "Good teamwork you two!",
+                        Who = Philip,
+                        What = "Man the engines are running horribly.",
+                        LoopTag = "unhappy"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "Forget the fight, I'm gonna tune them.",
+                        LoopTag = "gone"
                     }
                 }
             ));
@@ -371,6 +377,7 @@ namespace PhilipTheMechanic
                 {
                     type = NodeType.@combat,
                     priority = false,
+                    oncePerRun = true,
                     allPresent = new() { Philip, "goat" },
                     hasArtifacts = new() { "clay.PhilipTheMechanic.Artifacts.SelfPropellingCannons" }
                 },
@@ -405,6 +412,7 @@ namespace PhilipTheMechanic
                 {
                     type = NodeType.@combat,
                     priority = false,
+                    oncePerRun = true,
                     allPresent = new() { Philip }
                 },
                 instructions: new List<object>()
@@ -414,6 +422,7 @@ namespace PhilipTheMechanic
                         Who = Philip,
                         What = "Hey, you guys don't need monitors on your command consoles, right?",
                     },
+                    // TODO: this needs to be in a sayswitch
                     new ExternalStory.ExternalSay()
                     {
                         Who = "peri",
@@ -485,7 +494,7 @@ namespace PhilipTheMechanic
             ));
         }
 
-        private void RegisterSimpleShout(IStoryRegistry storyRegistry, string shout, string name, string? loopTag = null, StoryNode storyNode = null, HashSet<string>? zones = null)
+        private void RegisterSimpleShout(IStoryRegistry storyRegistry, string shout, string name, string? loopTag = null, StoryNode storyNode = null, HashSet<string>? zones = null, bool oncePerRun = false)
         {
             storyRegistry.RegisterStory(new ExternalStory(
                 $"{Name}.{name}",
@@ -494,6 +503,7 @@ namespace PhilipTheMechanic
                     type = NodeType.@combat,
                     priority = false,
                     zones = zones,
+                    oncePerRun = oncePerRun,
                     allPresent = new() { Philip }
                 },
                 instructions: new List<object>()
