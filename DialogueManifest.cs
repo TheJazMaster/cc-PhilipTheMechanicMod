@@ -238,7 +238,30 @@ namespace PhilipTheMechanic
                 philipText: "Please don't eject me.",
                 philipLoopTag: "sheepish");
 
-            
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.FreeRedraw",
+                node: new StoryNode()
+                {
+                    type = NodeType.@combat,
+                    priority = false,
+                    oncePerRun = true,
+                    lookup = new() { "JustDidRedraw" },
+                    allPresent = new() { Philip },
+                    hasArtifacts = new() { "clay.PhilipTheMechanic.Artifacts.HotChocolate" }
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "Ahhh, hot chocolate makes reorganizing so much easier.",
+                        LoopTag = "hotchocolate"
+                    },
+                }
+            ));
+
+
             storyRegistry.RegisterStory(new ExternalStory(
                 $"{Name}.Engines",
                 node: new StoryNode()
