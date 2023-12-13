@@ -150,6 +150,9 @@ namespace PhilipTheMechanic
                 "card_Permanence_Mod",
                 "card_Nanobot_Infestation",
                 "card_Nanobots",
+                "card_Emergency_Training",
+                "card_Loosen_Screws",
+                "card_Overfueled_Engines",
             };
 
             foreach (var filename in filenames) {
@@ -170,11 +173,11 @@ namespace PhilipTheMechanic
             {
                 new ExternalCard("clay.PhilipTheMechanic.cards.Overdrive Mod", typeof(OverdriveMod), sprites["card_Overdrive_Mod"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Frenzy Mod", typeof(FrenzyMod), sprites["card_Frenzy_Mod"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_philip_default"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Loosen Screws", typeof(LoosenScrews), sprites["card_Loosen_Screws"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Overfueled Engines", typeof(OverfueledEngines), sprites["card_Overfueled_Engines"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Shielding Mod", typeof(ShieldingMod), sprites["card_Shielding_Mod"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Recycle Parts", typeof(RecycleParts), sprites["card_Recycle_Parts"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Emergency Training", typeof(EmergencyTraining), sprites["card_philip_default"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Emergency Training", typeof(EmergencyTraining), sprites["card_Emergency_Training"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Impromptu Blast Shield", typeof(ImpromptuBlastShield), sprites["card_Impromptu_Blast_Shield"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Piercing Mod", typeof(PiercingMod), sprites["card_Piercing_Mod"], deck),
                 //new ExternalCard("clay.PhilipTheMechanic.cards.Permanence Mod", typeof(PermanenceMod), sprites["card_Permanence_Mod"], deck),
