@@ -9,8 +9,30 @@ namespace PhilipTheMechanic
 {
     public static class StandardShoutHooks
     {
-        public static NodeType NodeTypeCombat = Enum.Parse<NodeType>("combat");
+        private static NodeType NodeTypeCombat = Enum.Parse<NodeType>("combat");
+        private static Dictionary<string, Deck> NameToDeck_Cache = new() {};
+        private static Deck NameToDeck(string name) 
+        { 
+            if (!NameToDeck_Cache.ContainsKey(name)) NameToDeck_Cache.Add(name, Enum.Parse<Deck>(name));
+            return NameToDeck_Cache[name];
+        }
+        private static Dictionary<string, Status> NameToStatus_Cache = new() {};
+        private static Status NameToStatus(string name) 
+        { 
+            if (!NameToStatus_Cache.ContainsKey(name)) NameToStatus_Cache.Add(name, Enum.Parse<Status>(name));
+            return NameToStatus_Cache[name];
+        }
+        private static HashSet<Status> NamesToStatuses(HashSet<string> names)
+        {
+            HashSet<Status> result = new HashSet<Status>();
+            foreach (string name in names) 
+            {
+                result.Add(NameToStatus(name));
+            }
+            return result;
+        }
 
+        // All 8 crewmates comment on these events. Highly reccomended to write dialogue for these.
         public class Relevance8
         {
             public static StoryNode BanditThreats => new StoryNode()
@@ -76,7 +98,7 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 wasGoingToOverheatButStopped = true,
-                whoDidThat = "eunice",
+                whoDidThat = NameToDeck("eunice"),
                 allPresent = new() { "eunice" },
                 oncePerCombatTags = new() { "OverheatDrakeFix" }
             };
@@ -146,7 +168,7 @@ namespace PhilipTheMechanic
             public static StoryNode JustPlayedADraculaCard => new StoryNode()
             {
                 type = NodeTypeCombat,
-                whoDidThat = "dracula",
+                whoDidThat = NameToDeck("dracula"),
                 oncePerRun = true,
                 allPresent = new() { "peri" }
             };
@@ -204,7 +226,7 @@ namespace PhilipTheMechanic
             public static StoryNode WeJustGainedHeatAndDrakeIsHere => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "heat" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "heat" }),
                 allPresent = new() { "eunice" },
                 oncePerCombatTags = new() { "DrakeCanYouDoSomethingAboutTheHeatPlease" }
             };
@@ -222,7 +244,7 @@ namespace PhilipTheMechanic
             public static StoryNode BooksWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingBooks" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingBooks" }),
                 priority = true,
                 oncePerCombatTags = new() { "booksWentMissing" },
                 oncePerRun = true,
@@ -231,7 +253,7 @@ namespace PhilipTheMechanic
             public static StoryNode CatWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingCat" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingCat" }),
                 priority = true,
                 oncePerCombatTags = new() { "CatWentMissing" },
                 oncePerRun = true,
@@ -255,7 +277,7 @@ namespace PhilipTheMechanic
             public static StoryNode RiggsWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingRiggs" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingRiggs" }),
                 priority = true,
                 oncePerCombatTags = new() { "riggsWentMissing" },
                 oncePerRun = true,
@@ -271,7 +293,7 @@ namespace PhilipTheMechanic
             public static StoryNode TheyHaveAutoDodgeLeft => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnEnemyStatuses = new() { "autododgeLeft" },
+                lastTurnEnemyStatuses = NamesToStatuses(new() { "autododgeLeft" }),
                 oncePerCombatTags = new() { "aboutAutododge" },
                 oncePerRun = true,
                 allPresent = new() { "hacker" }
@@ -279,7 +301,7 @@ namespace PhilipTheMechanic
             public static StoryNode TheyHaveAutoDodgeRight => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnEnemyStatuses = new() { "autododgeRight" },
+                lastTurnEnemyStatuses = NamesToStatuses(new() { "autododgeRight" }),
                 oncePerCombatTags = new() { "aboutAutododge" },
                 oncePerRun = true,
                 allPresent = new() { "hacker" }
@@ -287,7 +309,7 @@ namespace PhilipTheMechanic
             public static StoryNode WeAreCorroded => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "corrode" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "corrode" }),
                 oncePerRun = true,
                 allPresent = new() { "shard" }
             };
@@ -394,7 +416,7 @@ namespace PhilipTheMechanic
             public static StoryNode DizzyWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingDizzy" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingDizzy" }),
                 priority = true,
                 oncePerCombatTags = new() { "dizzyWentMissing" },
                 allPresent = new() { "hacker" }
@@ -402,7 +424,7 @@ namespace PhilipTheMechanic
             public static StoryNode DrakeWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingDrake" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingDrake" }),
                 priority = true,
                 oncePerCombatTags = new() { "drakeWentMissing" },
                 oncePerRun = true,
@@ -420,7 +442,7 @@ namespace PhilipTheMechanic
             public static StoryNode IsaacWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingIsaac" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingIsaac" }),
                 priority = true,
                 oncePerCombatTags = new() { "isaacWentMissing" },
                 oncePerRun = true,
@@ -438,7 +460,7 @@ namespace PhilipTheMechanic
             public static StoryNode MaxWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingMax" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingMax" }),
                 priority = true,
                 oncePerCombatTags = new() { "maxWentMissing" },
                 oncePerRun = true,
@@ -448,14 +470,14 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 goingToOverheat = true,
-                whoDidThat = "eunice",
+                whoDidThat = NameToDeck("eunice"),
                 allPresent = new() { "eunice" },
                 oncePerCombatTags = new() { "OverheatDrakesFault" }
             };
             public static StoryNode PeriWentMissing => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "missingPeri" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "missingPeri" }),
                 priority = true,
                 oncePerCombatTags = new() { "periWentMissing" },
                 oncePerRun = true,
@@ -480,7 +502,7 @@ namespace PhilipTheMechanic
             public static StoryNode TheyGotCorroded => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnEnemyStatuses = new() { "corrode" },
+                lastTurnEnemyStatuses = NamesToStatuses(new() { "corrode" }),
                 oncePerRun = true,
                 allPresent = new() { "shard" }
             };
@@ -570,7 +592,7 @@ namespace PhilipTheMechanic
             public static StoryNode JustPlayedASashaCard => new StoryNode()
             {
                 type = NodeTypeCombat,
-                whoDidThat = "sasha",
+                whoDidThat = NameToDeck("sasha"),
                 oncePerRunTags = new() { "usedASashaCard" }
             };
             public static StoryNode SogginsEscapeIntent_3 => new StoryNode()
@@ -621,7 +643,7 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
-                whoDidThat = "dizzy",
+                whoDidThat = NameToDeck("dizzy"),
                 hasArtifacts = new() { "DizzyBoost" },
                 oncePerCombat = true,
                 allPresent = new() { "dizzy" }
@@ -692,7 +714,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 maxDamageDealtToEnemyThisAction = 0,
-                whoDidThat = "dizzy",
+                whoDidThat = NameToDeck("dizzy"),
                 hasArtifacts = new() { "PowerDiversion" },
                 allPresent = new() { "dizzy", "peri" }
             };
@@ -716,7 +738,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "shard",
+                whoDidThat = NameToDeck("shard"),
                 allPresent = new() { "shard", "eunice" },
                 oncePerCombatTags = new() { "BooksShotThatGuy" }
             };
@@ -725,7 +747,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "colorless",
+                whoDidThat = NameToDeck("colorless"),
                 allPresent = new() { "comp" }
             };
             public static StoryNode CheapCardPlayed => new StoryNode()
@@ -741,7 +763,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "dizzy",
+                whoDidThat = NameToDeck("dizzy"),
                 allPresent = new() { "dizzy", "riggs" }
             };
             public static StoryNode EvadeLastsBetweenTurns => new StoryNode()
@@ -750,7 +772,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 once = true,
                 oncePerCombatTags = new() { "goodEvadeAdvice" },
-                lastTurnPlayerStatuses = new() { "evade" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "evade" }),
                 minRuns = 1,
                 allPresent = new() { "riggs" }
             };
@@ -767,7 +789,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "hacker",
+                whoDidThat = NameToDeck("hacker"),
                 allPresent = new() { "hacker", "peri" }
             };
             public static StoryNode HandOnlyHasUnplayableCards => new StoryNode()
@@ -781,7 +803,7 @@ namespace PhilipTheMechanic
             public static StoryNode JustPlayedASogginsCard => new StoryNode()
             {
                 type = NodeTypeCombat,
-                whoDidThat = "soggins",
+                whoDidThat = NameToDeck("soggins"),
                 oncePerRun = true,
                 allPresent = new() { "comp" }
             };
@@ -792,7 +814,7 @@ namespace PhilipTheMechanic
                 minDamageDealtToEnemyThisAction = 1,
                 oncePerRun = true,
                 oncePerCombatTags = new() { "PeriHitEmYo" },
-                whoDidThat = "peri",
+                whoDidThat = NameToDeck("peri"),
                 allPresent = new() { "peri" }
             };
             public static StoryNode PlayedManyCards => new StoryNode()
@@ -952,7 +974,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "eunice",
+                whoDidThat = NameToDeck("eunice"),
                 allPresent = new() { "eunice", "peri" }
             };
             public static StoryNode GoatJustHit => new StoryNode()
@@ -960,13 +982,13 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "goat",
+                whoDidThat = NameToDeck("goat"),
                 allPresent = new() { "goat", "peri" }
             };
             public static StoryNode JustPlayedAToothCard => new StoryNode()
             {
                 type = NodeTypeCombat,
-                whoDidThat = "tooth",
+                whoDidThat = NameToDeck("tooth"),
                 oncePerRunTags = new() { "usedAToothCard" },
                 allPresent = new() { "riggs" }
             };
@@ -981,7 +1003,7 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 wasGoingToOverheatButStopped = true,
-                whoDidThat = "colorless",
+                whoDidThat = NameToDeck("colorless"),
                 allPresent = new() { "comp", "eunice" },
                 oncePerCombatTags = new() { "OverheatCatFix" }
             };
@@ -990,7 +1012,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 3,
-                whoDidThat = "peri",
+                whoDidThat = NameToDeck("peri"),
                 allPresent = new() { "peri", "eunice" }
             };
             public static StoryNode RiggsJustHit => new StoryNode()
@@ -998,7 +1020,7 @@ namespace PhilipTheMechanic
                 type = NodeTypeCombat,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                whoDidThat = "riggs",
+                whoDidThat = NameToDeck("riggs"),
                 allPresent = new() { "riggs", "peri" }
             };
             public static StoryNode RiggsSeesDrakesCoolCard => new StoryNode()
@@ -1246,7 +1268,7 @@ namespace PhilipTheMechanic
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 3,
                 oncePerRunTags = new() { "DizzyBigHit" },
-                whoDidThat = "dizzy",
+                whoDidThat = NameToDeck("dizzy"),
                 allPresent = new() { "dizzy" }
             };
             public static StoryNode DrakeBot_1_1 => new StoryNode()
@@ -1757,7 +1779,7 @@ namespace PhilipTheMechanic
             {
                 type = NodeTypeCombat,
                 priority = true,
-                whoDidThat = "ephemeral",
+                whoDidThat = NameToDeck("ephemeral"),
                 oncePerRunTags = new() { "usedAnEphemeralCard" },
                 allPresent = new() { "shard" }
             };
@@ -1864,7 +1886,7 @@ namespace PhilipTheMechanic
             public static StoryNode WeGotShard => new StoryNode()
             {
                 type = NodeTypeCombat,
-                lastTurnPlayerStatuses = new() { "shard" },
+                lastTurnPlayerStatuses = NamesToStatuses(new() { "shard" }),
                 oncePerCombat = true,
                 allPresent = new() { "shard" }
             };
