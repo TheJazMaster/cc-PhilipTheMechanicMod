@@ -153,6 +153,7 @@ namespace PhilipTheMechanic
                 "card_Emergency_Training",
                 "card_Loosen_Screws",
                 "card_Overfueled_Engines",
+                "card_Open_Bay_Doors",
             };
 
             foreach (var filename in filenames) {
@@ -191,7 +192,7 @@ namespace PhilipTheMechanic
                 new ExternalCard("clay.PhilipTheMechanic.cards.Nanobots", typeof(Nanobots), sprites["card_Nanobots"], ExternalDeck.GetRaw((int)Enum.Parse<Deck>("trash"))), 
                 new ExternalCard("clay.PhilipTheMechanic.cards.Oh No", typeof(OhNo), sprites["card_Uh_Oh"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Oops", typeof(Oops), sprites["card_Oops"], deck),
-                new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_Last_Resort"], deck),
+                new ExternalCard("clay.PhilipTheMechanic.cards.Open Bay Doors", typeof(OpenBayDoors), sprites["card_Open_Bay_Doors"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Plan WAF", typeof(PlanWAF), sprites["card_Last_Resort"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Precision Machining", typeof(PrecisionMachining), sprites["card_Precise_Machining"], deck),
                 new ExternalCard("clay.PhilipTheMechanic.cards.Reduce Reuse", typeof(ReduceReuse), sprites["card_Recycle_Parts"], deck),
@@ -257,6 +258,10 @@ namespace PhilipTheMechanic
             animationInfo["sheepish"] = new ExternalSprite[] { sprites["philip_sheepish_0"], sprites["philip_sheepish_1"], sprites["philip_sheepish_0"], sprites["philip_sheepish_3"] };
             animationInfo["proud"] = new ExternalSprite[] { sprites["philip_proud"] };
             animationInfo["mini"] = new ExternalSprite[] { sprites["philip_mini"] };
+            animationInfo["whatisthat"] = new ExternalSprite[] { sprites["philip_whatisthat"] };
+            animationInfo["unhappy"] = new ExternalSprite[] { sprites["philip_unhappy"] };
+            animationInfo["excited"] = new ExternalSprite[] { sprites["philip_excited_0"], sprites["philip_excited_1"], sprites["philip_excited_0"], sprites["philip_excited_3"] };
+            animationInfo["laugh"] = new ExternalSprite[] { sprites["philip_laugh_0"], sprites["philip_laugh_1"], sprites["philip_laugh_0"], sprites["philip_laugh_1"] };
 
             foreach (var kvp in animationInfo)
             {
