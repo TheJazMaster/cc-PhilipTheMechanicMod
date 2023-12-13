@@ -1,4 +1,5 @@
-﻿using FSPRO;
+﻿using daisyowl.text;
+using FSPRO;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
 using PhilipTheMechanic.artifacts;
@@ -17,16 +18,32 @@ namespace PhilipTheMechanic
         {
             if (g.state.route is Combat c)
             {
-                var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault();
-                if (ownedEndlessToolbox != null) { ownedEndlessToolbox.Pulse(); }
-                //MainManifest.Instance.Logger.LogInformation($"Has toolbox? {ownedEndlessToolbox != null}");
+                // find toolbox
+                var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault() as EndlessToolbox;
+                bool activateToolbox = ownedEndlessToolbox != null && ownedEndlessToolbox.counter > 0;
 
+                // subtract cost
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
                 if (!free) g.state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
 
+                // actually do the redraw
                 DiscardFromHand(g.state, card);
-                c.DrawCards(g.state, (ownedEndlessToolbox != null) ? 2 : 1);
+                c.DrawCards(g.state, activateToolbox ? 2 : 1);
 
+                // handle toolbox visuals
+                if (activateToolbox)
+                {
+                    ownedEndlessToolbox.counter--;
+                    ownedEndlessToolbox.Pulse();
+                }
+
+                // tell the shout system what just happened
+                (g.state.route as Combat).QueueImmediate(new ADummyAction()
+                {
+                    dialogueSelector = "JustDidRedraw"
+                });
+
+                // update the other cards in hand
                 foreach (Card otherCard in c.hand)
                 {
                     if (otherCard is ModifierCard mc) { mc.OnOtherCardDiscardedWhileThisWasInHand(g.state, c); }
@@ -39,13 +56,6 @@ namespace PhilipTheMechanic
         {
             if (s.route is Combat c)
             {
-                //if (c.hand.Count <= index || index < 0)
-                //{
-                //    MainManifest.Instance.Logger.LogCritical($"DiscardFromHand was called on index {index} for handsize {c.hand.Count}");
-                //    return;
-                //}
-
-                //var card = c.hand[index];
                 c.hand.Remove(card);
                 card.waitBeforeMoving = 0.05;
                 card.OnDiscard(s, c);
@@ -68,14 +78,18 @@ namespace PhilipTheMechanic
             if (state.route is not Combat) { return; } // should never hit this case
             if (__instance.drawAnim != 1) { return; }
 
+            // checking for isUnplayableModCard here allows us to do the Hot Chocolate logic later
             bool hasRedraw = state.ship.Get((Status)MainManifest.statuses["redraw"].Id) > 0;
             bool isUnplayableModCard = __instance is ModifierCard && __instance.GetDataWithOverrides(state).unplayable;
             if (!hasRedraw && !isUnplayableModCard) { return; }
 
-            int unplayableModCardCount = (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
-            bool redrawsForFree = !isUnplayableModCard && unplayableModCardCount < 3; // if you have 3 or more unplayable mod cards in your hand, they redraw for free
+            // logic for Hot Chocolate artifact
+            var ownedHotChocolate = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() as HotChocolate;
+            int unplayableModCardCount = ownedHotChocolate == null ? 0 : (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
+            bool redrawsForFree = isUnplayableModCard && unplayableModCardCount >= 3;
             if (!hasRedraw && !redrawsForFree) { return; }
 
+            // Draw the button
 
             int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
 
@@ -94,9 +108,6 @@ namespace PhilipTheMechanic
             Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
 
             // card height is 82, width is 59
-            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
-            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4, vec2.y + 69);
-
             var cardHalfWidth = 59.0 / 2.0;
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0 - hoverAnimOffset, 19, 13);
