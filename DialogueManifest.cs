@@ -184,7 +184,7 @@ namespace PhilipTheMechanic
             RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "squint", storyNode: StandardShoutHooks.Relevance3.ArtifactHardmode);
             RegisterSimpleShout(storyRegistry, "Tsk, you really should've armored that weak point.", "EnemyWeakPoint", loopTag: "classy", storyNode: StandardShoutHooks.Relevance7.EnemyHasWeakness);
             RegisterSimpleShout(storyRegistry, "Woah your ship, uh... That brittle part needs to be replaced.", "EnemyBrittlePart", storyNode: StandardShoutHooks.Relevance7.EnemyHasBrittle);
-            RegisterSimpleShout(storyRegistry, "Yeeeeeaaah we don't have enough spare parts to fix that.", "DamageTaken", storyNode: StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs);
+            RegisterSimpleShout(storyRegistry, "Yeeeeeaaah we don't have enough spare parts to fix that.", "DamageTaken", loopTag: "squint", storyNode: StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs);
             RegisterSimpleShout(storyRegistry, "I hear whirring. Why do I hear whirring?", "HullLow", loopTag: "gameover", storyNode: StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop);
             RegisterSimpleShout(storyRegistry, "Don't worry! I've got a tiny fire extinguisher!", "Heat", storyNode: new StoryNode()
             {
@@ -198,13 +198,19 @@ namespace PhilipTheMechanic
             RegisterSimpleShout(storyRegistry, "Everything's coming together!", "WeDidOverFiveDamage", loopTag: "maniacal", storyNode: StandardShoutHooks.Relevance7.WeDidOverFiveDamage);
             RegisterSimpleShout(storyRegistry, "Thank you shields!", "PlayerCompletelyBlocked", storyNode: StandardShoutHooks.Relevance6.WeGotShotButTookNoDamage);
             RegisterSimpleShout(storyRegistry, "Man, these engines are so good.", "PlayerEscaped", storyNode: StandardShoutHooks.Relevance6.WeDontOverlapWithEnemyAtAll);
-            RegisterSimpleShout(storyRegistry, "Oooh... fixing that corrosion damage is not gonna be fun.", "ImCorroded", loopTag: "unhappy", storyNode: StandardShoutHooks.Relevance6.WeAreCorroded);
+            RegisterSimpleShout(storyRegistry, "Aw man, why'd it have to be corrosion?", "ImCorroded", loopTag: "unhappy", storyNode: StandardShoutHooks.Relevance6.WeAreCorroded);
+            RegisterSimpleShout(storyRegistry, "Oooh... fixing that corrosion damage is not gonna be fun for you.", "TheyGotCorroded", loopTag: "squint", storyNode: StandardShoutHooks.Relevance5.TheyGotCorroded);
             RegisterSimpleShout(storyRegistry, "I really gotta get better at organization.", "Trash", loopTag: "sheepish", storyNode: StandardShoutHooks.Relevance6.HandOnlyHasTrashCards);
             RegisterSimpleShout(storyRegistry, "Out of tools...", "Energy", loopTag: "unhappy", storyNode: StandardShoutHooks.Relevance8.EmptyHandWithEnergy);
             RegisterSimpleShout(storyRegistry, "Solid hit!", "JustHit", storyNode: StandardShoutHooks.Relevance8.JustHitGeneric);
             RegisterSimpleShout(storyRegistry, "Woah... Max, who's your parts supplier?", "ArtifactTridimensionalCockpit", storyNode: StandardShoutHooks.Relevance7.ArtifactTridimensionalCockpit);
             RegisterSimpleShout(storyRegistry, "And here I thought I'd never get to use that woodworking class!", "ArtifactTiderunner", loopTag: "excited", storyNode: StandardShoutHooks.Relevance7.ArtifactTiderunner);
-            //RegisterSimpleShout(storyRegistry, "Easy repair!", "JustHit", loopTag: "classy", storyNode: StandardShoutHooks.Relevance8.JustHitGeneric);
+            RegisterSimpleShout(storyRegistry, "Easy repair!", "WeGotHurtButNotTooBad", loopTag: "classy", storyNode: StandardShoutHooks.Relevance6.WeGotHurtButNotTooBad);
+            RegisterSimpleShout(storyRegistry, "This is great, I don't even need to fix that.", "ArtifactNanofiberHull1", storyNode: StandardShoutHooks.Relevance5.ArtifactNanofiberHull1);
+            RegisterSimpleShout(storyRegistry, "Dang. Can we get extra nanofibers? No?", "ArtifactNanofiberHull2", storyNode: StandardShoutHooks.Relevance4.ArtifactNanofiberHull2);
+            RegisterSimpleShout(storyRegistry, "Woah, I love these engines.", "ArtifactJetThrusters", loopTag: "excited", storyNode: StandardShoutHooks.Relevance5.ArtifactJetThrusters);
+            RegisterSimpleShout(storyRegistry, "And that's why you should always install armor on your ship.", "BlockedALotOfAttacksWithArmor", loopTag: "classy", storyNode: StandardShoutHooks.Relevance4.BlockedALotOfAttacksWithArmor);
+            RegisterSimpleShout(storyRegistry, "That... cannot be a good noise I just heard.", "WeJustOverheated", loopTag: "squint", storyNode: StandardShoutHooks.Relevance2.WeJustOverheated);
 
             DBPatches.RegisterStoryNodeModification("ShopKeepBattleInsult", (node) =>
             {
