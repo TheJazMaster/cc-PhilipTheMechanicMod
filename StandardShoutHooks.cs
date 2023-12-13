@@ -35,6 +35,7 @@ namespace PhilipTheMechanic
         // All 8 crewmates comment on these events. Highly reccomended to write dialogue for these.
         public class Relevance8
         {
+            // should not be referenced as a new shout, modify game's existing shout sayswitch for BanditThreats_Multi_0 specifically
             public static StoryNode BanditThreats => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -44,6 +45,7 @@ namespace PhilipTheMechanic
                 priority = true,
                 oncePerCombatTags = new() { "BanditThreats" }
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode CrabFacts1 => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -53,6 +55,7 @@ namespace PhilipTheMechanic
                 minTurnsThisCombat = 2,
                 maxTurnsThisCombat = 2
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode CrabFacts2 => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -62,6 +65,7 @@ namespace PhilipTheMechanic
                 minTurnsThisCombat = 3,
                 maxTurnsThisCombat = 3
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode CrabFactsAreOverNow => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -100,6 +104,7 @@ namespace PhilipTheMechanic
                 allPresent = new() { "eunice" },
                 oncePerCombatTags = new() { "OverheatDrakeFix" }
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode ShopKeepBattleInsult => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -188,6 +193,7 @@ namespace PhilipTheMechanic
                 maxHull = 1,
                
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode SogginsEscapeIntent_1 => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -198,6 +204,7 @@ namespace PhilipTheMechanic
                 oncePerRun = true,
                 specialFight = "sogginsMissileEvent"
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode Soggins_Missile_Shout_1 => new StoryNode()
             {
                 type = NodeTypeCombat,
@@ -221,6 +228,7 @@ namespace PhilipTheMechanic
                 minDamageDealtToEnemyThisAction = 6,
                
             };
+            // should not be referenced as a new shout, modify game's existing shout sayswitch
             public static StoryNode WeJustGainedHeatAndDrakeIsHere => new StoryNode()
             {
                 type = NodeTypeCombat,
