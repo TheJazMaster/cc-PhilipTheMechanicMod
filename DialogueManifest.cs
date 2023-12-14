@@ -37,6 +37,7 @@ namespace PhilipTheMechanic
                 node: new StoryNode()
                 {
                     type = NodeType.@event,
+                    oncePerRun = true,
                     lookup = new HashSet<string>() { "after_any" },
                     allPresent = new() { Philip, "goat" },
                 },
@@ -63,10 +64,132 @@ namespace PhilipTheMechanic
             ));
 
             storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.IsaacCannonStruts",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    oncePerRun = true,
+                    lookup = new HashSet<string>() { "after_any" },
+                    allPresent = new() { Philip, "goat" },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "goat",
+                        What = "Hey, are you sure that engine will hold?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Certain!",
+                        LoopTag = "classy"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "goat",
+                        What = "Because without a strut there, and some plating there... it'll rip itself out of the ship.",
+                        LoopTag = "squint"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "... oh... I see.",
+                        LoopTag = "whatisthat"
+                    },
+                }
+            ));
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.PeriEfficiency",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    oncePerRun = true,
+                    lookup = new HashSet<string>() { "after_any" },
+                    allPresent = new() { Philip, "peri" },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "peri",
+                        What = "Philip, this cannon will work at higher efficiency, right?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Yep, I'm 80% confident it won't explode this time."
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "Wait I misunderstood your question.",
+                        LoopTag = "squint"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = "peri",
+                        What = "...",
+                        LoopTag = "squint"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = Philip,
+                        What = "My answer's still the same though.",
+                        LoopTag = "classy"
+                    },
+                }
+            ));
+
+            storyRegistry.RegisterStory(new ExternalStory(
+                $"{Name}.DizzyExplosion",
+                node: new StoryNode()
+                {
+                    type = NodeType.@event,
+                    oncePerRun = true,
+                    lookup = new HashSet<string>() { "after_any" },
+                    allPresent = new() { Philip, "dizzy" },
+                },
+                instructions: new List<object>()
+                {
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "Hey Dizzy! Want to see a phosphorus explosion?"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Flipped = true,
+                        Who = "dizzy",
+                        What = "Do I ever!"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "... from behind the observation window.",
+                        LoopTag = "squint"
+                    },
+                    new ExternalStory.ExternalSay()
+                    {
+                        Who = Philip,
+                        What = "I'm in here because I'm certified to have my fur burnt off.",
+                        LoopTag = "maniacal"
+                    },
+                }
+            ));
+
+            storyRegistry.RegisterStory(new ExternalStory(
                 $"{Name}.BooksRetain",
                 node: new StoryNode()
                 {
                     type = NodeType.@event,
+                    oncePerRun = true,
                     lookup = new HashSet<string>() { "after_any" },
                     allPresent = new() { Philip, "shard" },
                 },
@@ -181,6 +304,7 @@ namespace PhilipTheMechanic
         private void LoadShouts(IStoryRegistry storyRegistry)
         {
             RegisterSimpleShout(storyRegistry, "New loop, new ship to take apart!", "NewLoopShout", loopTag: "maniacal", zones: new HashSet<string>() { "zone_first" }, oncePerRun: true);
+            RegisterSimpleShout(storyRegistry, "Man, the engines are running horribly. Forget the fight, I'm gonna tune them.", "Engines", loopTag: "gone", oncePerRun: true);
             RegisterSimpleShout(storyRegistry, "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.", "SafetyGlass", loopTag: "squint", storyNode: StandardShoutHooks.Relevance3.ArtifactHardmode, oncePerRun: true);
             RegisterSimpleShout(storyRegistry, "Tsk, you really should've armored that weak point.", "EnemyWeakPoint", loopTag: "classy", storyNode: StandardShoutHooks.Relevance7.EnemyHasWeakness);
             RegisterSimpleShout(storyRegistry, "Woah your ship, uh... That brittle part needs to be replaced.", "EnemyBrittlePart", storyNode: StandardShoutHooks.Relevance7.EnemyHasBrittle);
@@ -258,34 +382,6 @@ namespace PhilipTheMechanic
                         What = "Ahhh, hot chocolate makes reorganizing so much easier.",
                         LoopTag = "hotchocolate"
                     },
-                }
-            ));
-
-
-            storyRegistry.RegisterStory(new ExternalStory(
-                $"{Name}.Engines",
-                node: new StoryNode()
-                {
-                    type = NodeType.@combat,
-                    priority = false,
-                    allPresent = new() { Philip },
-                    oncePerRun = true,
-                },
-                instructions: new List<object>()
-                {
-                    new ExternalStory.ExternalSay()
-                    {
-                        Who = Philip,
-                        What = "Man the engines are running horribly.",
-                        LoopTag = "unhappy"
-                    },
-                    new ExternalStory.ExternalSay()
-                    {
-                        Who = Philip,
-                        What = "Forget the fight, I'm gonna tune them.",
-                        LoopTag = "gone",
-                        Delay = 1
-                    }
                 }
             ));
 
@@ -467,7 +563,7 @@ namespace PhilipTheMechanic
                     new ExternalStory.ExternalSay()
                     {
                         Who = "goat",
-                        What = "We do!",
+                        What = "Please don't take my monitor.",
                         LoopTag = "squint",
                     },
                     new ExternalStory.ExternalSay()
