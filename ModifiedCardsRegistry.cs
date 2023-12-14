@@ -212,6 +212,12 @@ namespace PhilipTheMechanic
         public static void HarmonyPrefix_Card_Render(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
         {
             State state = fakeState ?? g.state;
+
+            if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
+            if (state.route is not Combat) { return; } // should never hit this case
+            if (!cardMods.ContainsKey(__instance.uuid)) { return; }
+            if (__instance.drawAnim != 1) { return; }
+
             var actions = __instance.GetActionsOverridden(state, state.route as Combat);
             if (ShouldStickyNote(__instance, actions, state))
             {

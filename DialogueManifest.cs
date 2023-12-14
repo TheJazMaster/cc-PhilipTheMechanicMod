@@ -222,13 +222,6 @@ namespace PhilipTheMechanic
                         Who = "shard",
                         What = "Thank you Mr. Philip!"
                     },
-                    new ExternalStory.ExternalSay()
-                    {
-                        Flipped = true,
-                        Who = Philip,
-                        What = "She's adorable. I hope that retain sticker works.",
-                        LoopTag = "proud"
-                    },
                 }
             ));
         }

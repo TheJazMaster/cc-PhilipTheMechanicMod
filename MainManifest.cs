@@ -132,6 +132,7 @@ namespace PhilipTheMechanic
                 "icon_sticker_redraw",
                 "icon_sticker_retain",
                 "icon_sticker_no_action",
+                "icon_sticker_energyLessNextTurn",
 
                 "button_redraw",
                 "button_redraw_on",
