@@ -601,7 +601,7 @@ namespace PhilipTheMechanic
                 });
 
             storyRegistry.RegisterStory(new ExternalStory(
-                $"{Name}.shardCard_ModifiedByPhilip",
+                $"{Name}.{character}Card_ModifiedByPhilip",
                 node: new StoryNode()
                 {
                     type = NodeType.@combat,
