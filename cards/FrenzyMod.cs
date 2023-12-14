@@ -8,7 +8,7 @@ using static PhilipTheMechanic.ModifiedCardsRegistry;
 
 namespace PhilipTheMechanic.cards
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
+    [CardMeta(rarity = Rarity.uncommon, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
     public class FrenzyMod : ModifierCard
     {
         public override string Name()
