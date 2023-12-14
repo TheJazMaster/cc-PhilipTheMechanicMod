@@ -24,7 +24,7 @@ namespace PhilipTheMechanic.cards
 
             if (centered)
             {
-                redrawAmount = upgrade == Upgrade.B ? 5 : 3;
+                redrawAmount = upgrade == Upgrade.B ? 7 : 5;
             }
 
             List<CardAction> actions = new()
@@ -40,14 +40,14 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {
                         new TTText()
                         {
-                            text = $"If this card is in the center of your hand, add {(upgrade == Upgrade.B ? 7 : 5)} redraw and draw 2 cards, otherwise, add 1 redraw."
+                            text = $"If this card is in the center of your hand, add {redrawAmount} redraw and draw 2 cards, otherwise, add 1 redraw."
                         },
                         new TTGlossary(MainManifest.glossary["CCardCentered"].Head),
                         new TTGlossary(MainManifest.glossary["CCardNotCentered"].Head),
                     },
                     icons = new()
                     {
-                        new Icon((Spr)MainManifest.sprites["icon_card_is_centered"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_card_is_centered" + (centered? "" : "_disabled")].Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.B ? 7 : 5, Colors.textMain),
                         new Icon(Enum.Parse<Spr>("icons_drawCard"), 2, Colors.textMain)
                     }
@@ -56,7 +56,7 @@ namespace PhilipTheMechanic.cards
                     tooltips = new() {},
                     icons = new()
                     {
-                        new Icon((Spr)MainManifest.sprites["icon_card_is_not_centered"].Id, null, Colors.textMain),
+                        new Icon((Spr)MainManifest.sprites["icon_card_is_not_centered" + (centered? "_disabled" : "")].Id, null, Colors.textMain),
                         new Icon((Spr)MainManifest.sprites["icon_redraw"].Id, upgrade == Upgrade.A ? 2 : 1, Colors.textMain)
                     }
                 },

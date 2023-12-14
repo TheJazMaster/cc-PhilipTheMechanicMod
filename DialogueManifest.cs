@@ -283,7 +283,8 @@ namespace PhilipTheMechanic
                     {
                         Who = Philip,
                         What = "Forget the fight, I'm gonna tune them.",
-                        LoopTag = "gone"
+                        LoopTag = "gone",
+                        Delay = 1
                     }
                 }
             ));

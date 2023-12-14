@@ -106,6 +106,8 @@ namespace PhilipTheMechanic
                 "icon_no_action",
                 "icon_card_is_centered",
                 "icon_card_is_not_centered",
+                "icon_card_is_centered_disabled",
+                "icon_card_is_not_centered_disabled",
                 "icon_flimsy",
 
                 "icon_2x_sticker",
