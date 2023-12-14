@@ -40,7 +40,7 @@ namespace PhilipTheMechanic
                 // tell the shout system what just happened
                 (g.state.route as Combat).QueueImmediate(new ADummyAction()
                 {
-                    dialogueSelector = "JustDidRedraw"
+                    dialogueSelector = ".JustDidRedraw"
                 });
 
                 // update the other cards in hand

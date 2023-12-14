@@ -142,6 +142,14 @@ namespace PhilipTheMechanic
                 overridenCardActions = registration.actionsModification(overridenCardActions, s);
             }
 
+            // TODO: this will break for modded characters
+            try {
+                string dialogueSelector = $".{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip";
+                overridenCardActions.Add(new ADummyAction() { dialogueSelector = dialogueSelector });
+                overridenCardActions.Insert(0, new ADummyAction() { });
+            } catch (Exception e) { }
+
+
             if (!StickyNoteHack)
             {
                 __result = overridenCardActions;
@@ -151,9 +159,6 @@ namespace PhilipTheMechanic
                 // we're trying to draw only the active actions, with icons rn
                 __result = overridenCardActions.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
             }
-
-            overridenCardActions.Add(new ADummyAction() { dialogueSelector = $"{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip" });
-            overridenCardActions.Insert(0, new ADummyAction() { });
         }
 
         [HarmonyPostfix]

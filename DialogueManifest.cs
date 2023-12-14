@@ -372,7 +372,7 @@ namespace PhilipTheMechanic
                     oncePerRun = true,
                     lookup = new() { "JustDidRedraw" },
                     allPresent = new() { Philip },
-                    hasArtifacts = new() { "clay.PhilipTheMechanic.Artifacts.HotChocolate" }
+                    hasArtifacts = new() { "HotChocolate" }
                 },
                 instructions: new List<object>()
                 {
@@ -601,7 +601,7 @@ namespace PhilipTheMechanic
                 });
 
             storyRegistry.RegisterStory(new ExternalStory(
-                $"{Name}.{character}Card_ModifiedByPhilip",
+                $"{Name}.{character}Card_ModifiedByPhilip_Dialogue",
                 node: new StoryNode()
                 {
                     type = NodeType.@combat,
