@@ -38,6 +38,7 @@ namespace PhilipTheMechanic
 
 
         private static bool StickyNoteHack = false;
+        private static bool SuppressActionMods = false;
 
 
         public static void RegisterMod(
@@ -127,6 +128,8 @@ namespace PhilipTheMechanic
         [HarmonyPatch(nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
+            if (SuppressActionMods) { return; }
+
             if (s.route is Combat combat && combat.routeOverride != null && !combat.eyeballPeek) { return; }
             if (s.route is not Combat) { return; } // should never hit this case
             if (!cardMods.ContainsKey(__instance.uuid)) { return; }
@@ -149,7 +152,7 @@ namespace PhilipTheMechanic
                 __result = overridenCardActions.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
             }
 
-            __result.Add(new ADummyAction() { dialogueSelector = $"{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip" });
+            overridenCardActions.Add(new ADummyAction() { dialogueSelector = $"{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip" });
             overridenCardActions.Insert(0, new ADummyAction() { });
         }
 
@@ -199,10 +202,23 @@ namespace PhilipTheMechanic
             __result = data;
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Card.Render))]
+        public static void HarmonyPrefix_Card_Render(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
+        {
+            State state = fakeState ?? g.state;
+            var actions = __instance.GetActionsOverridden(state, state.route as Combat);
+            if (ShouldStickyNote(__instance, actions, state))
+            {
+                SuppressActionMods = true;
+            }
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(nameof(Card.Render))]
         public static void HarmonyPostfix_Card_Render(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
         {
+            SuppressActionMods = false;
             State state = fakeState ?? g.state;
 
             if (state.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
