@@ -348,7 +348,7 @@ namespace PhilipTheMechanic
 
             RegisterGlossaryEntry(registry, "SRedraw", sprites["icon_redraw"],
                 "redraw",
-                "Allows you to discard {0} cards and draw a new one for each discarded."
+                "Lets you discard a card and draw a new one. Costs 1 redraw per discard."
             );
 
             RegisterGlossaryEntry(registry, "ANoAction", sprites["icon_no_action"],
@@ -393,7 +393,7 @@ namespace PhilipTheMechanic
         {
             var redraw = new ExternalStatus("clay.PhilipTheMechanic.Statuses.Redraw", true, System.Drawing.Color.Red, null, sprites["icon_redraw"], false);
             statusRegistry.RegisterStatus(redraw);
-            redraw.AddLocalisation("Redraw", "Enables you to discard a card of your choice and draw a new one.");
+            redraw.AddLocalisation("Redraw", "Lets you discard a card and draw a new one. Costs 1 redraw per discard.");
             statuses["redraw"] = redraw;
 
             var customParts = new ExternalStatus("clay.PhilipTheMechanic.Statuses.CustomParts", true, System.Drawing.Color.Red, null, sprites["icon_customParts"], false);
