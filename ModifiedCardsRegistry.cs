@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 
 namespace PhilipTheMechanic
 {
-    [HarmonyPatch(typeof(Card))]
+    [HarmonyPatch]
     public static class ModifiedCardsRegistry
     {
         public enum ModifierPriority
@@ -85,7 +86,39 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.AfterWasPlayed))]
+        [HarmonyPatch(typeof(Combat), nameof(Combat.DrainCardActions))]
+        public static void HarmonyPostfix_Combat_DrainCardActions(Combat __instance, G g)
+        {
+            if (__instance.currentCardAction != null)
+            {
+                foreach(Card card in __instance.hand)
+                {
+                    if (card is ModifierCard mc)
+                    {
+                        mc.ReapplyModifications(__instance);
+                    }
+                }
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(State), nameof(State.OnLoaded))]
+        public static void HarmonyPostfix_State_OnLoaded(State __instance)
+        {
+            if (__instance.route is Combat c)
+            {
+                foreach (Card card in c.hand)
+                {
+                    if (card is ModifierCard mc)
+                    {
+                        mc.ReapplyModifications(c);
+                    }
+                }
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Card), nameof(Card.AfterWasPlayed))]
         public static void HarmonyPostfix_Card_AfterWasPlayed(Card __instance, State state, Combat c)
         {
             if (!cardMods.ContainsKey(__instance.uuid)) return;
@@ -125,7 +158,7 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.GetActionsOverridden))]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
         public static void HarmonyPostfix_Card_GetActions(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
             if (SuppressActionMods) { return; }
@@ -162,7 +195,7 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.GetCurrentCost))]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetCurrentCost))]
         public static void HarmonyPostfix_Card_GetCurrentCost(Card __instance, ref int __result, State s)
         {
             if (s.route is Combat c && c.routeOverride != null && !c.eyeballPeek) { return; }
@@ -183,7 +216,7 @@ namespace PhilipTheMechanic
 
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.GetDataWithOverrides))]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
         public static void HarmonyPostfix_Card_GetData(Card __instance, ref CardData __result, State state)
         {
             if (state.ship.Get(Enum.Parse<Status>("tableFlip")) > 0 && __instance is ModifierCard)
@@ -208,7 +241,7 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(Card.Render))]
+        [HarmonyPatch(typeof(Card), nameof(Card.Render))]
         public static void HarmonyPrefix_Card_Render(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
         {
             State state = fakeState ?? g.state;
@@ -226,7 +259,7 @@ namespace PhilipTheMechanic
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(nameof(Card.Render))]
+        [HarmonyPatch(typeof(Card), nameof(Card.Render))]
         public static void HarmonyPostfix_Card_Render(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
         {
             SuppressActionMods = false;
