@@ -67,7 +67,7 @@ namespace PhilipTheMechanic
         public static void DeregisterMods(Card moddingCard, Card moddedCard)
         {
             if (!cardMods.ContainsKey(moddedCard.uuid)) { return; }
-            MainManifest.Instance.Logger.LogInformation($"Deregistering card modification for {moddedCard.uuid}:`{moddedCard.GetFullDisplayName()}` by {moddingCard.uuid}:`{moddingCard.GetFullDisplayName()}`");
+            //MainManifest.Instance.Logger.LogInformation($"Deregistering card modification for {moddedCard.uuid}:`{moddedCard.GetFullDisplayName()}` by {moddingCard.uuid}:`{moddingCard.GetFullDisplayName()}`");
 
             for (int i = 0; i < cardMods[moddedCard.uuid].Count; i++)
             {
