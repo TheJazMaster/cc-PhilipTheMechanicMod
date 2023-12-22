@@ -10,15 +10,20 @@ namespace PhilipTheMechanic.artifacts
     [ArtifactMeta(pools = new[] { ArtifactPool.Boss })]
     public class ScrapMagnet : Artifact
     {
+        public int counter = 2;
+
+        public override int? GetDisplayNumber(State s)
+        {
+            return counter;
+        }
+
         public override void OnTurnStart(State state, Combat combat)
         {
-            var redrawAmount = state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
+        }
 
-            if (redrawAmount <= 0) return;
-
-            state.ship.Set((Status)MainManifest.statuses["redraw"].Id, redrawAmount - 1);
-            combat.QueueImmediate(new ADrawCard() { count = 1 });
-            Pulse();
+        public override void OnCombatEnd(State state)
+        {
+            counter = 2;
         }
     }
 }

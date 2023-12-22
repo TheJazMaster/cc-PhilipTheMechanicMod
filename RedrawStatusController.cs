@@ -14,13 +14,34 @@ namespace PhilipTheMechanic
     [HarmonyPatch(typeof(Card))]
     public class RedrawStatusController
     {
-        private static void HandleRedraw(G g, Card card, bool free = false)
+        private static void HandleRedraw(G g, Card card, bool free, int index)
         {
             if (g.state.route is Combat c)
             {
+                var drawAmount = 1;
+
                 // find toolbox
                 var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault() as EndlessToolbox;
                 bool activateToolbox = ownedEndlessToolbox != null && ownedEndlessToolbox.counter > 0;
+                if (activateToolbox)
+                {
+                    drawAmount = 2;
+                    ownedEndlessToolbox.counter--;
+                    ownedEndlessToolbox.Pulse();
+                }
+
+                // find scrap magnet
+                if (index == 0 && !free)
+                {
+                    var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
+                    bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
+                    if (activateScrapMagnet)
+                    {
+                        free = true;
+                        ownedScrapMagnet.counter--;
+                        ownedScrapMagnet.Pulse();
+                    }
+                }
 
                 // subtract cost
                 var redrawAmount = g.state.ship.Get((Status)MainManifest.statuses["redraw"].Id);
@@ -28,14 +49,7 @@ namespace PhilipTheMechanic
 
                 // actually do the redraw
                 DiscardFromHand(g.state, card);
-                c.DrawCards(g.state, activateToolbox ? 2 : 1);
-
-                // handle toolbox visuals
-                if (activateToolbox)
-                {
-                    ownedEndlessToolbox.counter--;
-                    ownedEndlessToolbox.Pulse();
-                }
+                c.DrawCards(g.state, drawAmount);
 
                 // tell the shout system what just happened
                 (g.state.route as Combat).QueueImmediate(new ADummyAction()
@@ -78,20 +92,30 @@ namespace PhilipTheMechanic
             if (state.route is not Combat) { return; } // should never hit this case
             if (__instance.drawAnim != 1) { return; }
 
-            // checking for isUnplayableModCard here allows us to do the Hot Chocolate logic later
+            int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
+
+            // check to see if there's even a possibility we should draw the redraw arrow
             bool hasRedraw = state.ship.Get((Status)MainManifest.statuses["redraw"].Id) > 0;
             bool isUnplayableModCard = __instance is ModifierCard && __instance.GetDataWithOverrides(state).unplayable;
-            if (!hasRedraw && !isUnplayableModCard) { return; }
+
+            bool HOT_CHOCOLATE_CONDITION = isUnplayableModCard;
+            bool SCRAP_MAGNET_CONDITION = cardIndex == 0;
+
+            if (!hasRedraw && !HOT_CHOCOLATE_CONDITION && !SCRAP_MAGNET_CONDITION) { return; }
 
             // logic for Hot Chocolate artifact
             var ownedHotChocolate = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() as HotChocolate;
             int unplayableModCardCount = ownedHotChocolate == null ? 0 : (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
             bool redrawsForFree = isUnplayableModCard && unplayableModCardCount >= 3;
+
+            // logic for Scrap Magnet artifact
+            var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
+            bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
+            redrawsForFree = redrawsForFree || activateScrapMagnet;
+
             if (!hasRedraw && !redrawsForFree) { return; }
 
             // Draw the button
-
-            int cardIndex = (g.state.route as Combat).hand.IndexOf(__instance);
 
             double hoverAnim = __instance.hoverAnim;
 
@@ -111,7 +135,7 @@ namespace PhilipTheMechanic
             var cardHalfWidth = 59.0 / 2.0;
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth-19.0/2.0, cardHeight-13.0/2.0 - hoverAnimOffset, 19, 13);
-            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance, redrawsForFree));
+            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance, redrawsForFree, cardIndex));
             // 855026104 is a random int chosen to not overlap with custom button IDs from other mods
             ButtonSprite(g, vec2, rect2, new UIKey((UK)855026104, __instance.uuid, $"redraw_button_for_card_{cardIndex}"), (Spr)MainManifest.sprites["button_redraw"].Id, (Spr)MainManifest.sprites["button_redraw_on"].Id, onMouseDown: omd, gamepadUntargetable: true);
 

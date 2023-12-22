@@ -426,7 +426,7 @@ namespace PhilipTheMechanic
 
             // boss artifact
             var scrapMagnet = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.ScrapMagnet", typeof(ScrapMagnet), sprites["artifact_electromagnet"], ownerDeck: deck);
-            scrapMagnet.AddLocalisation("SCRAP MAGNET", "If you have at least 1 redraw, at the start of your turn draw an extra card and lose 1 redraw.");
+            scrapMagnet.AddLocalisation("SCRAP MAGNET", "Twice per turn, redraw the leftmost card in your hand for free.");
             registry.RegisterArtifact(scrapMagnet);
         }
     }
