@@ -87,6 +87,7 @@ namespace PhilipTheMechanic
                 "philip_hot_chocolate",
 
 
+                "icon_addUpgradedCard",
                 "icon_play_twice",
                 "icon_all_cards_to_the_left",
                 "icon_all_cards_to_the_right",
@@ -316,7 +317,7 @@ namespace PhilipTheMechanic
                 "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
             );
             RegisterGlossaryEntry(registry, "ANeighborCards", sprites["icon_card_neighbors"],
-                "modify all cards to the right",
+                "modify neighboring cards",
                 "Add the following effects to both adjacent cards. They do NOT trigger when this card is played."
             );
 

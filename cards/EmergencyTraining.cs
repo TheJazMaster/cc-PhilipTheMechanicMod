@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhilipTheMechanic.actions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,10 @@ namespace PhilipTheMechanic.cards
 
         public override List<CardAction> GetActions(State s, Combat c)
         {
+            var addCardAction = upgrade == Upgrade.B
+                ? new AAddCardUpgraded() { card = new ImpromptuBlastShield() { upgrade = Upgrade.B }, destination = Enum.Parse<CardDestination>("Hand") }
+                : new AAddCard() { card = new ImpromptuBlastShield(), destination = Enum.Parse<CardDestination>("Hand") };
+
             return new()
             {
                 new ADiscard(),
@@ -25,7 +30,7 @@ namespace PhilipTheMechanic.cards
                     statusAmount = 5,
                     mode = Enum.Parse<AStatusMode>("Add"),
                 },
-                new AAddCard() { card = new ImpromptuBlastShield() { upgrade = (this.upgrade == Upgrade.B ? Upgrade.B : Upgrade.None) }, destination = Enum.Parse<CardDestination>("Hand") },
+                addCardAction,
                 new ADrawCard() { count=4 },
             };
         }

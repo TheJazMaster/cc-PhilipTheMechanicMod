@@ -28,6 +28,18 @@ namespace PhilipTheMechanic
         // Explicitly has no actions
         public override List<CardAction> GetActions(State s, Combat c) { return new List<CardAction>(); }
 
+
+
+        public override void ExtraRender(G g, Vec v)
+        {
+            // just... man with effects that directly write to the state of the hand, what else can I do?
+            // I suppose I should probably hook into something like Combat.DrainActions but this is much easier
+            if (g.state.route is Combat c)
+            {
+                ReapplyModifications(c);
+            }
+        }
+
         public override void OnDiscard(State s, Combat c)
         {
             RemoveModifications();

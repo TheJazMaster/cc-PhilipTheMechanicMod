@@ -124,7 +124,6 @@ namespace PhilipTheMechanic.cards
                         upgrade == Upgrade.B 
                             ? new Icon(Enum.Parse<Spr>("icons_energy"), 0, Colors.energy)
                             : new Icon(Enum.Parse<Spr>("icons_discount"), 1, Colors.energy),
-
                     }
                 }
             };
