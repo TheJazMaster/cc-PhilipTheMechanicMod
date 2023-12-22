@@ -116,6 +116,7 @@ namespace PhilipTheMechanic.cards
                             text = $"{GetTargetLocationString().Capitalize()} gain exhaust{upgradeText} Makes unplayable cards playable."
                         },
                         new TTGlossary(GetGlossaryForTargetLocation().Head),
+                        MainManifest.vanillaSpritesGlossary["AEnergyDiscount"],
                         // TODO: add glossary for missile
                     },
                     icons = icons
