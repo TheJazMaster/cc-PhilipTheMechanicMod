@@ -13,7 +13,7 @@ namespace PhilipTheMechanic.actions
     {
         public override Icon? GetIcon(State s)
         {
-            return new Icon((Spr)MainManifest.sprites["icon_addUpgradedCard"].Id, null, Colors.heal);
+            return new Icon((Spr)MainManifest.sprites["icon_addUpgradedCard"].Id, base.amount, Colors.textBold);
         }
     }
 }
