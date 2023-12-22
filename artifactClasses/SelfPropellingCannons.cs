@@ -11,18 +11,21 @@ namespace PhilipTheMechanic.artifacts
     [ArtifactMeta(pools = new[] { ArtifactPool.Common })]
     public class SelfPropellingCannons : Artifact
     {
-        public override void OnCombatStart(State state, Combat combat)
+        // should be OnCombatStart, but then GlassCannons overrides this effect
+        public override void OnTurnStart(State state, Combat combat)
         {
             State state2 = state;
-            combat.QueueImmediate(from pair in state2.ship.parts.Select((Part part, int x) => new { part, x })
-                                  where pair.part.type == PType.cannon
-                                  select new ABrittle
-                                  {
-                                      targetPlayer = true,
-                                      worldX = state2.ship.x + pair.x,
-                                      //justTheActiveOverride = true,
-                                      artifactPulse = Key()
-                                  });
+            combat.QueueImmediate(
+                from pair in state2.ship.parts.Select((Part part, int x) => new { part, x })
+                where pair.part.type == PType.cannon && pair.part.active == true
+                select new ABrittle
+                {
+                    targetPlayer = true,
+                    worldX = state2.ship.x + pair.x,
+                    //justTheActiveOverride = true,
+                    artifactPulse = Key()
+                }
+            );
         }
 
         public override void OnTurnEnd(State state, Combat combat)
