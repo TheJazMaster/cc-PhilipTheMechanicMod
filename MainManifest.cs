@@ -413,7 +413,7 @@ namespace PhilipTheMechanic
             registry.RegisterArtifact(sturdyPliers);
 
             var endlessToolbox = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.EndlessToolbox", typeof(EndlessToolbox), sprites["artifact_endless_toolbox"], ownerDeck: deck);
-            endlessToolbox.AddLocalisation("ENDLESS TOOLBOX", "When you redraw, draw an extra card");
+            endlessToolbox.AddLocalisation("ENDLESS TOOLBOX", "The first 2 times you redraw each turn, draw an extra card.");
             registry.RegisterArtifact(endlessToolbox);
 
             var selfPropellingCannons = new ExternalArtifact("clay.PhilipTheMechanic.Artifacts.SelfPropellingCannons", typeof(SelfPropellingCannons), sprites["artifact_self_propelling_cannons"], ownerDeck: deck);
