@@ -30,15 +30,15 @@ namespace PhilipTheMechanic
 
 
 
-            public override void ExtraRender(G g, Vec v)
+        public override void ExtraRender(G g, Vec v)
+        {
+            // just... man with effects that directly write to the state of the hand, what else can I do?
+            // I suppose I should probably hook into something like Combat.DrainActions but this is much easier
+            if (g.state.route is Combat c)
             {
-                // just... man with effects that directly write to the state of the hand, what else can I do?
-                // I suppose I should probably hook into something like Combat.DrainActions but this is much easier
-                if (g.state.route is Combat c)
-                {
-                    ReapplyModifications(c);
-                }
+                ReapplyModifications(c);
             }
+        }
 
         public override void OnDiscard(State s, Combat c)
         {
