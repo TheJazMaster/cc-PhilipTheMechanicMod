@@ -25,11 +25,11 @@ public sealed class CustomTTGlossary : TTGlossary
 	private readonly string Description;
 	private readonly IReadOnlyList<Func<object>> Values;
 
-	public CustomTTGlossary(GlossaryType type, string title, string description, IEnumerable<object> values) : this(type, null, title, description, values) { }
+	//public CustomTTGlossary(GlossaryType type, string title, string description, IEnumerable<object> values) : this(type, null, title, description, values) { }
 
-	public CustomTTGlossary(GlossaryType type, string title, string description, IEnumerable<Func<object>>? values = null) : this(type, null, title, description, values) { }
+	//public CustomTTGlossary(GlossaryType type, string title, string description, IEnumerable<Func<object>>? values = null) : this(type, null, title, description, values) { }
 
-	public CustomTTGlossary(GlossaryType type, Spr? icon, string title, string description, IEnumerable<object> values) : this(type, icon, title, description, values.Select<object, Func<object>>(v => () => v).ToArray()) { }
+	//public CustomTTGlossary(GlossaryType type, Spr? icon, string title, string description, IEnumerable<object> values) : this(type, icon, title, description, values.Select<object, Func<object>>(v => () => v).ToArray()) { }
 
 	public CustomTTGlossary(GlossaryType type, Spr? icon, string title, string description, IEnumerable<Func<object>>? values = null) : base($"{Enum.GetName(type)}.customttglossary")
 	{
