@@ -52,6 +52,7 @@ namespace PhilipTheMechanic.cards
                     // note: CardData is a struct, so there's no need to copy it, it's totally safe to directly modify it
                     data.exhaust = true;
                     data.infinite = false; // Prevent Dice Roll from being a one card infinite
+                    data.unplayable = false; // I feel like this should be allowed
                     return data;
                 },
                 stickers: new() 
