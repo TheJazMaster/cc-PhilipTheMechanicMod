@@ -87,6 +87,7 @@ namespace PhilipTheMechanic
                 "philip_hot_chocolate",
 
 
+                "icon_addUpgradedCard",
                 "icon_play_twice",
                 "icon_all_cards_to_the_left",
                 "icon_all_cards_to_the_right",
