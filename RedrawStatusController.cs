@@ -106,14 +106,14 @@ namespace PhilipTheMechanic
             // logic for Hot Chocolate artifact
             var ownedHotChocolate = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() as HotChocolate;
             int unplayableModCardCount = ownedHotChocolate == null ? 0 : (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
-            bool redrawsForFree = isUnplayableModCard && unplayableModCardCount >= 3;
+            bool redrawsForFree = ownedHotChocolate != null && HOT_CHOCOLATE_CONDITION && unplayableModCardCount >= 3;
 
             // logic for Scrap Magnet artifact
             var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
-            bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
-            redrawsForFree = redrawsForFree || activateScrapMagnet;
+            bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0 && SCRAP_MAGNET_CONDITION;
+            //redrawsForFree = redrawsForFree || activateScrapMagnet;
 
-            if (!hasRedraw && !redrawsForFree) { return; }
+            if (!hasRedraw && !redrawsForFree && !activateScrapMagnet) { return; }
 
             // Draw the button
 
