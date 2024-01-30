@@ -384,7 +384,7 @@ namespace PhilipTheMechanic
         }
         private void RegisterGlossaryEntry(IGlossaryRegisty registry, string itemName, ExternalSprite sprite, string displayName, string description)
         {
-            var entry = new ExternalGlossary("clay.PhilipTheMechanic.Glossary", itemName, false, ExternalGlossary.GlossayType.action, sprite);
+            var entry = new ExternalGlossary("clay.PhilipTheMechanic.Glossary." +  itemName, itemName, false, ExternalGlossary.GlossayType.action, sprite);
             entry.AddLocalisation("en", displayName, description);
             registry.RegisterGlossary(entry);
             glossary[entry.ItemName] = entry;
