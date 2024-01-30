@@ -345,7 +345,7 @@ namespace PhilipTheMechanic
                 philipLoopTag: "classy");
             RegisterModifiedCardShout(storyRegistry, "dizzy",
                 characterText: "How'd you do that?",
-                characterLooptag: "surprised",
+                characterLooptag: "serious",
                 philipText: "Hopes, dreams, and a screwdriver.");
             RegisterModifiedCardShout(storyRegistry, "peri",
                 characterText: "Good work, Philip.");
