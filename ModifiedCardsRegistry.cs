@@ -337,20 +337,11 @@ namespace PhilipTheMechanic
 
         public static bool ShouldStickyNote(Card card, List<CardAction> actions, State s)
         {
-            bool foundIcon = false;
-            bool foundNoIcon = false;
+            if (card.GetDataWithOverrides(s).description != null) return false;
+            
             foreach (CardAction action in actions)
             {
-                bool hasIcon = action.GetIcon(s) != null;
-                if (hasIcon) 
-                {
-                    if (foundIcon && foundNoIcon) return true;
-                    foundIcon = true;
-                }
-                else
-                {
-                    foundNoIcon = true;
-                }
+                if (action.disabled) return true;
             }
             return false;
         }
