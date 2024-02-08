@@ -20,10 +20,17 @@ namespace clay.PhilipTheMechanic
             Neighboring
         }
 
-        CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false);
+        enum CardModifierTargetDirection
+        {
+            RIGHT,
+            LEFT
+        }
+
+        CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false, CardModifierTargetDirection direction = CardModifierTargetDirection.RIGHT);
 
         ICardModifier MakeMBuffAttack(int amount);
         ICardModifier MakeMExhaust();
+        ICardModifier MakeMRetain();
     }
 
     public interface ICardModifier

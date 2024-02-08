@@ -15,7 +15,7 @@ public sealed class ApiImplementation : IPhilipAPI
     public IStatusEntry RedrawStatus => ModEntry.Instance.RedrawStatus;
     public IStatusEntry CustomPartsStatus => ModEntry.Instance.CustomPartsStatus;
 
-    public CardAction MakeAModifierWrapper(IPhilipAPI.CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false)
+    public CardAction MakeAModifierWrapper(IPhilipAPI.CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false, IPhilipAPI.CardModifierTargetDirection direction = IPhilipAPI.CardModifierTargetDirection.RIGHT)
     {
         switch (target)
         {
@@ -24,12 +24,14 @@ public sealed class ApiImplementation : IPhilipAPI
                 {
                     isFlimsy = isFlimsy,
                     modifiers = modifiers,
+                    left = direction == IPhilipAPI.CardModifierTargetDirection.LEFT
                 };
             case IPhilipAPI.CardModifierTarget.Directional_WholeHand:
                 return new AWholeHandDirectionalCardsModifierWrapper()
                 {
                     isFlimsy = isFlimsy,
                     modifiers = modifiers,
+                    left = direction == IPhilipAPI.CardModifierTargetDirection.LEFT
                 };
             case IPhilipAPI.CardModifierTarget.Neighboring:
                 return new ANeighboringCardsModifierWrapper()
@@ -44,4 +46,5 @@ public sealed class ApiImplementation : IPhilipAPI
 
     public ICardModifier MakeMBuffAttack(int amount) { return new MBuffAttack() { amount = amount }; }
     public ICardModifier MakeMExhaust() { return new MExhaust(); }
+    public ICardModifier MakeMRetain() { return new MRetain(); }
 }
