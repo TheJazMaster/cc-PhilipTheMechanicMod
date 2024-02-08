@@ -35,8 +35,6 @@ internal sealed class JettisonParts : Card, IRegisterableCard
     {
         List<ICardModifier> modifiers = new()
         {
-            ModEntry.Instance.Api.MakeMDeleteActions(),
-            ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.evade, statusAmount = 2, targetPlayer = true }, ModEntry.Instance.sprites["icon_sticker_evade"].Sprite),
             ModEntry.Instance.Api.MakeMExhaust()
         };
 
@@ -45,6 +43,15 @@ internal sealed class JettisonParts : Card, IRegisterableCard
 
         return new()
         {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
+                    ModEntry.Instance.Api.MakeMDeleteActions(),
+                    ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.evade, statusAmount = 2, targetPlayer = true }, ModEntry.Instance.sprites["icon_sticker_evade"].Sprite),
+                }
+            ),
             ModEntry.Instance.Api.MakeAModifierWrapper
             (
                 IPhilipAPI.CardModifierTarget.Directional,
