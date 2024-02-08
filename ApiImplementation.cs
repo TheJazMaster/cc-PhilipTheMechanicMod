@@ -15,28 +15,28 @@ public sealed class ApiImplementation : IPhilipAPI
     public IStatusEntry RedrawStatus => ModEntry.Instance.RedrawStatus;
     public IStatusEntry CustomPartsStatus => ModEntry.Instance.CustomPartsStatus;
 
-    public CardAction MakeAModifierWrapper(IPhilipAPI.CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false, IPhilipAPI.CardModifierTargetDirection direction = IPhilipAPI.CardModifierTargetDirection.RIGHT)
+    public CardAction MakeAModifierWrapper(IPhilipAPI.CardModifierTarget target, List<ICardModifier> modifiers, IPhilipAPI.AModifierWrapperMeta meta)
     {
         switch (target)
         {
             case IPhilipAPI.CardModifierTarget.Directional:
                 return new ADirectionalCardModifierWrapper()
                 {
-                    isFlimsy = isFlimsy,
+                    isFlimsy = meta.isFlimsy,
                     modifiers = modifiers,
-                    left = direction == IPhilipAPI.CardModifierTargetDirection.LEFT
+                    left = meta.direction == IPhilipAPI.CardModifierTargetDirection.LEFT
                 };
             case IPhilipAPI.CardModifierTarget.Directional_WholeHand:
                 return new AWholeHandDirectionalCardsModifierWrapper()
                 {
-                    isFlimsy = isFlimsy,
+                    isFlimsy = meta.isFlimsy,
                     modifiers = modifiers,
-                    left = direction == IPhilipAPI.CardModifierTargetDirection.LEFT
+                    left = meta.direction == IPhilipAPI.CardModifierTargetDirection.LEFT
                 };
             case IPhilipAPI.CardModifierTarget.Neighboring:
                 return new ANeighboringCardsModifierWrapper()
                 {
-                    isFlimsy = isFlimsy,
+                    isFlimsy = meta.isFlimsy,
                     modifiers = modifiers,
                 };
         }

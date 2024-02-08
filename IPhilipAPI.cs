@@ -26,7 +26,13 @@ namespace clay.PhilipTheMechanic
             LEFT
         }
 
-        CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, bool isFlimsy = false, CardModifierTargetDirection direction = CardModifierTargetDirection.RIGHT);
+        struct AModifierWrapperMeta
+        {
+            public bool isFlimsy;
+            public CardModifierTargetDirection direction;
+        }
+
+        CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, AModifierWrapperMeta meta = default);
 
         ICardModifier MakeMBuffAttack(int amount);
         ICardModifier MakeMExhaust();
