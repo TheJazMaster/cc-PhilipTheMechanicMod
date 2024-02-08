@@ -9,16 +9,17 @@ internal sealed class OverdriveMod : Card, IDemoCard
 {
     public static void Register(IModHelper helper)
     {
-        helper.Content.Cards.RegisterCard("OverdriveMod", new()
+        var cardType = MethodBase.GetCurrentMethod()!.DeclaringType!;
+        helper.Content.Cards.RegisterCard(cardType.Name, new()
         {
-            CardType = MethodBase.GetCurrentMethod()!.DeclaringType!,
+            CardType = cardType,
             Meta = new()
             {
                 deck = ModEntry.Instance.PhilipDeck.Deck,
                 rarity = Rarity.common,
-                upgradesTo = [ Upgrade.A, Upgrade.B ]
+                upgradesTo = [Upgrade.A, Upgrade.B]
             },
-            Name = ModEntry.Instance.AnyLocalizations.Bind(["card", "OverdriveMod", "name"]).Localize
+            Name = ModEntry.Instance.AnyLocalizations.Bind(["card", cardType.Name, "name"]).Localize
         });
     }
     public override CardData GetData(State state)
