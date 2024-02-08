@@ -1,5 +1,4 @@
-﻿using clay.PhilipTheMechanic.Artifacts;
-using clay.PhilipTheMechanic.Cards;
+﻿using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
@@ -107,6 +106,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_Flimsy_All_Left_Card_Mod");
         RegisterSprite(package, "icon_Flimsy_Neighbors_Card_Mod");
         RegisterSprite(package, "icon_attack_buff");
+        RegisterSprite(package, "icon_card_unplayable");
         RegisterSprite(package, "icon_screw");
         RegisterSprite(package, "icon_equal");
         RegisterSprite(package, "icon_redraw");
@@ -141,6 +141,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_sticker_retain");
         RegisterSprite(package, "icon_sticker_no_action");
         RegisterSprite(package, "icon_sticker_energyLessNextTurn");
+        RegisterSprite(package, "icon_sticker_card_unplayable");
     
         RegisterSprite(package, "button_redraw");
         RegisterSprite(package, "button_redraw_on");

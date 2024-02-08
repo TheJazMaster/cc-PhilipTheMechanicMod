@@ -28,12 +28,28 @@ internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
         return new()
         {
             cost = 0,
-            flippable = upgrade != Upgrade.None,
-            retain = true,
+            flippable = upgrade == Upgrade.A,
+            retain = upgrade != Upgrade.B,
         };
     }
     public override List<CardAction> GetActions(State s, Combat c)
     {
+        if (upgrade == Upgrade.B)
+        {
+            return new()
+            {
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Neighboring,
+                    new() 
+                    { 
+                        ModEntry.Instance.Api.MakeMRetain(),
+                        ModEntry.Instance.Api.MakeMUnplayable(),
+                    }
+                )
+            };
+        }
+
         return new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper

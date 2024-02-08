@@ -34,9 +34,11 @@ namespace clay.PhilipTheMechanic
 
         CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, AModifierWrapperMeta meta = default);
 
+        ICardModifier MakeMAddAction(CardAction action, Spr? stickerSprite);
         ICardModifier MakeMBuffAttack(int amount);
         ICardModifier MakeMExhaust();
         ICardModifier MakeMRetain();
+        ICardModifier MakeMUnplayable();
     }
 
     public interface ICardModifier
