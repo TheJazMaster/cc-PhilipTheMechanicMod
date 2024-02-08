@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace clay.PhilipTheMechanic.Controllers
 {
@@ -37,6 +38,46 @@ namespace clay.PhilipTheMechanic.Controllers
             // TODO: sort CardModifiers by their wrappers' priority
             return modifiers;
         }
+
+        //
+        // flip directional modifiers
+        //
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
+        public static void FlipModifierWrappers(Card __instance, ref List<CardAction> __result, State s, Combat c)
+        {
+            if (!__instance.flipped) return;
+            foreach (CardAction action in __result)
+            {
+                if (action is ADirectionalCardModifierWrapper dw) dw.left = !dw.left;
+                if (action is AWholeHandDirectionalCardsModifierWrapper whdw) whdw.left = !whdw.left;
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
+        public static void FlippableModifierWrappers(Card __instance, ref CardData __result, State state)
+        {
+            if (state.route is not Combat c) return;
+
+            if (!__result.flippable && state.ship.Get(Status.tableFlip) > 0)
+            {
+                var actions = __instance.GetActions(state, c);
+                foreach (CardAction action in actions)
+                {
+                    if (action is ADirectionalCardModifierWrapper || action is AWholeHandDirectionalCardsModifierWrapper)
+                    {
+                        __result.flippable = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        //
+        // apply modifiers
+        //
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
