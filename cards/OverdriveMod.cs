@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Cards;
-internal sealed class OverdriveMod : Card, IDemoCard
+internal sealed class OverdriveMod : Card, IRegisterableCard
 {
     public static void Register(IModHelper helper)
     {

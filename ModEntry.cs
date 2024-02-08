@@ -258,9 +258,9 @@ public sealed class ModEntry : SimpleMod
             .ToList();
         foreach(var cardType in cardTypes)
         {
-            if (!typeof(IDemoCard).IsAssignableFrom(cardType)) continue;
+            if (!typeof(IRegisterableCard).IsAssignableFrom(cardType)) continue;
 
-            AccessTools.DeclaredMethod(cardType, nameof(IDemoCard.Register))?.Invoke(null, [helper]);
+            AccessTools.DeclaredMethod(cardType, nameof(IRegisterableCard.Register))?.Invoke(null, [helper]);
         }
 
         // one for every artifact

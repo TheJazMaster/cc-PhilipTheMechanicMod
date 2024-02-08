@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Cards;
-internal sealed class RecycleParts : Card, IDemoCard
+internal sealed class RecycleParts : Card, IRegisterableCard
 {
     public static void Register(IModHelper helper)
     {

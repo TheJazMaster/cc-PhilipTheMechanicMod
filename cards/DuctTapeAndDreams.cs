@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Cards;
 
-internal sealed class DuctTapeAndDreams : Card, IDemoCard
+internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
 {
     public static void Register(IModHelper helper)
     {
