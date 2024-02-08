@@ -13,7 +13,7 @@
     "customParts": {
       "name": "Custom Parts",
       "description": "Gives you {0} redraw at the start of each turn."
-    },
+    }
   },
   "artifact": {
     "BookOfTails": {
@@ -27,6 +27,9 @@
     },
     "RecycleParts": {
       "name": "Recycle Parts"
+    },
+    "DuctTapeAndDreams": {
+      "name": "Duct Tape and Dreams"
     },
     "SheepDream": {
       "name": "Sheep Dream",
