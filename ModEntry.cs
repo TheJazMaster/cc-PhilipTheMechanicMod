@@ -180,7 +180,7 @@ public sealed class ModEntry : SimpleMod
         Helper.Content.Characters.RegisterCharacter("Philip", new CharacterConfiguration()
         {
             Deck = PhilipDeck.Deck,
-            StarterCardTypes = new List<Type>() { typeof(OverdriveMod)/*, typeof(RecycleParts)*/ },
+            StarterCardTypes = new List<Type>() { typeof(OverdriveMod), typeof(RecycleParts) },
             Description = this.AnyLocalizations.Bind(new List<String>() { "character", "Philip", "description" }).Localize,
             BorderSprite = sprites["char_frame_philip"].Sprite,
             NeutralAnimation = new() {
@@ -239,7 +239,9 @@ public sealed class ModEntry : SimpleMod
         });
 
         // one for every card
+        // TODO: do this automatically with... reflection?
         OverdriveMod.Register(helper);
+        RecycleParts.Register(helper);
 
         // one for every artifact
         //AccessTools.DeclaredMethod(HotChocolate, nameof(IDemoArtifact.Register))?.Invoke(null, new() { helper });

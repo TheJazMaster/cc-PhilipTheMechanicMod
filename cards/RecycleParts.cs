@@ -1,15 +1,16 @@
 ﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using Nickel;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Cards;
-internal sealed class OverdriveMod : Card, IDemoCard
+internal sealed class RecycleParts : Card, IDemoCard
 {
     public static void Register(IModHelper helper)
     {
-        helper.Content.Cards.RegisterCard("OverdriveMod", new()
+        helper.Content.Cards.RegisterCard("RecycleParts", new()
         {
             CardType = MethodBase.GetCurrentMethod()!.DeclaringType!,
             Meta = new()
@@ -18,29 +19,34 @@ internal sealed class OverdriveMod : Card, IDemoCard
                 rarity = Rarity.common,
                 upgradesTo = [ Upgrade.A, Upgrade.B ]
             },
-            Name = ModEntry.Instance.AnyLocalizations.Bind(["card", "OverdriveMod", "name"]).Localize
+            Name = ModEntry.Instance.AnyLocalizations.Bind(["card", "RecycleParts", "name"]).Localize
         });
     }
+
     public override CardData GetData(State state)
     {
-        return new()
-        {
-            cost = 1,
-            flippable = upgrade != Upgrade.None
+        return new() 
+        { 
+            cost = upgrade == Upgrade.A ? 0 : 1 
         };
     }
+
     public override List<CardAction> GetActions(State s, Combat c)
     {
         return new()
         {
-            new ADirectionalCardModifierWrapper()
-            {
-                modifiers = new()
-                {
-                    new MBuffAttack() { amount = upgrade == Upgrade.A ? 2 : 1 },
-                }
+            new AStatus() {
+                status = ModEntry.Instance.RedrawStatus.Status,
+                targetPlayer = true,
+                statusAmount = upgrade == Upgrade.B ? 2 : 1,
+                mode = Enum.Parse<AStatusMode>("Add"),
             },
-            new AAttack() { damage = GetDmg(s, upgrade == Upgrade.B ? 2 : 1) }
+            new AStatus() {
+                status = Enum.Parse<Status>("tempShield"),
+                targetPlayer = true,
+                statusAmount = 2,
+                mode = Enum.Parse<AStatusMode>("Add"),
+            }
         };
     }
 }

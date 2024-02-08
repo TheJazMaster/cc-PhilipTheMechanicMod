@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 {
-    public class AAdjacentCardModifierWrapper : AModifierWrapper
-    {
-        public bool left;
-
+    public class ANeighboringCardsModifierWrapper : AModifierWrapper
+    {   
         public override bool IsTargeting(Card potetialTarget, Card myOwnerCard, Combat c)
         {
             int selfIndex = c.hand.IndexOf(myOwnerCard);
@@ -18,23 +16,18 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
             // should never happen, but just in case
             if (queryIndex == -1 || selfIndex == -1) { return false; }
 
-            int offset = left ? -1 : 1;
-            return queryIndex == selfIndex + offset;
+            return queryIndex == selfIndex - 1 || queryIndex == selfIndex + 1;
         }
 
         public override Icon? GetIcon(State s)
         {
             if (isFlimsy)
             {
-                return left
-                    ? new Icon(ModEntry.Instance.sprites["icon_Flimsy_Left_Card_Mod"].Sprite, null, Colors.textMain)
-                    : new Icon(ModEntry.Instance.sprites["icon_Flimsy_Right_Card_Mod"].Sprite, null, Colors.textMain);
+                return new Icon(ModEntry.Instance.sprites["icon_Flimsy_Neighbors_Card_Mod"].Sprite, null, Colors.textMain);
             }
             else
             {
-                return left
-                    ? new Icon(ModEntry.Instance.sprites["icon_card_to_the_left"].Sprite, null, Colors.textMain)
-                    : new Icon(ModEntry.Instance.sprites["icon_card_to_the_right"].Sprite, null, Colors.textMain);
+                return new Icon(ModEntry.Instance.sprites["icon_card_neighbors"].Sprite, null, Colors.textMain);
             }
         }
     }

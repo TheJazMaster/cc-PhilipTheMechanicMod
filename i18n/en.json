@@ -19,15 +19,14 @@
     "BookOfTails": {
       "name": "BOOK OF TAILS",
       "description": "At start of turn, add a <c=cardtrait>temp</c> <c=card>Fox Tale</c> to your hand."
-    },
-    "Counting": {
-      "name": "COUNTING",
-      "description": "At start of turn, count sheeps. Once you counted 7 sheep, gain 1 <c=status>ENERGY</c> and restart the counter."
     }
   },
   "card": {
     "OverdriveMod": {
       "name": "Overdrive Mod"
+    },
+    "RecycleParts": {
+      "name": "Recycle Parts"
     },
     "SheepDream": {
       "name": "Sheep Dream",
