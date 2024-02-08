@@ -188,7 +188,7 @@ namespace clay.PhilipTheMechanic.Controllers
         public static void HandleFlimsyModifiers(Card playedCard, State s, Combat c, int handPosition)
         {
             bool readdedPlayedCard = false;
-            if (c.hand[handPosition] != playedCard)
+            if (c.hand.Count <= handPosition || c.hand[handPosition] != playedCard)
             {
                 c.hand.Insert(handPosition, playedCard);
                 readdedPlayedCard = true;
@@ -214,6 +214,7 @@ namespace clay.PhilipTheMechanic.Controllers
             if (readdedPlayedCard) c.hand.RemoveAt(handPosition);
             foreach (Card card in cardsToDiscard)
             {
+                s.RemoveCardFromWhereverItIs(card.uuid);
                 c.SendCardToDiscard(s, card);
             }
         }

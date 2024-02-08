@@ -182,7 +182,18 @@ public sealed class ModEntry : SimpleMod
             Deck = PhilipDeck.Deck,
             StarterCardTypes = new List<Type>() { typeof(OverdriveMod)/*, typeof(RecycleParts)*/ },
             Description = this.AnyLocalizations.Bind(new List<String>() { "character", "Philip", "description" }).Localize,
-            BorderSprite = sprites["char_frame_philip"].Sprite
+            BorderSprite = sprites["char_frame_philip"].Sprite,
+            NeutralAnimation = new() {
+                Deck = PhilipDeck.Deck,
+                LoopTag = "neutral",
+                Frames = new[] { sprites[$"philip_neutral_0"].Sprite, sprites[$"philip_neutral_1"].Sprite, sprites[$"philip_neutral_0"].Sprite, sprites[$"philip_neutral_3"].Sprite, }
+            },
+            MiniAnimation = new()
+            {
+                Deck = PhilipDeck.Deck,
+                LoopTag = "mini",
+                Frames = new[] { sprites[$"philip_mini"].Sprite }
+            }
         });
 
         // statuses
@@ -209,14 +220,12 @@ public sealed class ModEntry : SimpleMod
         });
 
         // animations
-        RegisterAnimation("neutral");
         RegisterAnimation("classy");
         RegisterAnimation("maniacal");
         RegisterAnimation("squint");
         RegisterAnimation("surprise");
         RegisterAnimation("sheepish");
         RegisterAnimation("excited");
-        RegisterSingleFrameAnimation("mini");
         RegisterSingleFrameAnimation("proud");
         RegisterSingleFrameAnimation("whatisthat");
         RegisterSingleFrameAnimation("unhappy");
@@ -240,9 +249,9 @@ public sealed class ModEntry : SimpleMod
     {
         sprites[name] = Helper.Content.Sprites.RegisterSprite(package.PackageRoot.GetRelativeFile($"assets/{name}.png"));
     }
-    private void RegisterAnimation(string looptag)
+    private ICharacterAnimationEntry RegisterAnimation(string looptag)
     {
-        Helper.Content.Characters.RegisterCharacterAnimation(new CharacterAnimationConfiguration()
+        return Helper.Content.Characters.RegisterCharacterAnimation(new CharacterAnimationConfiguration()
         {
             Deck = PhilipDeck.Deck,
             LoopTag = looptag,
