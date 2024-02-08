@@ -1,109 +1,47 @@
-﻿using CobaltCoreModding.Definitions.ExternalItems;
-using PhilipTheMechanic.actions;
-using System;
+﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
+using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+using Nickel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static PhilipTheMechanic.ModifiedCardsRegistry;
-using static System.Collections.Specialized.BitVector32;
+using System.Reflection;
 
-namespace PhilipTheMechanic.cards
+namespace clay.PhilipTheMechanic.Cards;
+internal sealed class OverdriveMod : Card, IDemoCard
 {
-    [CardMeta(rarity = Rarity.common, upgradesTo = new[] { Upgrade.A, Upgrade.B })]
-    public class OverdriveMod : ModifierCard
+    public static void Register(IModHelper helper)
     {
-        public override string Name()
+        helper.Content.Cards.RegisterCard("OverdriveMod", new()
         {
-            return "Overdrive Mod";
-        }
-
-        public override TargetLocation GetBaseTargetLocation() 
-        {
-            switch (upgrade)
+            CardType = MethodBase.GetCurrentMethod()!.DeclaringType!,
+            Meta = new()
             {
-                default: return TargetLocation.SINGLE_RIGHT;
-                case Upgrade.A: return TargetLocation.SINGLE_RIGHT;
-                case Upgrade.B: return TargetLocation.ALL_LEFT;
-            }
-        }
-
-        public override void ApplyMod(Card c)
+                deck = ModEntry.Instance.PhilipDeck.Deck,
+                rarity = Rarity.common,
+                upgradesTo = [ Upgrade.A, Upgrade.B ]
+            },
+            Name = ModEntry.Instance.AnyLocalizations.Bind(["card", "OverdriveMod", "name"]).Localize
+        });
+    }
+    public override CardData GetData(State state)
+    {
+        CardData data = new CardData()
         {
-            ModifiedCardsRegistry.RegisterMod(
-                this, 
-                c,
-                ModifierPriority.LAST,
-                actionsModification: (List<CardAction> cardActions, State s) =>
-                {
-                    List<CardAction> overridenCardActions = new();
-                    foreach (var action in cardActions)
-                    {
-                        if (action is AAttack attack)
-                        {
-                            var newAttack = Mutil.DeepCopy(attack);
-                            newAttack.damage += 1;
-                            overridenCardActions.Add(newAttack);
-                        }
-                        else
-                        {
-                            overridenCardActions.Add(action);
-                        }
-                    }
-                    return overridenCardActions;
-                },
-                stickers: new() { (Spr)MainManifest.sprites["icon_sticker_buff_attack"].Id }
-            );
-        }
-
-        public override CardData GetData(State state)
+            cost = 1,
+        };
+        return data;
+    }
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        return new()
         {
-            switch (upgrade)
+            new AAdjacentCardModifierWrapper()
             {
-                default:
-                    return new()
-                    {
-                        cost = 1,
-                    };
-                case Upgrade.A:
-                    return new()
-                    {
-                        cost = 1,
-                        flippable = true,
-                    };
-                case Upgrade.B:
-                    return new()
-                    {
-                        cost = 1,
-                    };
-            }
-        }
-
-        // NOTE: this is only here for the tooltip, this card isn't actually supposed to have any actions
-        public override List<CardAction> GetActions(State s, Combat c)
-        {
-            return new List<CardAction>() {
-                new ATooltipDummy() {
-                    tooltips = new() {
-                        new TTText()
-                        {
-                            text = $"Increases the damage of every attack on {GetTargetLocationString()} by 1. On play, attack for 1 damage."
-                        },
-                        new TTGlossary(GetGlossaryForTargetLocation().Head),
-                        new TTGlossary(MainManifest.glossary["AAttackBuff"].Head, "1")
-                    },
-                    icons = new() {
-                        new Icon((Spr)GetIconSpriteForTargetLocation().Id, null, Colors.textMain),
-                        new Icon((Spr)MainManifest.sprites["icon_attack_buff"].Id, 1, Colors.textMain)
-                    }
-                },
-
-                new AAttack()
+                isFlimsy = true,
+                modifiers = new()
                 {
-                    targetPlayer = false,
-                    damage = GetDmg(s, 1)
+                    new MBuffAttack() { amount = 1 },
                 }
-            };
-        }
+            },
+            new AAttack() { damage = GetDmg(s, 1) }
+        };
     }
 }

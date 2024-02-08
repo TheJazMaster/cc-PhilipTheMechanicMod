@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhilipTheMechanic.actions
+namespace clay.PhilipTheMechanic.Actions
 {
     [HarmonyPatch(typeof(Card))]
     public class ATooltipDummy : ADummyAction
     {
-        public List<Tooltip> tooltips;
+        public List<Tooltip>? tooltips;
         public List<Icon>? icons;
 
         public override List<Tooltip> GetTooltips(State s)
@@ -24,13 +24,16 @@ namespace PhilipTheMechanic.actions
             return null;
         }
 
+        public virtual List<Icon> GetIcons(State s) { return icons ?? new(); }
+
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Card.RenderAction))]
         public static bool HarmonyPrefix_Card_RenderAction(ref int __result, G g, State state, CardAction action, bool dontDraw = false, int shardAvailable = 0, int stunChargeAvailable = 0, int bubbleJuiceAvailable = 0)
         {
             if (action is ATooltipDummy aTooltipDummy)
             {
-                if (aTooltipDummy.icons == null)
+                var icons = aTooltipDummy.GetIcons(state);
+                if (icons == null)
                 {
                     return true;
                 }
@@ -44,16 +47,16 @@ namespace PhilipTheMechanic.actions
                 int w = 0;
                 bool isFirst = true;
 
-                foreach (var icon in aTooltipDummy.icons)
+                foreach (var icon in icons)
                 {
-                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, true, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path).Width);
+                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, true, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path)?.Width ?? 8);
                 }
 
                 w = -w / 2;
                 isFirst = true;
-                foreach (var icon in aTooltipDummy.icons)
+                foreach (var icon in icons)
                 {
-                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path).Width, textColor: icon.color);
+                    IconAndOrNumber(icon.path, ref isFirst, ref w, g, action, state, spriteColor, dontDraw, amount: icon.number, iconWidth: SpriteLoader.Get(icon.path)?.Width ?? 8, textColor: icon.color);
                 }
             } 
             else

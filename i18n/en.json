@@ -1,0 +1,41 @@
+{
+  "character": {
+    "Philip": {
+      "name": "Philip",
+      "description": "<c=c9f000>PHILIP</c>\nYour ship engineering officer. His cards modify other cards in your hand, provide <c=d6525f>redraw</c>, and are often unplayable."
+    }
+  },
+  "status": {
+    "redraw": {
+      "name": "Redraw",
+      "description": "Lets you discard a card and draw a new one. Costs 1 redraw per discard."
+    },
+    "customParts": {
+      "name": "Custom Parts",
+      "description": "Gives you {0} redraw at the start of each turn."
+    },
+  },
+  "artifact": {
+    "BookOfTails": {
+      "name": "BOOK OF TAILS",
+      "description": "At start of turn, add a <c=cardtrait>temp</c> <c=card>Fox Tale</c> to your hand."
+    },
+    "Counting": {
+      "name": "COUNTING",
+      "description": "At start of turn, count sheeps. Once you counted 7 sheep, gain 1 <c=status>ENERGY</c> and restart the counter."
+    }
+  },
+  "card": {
+    "OverdriveMod": {
+      "name": "Overdrive Mod"
+    },
+    "SheepDream": {
+      "name": "Sheep Dream",
+      "description": {
+        "None": "Attack for set amount = 3. On hit, apply 1 <c=status>BOOST</c>.",
+        "A": "Attack for set amount = 4. On hit, apply 1 <c=status>BOOST</c>.",
+        "B": "Attack for set amount = 5. On hit, apply 2 <c=status>BOOST</c>."
+      }
+    }
+  }
+}

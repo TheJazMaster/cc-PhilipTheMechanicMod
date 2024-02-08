@@ -1,0 +1,6 @@
+{
+  "UniqueName": "clay.PhilipTheMechanic",
+  "Version": "2.0.0",
+  "RequiredApiVersion": "0.1.0",
+  "EntryPointAssembly": "PhilipTheMechanic.dll"
+}

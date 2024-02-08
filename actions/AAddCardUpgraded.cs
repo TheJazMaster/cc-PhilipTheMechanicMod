@@ -1,19 +1,17 @@
-﻿using CobaltCoreModding.Definitions.ExternalItems;
-using FSPRO;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhilipTheMechanic.actions
+namespace clay.PhilipTheMechanic.Actions
 {
     public class AAddCardUpgraded : AAddCard
     {
         public override Icon? GetIcon(State s)
         {
-            return new Icon((Spr)MainManifest.sprites["icon_addUpgradedCard"].Id, base.amount, Colors.textBold);
+            return new Icon(ModEntry.Instance.sprites["icon_addUpgradedCard"].Sprite, base.amount, Colors.textBold);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhilipTheMechanic
+namespace clay.PhilipTheMechanic
 {
     public static class StandardShoutHooks
     {

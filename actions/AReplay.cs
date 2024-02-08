@@ -1,5 +1,4 @@
-﻿using CobaltCoreModding.Definitions.ExternalItems;
-using FSPRO;
+﻿using FSPRO;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -7,29 +6,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhilipTheMechanic.actions
+namespace clay.PhilipTheMechanic.Actions
 {
     public class AReplay : CardAction
     {
-        public override List<Tooltip> GetTooltips(State s)
-        {
-            return new List<Tooltip>
-            {
-                new TTGlossary(MainManifest.glossary["AReplay"].Head, null)
-            };
-        }
+        // TODO: this
+        //public override List<Tooltip> GetTooltips(State s)
+        //{
+        //    return new List<Tooltip>
+        //    {
+        //        new TTGlossary(ModEntry.Instance.glossary["AReplay"].Head, null)
+        //    };
+        //}
 
-        public Card card { get; set; }
+        public required List<CardAction> cardActions { get; set; }
 
         public override void Begin(G g, State s, Combat c)
         {
-            foreach (CardAction item in card.GetActionsOverridden(s, c))
+            foreach (CardAction item in cardActions)
             {
+                if (item is AReplay) return;
                 if (!(item is AEndTurn))
                 {
-                    c.Queue(Mutil.DeepCopy(item));
+                    c.Queue(item);
                 }
-                if (item is AReplay) return;
             }
         }
 
