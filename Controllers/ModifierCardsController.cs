@@ -34,7 +34,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 }
             }
 
-            // TODO: sort CardModifiers by priority
+            // TODO: sort CardModifiers by their wrappers' priority
             return modifiers;
         }
 

@@ -46,6 +46,7 @@ public sealed class ApiImplementation : IPhilipAPI
 
     public ICardModifier MakeMAddAction(CardAction action, Spr? stickerSprite) { return new MAddAction() { action = action, stickerSprite = stickerSprite }; }
     public ICardModifier MakeMBuffAttack(int amount) { return new MBuffAttack() { amount = amount }; }
+    public ICardModifier MakeMDeleteActions() { return new MDeleteActions(); }
     public ICardModifier MakeMExhaust() { return new MExhaust(); }
     public ICardModifier MakeMRetain() { return new MRetain(); }
     public ICardModifier MakeMUnplayable() { return new MUnplayable(); }

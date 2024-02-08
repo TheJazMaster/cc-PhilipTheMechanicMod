@@ -11,6 +11,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
     {
         public required List<ICardModifier> modifiers;
         public bool isFlimsy;
+        public int priority;
 
         public override List<Icon> GetIcons(State s) 
         { 
