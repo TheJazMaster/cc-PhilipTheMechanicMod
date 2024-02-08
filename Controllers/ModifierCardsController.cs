@@ -204,6 +204,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 foreach (CardAction action in actions)
                 {
                     if (action is not AModifierWrapper wrapper) continue;
+                    if (!wrapper.isFlimsy) continue;
                     if (!wrapper.IsTargeting(playedCard, card, c)) continue;
 
                     cardsToDiscard.Add(card);
