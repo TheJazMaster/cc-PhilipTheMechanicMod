@@ -15,9 +15,9 @@ namespace clay.PhilipTheMechanic.Controllers
         // patch get actions and stuff like that
         private static bool SuppressActionMods = false;
 
-        public static List<CardModifier> GetCardModifiers(Card target, State s, Combat c)
+        public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c)
         {
-            List<CardModifier> modifiers = new List<CardModifier>();
+            List<ICardModifier> modifiers = new List<ICardModifier>();
 
             foreach (Card card in c.hand)
             {
@@ -48,7 +48,7 @@ namespace clay.PhilipTheMechanic.Controllers
 
             List<CardAction> overridenCardActions = __result;
             var modifiers = GetCardModifiers(__instance, s, c);
-            foreach (CardModifier modifier in modifiers)
+            foreach (ICardModifier modifier in modifiers)
             {
                 overridenCardActions = modifier.TransformActions(overridenCardActions, s, c);
             }
@@ -91,7 +91,7 @@ namespace clay.PhilipTheMechanic.Controllers
 
             CardData data = __result;
             var modifiers = GetCardModifiers(__instance, state, c);
-            foreach (CardModifier modifier in modifiers)
+            foreach (ICardModifier modifier in modifiers)
             {
                 data = modifier.TransformData(data, state, c);
             }

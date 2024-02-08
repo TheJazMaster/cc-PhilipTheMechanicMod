@@ -9,7 +9,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 {
     public class AModifierWrapper : ATooltipDummy
     {
-        public required List<CardModifier> modifiers;
+        public required List<ICardModifier> modifiers;
         public bool isFlimsy;
 
         public override List<Icon> GetIcons(State s) 
@@ -23,8 +23,6 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 
             var ownIcon = GetIcon(s);
             if (ownIcon.HasValue) icons.Insert(0, ownIcon.Value);
-
-
 
             return icons;
         }

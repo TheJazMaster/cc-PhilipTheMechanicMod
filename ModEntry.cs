@@ -18,21 +18,31 @@ namespace clay.PhilipTheMechanic;
 public sealed class ModEntry : SimpleMod
 {
     internal static ModEntry Instance { get; private set; } = null!;
+    internal readonly IPhilipAPI Api = new ApiImplementation();
+
+    internal Harmony Harmony { get; }
     internal ILocalizationProvider<IReadOnlyList<string>> AnyLocalizations { get; }
     internal ILocaleBoundNonNullLocalizationProvider<IReadOnlyList<string>> Localizations { get; }
 
+
     internal Dictionary<string, ISpriteEntry> sprites = new();
+
     internal IDeckEntry PhilipDeck { get; }
 
     internal IStatusEntry RedrawStatus { get; private set; }
     internal IStatusEntry CustomPartsStatus { get; private set; }
-    
+
+    public override object? GetApi(IModManifest requestingMod)
+    {
+        return Api;
+    }
+
     public ModEntry(IPluginPackage<IModManifest> package, IModHelper helper, ILogger logger) : base(package, helper, logger)
     {
         Instance = this;
 
-        var harmony = new Harmony(package.Manifest.UniqueName);
-        harmony.PatchAll();
+        Harmony = new Harmony(package.Manifest.UniqueName);
+        Harmony.PatchAll();
 
         this.AnyLocalizations = new JsonLocalizationProvider(
             tokenExtractor: new SimpleLocalizationTokenExtractor(),

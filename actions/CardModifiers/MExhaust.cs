@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
-    public class MExhaust : CardModifier
+    public class MExhaust : ICardModifier
     {
-        public override Spr? GetSticker(State s)
+        public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_exhaust"].Sprite;
         }
-        public override Icon? GetIcon(State s)
+        public Icon? GetIcon(State s)
         {
             return new Icon(Enum.Parse<Spr>("icons_exhaust"), null, Colors.textMain);
         }
-        public override CardData TransformData(CardData data, State s, Combat c)
+        public CardData TransformData(CardData data, State s, Combat c)
         {
             data.exhaust = true;
             return data;
