@@ -3,11 +3,13 @@ using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using Nanoray.PluginManager;
 using Nickel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 /* In the Cobalt Core modding community it is common for namespaces to be <Author>.<ModName>
  * This is helpful to know at a glance what mod we're looking at, and who made it */
@@ -248,10 +250,18 @@ public sealed class ModEntry : SimpleMod
             Frames = new[] { sprites["philip_laugh_0"].Sprite, sprites["philip_laugh_1"].Sprite, sprites["philip_laugh_0"].Sprite, sprites["philip_laugh_1"].Sprite, }
         });
 
-        // one for every card
-        // TODO: do this automatically with... reflection?
-        OverdriveMod.Register(helper);
-        RecycleParts.Register(helper);
+        // register cards
+        var cardTypes = Assembly
+            .GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => String.Equals(t.Namespace, "clay.PhilipTheMechanic.Cards", StringComparison.Ordinal))
+            .ToList();
+        foreach(var cardType in cardTypes)
+        {
+            if (!typeof(IDemoCard).IsAssignableFrom(cardType)) continue;
+
+            AccessTools.DeclaredMethod(cardType, nameof(IDemoCard.Register))?.Invoke(null, [helper]);
+        }
 
         // one for every artifact
         //AccessTools.DeclaredMethod(HotChocolate, nameof(IDemoArtifact.Register))?.Invoke(null, new() { helper });
