@@ -29,7 +29,7 @@ internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
         {
             cost = 0,
             flippable = upgrade == Upgrade.A,
-            retain = upgrade != Upgrade.B,
+            retain = true,
         };
     }
     public override List<CardAction> GetActions(State s, Combat c)
