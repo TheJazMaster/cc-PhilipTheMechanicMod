@@ -236,12 +236,13 @@ internal sealed class ReduceReuse : Card, IRegisterableCard
         {
             cost = 1,
             flippable = true,
+            unplayable = upgrade == Upgrade.B
         };
     }
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
-        if (upgrade == Upgrade.A)
+        if (upgrade == Upgrade.B)
         {
             return new()
             {
@@ -250,11 +251,18 @@ internal sealed class ReduceReuse : Card, IRegisterableCard
                     IPhilipAPI.CardModifierTarget.Directional,
                     new()
                     {
+                        ModEntry.Instance.Api.MakeMRecycle(),
                         ModEntry.Instance.Api.MakeMDeleteActions(),
                         ModEntry.Instance.Api.MakeMSetEnergyCostToZero(),
+                    }
+                ),
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Directional,
+                    new()
+                    {
                         ModEntry.Instance.Api.MakeMMakePlayable(),
                         ModEntry.Instance.Api.MakeMDontExhaust(),
-                        ModEntry.Instance.Api.MakeMRecycle(),
                     }
                 )
             };
