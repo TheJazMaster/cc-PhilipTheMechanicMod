@@ -55,12 +55,41 @@ internal sealed class DisableSafeties : Card, IRegisterableCard
         return new()
         {
             cost = 0,
-            retain = upgrade == Upgrade.A
+            unplayable = upgrade == Upgrade.B
         };
     }
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
+        if (upgrade == Upgrade.B)
+        {
+            return new()
+            {
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Neighboring,
+                    new()
+                    {
+                        ModEntry.Instance.Api.MakeMAddAction(
+                            new AAttack() { damage = GetDmg(s, 1) },
+                            ModEntry.Instance.sprites["icon_sticker_attack"].Sprite
+                        )
+                    }
+                ),
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Neighboring,
+                    new()
+                    {
+                        ModEntry.Instance.Api.MakeMAddAction(
+                            new AStatus() { status = Status.heat, targetPlayer = true, statusAmount = 1 },
+                            ModEntry.Instance.sprites["icon_sticker_heat"].Sprite
+                        )
+                    }
+                ),
+            };
+        }
+
         return new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper
@@ -69,7 +98,7 @@ internal sealed class DisableSafeties : Card, IRegisterableCard
                 new()
                 {
                     ModEntry.Instance.Api.MakeMAddAction(
-                        new AAttack() { damage = GetDmg(s, upgrade == Upgrade.B ? 2 : 1) },
+                        new AAttack() { damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1) },
                         ModEntry.Instance.sprites["icon_sticker_attack"].Sprite
                     ),
                 },
@@ -84,7 +113,7 @@ internal sealed class DisableSafeties : Card, IRegisterableCard
                 new()
                 {
                     ModEntry.Instance.Api.MakeMAddAction(
-                        new AAttack() { damage = GetDmg(s, upgrade == Upgrade.B ? 2 : 1) },
+                        new AAttack() { damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1) },
                         ModEntry.Instance.sprites["icon_sticker_attack"].Sprite
                     ),
                 },
@@ -99,7 +128,7 @@ internal sealed class DisableSafeties : Card, IRegisterableCard
                 new()
                 {
                     ModEntry.Instance.Api.MakeMAddAction(
-                        new AStatus() { status = Status.heat, targetPlayer = true, statusAmount = upgrade == Upgrade.B ? 3 : 2 },
+                        new AStatus() { status = Status.heat, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 3 : 2 },
                         ModEntry.Instance.sprites["icon_sticker_heat"].Sprite
                     )
                 },
