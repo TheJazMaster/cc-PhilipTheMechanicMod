@@ -8,14 +8,13 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MStun : ICardModifier
     {
-        public int amount;
         public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_stun"].Sprite;
         }
         public Icon? GetIcon(State s)
         {
-            return new Icon(Enum.Parse<Spr>("icons_stun"), amount, Colors.textMain);
+            return new Icon(Enum.Parse<Spr>("icons_stun"), null, Colors.textMain);
         }
         public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c)
         {
