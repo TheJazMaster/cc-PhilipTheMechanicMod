@@ -1,4 +1,5 @@
 ﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.CardModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,112 +57,108 @@ internal sealed class FrenzyMod : Card, IRegisterableCard
     }
 }
 
-// UNCOMMENT THIS
-//internal sealed class LoosenScrews : Card, IRegisterableCard
-//{
-//    public static Rarity GetRarity() => Rarity.uncommon;
+internal sealed class LoosenScrews : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.uncommon;
 
-//    public override CardData GetData(State state)
-//    {
-//        return new()
-//        {
-//            cost = 1,
-//            unplayable = true,
-//            flippable = true
-//        };
-//    }
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 1,
+            unplayable = true,
+            flippable = true
+        };
+    }
 
-//    public override List<CardAction> GetActions(State s, Combat c)
-//    {
-//        return new()
-//        {
-//            ModEntry.Instance.Api.MakeAModifierWrapper
-//            (
-//                IPhilipAPI.CardModifierTarget.Directional,
-//                new()
-//                {
-//                    ModEntry.Instance.Api.MakeMReduceEnergyCost(),
-//                    ModEntry.Instance.Api.MakeMAddAction(
-//                        new AStatus() { status = Status.energyLessNextTurn, statusAmount = 1, targetPlayer = true },
-//                        ModEntry.Instance.sprites["icon_sticker_energyLessNextTurn"].Sprite
-//                    )
-//                }
-//            )
-//        };
-//    }
-//}
-//
-//internal sealed class OverfueledEngines : Card, IRegisterableCard
-//{
-//    public static Rarity GetRarity() => Rarity.uncommon;
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
+                    ModEntry.Instance.Api.MakeMReduceEnergyCost(),
+                    ModEntry.Instance.Api.MakeMAddAction(
+                        new AStatus() { status = Status.energyLessNextTurn, statusAmount = 1, targetPlayer = true },
+                        ModEntry.Instance.sprites["icon_sticker_energyLessNextTurn"].Sprite
+                    )
+                }
+            )
+        };
+    }
+}
 
-//    public override CardData GetData(State state)
-//    {
-//        return new()
-//        {
-//            cost = 0,
-//            unplayable = true,
-//            flippable = upgrade == Upgrade.B
-//        };
-//    }
+internal sealed class OverfueledEngines : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.uncommon;
 
-//    public override List<CardAction> GetActions(State s, Combat c)
-//    {
-//        return new()
-//        {
-//            ModEntry.Instance.Api.MakeAModifierWrapper
-//            (
-//                IPhilipAPI.CardModifierTarget.Directional,
-//                new()
-//                {
-//                    ModEntry.Instance.Api.MakeMAddAction(
-//                        new AReplay(),
-//                        ModEntry.Instance.sprites["icon_2x_sticker"].Sprite
-//                    ),
-//                    ModEntry.Instance.Api.MakeMAddAction(
-//                        new AAddCard() { amount = 1, card = upgrade == Upgrade.A ? new ColorlessTrash() : new Toxic() },
-//                        ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
-//                    )
-//                },
-//                new() { isFlimsy = true }
-//            )
-//        };
-//    }
-//}
-//
-//internal sealed class PiercingMod : Card, IRegisterableCard
-//{
-//    public static Rarity GetRarity() => Rarity.uncommon;
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 0,
+            unplayable = true,
+            flippable = upgrade == Upgrade.B
+        };
+    }
 
-//    public override CardData GetData(State state)
-//    {
-//        return new()
-//        {
-//            cost = 0,
-//            unplayable = true,
-//            flippable = upgrade == Upgrade.A
-//        };
-//    }
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
+                    ModEntry.Instance.Api.MakeMPlayTwice(),
+                    ModEntry.Instance.Api.MakeMAddAction(
+                        new AAddCard() { amount = 1, card = upgrade == Upgrade.A ? new ColorlessTrash() : new Toxic() },
+                        ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
+                    )
+                },
+                new() { isFlimsy = true }
+            )
+        };
+    }
+}
 
-//    public override List<CardAction> GetActions(State s, Combat c)
-//    {
-//        List<ICardModifier> modifiers = new()
-//        {
-//            ModEntry.Instance.Api.MakeMAttacksPierce(),
-//        };
+internal sealed class PiercingMod : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.uncommon;
 
-//        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMBuffAttack(1));
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 0,
+            unplayable = true,
+            flippable = upgrade == Upgrade.A
+        };
+    }
 
-//        return new()
-//        {
-//            ModEntry.Instance.Api.MakeAModifierWrapper
-//            (
-//                IPhilipAPI.CardModifierTarget.Directional,
-//                modifiers
-//            )
-//        };
-//    }
-//}
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        List<ICardModifier> modifiers = new()
+        {
+            ModEntry.Instance.Api.MakeMAttacksPierce(),
+        };
+
+        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMBuffAttack(1));
+
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                modifiers
+            )
+        };
+    }
+}
 
 internal sealed class PlanWAF : Card, IRegisterableCard
 {
@@ -190,43 +187,40 @@ internal sealed class PlanWAF : Card, IRegisterableCard
         };
     }
 }
-// UNCOMMENT THIS
-//internal sealed class ShieldingMod : Card, IRegisterableCard
-//{
-//    public static Rarity GetRarity() => Rarity.uncommon;
 
-//    public override CardData GetData(State state)
-//    {
-//        return new()
-//        {
-//            cost = 0,
-//            unplayable = true,
-//            flippable = upgrade != Upgrade.None
-//        };
-//    }
+internal sealed class ShieldingMod : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.uncommon;
 
-//    public override List<CardAction> GetActions(State s, Combat c)
-//    {
-//        return new()
-//        {
-//            ModEntry.Instance.Api.MakeAModifierWrapper
-//            (
-//                upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Directional,
-//                new()
-//                {
-//                    ModEntry.Instance.Api.MakeMAddAction(
-//                        new AVariableHint() { status = ModEntry.Instance.AttackIconStatusDummy.Status },
-//                        null
-//                    ),
-//                    ModEntry.Instance.Api.MakeMAddAction(
-//                        new AStatus() { status = upgrade == Upgrade.B ? Status.shield : Status.tempShield, xHint = 1, statusAmount = HOW_WILL_I_FIGURE_THIS_VALUE_OUT },
-//                        upgrade == Upgrade.B ? ModEntry.Instance.sprites["icon_sticker_shield"] :  ModEntry.Instance.sprites["icon_sticker_temp_shield"]
-//                    ),
-//                }
-//            )
-//        };
-//    }
-//}
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 0,
+            unplayable = true,
+            flippable = upgrade != Upgrade.None
+        };
+    }
+
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
+                    ModEntry.Instance.Api.MakeMAddAction(
+                        new AVariableHint() { status = ModEntry.Instance.AttackIconStatusDummy.Status },
+                        null
+                    ),
+                    new MShieldForAttackAmount() { tempShield = upgrade != Upgrade.B }
+                }
+            )
+        };
+    }
+}
 
 internal sealed class SpareParts : Card, IRegisterableCard
 {

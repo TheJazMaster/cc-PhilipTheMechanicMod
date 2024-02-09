@@ -46,8 +46,10 @@ public sealed class ApiImplementation : IPhilipAPI
 
     public ICardModifier MakeMAddAction(CardAction action, Spr? stickerSprite) { return new MAddAction() { action = action, stickerSprite = stickerSprite }; }
     public ICardModifier MakeMBuffAttack(int amount) { return new MBuffAttack() { amount = amount }; }
+    public ICardModifier MakeMAttacksPierce() { return new MAttacksPierce(); }
     public ICardModifier MakeMStun() { return new MStun(); }
     public ICardModifier MakeMDeleteActions() { return new MDeleteActions(); }
+    public ICardModifier MakeMPlayTwice() { return new MPlayTwice(); }
 
     public ICardModifier MakeMExhaust() { return new MExhaust(); }
     public ICardModifier MakeMRetain() { return new MRetain(); }
@@ -56,4 +58,5 @@ public sealed class ApiImplementation : IPhilipAPI
     public ICardModifier MakeMDontExhaust() { return new MDontExhaust(); }
     public ICardModifier MakeMRecycle() { return new MRecycle(); }
     public ICardModifier MakeMSetEnergyCostToZero() { return new MSetEnergyCostToZero(); }
+    public ICardModifier MakeMReduceEnergyCost() { return new MReduceEnergyCost(); }
 }
