@@ -283,3 +283,51 @@ internal sealed class ReduceReuse : Card, IRegisterableCard
         return actions;
     }
 }
+
+internal sealed class OpenBayDoors : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.common;
+
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 0,
+            retain = upgrade == Upgrade.A
+        };
+    }
+
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        List<ICardModifier> modifiers = new()
+        {
+            ModEntry.Instance.Api.MakeMExhaust(),
+            ModEntry.Instance.Api.MakeMReduceEnergyCost()
+        };
+
+        if (upgrade == Upgrade.B)
+        {
+            modifiers.Add
+            (
+                ModEntry.Instance.Api.MakeMAddAction
+                (
+                    new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, 
+                    ModEntry.Instance.sprites["icon_sticker_missile"].Sprite
+                )
+            );
+        }
+
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional_WholeHand,
+                modifiers,
+                new()
+                {
+                    direction = upgrade == Upgrade.A ? IPhilipAPI.CardModifierTargetDirection.RIGHT : IPhilipAPI.CardModifierTargetDirection.LEFT
+                }
+            )
+        };
+    }
+}
