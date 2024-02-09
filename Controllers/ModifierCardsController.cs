@@ -155,6 +155,7 @@ namespace clay.PhilipTheMechanic.Controllers
         public static void ConditionallyReplaceArtWithMetalPlate(Card __instance, ref CardData __result, State state)
         {
             if (SuppressMetalPlatingPatch) return;
+            if (__instance == null) return;
 
             var s = state;
             if (s.route is not Combat c) { return; }
