@@ -8,6 +8,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MDeleteActions : ICardModifier
     {
+        public bool MandatesStickyNote() { return true; }
         public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_no_action"].Sprite;

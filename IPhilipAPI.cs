@@ -44,6 +44,8 @@ namespace clay.PhilipTheMechanic
 
     public interface ICardModifier
     {
+        bool RequestsStickyNote() { return false; }
+        bool MandatesStickyNote() { return false; }
         Spr? GetSticker(State s) { return null; }
         Icon? GetIcon(State s) { return null; }
         List<Tooltip> GetTooltips(State s) { return new(); }

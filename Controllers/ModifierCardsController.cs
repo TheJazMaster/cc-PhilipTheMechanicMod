@@ -1,6 +1,7 @@
 ﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using HarmonyLib;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,16 +105,6 @@ namespace clay.PhilipTheMechanic.Controllers
             //}
             //catch (Exception e) { }
 
-            // TODO: sticky notes
-            //if (!StickyNoteHack)
-            //{
-            //    __result = overridenCardActions;
-            //}
-            //else
-            //{
-            //    // we're trying to draw only the active actions, with icons rn
-            //    __result = overridenCardActions.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
-            //}
             __result = overridenCardActions;
         }
 
@@ -141,6 +132,46 @@ namespace clay.PhilipTheMechanic.Controllers
         }
 
 
+        //
+        // Move below to new class ModifierRendererController?
+        //
+
+        internal static bool RenderingActionsOnStickyNote = false;
+        internal static bool SuppressMetalPlatingPatch = false;
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
+        public static void SupportStickyNoteRendering(Card __instance, ref List<CardAction> __result, State s, Combat c)
+        {
+            if (!RenderingActionsOnStickyNote) return;
+
+            // we're trying to draw only the active actions with icons rn
+            __result = __result.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
+        }
+
+        // stack overflows from infinite recursion that happens for no reason
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
+        public static void ConditionallyReplaceArtWithMetalPlate(Card __instance, ref CardData __result, State state)
+        {
+            if (SuppressMetalPlatingPatch) return;
+
+            var s = state;
+            if (s.route is not Combat c) { return; }
+            if (c.routeOverride != null && !c.eyeballPeek) { return; }
+            if (__instance.drawAnim != 1) { return; }
+
+            SuppressActionMods = true;
+            var modifiers = GetCardModifiers(__instance, s, c);
+            var actions = __instance.GetActionsOverridden(s, c);
+            SuppressActionMods = false;
+            if (ShouldStickyNote(__instance, s, actions, modifiers))
+            {
+                __result.art = ModEntry.Instance.sprites["card_art_override"].Sprite;
+                __result.artTint = "ffffff";
+            }
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.Render))]
         public static void RenderStickersAndStickyNotes(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
@@ -164,30 +195,33 @@ namespace clay.PhilipTheMechanic.Controllers
             Box box = g.Push(null, rect);
             Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
 
-            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 46, vec2.y + 19);
-            //Draw.Sprite((Spr)MainManifest.sprites["icon_screw"].Id, vec2.x + 4,  vec2.y + 69);
+            //Draw.Sprite(ModEntry.Instance.sprites["icon_screw"].Sprite, vec2.x + 46, vec2.y + 19);
+            //Draw.Sprite(ModEntry.Instance.sprites["icon_screw"].Sprite, vec2.x + 4,  vec2.y + 69);
+
+            var modifiers = GetCardModifiers(__instance, state, c);
 
             //
             // draw index card / sticky note fix for floppables
             //
 
             var actions = __instance.GetActionsOverridden(state, c);
-            // TODO: reimplement sticky notes
-            //if (ShouldStickyNote(__instance, actions, state))
-            //{
-            //    if (actions.Where((action) => action.GetIcon(state) != null && !action.disabled).Count() <= 3)
-            //    {
-            //        Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_sticky_note"].Id, vec2.x, vec2.y);
-            //    }
-            //    else
-            //    {
-            //        Draw.Sprite((Spr)MainManifest.sprites["floppable_fix_index_card"].Id, vec2.x, vec2.y);
-            //    }
+            if(ShouldStickyNote(__instance, state, actions, modifiers))
+            {
+                // TODO: tell kokoro to stop rendering card weird
 
-            //    StickyNoteHack = true;
-            //    __instance.MakeAllActionIcons(g, g.state);
-            //    StickyNoteHack = false;
-            //}
+                //if (actions.Where((action) => action.GetIcon(state) != null && !action.disabled).Count() <= 3)
+                //{
+                //    Draw.Sprite(ModEntry.Instance.sprites["floppable_fix_sticky_note"].Sprite, vec2.x, vec2.y);
+                //}
+                //else
+                //{
+                //    Draw.Sprite(ModEntry.Instance.sprites["floppable_fix_index_card"].Sprite, vec2.x, vec2.y);
+                //}
+
+                RenderingActionsOnStickyNote = true;
+                __instance.MakeAllActionIcons(g, g.state);
+                RenderingActionsOnStickyNote = false;
+            }
 
             //
             // draw stickers
@@ -201,7 +235,7 @@ namespace clay.PhilipTheMechanic.Controllers
             double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
             double stickerOriginY = 8 - 7.5 + 5;
 
-            var stickers = GetCardModifiers(__instance, state, c)
+            var stickers = modifiers
                 .Select(modifier => modifier.GetSticker(state))
                 .Where(sticker => sticker != null)
                 .Select(sticker => sticker!.Value);
@@ -224,6 +258,21 @@ namespace clay.PhilipTheMechanic.Controllers
         {
             //return (0.5f * Math.Sin(uuid) + 0.5f) * (max-min) + min;
             return (Math.Abs(uuid / 100.0) % Math.Abs(max - min)) + min;
+        }
+
+        public static bool ShouldStickyNote(Card card, State s, List<CardAction> actions, List<ICardModifier> modifiers)
+        {
+            SuppressMetalPlatingPatch = true;
+            var description = card.GetDataWithOverrides(s).description;
+            SuppressMetalPlatingPatch = false;
+            if (description != null) return false;
+
+            if (modifiers.Where(m => m.MandatesStickyNote()).Any()) return true;
+
+            var hasDisabledAction = actions.Where(a => a.disabled).Any();
+            var hasStickyNoteRequest = modifiers.Where(m => m.RequestsStickyNote()).Any();
+
+            return hasDisabledAction && hasStickyNoteRequest;
         }
 
         public static void HandleFlimsyModifiers(Card playedCard, State s, Combat c, int handPosition)

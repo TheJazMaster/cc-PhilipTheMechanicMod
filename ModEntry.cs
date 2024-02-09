@@ -63,6 +63,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "frame_philip");
         RegisterSprite(package, "floppable_fix_sticky_note");
         RegisterSprite(package, "floppable_fix_index_card");
+        RegisterSprite(package, "card_art_override");
             
         RegisterSprite(package, "philip_mini");
         RegisterSprite(package, "philip_classy_0");

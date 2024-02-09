@@ -11,6 +11,11 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         public required CardAction action;
         public Spr? stickerSprite;
 
+        public bool RequestsStickyNote() 
+        {
+            return true;
+        }
+
         public Spr? GetSticker(State s)
         {
             return stickerSprite;
