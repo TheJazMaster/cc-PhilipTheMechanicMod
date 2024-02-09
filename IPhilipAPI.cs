@@ -36,10 +36,16 @@ namespace clay.PhilipTheMechanic
 
         ICardModifier MakeMAddAction(CardAction action, Spr? stickerSprite);
         ICardModifier MakeMBuffAttack(int amount);
+        ICardModifier MakeMStun();
         ICardModifier MakeMDeleteActions();
+
         ICardModifier MakeMExhaust();
         ICardModifier MakeMRetain();
         ICardModifier MakeMUnplayable();
+        ICardModifier MakeMMakePlayable();
+        ICardModifier MakeMDontExhaust();
+        ICardModifier MakeMRecycle();
+        ICardModifier MakeMSetEnergyCostToZero();
     }
 
     public interface ICardModifier

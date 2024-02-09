@@ -7,6 +7,7 @@ using Nanoray.PluginManager;
 using Nickel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -108,6 +109,9 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_Flimsy_Neighbors_Card_Mod");
         RegisterSprite(package, "icon_attack_buff");
         RegisterSprite(package, "icon_card_unplayable");
+        RegisterSprite(package, "icon_card_playable");
+        RegisterSprite(package, "icon_dont_exhaust");
+        RegisterSprite(package, "icon_0_energy");
         RegisterSprite(package, "icon_screw");
         RegisterSprite(package, "icon_equal");
         RegisterSprite(package, "icon_redraw");
@@ -134,6 +138,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_sticker_heat");
         RegisterSprite(package, "icon_sticker_evade");
         RegisterSprite(package, "icon_sticker_exhaust");
+        RegisterSprite(package, "icon_sticker_dont_exhaust");
         RegisterSprite(package, "icon_sticker_missile");
         RegisterSprite(package, "icon_sticker_hermes");
         RegisterSprite(package, "icon_sticker_stun");
@@ -143,7 +148,8 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_sticker_no_action");
         RegisterSprite(package, "icon_sticker_energyLessNextTurn");
         RegisterSprite(package, "icon_sticker_card_unplayable");
-    
+        RegisterSprite(package, "icon_sticker_card_playable");
+
         RegisterSprite(package, "button_redraw");
         RegisterSprite(package, "button_redraw_on");
     
@@ -210,6 +216,8 @@ public sealed class ModEntry : SimpleMod
             }
         });
 
+        // TODO: alt starters - duct tape and dreams, and reduce reuse
+
         // statuses
         RedrawStatus = helper.Content.Statuses.RegisterStatus("Redraw", new()
         {
@@ -262,7 +270,17 @@ public sealed class ModEntry : SimpleMod
         {
             if (!typeof(IRegisterableCard).IsAssignableFrom(cardType)) continue;
 
-            AccessTools.DeclaredMethod(cardType, nameof(IRegisterableCard.Register))?.Invoke(null, [helper]);
+            helper.Content.Cards.RegisterCard(cardType.Name, new()
+            {
+                CardType = cardType,
+                Meta = new()
+                {
+                    deck = PhilipDeck.Deck,
+                    rarity = (Rarity)AccessTools.DeclaredMethod(cardType, nameof(IRegisterableCard.GetRarity))?.Invoke(null, [])!,
+                    upgradesTo = [Upgrade.A, Upgrade.B]
+                },
+                Name = AnyLocalizations.Bind(["card", cardType.Name, "name"]).Localize
+            });
         }
 
         // one for every artifact

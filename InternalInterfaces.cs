@@ -4,7 +4,7 @@ namespace clay.PhilipTheMechanic;
 
 internal interface IRegisterableCard
 {
-    static abstract void Register(IModHelper helper);
+    static abstract Rarity GetRarity();
 }
 
 internal interface IRegisterableArtifact

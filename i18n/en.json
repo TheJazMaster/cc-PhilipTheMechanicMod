@@ -34,13 +34,68 @@
     "JettisonParts": {
       "name": "Jettison Parts"
     },
-    "SheepDream": {
-      "name": "Sheep Dream",
-      "description": {
-        "None": "Attack for set amount = 3. On hit, apply 1 <c=status>BOOST</c>.",
-        "A": "Attack for set amount = 4. On hit, apply 1 <c=status>BOOST</c>.",
-        "B": "Attack for set amount = 5. On hit, apply 2 <c=status>BOOST</c>."
-      }
+    "Oops": {
+      "name": "Oops"
+    },
+    "OpenBayDoors": {
+      "name": "Open Bay Doors"
+    },
+    "ReduceReuse": {
+      "name": "Reduce Reuse"
+    },
+    "StunMod": {
+      "name": "Stun Mod"
+    },
+    "FrenzyMod": {
+      "name": "Frenzy Mod"
+    },
+    "LoosenScrews": {
+      "name": "Loosen Screws"
+    },
+    "OverfueledEngines": {
+      "name": "Overfueled Engines"
+    },
+    "PiercingMod": {
+      "name": "Piercing Mod"
+    },
+    "PlanWAF": {
+      "name": "Plan WAF"
+    },
+    "PrecisionMachining": {
+      "name": "Precision Machining"
+    },
+    "ShieldingMod": {
+      "name": "Shielding Mod"
+    },
+    "SpareParts": {
+      "name": "Spare Parts"
+    },
+    "BlackMarketParts": {
+      "name": "Black Market Parts"
+    },
+    "DisableSafeties": {
+      "name": "Disable Safeties"
+    },
+    "EmergencyTraining": {
+      "name": "Emergency Training"
+    },
+    "NanobotInfestation": {
+      "name": "Infestation"
+    },
+    "NoStockParts": {
+      "name": "No Stock Parts"
+    },
+    "Nanobots": {
+      "name": "Nanobots"
+    },
+    "UraniumRound": {
+      "name": "Uranium Round"
+    },
+    "ImpromptuBlastShield": {
+      "name": "Impromptu Blast Shield"
+    },
+    "OhNo": {
+      "name": "Oh No"
     }
   }
 }

@@ -200,55 +200,49 @@ namespace clay.PhilipTheMechanic.Controllers
 
             var modifiers = GetCardModifiers(__instance, state, c);
 
-            //
-            // draw index card / sticky note fix for floppables
-            //
 
             var actions = __instance.GetActionsOverridden(state, c);
             if(ShouldStickyNote(__instance, state, actions, modifiers))
             {
-                // TODO: tell kokoro to stop rendering card weird
+                //
+                // draw index card / sticky note fix for floppables
+                //
 
-                //if (actions.Where((action) => action.GetIcon(state) != null && !action.disabled).Count() <= 3)
-                //{
-                //    Draw.Sprite(ModEntry.Instance.sprites["floppable_fix_sticky_note"].Sprite, vec2.x, vec2.y);
-                //}
-                //else
-                //{
-                //    Draw.Sprite(ModEntry.Instance.sprites["floppable_fix_index_card"].Sprite, vec2.x, vec2.y);
-                //}
+                // TODO: tell kokoro to stop rendering card weird
 
                 RenderingActionsOnStickyNote = true;
                 __instance.MakeAllActionIcons(g, g.state);
                 RenderingActionsOnStickyNote = false;
             }
-
-            //
-            // draw stickers
-            //
-
-            // sticker goes at (50, 8) - 0.5*sticker.dimensions
-            //var DEG_60 = 1.0472;
-            //MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
-            var DEG_30 = 0.5236;
-            int stickerCount = 0;
-            double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
-            double stickerOriginY = 8 - 7.5 + 5;
-
-            var stickers = modifiers
-                .Select(modifier => modifier.GetSticker(state))
-                .Where(sticker => sticker != null)
-                .Select(sticker => sticker!.Value);
-
-            foreach (var sticker in stickers)
+            else
             {
-                var seed = __instance.uuid + stickerCount * 700;
-                var xRandOff = uuidToRandRange(seed, -6, 6);
-                var yRandOff = uuidToRandRange(seed + 37, -3, 10);
-                var randRotation = uuidToRandRange(seed, -DEG_30, DEG_30);
-                Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
-                //MainManifest.Instance?.Logger?.LogInformation($"seed={seed} xRandOff={xRandOff} yRandOff={yRandOff} rotation={randRotation}");
-                stickerCount++;
+                //
+                // draw stickers
+                //
+
+                // sticker goes at (50, 8) - 0.5*sticker.dimensions
+                //var DEG_60 = 1.0472;
+                //MainManifest.Instance?.Logger?.LogInformation($"Drawing stickers on {__instance.uuid}:`{__instance.GetFullDisplayName()}`");
+                var DEG_30 = 0.5236;
+                int stickerCount = 0;
+                double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
+                double stickerOriginY = 8 - 7.5 + 5;
+
+                var stickers = modifiers
+                    .Select(modifier => modifier.GetSticker(state))
+                    .Where(sticker => sticker != null)
+                    .Select(sticker => sticker!.Value);
+
+                foreach (var sticker in stickers)
+                {
+                    var seed = __instance.uuid + stickerCount * 700;
+                    var xRandOff = uuidToRandRange(seed, -6, 6);
+                    var yRandOff = uuidToRandRange(seed + 37, -3, 10);
+                    var randRotation = uuidToRandRange(seed, -DEG_30, DEG_30);
+                    Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
+                    //MainManifest.Instance?.Logger?.LogInformation($"seed={seed} xRandOff={xRandOff} yRandOff={yRandOff} rotation={randRotation}");
+                    stickerCount++;
+                }
             }
 
             g.Pop();
