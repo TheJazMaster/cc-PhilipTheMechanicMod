@@ -118,8 +118,10 @@ namespace clay.PhilipTheMechanic.Controllers
             //    __result.flippable = true;
             //}
 
-            if (state.route is not Combat c) { return; }
-            if (c.routeOverride != null && !c.eyeballPeek) { return; }
+            var s = state;
+            if (!ModifiersCurrentlyApply(state, __instance)) return;
+            Combat c = (s.route as Combat)!;
+
 
             CardData data = __result;
             var modifiers = GetCardModifiers(__instance, state, c);
@@ -158,14 +160,18 @@ namespace clay.PhilipTheMechanic.Controllers
             if (__instance == null) return;
 
             var s = state;
-            if (s.route is not Combat c) { return; }
-            if (c.routeOverride != null && !c.eyeballPeek) { return; }
-            if (__instance.drawAnim != 1) { return; }
+            if (!ModifiersCurrentlyApply(state, __instance)) return;
+            Combat c = (s.route as Combat)!;
 
             SuppressActionMods = true;
             var modifiers = GetCardModifiers(__instance, s, c);
+            SuppressActionMods = false;
+            if (modifiers.Count == 0) { return; }
+
+            SuppressActionMods = true;
             var actions = __instance.GetActionsOverridden(s, c);
             SuppressActionMods = false;
+
             if (ShouldStickyNote(__instance, s, actions, modifiers))
             {
                 __result.art = ModEntry.Instance.sprites["card_art_override"].Sprite;
@@ -180,9 +186,9 @@ namespace clay.PhilipTheMechanic.Controllers
             SuppressActionMods = false;
             State state = fakeState ?? g.state;
 
-            if (state.route is not Combat c) { return; } 
-            if (c.routeOverride != null && !c.eyeballPeek) { return; }
-            if (__instance.drawAnim != 1) { return; }
+            var s = state;
+            if (!ModifiersCurrentlyApply(state, __instance)) return;
+            Combat c = (s.route as Combat)!;
 
 
             Vec vec = posOverride ?? __instance.pos;
@@ -253,6 +259,17 @@ namespace clay.PhilipTheMechanic.Controllers
         {
             //return (0.5f * Math.Sin(uuid) + 0.5f) * (max-min) + min;
             return (Math.Abs(uuid / 100.0) % Math.Abs(max - min)) + min;
+        }
+
+        public static bool ModifiersCurrentlyApply(State s, Card card)
+        {
+            if (s.route is not Combat c) { return false; }
+            if (s == DB.fakeState) { return false; }
+            if (c == DB.fakeCombat) { return false; }
+            if (c.routeOverride != null && !c.eyeballPeek) { return false; }
+            if (card.drawAnim != 1) { return false; }
+            
+            return true;
         }
 
         public static bool ShouldStickyNote(Card card, State s, List<CardAction> actions, List<ICardModifier> modifiers)

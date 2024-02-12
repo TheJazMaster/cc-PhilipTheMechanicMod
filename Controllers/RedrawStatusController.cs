@@ -110,9 +110,10 @@ namespace clay.PhilipTheMechanic.Controllers
         {
             State state = fakeState ?? g.state;
 
-            if (state.route is not Combat c) { return; } // should never hit this case
-            if (c.routeOverride != null && !c.eyeballPeek) { return; }
-            if (__instance.drawAnim != 1) { return; }
+            var s = state;
+            if (!ModifierCardsController.ModifiersCurrentlyApply(state, __instance)) return;
+            Combat c = (s.route as Combat)!;
+
 
             int cardIndex = c.hand.IndexOf(__instance);
 
