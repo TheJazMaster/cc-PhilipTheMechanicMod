@@ -1,4 +1,5 @@
-﻿using clay.PhilipTheMechanic.Cards;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using Nanoray.PluginManager;
 using Nickel;
+using Shockah.Kokoro;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +24,7 @@ public sealed class ModEntry : SimpleMod
 {
     internal static ModEntry Instance { get; private set; } = null!;
     internal readonly IPhilipAPI Api = new ApiImplementation();
+    internal IKokoroApi? KokoroApi { get; }
 
     internal Harmony Harmony { get; }
     internal ILocalizationProvider<IReadOnlyList<string>> AnyLocalizations { get; }
@@ -44,6 +47,10 @@ public sealed class ModEntry : SimpleMod
     public ModEntry(IPluginPackage<IModManifest> package, IModHelper helper, ILogger logger) : base(package, helper, logger)
     {
         Instance = this;
+        KokoroApi = helper.ModRegistry.GetApi<IKokoroApi>("Shockah.Kokoro");
+
+        // tell Kokoro about my wrapper action, if Kokoro exists
+        KokoroApi?.Actions.RegisterWrappedActionHook(new KokoroHooksImplementation(), 0);
 
         Harmony = new Harmony(package.Manifest.UniqueName);
         Harmony.PatchAll();

@@ -19,14 +19,28 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         }
         public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c)
         {
+
             foreach (var action in actions)
             {
-                if (action is AAttack aattack)
+                if (ModEntry.Instance.KokoroApi != null)
                 {
-                    aattack.damage = Math.Max(0, aattack.damage+amount);
+                    var actionsLevel2 = ModEntry.Instance.KokoroApi.Actions.GetWrappedCardActionsRecursively(action, true);
+                    foreach (var action2 in actionsLevel2) ModifyAction(action2);
+                }
+                else
+                {
+                    ModifyAction(action);
                 }
             }
+
             return actions;
+        }
+        private void ModifyAction(CardAction action)
+        {
+            if (action is AAttack aattack)
+            {
+                aattack.damage = Math.Max(0, aattack.damage + amount);
+            }
         }
     }
 }

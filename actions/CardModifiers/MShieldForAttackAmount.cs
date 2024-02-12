@@ -35,8 +35,15 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
             int amount = 0;
             foreach (CardAction action in actions)
             {
-                // TODO: kokoro unwrap
-                if (action is AAttack a) amount += a.damage;
+                if (ModEntry.Instance.KokoroApi != null)
+                {
+                    var actionsLevel2 = ModEntry.Instance.KokoroApi.Actions.GetWrappedCardActionsRecursively(action, true);
+                    foreach (var action2 in actionsLevel2) if (action2 is AAttack a) amount += a.damage;
+                }
+                else
+                {
+                    if (action is AAttack a) amount += a.damage;
+                }
             }
 
             actions.Add(new AStatus() 
