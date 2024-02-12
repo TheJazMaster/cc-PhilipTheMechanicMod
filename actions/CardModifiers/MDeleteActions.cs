@@ -17,7 +17,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(ModEntry.Instance.sprites["icon_no_action"].Sprite, null, Colors.textMain);
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
         {
             return new();
         }

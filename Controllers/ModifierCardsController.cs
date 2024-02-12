@@ -15,7 +15,7 @@ namespace clay.PhilipTheMechanic.Controllers
     public static class ModifierCardsController
     {
         // patch get actions and stuff like that
-        private static bool SuppressActionMods = false;
+        internal static bool SuppressActionMods = false;
 
         public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c)
         {
@@ -92,7 +92,7 @@ namespace clay.PhilipTheMechanic.Controllers
             var modifiers = GetCardModifiers(__instance, s, c);
             foreach (ICardModifier modifier in modifiers)
             {
-                overridenCardActions = modifier.TransformActions(overridenCardActions, s, c);
+                overridenCardActions = modifier.TransformActions(overridenCardActions, s, c, __instance);
             }
 
             // TODO: this will break for modded characters

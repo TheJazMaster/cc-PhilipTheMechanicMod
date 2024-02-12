@@ -1,4 +1,5 @@
-﻿using System;
+﻿using clay.PhilipTheMechanic.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,13 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new(); // TODO
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
         {
-            actions.AddRange(actions.Select(a => Mutil.DeepCopy(a)));
+            // rft asked that I don't clone actions
+            ModifierCardsController.SuppressActionMods = true;
+            actions.AddRange(card.GetActionsOverridden(s, c));
+            ModifierCardsController.SuppressActionMods = false;
+
             return actions;
         }
     }

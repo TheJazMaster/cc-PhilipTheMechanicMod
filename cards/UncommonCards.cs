@@ -247,4 +247,52 @@ internal sealed class SpareParts : Card, IRegisterableCard
     }
 }
 
-// TODO: for precision machining, use a kokoro wrapper - make a "inCenterOfHand" wraper and a "notInCenter" wrapper
+internal sealed class PrecisionMachining : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.uncommon;
+
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 1
+        };
+    }
+
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        int index = c.hand.IndexOf(this);
+        bool isCentered = c.hand.Count % 2 == 1 && index == c.hand.Count / 2;
+
+        return new()
+        {
+            new ACenterOfHandWrapper()
+            {
+                isCenter = true,
+                actions = new()
+                {
+                    new ADrawCard() { count = 2 },
+                    new AStatus() {
+                        status = ModEntry.Instance.RedrawStatus.Status,
+                        targetPlayer = true,
+                        statusAmount = upgrade == Upgrade.B ? 4 : 2
+                    },
+                },
+                disabled = (!isCentered && c != DB.fakeCombat)
+            },
+            new ACenterOfHandWrapper()
+            {
+                isCenter = false,
+                actions = new()
+                {
+                    new AStatus() {
+                        status = ModEntry.Instance.RedrawStatus.Status,
+                        targetPlayer = true,
+                        statusAmount = upgrade == Upgrade.A ? 2 : 1
+                    },
+                },
+                disabled = (isCentered && c != DB.fakeCombat)
+            }
+        };
+    }
+}

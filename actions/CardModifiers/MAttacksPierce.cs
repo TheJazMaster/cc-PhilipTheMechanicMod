@@ -17,7 +17,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(Enum.Parse<Spr>("icons_attackPiercing"), amount, Colors.textMain);
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
         {
             foreach (var action in actions)
             {
