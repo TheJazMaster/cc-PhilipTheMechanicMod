@@ -224,6 +224,17 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
                 {
                     ModEntry.Instance.Api.MakeMPlayTwice(),
                     ModEntry.Instance.Api.MakeMExhaust(),
+                },
+                new()
+                {
+                    isFlimsy = true,
+                }
+            ),
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
                     ModEntry.Instance.Api.MakeMSetEnergyCostToZero(),
                     ModEntry.Instance.Api.MakeMAddAction
                     (
@@ -240,7 +251,7 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
                 {
                     isFlimsy = true,
                 }
-            )
+            ),
         };
     }
 }

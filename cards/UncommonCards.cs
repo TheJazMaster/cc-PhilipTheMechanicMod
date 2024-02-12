@@ -73,6 +73,7 @@ internal sealed class LoosenScrews : Card, IRegisterableCard
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
+        // TODO: B
         return new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper
@@ -211,10 +212,7 @@ internal sealed class ShieldingMod : Card, IRegisterableCard
                 upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Directional,
                 new()
                 {
-                    ModEntry.Instance.Api.MakeMAddAction(
-                        new AVariableHint() { status = ModEntry.Instance.AttackIconStatusDummy.Status },
-                        null
-                    ),
+                    ModEntry.Instance.Api.MakeMAddAction(new AVariableHint_AttackIcon(), null),
                     new MShieldForAttackAmount() { tempShield = upgrade != Upgrade.B }
                 }
             )

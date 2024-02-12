@@ -37,7 +37,7 @@ public sealed class ModEntry : SimpleMod
 
     internal IStatusEntry RedrawStatus { get; private set; }
     internal IStatusEntry CustomPartsStatus { get; private set; }
-    internal IStatusEntry AttackIconStatusDummy { get; private set; }
+
 
     public override object? GetApi(IModManifest requestingMod)
     {
@@ -250,17 +250,6 @@ public sealed class ModEntry : SimpleMod
             },
             Name = this.AnyLocalizations.Bind(["status", "customParts", "name"]).Localize,
             Description = this.AnyLocalizations.Bind(["status", "customParts", "description"]).Localize
-        });
-
-        AttackIconStatusDummy = helper.Content.Statuses.RegisterStatus("AttackIconForVariableHint", new()
-        {
-            Definition = new()
-            {
-                icon = Enum.Parse<Spr>("icons_attack"),
-                color = new("000")
-            },
-            Name = (string locale) => "UNOBTAINABLE",
-            Description = (string locale) => "for internal use only, for easily displaying an icon for a variable hint"
         });
 
         // animations
