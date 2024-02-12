@@ -47,10 +47,10 @@ public sealed class ModEntry : SimpleMod
     public ModEntry(IPluginPackage<IModManifest> package, IModHelper helper, ILogger logger) : base(package, helper, logger)
     {
         Instance = this;
-        KokoroApi = helper.ModRegistry.GetApi<IKokoroApi>("Shockah.Kokoro");
 
-        // tell Kokoro about my wrapper action, if Kokoro exists
+        KokoroApi = helper.ModRegistry.GetApi<IKokoroApi>("Shockah.Kokoro");
         KokoroApi?.Actions.RegisterWrappedActionHook(new KokoroHooksImplementation(), 0);
+        KokoroApi?.RegisterCardRenderHook(new KokoroHooksImplementation(), 1000);
 
         Harmony = new Harmony(package.Manifest.UniqueName);
         Harmony.PatchAll();
