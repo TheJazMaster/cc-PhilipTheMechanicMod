@@ -96,6 +96,13 @@ internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
                     new()
                     {
                         ModEntry.Instance.Api.MakeMRetain(),
+                    }
+                ),
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Neighboring,
+                    new()
+                    {
                         ModEntry.Instance.Api.MakeMUnplayable(),
                     }
                 )

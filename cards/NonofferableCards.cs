@@ -144,6 +144,13 @@ internal sealed class OhNo : Card
                 {
                     ModEntry.Instance.Api.MakeMDeleteActions(),
                     ModEntry.Instance.Api.MakeMExhaust(),
+                }
+            ),
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional_WholeHand,
+                new()
+                {
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AStatus() { status = Status.evade, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 2 : 1 },
                         ModEntry.Instance.sprites["icon_sticker_evade"].Sprite
@@ -153,7 +160,7 @@ internal sealed class OhNo : Card
                         ModEntry.Instance.sprites["icon_sticker_redraw"].Sprite
                     ),
                 }
-            )
+            ),
         };
     }
 }

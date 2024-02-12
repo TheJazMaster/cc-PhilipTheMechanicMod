@@ -37,12 +37,19 @@ internal sealed class BlackMarketParts : Card, IRegisterableCard
                 {
                     ModEntry.Instance.Api.MakeMDeleteActions(),
                     ModEntry.Instance.Api.MakeMExhaust(),
+                }
+            ),
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
                     ModEntry.Instance.Api.MakeMAddAction(
                         addCardAction,
                         ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
                     ),
                 }
-            )
+            ),
         };
     }
 }
