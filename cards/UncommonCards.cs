@@ -257,7 +257,7 @@ internal sealed class SpareParts : Card, IRegisterableCard
 internal sealed class PrecisionMachining : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Precision_Machining"].Sprite;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Precise_Machining"].Sprite;
 
     public override CardData GetData(State state)
     {

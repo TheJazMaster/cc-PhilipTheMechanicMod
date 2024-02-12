@@ -74,7 +74,7 @@ internal sealed class OverdriveMod : Card, IRegisterableCard
 internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Duct_Tape_AndDreams"].Sprite;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Duct_Tape_and_Dreams"].Sprite;
     public override CardData GetData(State state)
     {
         return new()

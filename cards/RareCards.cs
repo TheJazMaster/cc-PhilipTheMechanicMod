@@ -50,7 +50,7 @@ internal sealed class BlackMarketParts : Card, IRegisterableCard
 internal sealed class DisableSafeties : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Disable_Safeties"].Sprite;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"].Sprite;
 
     public override CardData GetData(State state)
     {
