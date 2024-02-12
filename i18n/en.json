@@ -16,10 +16,6 @@
     }
   },
   "artifact": {
-    "BookOfTails": {
-      "name": "BOOK OF TAILS",
-      "description": "At start of turn, add a <c=cardtrait>temp</c> <c=card>Fox Tale</c> to your hand."
-    }
   },
   "card": {
     "OverdriveMod": {
@@ -86,7 +82,12 @@
       "name": "No Stock Parts"
     },
     "Nanobots": {
-      "name": "Nanobots"
+      "name": "Nanobots",
+      "description": {
+        "None": "On shuffle deck, exhaust random card and gain Nanobots.",
+        "A": "On shuffle deck, exhaust random card and gain Nanobots.",
+        "B": "On shuffle deck, exhaust random card and gain Nanobots."
+      }
     },
     "UraniumRound": {
       "name": "Uranium Round"

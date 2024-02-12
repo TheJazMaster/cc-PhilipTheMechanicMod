@@ -116,7 +116,7 @@ internal sealed class OverfueledEngines : Card, IRegisterableCard
                 {
                     ModEntry.Instance.Api.MakeMPlayTwice(),
                     ModEntry.Instance.Api.MakeMAddAction(
-                        new AAddCard() { amount = 1, card = upgrade == Upgrade.A ? new ColorlessTrash() : new Toxic() },
+                        new AAddCard() { amount = 1, card = upgrade == Upgrade.A ? new ColorlessTrash() : new Toxic(), destination = CardDestination.Hand },
                         ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
                     )
                 },
@@ -176,8 +176,8 @@ internal sealed class PlanWAF : Card, IRegisterableCard
     public override List<CardAction> GetActions(State s, Combat c)
     {
         var addCard = upgrade == Upgrade.B
-            ? new AAddCard() { amount = 1, card = new OhNo()  }
-            : new AAddCardUpgraded() { amount = 1, card = new OhNo() { upgrade = Upgrade.B } };
+            ? new AAddCard() { amount = 1, card = new OhNo(), destination = CardDestination.Hand }
+            : new AAddCardUpgraded() { amount = 1, card = new OhNo() { upgrade = Upgrade.B }, destination = CardDestination.Hand };
 
         return new()
         {

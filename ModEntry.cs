@@ -2,6 +2,7 @@
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using Nanoray.PluginManager;
 using Nickel;
@@ -296,6 +297,57 @@ public sealed class ModEntry : SimpleMod
                 Name = AnyLocalizations.Bind(["card", cardType.Name, "name"]).Localize
             });
         }
+
+        // register unofferable cards
+        helper.Content.Cards.RegisterCard("Nanobots", new()
+        {
+            CardType = typeof(Nanobots),
+            Meta = new()
+            {
+                deck = Deck.trash,
+                rarity = Rarity.common,
+                upgradesTo = [],
+                dontOffer = true
+            },
+            Name = AnyLocalizations.Bind(["card", "Nanobots", "name"]).Localize
+        });
+
+        helper.Content.Cards.RegisterCard("UraniumRound", new()
+        {
+            CardType = typeof(UraniumRound),
+            Meta = new()
+            {
+                deck = PhilipDeck.Deck,
+                rarity = Rarity.rare,
+                upgradesTo = [Upgrade.A, Upgrade.B],
+                dontOffer = true
+            },
+            Name = AnyLocalizations.Bind(["card", "UraniumRound", "name"]).Localize
+        });
+        helper.Content.Cards.RegisterCard("ImpromptuBlastShield", new()
+        {
+            CardType = typeof(ImpromptuBlastShield),
+            Meta = new()
+            {
+                deck = PhilipDeck.Deck,
+                rarity = Rarity.rare,
+                upgradesTo = [Upgrade.A, Upgrade.B],
+                dontOffer = true
+            },
+            Name = AnyLocalizations.Bind(["card", "ImpromptuBlastShield", "name"]).Localize
+        });
+        helper.Content.Cards.RegisterCard("OhNo", new()
+        {
+            CardType = typeof(OhNo),
+            Meta = new()
+            {
+                deck = PhilipDeck.Deck,
+                rarity = Rarity.uncommon,
+                upgradesTo = [Upgrade.A, Upgrade.B],
+                dontOffer = true
+            },
+            Name = AnyLocalizations.Bind(["card", "OhNo", "name"]).Localize
+        });
 
         // one for every artifact
         //AccessTools.DeclaredMethod(HotChocolate, nameof(IDemoArtifact.Register))?.Invoke(null, new() { helper });

@@ -24,8 +24,8 @@ internal sealed class BlackMarketParts : Card, IRegisterableCard
     public override List<CardAction> GetActions(State s, Combat c)
     {
         var addCardAction = upgrade == Upgrade.B
-            ? new AAddCardUpgraded() { card = new UraniumRound() { upgrade = Upgrade.B } }
-            : new AAddCard() { amount = upgrade == Upgrade.A ? 2 : 1, card = new UraniumRound() };
+            ? new AAddCardUpgraded() { card = new UraniumRound() { upgrade = Upgrade.B }, destination = CardDestination.Hand }
+            : new AAddCard() { amount = upgrade == Upgrade.A ? 2 : 1, card = new UraniumRound(), destination = CardDestination.Hand };
 
         return new()
         {
@@ -195,6 +195,52 @@ internal sealed class NoStockParts : Card, IRegisterableCard
                 targetPlayer = true,
                 statusAmount = 1
             },
+        };
+    }
+}
+
+internal sealed class NanobotInfestation : Card, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.rare;
+
+    public override CardData GetData(State state)
+    {
+        return new()
+        {
+            cost = 1,
+            unplayable = true,
+            flippable = true,
+        };
+    }
+
+    public override List<CardAction> GetActions(State s, Combat c)
+    {
+        return new()
+        {
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                IPhilipAPI.CardModifierTarget.Directional,
+                new()
+                {
+                    ModEntry.Instance.Api.MakeMPlayTwice(),
+                    ModEntry.Instance.Api.MakeMExhaust(),
+                    ModEntry.Instance.Api.MakeMSetEnergyCostToZero(),
+                    ModEntry.Instance.Api.MakeMAddAction
+                    (
+                        new AAddCard()
+                        {
+                            card = new Nanobots(),
+                            amount = 1,
+                            destination = CardDestination.Discard
+                        },
+                        ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
+                    ),
+                },
+                new()
+                {
+                    isFlimsy = true,
+                }
+            )
         };
     }
 }
