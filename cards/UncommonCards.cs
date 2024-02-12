@@ -165,7 +165,7 @@ internal sealed class PiercingMod : Card, IRegisterableCard
     }
 }
 
-internal sealed class PlanWAF : Card, IRegisterableCard
+internal sealed class InCaseOfEmergency : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
     public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"].Sprite;
@@ -182,8 +182,8 @@ internal sealed class PlanWAF : Card, IRegisterableCard
     public override List<CardAction> GetActions(State s, Combat c)
     {
         var addCard = upgrade == Upgrade.B
-            ? new AAddCard() { amount = 1, card = new OhNo(), destination = CardDestination.Hand }
-            : new AAddCardUpgraded() { amount = 1, card = new OhNo() { upgrade = Upgrade.B }, destination = CardDestination.Hand };
+            ? new AAddCardUpgraded() { amount = 1, card = new OhNo() { upgrade = Upgrade.B }, destination = CardDestination.Hand }
+            : new AAddCard() { amount = 1, card = new OhNo(), destination = CardDestination.Hand };
 
         return new()
         {
