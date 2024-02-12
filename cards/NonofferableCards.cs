@@ -14,7 +14,7 @@ internal sealed class Nanobots : Card
     public override List<CardAction> GetActions(State s, Combat c) { return new() {}; }
 
     [HarmonyPostfix]
-    [HarmonyPatch(nameof(State.ShuffleDeck))]
+    [HarmonyPatch(typeof(State), nameof(State.ShuffleDeck))]
     public static void REPLICATE(State __instance, bool isMidCombat = false)
     {
         try
