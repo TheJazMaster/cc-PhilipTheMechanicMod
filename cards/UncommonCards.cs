@@ -11,6 +11,7 @@ namespace clay.PhilipTheMechanic.Cards;
 internal sealed class FrenzyMod : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Frenzy_Mod"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -50,7 +51,7 @@ internal sealed class FrenzyMod : Card, IRegisterableCard
             ModEntry.Instance.Api.MakeAModifierWrapper
             (
                 IPhilipAPI.CardModifierTarget.Directional,
-                modifiers, 
+                modifiers,
                 new() { isFlimsy = true }
             )
         };
@@ -60,6 +61,7 @@ internal sealed class FrenzyMod : Card, IRegisterableCard
 internal sealed class LoosenScrews : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Loosen_Screws"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -95,6 +97,7 @@ internal sealed class LoosenScrews : Card, IRegisterableCard
 internal sealed class OverfueledEngines : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Overfueled_Engines"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -130,6 +133,7 @@ internal sealed class OverfueledEngines : Card, IRegisterableCard
 internal sealed class PiercingMod : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Piercing_Mod"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -164,6 +168,7 @@ internal sealed class PiercingMod : Card, IRegisterableCard
 internal sealed class PlanWAF : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -192,6 +197,7 @@ internal sealed class PlanWAF : Card, IRegisterableCard
 internal sealed class ShieldingMod : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Shielding_Mod"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -223,6 +229,7 @@ internal sealed class ShieldingMod : Card, IRegisterableCard
 internal sealed class SpareParts : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_philip_default"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -250,6 +257,7 @@ internal sealed class SpareParts : Card, IRegisterableCard
 internal sealed class PrecisionMachining : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Precision_Machining"].Sprite;
 
     public override CardData GetData(State state)
     {

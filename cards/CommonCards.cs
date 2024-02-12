@@ -13,6 +13,7 @@ namespace clay.PhilipTheMechanic.Cards;
 internal sealed class RecycleParts : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Recycle_Parts"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -44,6 +45,7 @@ internal sealed class RecycleParts : Card, IRegisterableCard
 internal sealed class OverdriveMod : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Overdrive_Mod"].Sprite;
     public override CardData GetData(State state)
     {
         return new()
@@ -72,6 +74,7 @@ internal sealed class OverdriveMod : Card, IRegisterableCard
 internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Duct_Tape_AndDreams"].Sprite;
     public override CardData GetData(State state)
     {
         return new()
@@ -114,6 +117,7 @@ internal sealed class DuctTapeAndDreams : Card, IRegisterableCard
 internal sealed class JettisonParts : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"].Sprite;
     public override CardData GetData(State state)
     {
         return new()
@@ -156,6 +160,7 @@ internal sealed class JettisonParts : Card, IRegisterableCard
 internal sealed class StunMod : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Stun_Mod"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -190,6 +195,7 @@ internal sealed class StunMod : Card, IRegisterableCard
 internal sealed class Oops : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Oops"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -229,6 +235,7 @@ internal sealed class Oops : Card, IRegisterableCard
 internal sealed class ReduceReuse : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Recycle_Parts"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -287,6 +294,7 @@ internal sealed class ReduceReuse : Card, IRegisterableCard
 internal sealed class OpenBayDoors : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Open_Bay_Doors"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -311,7 +319,7 @@ internal sealed class OpenBayDoors : Card, IRegisterableCard
             (
                 ModEntry.Instance.Api.MakeMAddAction
                 (
-                    new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, 
+                    new ASpawn() { thing = new Missile() { missileType = MissileType.normal } },
                     ModEntry.Instance.sprites["icon_sticker_missile"].Sprite
                 )
             );

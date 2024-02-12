@@ -10,6 +10,7 @@ namespace clay.PhilipTheMechanic.Cards;
 internal sealed class BlackMarketParts : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Black_Market_Parts"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -49,6 +50,7 @@ internal sealed class BlackMarketParts : Card, IRegisterableCard
 internal sealed class DisableSafeties : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Disable_Safeties"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -144,6 +146,7 @@ internal sealed class DisableSafeties : Card, IRegisterableCard
 internal sealed class EmergencyTraining : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Emergency_Training"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -176,6 +179,7 @@ internal sealed class EmergencyTraining : Card, IRegisterableCard
 internal sealed class NoStockParts : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_philip_default"].Sprite;
 
     public override CardData GetData(State state)
     {
@@ -202,6 +206,7 @@ internal sealed class NoStockParts : Card, IRegisterableCard
 internal sealed class NanobotInfestation : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.rare;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Nanobot_Infestation"].Sprite;
 
     public override CardData GetData(State state)
     {

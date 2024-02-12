@@ -290,7 +290,8 @@ public sealed class ModEntry : SimpleMod
                     rarity = (Rarity)AccessTools.DeclaredMethod(cardType, nameof(IRegisterableCard.GetRarity))?.Invoke(null, [])!,
                     upgradesTo = [Upgrade.A, Upgrade.B]
                 },
-                Name = AnyLocalizations.Bind(["card", cardType.Name, "name"]).Localize
+                Name = AnyLocalizations.Bind(["card", cardType.Name, "name"]).Localize,
+                Art = (Spr)AccessTools.DeclaredMethod(cardType, nameof(IRegisterableCard.GetArt))?.Invoke(null, [])!,
             });
         }
 
@@ -305,7 +306,8 @@ public sealed class ModEntry : SimpleMod
                 upgradesTo = [],
                 dontOffer = true
             },
-            Name = AnyLocalizations.Bind(["card", "Nanobots", "name"]).Localize
+            Name = AnyLocalizations.Bind(["card", "Nanobots", "name"]).Localize,
+            Art = ModEntry.Instance.sprites["card_Nanobots"].Sprite
         });
 
         helper.Content.Cards.RegisterCard("UraniumRound", new()
@@ -318,7 +320,8 @@ public sealed class ModEntry : SimpleMod
                 upgradesTo = [Upgrade.A, Upgrade.B],
                 dontOffer = true
             },
-            Name = AnyLocalizations.Bind(["card", "UraniumRound", "name"]).Localize
+            Name = AnyLocalizations.Bind(["card", "UraniumRound", "name"]).Localize,
+            Art = ModEntry.Instance.sprites["card_Uranium_Rounds"].Sprite
         });
         helper.Content.Cards.RegisterCard("ImpromptuBlastShield", new()
         {
@@ -330,7 +333,8 @@ public sealed class ModEntry : SimpleMod
                 upgradesTo = [Upgrade.A, Upgrade.B],
                 dontOffer = true
             },
-            Name = AnyLocalizations.Bind(["card", "ImpromptuBlastShield", "name"]).Localize
+            Name = AnyLocalizations.Bind(["card", "ImpromptuBlastShield", "name"]).Localize,
+            Art = ModEntry.Instance.sprites["card_Impromptu_Blast_Shield"].Sprite
         });
         helper.Content.Cards.RegisterCard("OhNo", new()
         {
@@ -342,7 +346,8 @@ public sealed class ModEntry : SimpleMod
                 upgradesTo = [Upgrade.A, Upgrade.B],
                 dontOffer = true
             },
-            Name = AnyLocalizations.Bind(["card", "OhNo", "name"]).Localize
+            Name = AnyLocalizations.Bind(["card", "OhNo", "name"]).Localize,
+            Art = ModEntry.Instance.sprites["card_Uh_Oh"].Sprite
         });
 
         // one for every artifact
