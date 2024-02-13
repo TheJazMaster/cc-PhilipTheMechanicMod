@@ -67,7 +67,8 @@ public sealed class ModEntry : SimpleMod
         {
             ModifierCardsController.HandleFlimsyModifiers(card, state, combat, handPosition);
         }, 0);
-        helper.Events.RegisterBeforeArtifactsHook(nameof(Artifact.OnTurnStart), Nanobots.Replicate, 0);
+        
+        helper.Events.RegisterBeforeArtifactsHook(nameof(Artifact.OnTurnStart), (State state, Combat combat) => Nanobots.Replicate(state, combat), 0);
 
         // sprites
         RegisterSprite(package, "char_frame_philip");                

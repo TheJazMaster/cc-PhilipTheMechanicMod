@@ -14,7 +14,8 @@ namespace clay.PhilipTheMechanic.Actions
 
         public override void Begin(G g, State s, Combat c)
         {
-            foreach (Card card in c.hand)
+            var cards = c.hand.ToList();
+            foreach (Card card in cards)
             {
                 if (card.uuid == thisCardUuid) continue;
                 if (card is Nanobots)
