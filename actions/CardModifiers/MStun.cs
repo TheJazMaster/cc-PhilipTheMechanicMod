@@ -16,7 +16,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(Enum.Parse<Spr>("icons_stun"), null, Colors.textMain);
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
         {
             foreach (var action in actions)
             {

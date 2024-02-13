@@ -58,7 +58,7 @@ namespace clay.PhilipTheMechanic
         Spr? GetSticker(State s) { return null; }
         Icon? GetIcon(State s) { return null; }
         List<Tooltip> GetTooltips(State s) { return new(); }
-        List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card) { return actions; }
-        CardData TransformData(CardData data, State s, Combat c) { return data; }
+        List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering) { return actions; }
+        CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering) { return data; }
     }
 }

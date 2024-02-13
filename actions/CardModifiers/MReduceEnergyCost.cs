@@ -16,7 +16,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(Enum.Parse<Spr>("icons_discount"), null, Colors.textMain);
         }
-        public CardData TransformData(CardData data, State s, Combat c)
+        public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
         {
             data.cost = Math.Max(0, data.cost - 1);
             return data;

@@ -30,7 +30,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new(); // TODO 
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
         {
             int amount = 0;
             foreach (CardAction action in actions)

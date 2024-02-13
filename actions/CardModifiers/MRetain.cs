@@ -16,7 +16,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(Enum.Parse<Spr>("icons_retain"), null, Colors.textMain);
         }
-        public CardData TransformData(CardData data, State s, Combat c)
+        public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
         {
             data.retain = true;
             return data;

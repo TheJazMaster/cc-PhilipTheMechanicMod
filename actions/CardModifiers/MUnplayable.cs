@@ -16,7 +16,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new Icon(ModEntry.Instance.sprites["icon_card_unplayable"].Sprite, null, Colors.textMain);
         }
-        public CardData TransformData(CardData data, State s, Combat c)
+        public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
         {
             data.unplayable = true;
             return data;

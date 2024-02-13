@@ -26,7 +26,7 @@ internal class KokoroHooksImplementation : IWrappedActionHook, ICardRenderHook
         if (c.routeOverride != null && !c.eyeballPeek) { return false; }
         if (card.drawAnim != 1) { return false; }
 
-        return ModifierCardsController.ShouldStickyNote
+        return ModifierCardsRenderingController.ShouldStickyNote
         (
             card, 
             s, 

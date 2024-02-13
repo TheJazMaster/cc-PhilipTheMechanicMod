@@ -11,7 +11,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
     {
         public bool RequestsStickyNote() 
         {
-            return true;
+            return false;
         }
 
         public Spr? GetSticker(State s)
@@ -26,8 +26,11 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return new(); // TODO
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
         {
+            // don't put double the actions on the card
+            if (isRendering) return actions;
+
             // rft asked that I don't clone actions
             ModifierCardsController.SuppressActionMods = true;
             actions.AddRange(card.GetActionsOverridden(s, c));

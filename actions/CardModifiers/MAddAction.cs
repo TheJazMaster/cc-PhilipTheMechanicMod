@@ -28,7 +28,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             return action.GetTooltips(s); 
         }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card)
+        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
         {
             actions.Add(Mutil.DeepCopy(action));
             return actions;
