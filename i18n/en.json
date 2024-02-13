@@ -69,6 +69,67 @@
       "description": "Modify both adjacent cards. When a card modified by this is played, discard this card."
     }
   },
+  "modifier": {
+    "MAttacksPierce": {
+      "name": "Attacks Pierce",
+      "description": "Makes all attacks on this card pierce."
+    },
+    "MBuffAttack": {
+      "name": "Buff Attack",
+      "description": "Increases the power of attacks on the target card by {0}."
+    },
+    "MDeleteActions": {
+      "name": "Remove Actions",
+      "description": "Removes all pre-existing actions on this card."
+    },
+    "MDontExhaust": {
+      "name": "Don't Exhaust",
+      "description": "Removes exhaust from this card, if it has it."
+    },
+    "MExhaust": {
+      "name": "Make Exhaust",
+      "description": "Adds exhaust to this card, if it doesn't have it already."
+    },
+    "MMakePlayable": {
+      "name": "Make Playable",
+      "description": "Makes this card playable, if it was not already."
+    },
+    "MPlayTwice": {
+      "name": "Play Twice",
+      "description": "Makes all pre-existing actions on this card take effect twice."
+    },
+    "MRecycle": {
+      "name": "Make Recycle",
+      "description": "Adds recycle to this card, if it doesn't have it already."
+    },
+    "MReduceEnergyCost": {
+      "name": "Reduce Energy Cost",
+      "description": "Reduces the energy cost of this card by 1."
+    },
+    "MRetain": {
+      "name": "Make Retain",
+      "description": "Adds retain to this card, if it doesn't have it already."
+    },
+    "MSetEnergyCostToZero": {
+      "name": "Set Energy Cost to Zero",
+      "description": "Sets the energy cost of this card to 0."
+    },
+    "MShieldForAttackAmount": {
+      "name": "Shield for Attack",
+      "description": {
+        "temp": "Sum the damage of all attack actions on this card. Add temp shield equal to that amount.",
+        "regular": "Sum the damage of all attack actions on this card. Add shield equal to that amount."
+      }
+    },
+    "MStun": {
+      "name": "Attacks Stun",
+      "description": "Makes all attacks on this card stun."
+    },
+    "MUnplayable": {
+      "name": "Make Unplayable",
+      "description": "Makes this card unplayable, if it wasn't already."
+    }
+  },
   "artifact": {
   },
   "card": {
