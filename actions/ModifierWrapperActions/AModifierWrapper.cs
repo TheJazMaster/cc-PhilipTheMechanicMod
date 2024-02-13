@@ -37,7 +37,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
                 ?? new();
 
             var ownTooltip = GetTooltip(s);
-            if (ownTooltip != null) tooltips.Add(ownTooltip);
+            if (ownTooltip != null) tooltips.Insert(0, ownTooltip);
 
             return tooltips;
         }
