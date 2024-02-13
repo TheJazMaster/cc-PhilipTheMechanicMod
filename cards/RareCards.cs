@@ -227,7 +227,23 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
-        return new()
+        var addCardAction = upgrade == Upgrade.A
+            ?
+                new AAddCardUpgraded()
+                {
+                    card = new Nanobots() { upgrade = Upgrade.A },
+                    amount = 1,
+                    destination = CardDestination.Discard
+                }
+            :
+                new AAddCard()
+                {
+                    card = new Nanobots(),
+                    amount = 1,
+                    destination = CardDestination.Discard
+                };
+
+        List<CardAction> actions =  new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper
             (
@@ -250,12 +266,7 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
                     ModEntry.Instance.Api.MakeMSetEnergyCostToZero(),
                     ModEntry.Instance.Api.MakeMAddAction
                     (
-                        new AAddCard()
-                        {
-                            card = new Nanobots(),
-                            amount = 1,
-                            destination = CardDestination.Discard
-                        },
+                        addCardAction,
                         ModEntry.Instance.sprites["icon_sticker_add_card"].Sprite
                     ),
                 },
@@ -265,5 +276,24 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
                 }
             ),
         };
+
+        if (upgrade == Upgrade.B)
+        {
+            actions.Add(
+                ModEntry.Instance.Api.MakeAModifierWrapper
+                (
+                    IPhilipAPI.CardModifierTarget.Directional,
+                    new()
+                    {
+                        ModEntry.Instance.Api.MakeMAddAction(
+                            new AHurt() { targetPlayer = true, hurtAmount = 1 },
+                            ModEntry.Instance.sprites["icon_sticker_hull_damage"].Sprite
+                        ),
+                    }
+                )
+            );
+        }
+
+        return actions;
     }
 }

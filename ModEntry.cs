@@ -158,6 +158,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_sticker_retain");
         RegisterSprite(package, "icon_sticker_no_action");
         RegisterSprite(package, "icon_sticker_energyLessNextTurn");
+        RegisterSprite(package, "icon_sticker_drawLessNextTurn");
         RegisterSprite(package, "icon_sticker_card_unplayable");
         RegisterSprite(package, "icon_sticker_card_playable");
 

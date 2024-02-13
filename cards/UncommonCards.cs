@@ -75,7 +75,22 @@ internal sealed class LoosenScrews : Card, IRegisterableCard
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
-        // TODO: B
+        var energyReductionMod = upgrade == Upgrade.B
+            ? ModEntry.Instance.Api.MakeMSetEnergyCostToZero()
+            : ModEntry.Instance.Api.MakeMReduceEnergyCost();
+
+        var penaltyMod = upgrade == Upgrade.A
+            ? 
+                ModEntry.Instance.Api.MakeMAddAction(
+                    new AStatus() { status = Status.drawLessNextTurn, statusAmount = 1, targetPlayer = true },
+                    ModEntry.Instance.sprites["icon_sticker_drawLessNextTurn"].Sprite
+                )
+            : 
+                ModEntry.Instance.Api.MakeMAddAction(
+                    new AStatus() { status = Status.energyLessNextTurn, statusAmount = upgrade == Upgrade.B ? 2 : 1, targetPlayer = true },
+                    ModEntry.Instance.sprites["icon_sticker_energyLessNextTurn"].Sprite
+                );
+
         return new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper
@@ -83,11 +98,8 @@ internal sealed class LoosenScrews : Card, IRegisterableCard
                 IPhilipAPI.CardModifierTarget.Directional,
                 new()
                 {
-                    ModEntry.Instance.Api.MakeMReduceEnergyCost(),
-                    ModEntry.Instance.Api.MakeMAddAction(
-                        new AStatus() { status = Status.energyLessNextTurn, statusAmount = 1, targetPlayer = true },
-                        ModEntry.Instance.sprites["icon_sticker_energyLessNextTurn"].Sprite
-                    )
+                    energyReductionMod,
+                    penaltyMod
                 }
             )
         };
