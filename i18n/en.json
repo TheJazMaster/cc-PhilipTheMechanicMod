@@ -84,9 +84,9 @@
     "Nanobots": {
       "name": "Nanobots",
       "description": {
-        "None": "On shuffle deck, exhaust random card and gain Nanobots.",
-        "A": "On shuffle deck, exhaust random card and gain Nanobots.",
-        "B": "On shuffle deck, exhaust random card and gain Nanobots."
+        "None": "On turn end, add another to hand. On play, exhaust other Nanobots in hand.",
+        "A": "On turn end, add another to hand. On play, exhaust other Nanobots in hand.",
+        "B": "On turn end, add another to hand. On play, exhaust other Nanobots in hand."
       }
     },
     "UraniumRound": {

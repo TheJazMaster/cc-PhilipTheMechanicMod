@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using clay.PhilipTheMechanic.Actions;
+using HarmonyLib;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,50 +12,29 @@ namespace clay.PhilipTheMechanic.Cards;
 [HarmonyPatch]
 internal sealed class Nanobots : Card
 {
-    public override List<CardAction> GetActions(State s, Combat c) { return new() {}; }
+    public override List<CardAction> GetActions(State s, Combat c) 
+    { 
+        return new() 
+        {
+            new ANanobots() { thisCardUuid = this.uuid },
+        }; 
+    }
 
-    [HarmonyPostfix]
-    [HarmonyPatch(typeof(State), nameof(State.ShuffleDeck))]
-    public static void REPLICATE(State __instance, bool isMidCombat = false)
+    public static void Replicate(State state, Combat combat)
     {
-        try
+        var nanobotsInHand = combat.hand.Where(c => c is Nanobots).ToList();
+        foreach(var nanobots in nanobotsInHand) 
         {
-            if (isMidCombat && __instance.route is Combat combat)
-            {
-                int nanobotsCount = 0;
-                foreach (Card card in __instance.deck)
-                {
-                    if (card is Nanobots n) { nanobotsCount++; }
-                }
-
-                for (int i = 0; i < nanobotsCount; i++)
-                {
-                    __instance.SendCardToDeck(new Nanobots(), doAnimation: false, insertRandomly: true);
-                }
-
-                for (int i = 0; i < nanobotsCount; i++)
-                {
-                    var cardIdx = __instance.rngShuffle.NextInt() % __instance.deck.Count;
-                    var card = __instance.deck[cardIdx];
-                    __instance.deck.RemoveAt(cardIdx);
-                    combat.SendCardToExhaust(__instance, card);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            ModEntry.Instance.Logger.LogError("Error in nanobot replication");
-            ModEntry.Instance.Logger.LogError(e.ToString());
-            ModEntry.Instance.Logger.LogError(e.StackTrace);
+            combat.SendCardToHand(state, new Nanobots() { upgrade = nanobots.upgrade });
         }
     }
 
     public override CardData GetData(State state) => new()
     {
-        unplayable = true,
+        retain = true,
         temporary = true,
-        cost = 1,
-        exhaust = true,
+        cost = upgrade == Upgrade.A ? 2 : 3,
+        infinite = upgrade == Upgrade.B, // yes this is worse unless you like expensive trash, that's intentional because you can only get this upgrade through weird trickery, like with Johnson
         description = ModEntry.Instance.Localizations.Localize(["card", "Nanobots", "description", upgrade.ToString()])
     };
 }
