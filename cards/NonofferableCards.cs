@@ -17,6 +17,7 @@ internal sealed class Nanobots : Card
         return new() 
         {
             new ANanobots() { thisCardUuid = this.uuid },
+            new ADummyAction(),
         }; 
     }
 
@@ -33,9 +34,14 @@ internal sealed class Nanobots : Card
     {
         retain = true,
         temporary = true,
-        cost = upgrade == Upgrade.A ? 2 : 3,
+        cost = upgrade switch
+        {
+            Upgrade.None => 3,
+            Upgrade.A => 2,
+            Upgrade.B => 1,
+        },
         infinite = upgrade == Upgrade.B, // yes this is worse unless you like expensive trash, that's intentional because you can only get this upgrade through weird trickery, like with Johnson
-        description = ModEntry.Instance.Localizations.Localize(["card", "Nanobots", "description", upgrade.ToString()])
+        //description = ModEntry.Instance.Localizations.Localize(["card", "Nanobots", "description", upgrade.ToString()])
     };
 }
 

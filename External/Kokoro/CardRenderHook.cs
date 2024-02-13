@@ -11,4 +11,5 @@ public partial interface IKokoroApi
 public interface ICardRenderHook
 {
 	bool ShouldDisableCardRenderingTransformations(G g, Card card) => false;
+    Matrix ModifyNonTextCardRenderMatrix(G g, Card card, List<CardAction> actions) => Matrix.Identity;
 }

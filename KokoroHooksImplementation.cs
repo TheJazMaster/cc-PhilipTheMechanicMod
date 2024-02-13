@@ -1,5 +1,7 @@
 ﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
+using Microsoft.Xna.Framework;
 using Shockah.Kokoro;
 using System;
 using System.Collections.Generic;
@@ -31,5 +33,11 @@ internal class KokoroHooksImplementation : IWrappedActionHook, ICardRenderHook
             card.GetActionsOverridden(s, c), 
             ModifierCardsController.GetCardModifiers(card, s, c)
         );
+    }
+
+    public Matrix ModifyNonTextCardRenderMatrix(G g, Card card, List<CardAction> actions)
+    {
+        if (card is not Nanobots) return Matrix.Identity;
+        return Matrix.CreateScale(1.5f);
     }
 }

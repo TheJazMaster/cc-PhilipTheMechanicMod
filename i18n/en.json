@@ -15,6 +15,12 @@
       "description": "Gives you {0} redraw at the start of each turn."
     }
   },
+  "action": {
+    "ANanobots": {
+      "name": "Nanobots",
+      "description": "On play, remove all other <c=card>Nanobots</c> from hand. If in hand at the end of turn, add a new <c=card>Nanobots</c> to hand."
+    }
+  },
   "artifact": {
   },
   "card": {
@@ -85,8 +91,8 @@
       "name": "Nanobots",
       "description": {
         "None": "On turn end, add another to hand. On play, exhaust other Nanobots in hand.",
-        "A": "On turn end, add another to hand. On play, exhaust other Nanobots in hand.",
-        "B": "On turn end, add another to hand. On play, exhaust other Nanobots in hand."
+        "A": "Exhaust other Nanobots in hand.\nOn turn end, add another to hand.",
+        "B": "Exhaust other Nanobots in hand. In hand on turn end: replicate."
       }
     },
     "UraniumRound": {

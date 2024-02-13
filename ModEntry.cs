@@ -134,6 +134,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_card_is_centered_disabled");
         RegisterSprite(package, "icon_card_is_not_centered_disabled");
         RegisterSprite(package, "icon_flimsy");
+        RegisterSprite(package, "icon_nanobots");
     
         RegisterSprite(package, "icon_2x_sticker");
         RegisterSprite(package, "icon_sticker_add_card");
@@ -192,6 +193,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "card_Permanence_Mod");
         RegisterSprite(package, "card_Nanobot_Infestation");
         RegisterSprite(package, "card_Nanobots");
+        RegisterSprite(package, "card_Nanobots_2");
         RegisterSprite(package, "card_Emergency_Training");
         RegisterSprite(package, "card_Loosen_Screws");
         RegisterSprite(package, "card_Overfueled_Engines");
@@ -305,11 +307,11 @@ public sealed class ModEntry : SimpleMod
             {
                 deck = Deck.trash,
                 rarity = Rarity.common,
-                upgradesTo = [Upgrade.A],
+                upgradesTo = [Upgrade.A, Upgrade.B],
                 dontOffer = true
             },
             Name = AnyLocalizations.Bind(["card", "Nanobots", "name"]).Localize,
-            Art = ModEntry.Instance.sprites["card_Nanobots"].Sprite
+            Art = ModEntry.Instance.sprites["card_Nanobots_2"].Sprite
         });
 
         helper.Content.Cards.RegisterCard("UraniumRound", new()
