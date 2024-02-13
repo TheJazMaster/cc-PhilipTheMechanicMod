@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shockah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,19 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         {
             data.exhaust = false;
             return data;
+        }
+
+        public List<Tooltip> GetTooltips(State s)
+        {
+            return [
+                new CustomTTGlossary(
+                    CustomTTGlossary.GlossaryType.actionMisc,
+                    () => GetIcon(s)!.Value!.path,
+                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                    key: GetType().FullName ?? GetType().Name
+                )
+            ];
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+using Microsoft.Extensions.Logging;
+using Shockah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +11,13 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MAttacksPierce : ICardModifier
     {
-        public int amount;
         public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_piercing"].Sprite;
         }
         public Icon? GetIcon(State s)
         {
-            return new Icon(Enum.Parse<Spr>("icons_attackPiercing"), amount, Colors.textMain);
+            return new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain);
         }
         public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
         {
@@ -40,6 +42,19 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
             {
                 aattack.piercing = true;
             }
+        }
+
+        public List<Tooltip> GetTooltips(State s)
+        {
+            return [
+                new CustomTTGlossary(
+                    CustomTTGlossary.GlossaryType.actionMisc,
+                    () => GetIcon(s)!.Value!.path,
+                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                    key: GetType().FullName ?? GetType().Name
+                )
+            ];
         }
     }
 }
