@@ -88,12 +88,7 @@
       "name": "No Stock Parts"
     },
     "Nanobots": {
-      "name": "Nanobots",
-      "description": {
-        "None": "On turn end, add another to hand. On play, exhaust other Nanobots in hand.",
-        "A": "Exhaust other Nanobots in hand.\nOn turn end, add another to hand.",
-        "B": "Exhaust other Nanobots in hand. In hand on turn end: replicate."
-      }
+      "name": "Nanobots"
     },
     "UraniumRound": {
       "name": "Uranium Round"
