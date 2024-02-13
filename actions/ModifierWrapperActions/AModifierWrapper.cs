@@ -30,16 +30,23 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 
         public override List<Tooltip> GetTooltips(State s) 
         { 
-            return modifiers
+            var tooltips = modifiers
                 .Select(modifier => modifier.GetTooltips(s))
                 .SelectMany(m => m) // flatten
                 .ToList()
                 ?? new();
+
+            var ownTooltip = GetTooltip(s);
+            if (ownTooltip != null) tooltips.Add(ownTooltip);
+
+            return tooltips;
         }
 
         public virtual bool IsTargeting(Card potetialTarget, Card myOwnerCard, Combat c)
         {
             return false;
         }
+
+        public virtual Tooltip? GetTooltip(State s) { return null; }
     }
 }

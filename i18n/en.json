@@ -2,7 +2,7 @@
   "character": {
     "Philip": {
       "name": "Philip",
-      "description": "<c=c9f000>PHILIP</c>\nYour ship engineering officer. His cards modify other cards in your hand, provide <c=d6525f>redraw</c>, and are often unplayable."
+      "description": "<c=c9f000>PHILIP</c>\nYour ship engineering officer. His cards <c=keyword>modify other cards</c> in your hand, provide <c=status>REDRAW</c>, and are often <c=downside>unplayable</c>."
     }
   },
   "status": {
@@ -19,6 +19,54 @@
     "ANanobots": {
       "name": "Nanobots",
       "description": "On play, remove all other <c=card>Nanobots</c> from hand. If in hand at the end of turn, add a new <c=card>Nanobots</c> to hand."
+    },
+    "ADirectionalMod": {
+      "name": {
+        "left": "Modify Card to the Left",
+        "right": "Modify Card to the Right"
+      },
+      "description": {
+        "left": "Add the following effects to the card to the left. They do NOT trigger when this card is played.",
+        "right": "Add the following effects to the card to the right. They do NOT trigger when this card is played."
+      }
+    },
+    "ADirectionalMod_Flimsy": {
+      "name": {
+        "left": "Modify Card to the Left (Flimsy)",
+        "right": "Modify Card to the Right (Flimsy)"
+      },
+      "description": {
+        "left": "Modify the card to the left. When a card modified by this is played, discard this card.",
+        "right": "Modify the card to the right. When a card modified by this is played, discard this card."
+      }
+    },
+    "AWholeHandDirectionalMod": {
+      "name": {
+        "left": "Modify All Cards to the Left",
+        "right": "Modify All Cards to the Right"
+      },
+      "description": {
+        "left": "Add the following effects to all cards to the left. They do NOT trigger when this card is played.",
+        "right": "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
+      }
+    },
+    "AWholeHandDirectionalMod_Flimsy": {
+      "name": {
+        "left": "Modify All Cards to the Left (Flimsy)",
+        "right": "Modify All Cards to the Right (Flimsy)"
+      },
+      "description": {
+        "left": "Modify all cards to the left. When a card modified by this is played, discard this card.",
+        "right": "Modify all cards to the right. When a card modified by this is played, discard this card."
+      }
+    },
+    "ANeighborsMod": {
+      "name": "Modify Neighboring Cards",
+      "description": "Add the following effects to both adjacent cards. They do NOT trigger when this card is played."
+    },
+    "ANeighborsMod_Flimsy": {
+      "name": "Modify Neighboring Cards (Flimsy)",
+      "description": "Modify both adjacent cards. When a card modified by this is played, discard this card."
     }
   },
   "artifact": {

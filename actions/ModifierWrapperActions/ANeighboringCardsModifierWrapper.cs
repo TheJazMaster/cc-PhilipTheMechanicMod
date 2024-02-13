@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shockah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,33 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
             else
             {
                 return new Icon(ModEntry.Instance.sprites["icon_card_neighbors"].Sprite, null, Colors.textMain);
+            }
+        }
+
+
+        public override Tooltip? GetTooltip(State s)
+        {
+            List<Tooltip> tooltips = new();
+
+            if (isFlimsy)
+            {
+                return new CustomTTGlossary(
+                    CustomTTGlossary.GlossaryType.action,
+                    () => ModEntry.Instance.sprites["icon_Flimsy_Neighbors_Card_Mod"].Sprite,
+                    () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod_Flimsy", "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod_Flimsy", "description"]),
+                    key: typeof(ANeighboringCardsModifierWrapper).FullName ?? typeof(ANeighboringCardsModifierWrapper).Name
+                );
+            }
+            else
+            {
+                return new CustomTTGlossary(
+                    CustomTTGlossary.GlossaryType.action,
+                    () => ModEntry.Instance.sprites["icon_card_neighbors"].Sprite,
+                    () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod", "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod", "description"]),
+                    key: typeof(ANeighboringCardsModifierWrapper).FullName ?? typeof(ANeighboringCardsModifierWrapper).Name
+                );
             }
         }
     }
