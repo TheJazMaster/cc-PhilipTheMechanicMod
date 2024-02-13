@@ -67,6 +67,7 @@ public sealed class ModEntry : SimpleMod
         {
             ModifierCardsController.HandleFlimsyModifiers(card, state, combat, handPosition);
         }, 0);
+        helper.Events.RegisterBeforeArtifactsHook(nameof(Artifact.OnTurnStart), Nanobots.Replicate, 0);
 
         // sprites
         RegisterSprite(package, "char_frame_philip");                
@@ -304,7 +305,7 @@ public sealed class ModEntry : SimpleMod
             {
                 deck = Deck.trash,
                 rarity = Rarity.common,
-                upgradesTo = [],
+                upgradesTo = [Upgrade.A],
                 dontOffer = true
             },
             Name = AnyLocalizations.Bind(["card", "Nanobots", "name"]).Localize,

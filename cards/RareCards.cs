@@ -233,14 +233,14 @@ internal sealed class NanobotInfestation : Card, IRegisterableCard
                 {
                     card = new Nanobots() { upgrade = Upgrade.A },
                     amount = 1,
-                    destination = CardDestination.Discard
+                    destination = CardDestination.Hand
                 }
             :
                 new AAddCard()
                 {
                     card = new Nanobots(),
                     amount = 1,
-                    destination = CardDestination.Discard
+                    destination = CardDestination.Hand
                 };
 
         List<CardAction> actions =  new()
