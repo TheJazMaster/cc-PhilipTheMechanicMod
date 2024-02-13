@@ -288,6 +288,19 @@ internal sealed class PrecisionMachining : Card, IRegisterableCard
         {
             new ACenterOfHandWrapper()
             {
+                isCenter = false,
+                actions = new()
+                {
+                    new AStatus() {
+                        status = ModEntry.Instance.RedrawStatus.Status,
+                        targetPlayer = true,
+                        statusAmount = upgrade == Upgrade.A ? 2 : 1
+                    },
+                },
+                disabled = (isCentered && c != DB.fakeCombat)
+            },
+            new ACenterOfHandWrapper()
+            {
                 isCenter = true,
                 actions = new()
                 {
@@ -300,19 +313,6 @@ internal sealed class PrecisionMachining : Card, IRegisterableCard
                 },
                 disabled = (!isCentered && c != DB.fakeCombat)
             },
-            new ACenterOfHandWrapper()
-            {
-                isCenter = false,
-                actions = new()
-                {
-                    new AStatus() {
-                        status = ModEntry.Instance.RedrawStatus.Status,
-                        targetPlayer = true,
-                        statusAmount = upgrade == Upgrade.A ? 2 : 1
-                    },
-                },
-                disabled = (isCentered && c != DB.fakeCombat)
-            }
         };
     }
 }
