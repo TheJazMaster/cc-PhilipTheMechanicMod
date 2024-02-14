@@ -30,7 +30,7 @@ public class HotChocolateHook : IAllowRedrawHook, IRedrawCostHook
         if (ownedHotChocolate == null) return false;
 
         var cardIsUnplayable = card.GetDataWithOverrides(state).unplayable;
-        if (cardIsUnplayable) return false;
+        if (!cardIsUnplayable) return false;
 
         int unplayableModCardCount = ownedHotChocolate == null ? 0 : combat.hand.Where(c => c.GetDataWithOverrides(state).unplayable).Count();
         if (unplayableModCardCount >= 3) return false;

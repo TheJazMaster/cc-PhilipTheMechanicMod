@@ -368,7 +368,7 @@ public sealed class ModEntry : SimpleMod
             .ToList();
         foreach (var artifactType in artifactTypes)
         {
-            if (!typeof(IRegisterableCard).IsAssignableFrom(artifactType)) continue;
+            if (!typeof(IRegisterableArtifact).IsAssignableFrom(artifactType)) continue;
 
             helper.Content.Artifacts.RegisterArtifact(artifactType.Name, new()
             {

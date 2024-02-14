@@ -10,7 +10,7 @@ namespace clay.PhilipTheMechanic.Artifacts;
 internal sealed class ScrapMagnet : Artifact, IRegisterableArtifact
 {
     public static ArtifactPool[] GetPools() => [ArtifactPool.Boss];
-    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_scrap_magnet"].Sprite;
+    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_electromagnet"].Sprite;
     public int counter = 2;
 
     public override int? GetDisplayNumber(State s)

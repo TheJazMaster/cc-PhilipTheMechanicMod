@@ -66,7 +66,7 @@ namespace clay.PhilipTheMechanic.Controllers
             var apiImplementation = ((ApiImplementation)ModEntry.Instance.Api);
             var anyHook = apiImplementation
                 .AllowRedrawHooks
-                .Select(hook => hook.AllowRedraw(card, state, combat))
+                .Where(hook => hook.AllowRedraw(card, state, combat))
                 .Any();
 
             if (anyHook) return true;
