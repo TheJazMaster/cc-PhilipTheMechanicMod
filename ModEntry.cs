@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using TheJazMaster.MoreDifficulties;
 
 /* In the Cobalt Core modding community it is common for namespaces to be <Author>.<ModName>
  * This is helpful to know at a glance what mod we're looking at, and who made it */
@@ -25,6 +26,7 @@ public sealed class ModEntry : SimpleMod
     internal static ModEntry Instance { get; private set; } = null!;
     internal readonly IPhilipAPI Api = new ApiImplementation();
     internal IKokoroApi? KokoroApi { get; }
+    internal IMoreDifficultiesApi? MoreDifficultiesApi { get; }
 
     internal Harmony Harmony { get; }
     internal ILocalizationProvider<IReadOnlyList<string>> AnyLocalizations { get; }
@@ -51,6 +53,8 @@ public sealed class ModEntry : SimpleMod
         KokoroApi = helper.ModRegistry.GetApi<IKokoroApi>("Shockah.Kokoro");
         KokoroApi?.Actions.RegisterWrappedActionHook(new KokoroHooksImplementation(), 0);
         KokoroApi?.RegisterCardRenderHook(new KokoroHooksImplementation(), 1000);
+
+        MoreDifficultiesApi = helper.ModRegistry.GetApi<IMoreDifficultiesApi>("TheJazMaster.MoreDifficulties");
 
         Harmony = new Harmony(package.Manifest.UniqueName);
         Harmony.PatchAll();
@@ -232,7 +236,7 @@ public sealed class ModEntry : SimpleMod
             }
         });
 
-        // TODO: alt starters - duct tape and dreams, and reduce reuse
+        MoreDifficultiesApi?.RegisterAltStarters(PhilipDeck.Deck, new() { cards = new() { new ReduceReuse(), new DuctTapeAndDreams() } });
 
         // statuses
         RedrawStatus = helper.Content.Statuses.RegisterStatus("Redraw", new()
