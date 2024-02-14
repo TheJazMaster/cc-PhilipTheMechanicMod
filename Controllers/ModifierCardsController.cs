@@ -109,15 +109,14 @@ namespace clay.PhilipTheMechanic.Controllers
                 overridenCardActions = modifier.TransformActions(overridenCardActions, s, c, __instance, isDuringRender);
             }
 
-            // TODO: this will break for modded characters
-            // also TODO: make this work with nickel
-            //try
-            //{
-            //    string dialogueSelector = $".{Enum.GetName<Deck>(__instance.GetMeta().deck)}Card_ModifiedByPhilip";
-            //    overridenCardActions.Add(new ADummyAction() { dialogueSelector = dialogueSelector });
-            //    overridenCardActions.Insert(0, new ADummyAction() { });
-            //}
-            //catch (Exception e) { }
+            // todo: make sure this still works
+            try
+            {
+                string dialogueSelector = $".{ModEntry.Instance.Helper.Content.Decks.LookupByDeck(__instance.GetMeta().deck)!.UniqueName}Card_ModifiedByPhilip";
+                overridenCardActions.Add(new ADummyAction() { dialogueSelector = dialogueSelector });
+                overridenCardActions.Insert(0, new ADummyAction() { });
+            }
+            catch (Exception e) { }
 
             __result = overridenCardActions;
         }

@@ -15,6 +15,41 @@ public sealed class ApiImplementation : IPhilipAPI
     public IStatusEntry RedrawStatus => ModEntry.Instance.RedrawStatus;
     public IStatusEntry CustomPartsStatus => ModEntry.Instance.CustomPartsStatus;
 
+    public List<IAllowRedrawHook>          AllowRedrawHooks = new();
+    public List<(IRedrawCostHook, double)> RedrawCostHooks = new();
+    public List<(IOnRedrawHook, double)>   OnRedrawHooks = new();
+
+    public void RegisterAllowRedrawHook(IAllowRedrawHook hook)
+    {
+        AllowRedrawHooks.Add(hook);
+    }
+
+    public void RegisterRedrawCostHook(IRedrawCostHook hook, double priority)
+    {
+        for (int i = 0; i < RedrawCostHooks.Count; i++)
+        {
+            if (RedrawCostHooks[i].Item2 < priority)
+            {
+                RedrawCostHooks.Insert(i, (hook, priority));
+            }
+        }
+
+        RedrawCostHooks.Add((hook, priority));
+    }
+
+    public void RegisterOnRedrawHook(IOnRedrawHook hook, double priority)
+    {
+        for (int i = 0; i < OnRedrawHooks.Count; i++)
+        {
+            if (OnRedrawHooks[i].Item2 < priority)
+            {
+                OnRedrawHooks.Insert(i, (hook, priority));
+            }
+        }
+
+        OnRedrawHooks.Add((hook, priority));
+    }
+
     public CardAction MakeAModifierWrapper(IPhilipAPI.CardModifierTarget target, List<ICardModifier> modifiers, IPhilipAPI.AModifierWrapperMeta meta)
     {
         switch (target)

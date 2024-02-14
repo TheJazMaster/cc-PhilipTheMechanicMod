@@ -361,6 +361,8 @@ public sealed class ModEntry : SimpleMod
 
         // one for every artifact
         //AccessTools.DeclaredMethod(HotChocolate, nameof(IDemoArtifact.Register))?.Invoke(null, new() { helper });
+
+        // TODO: register dialogue
     }
 
     private void RegisterSprite(IPluginPackage<IModManifest> package, string name)

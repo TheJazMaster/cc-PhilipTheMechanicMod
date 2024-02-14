@@ -13,50 +13,56 @@ namespace clay.PhilipTheMechanic.Controllers
     [HarmonyPatch(typeof(Card))]
     public class RedrawStatusController
     {
-        private static void HandleRedraw(G g, Card card, bool free, int index)
+        private static void HandleRedraw(G g, Card card, int index)
         {
-            if (g.state.route is Combat c)
+            if (g.state.route is not Combat c) return;
+            if (c == DB.fakeCombat) return;
+
+            var apiImplementation = ((ApiImplementation)ModEntry.Instance.Api);
+
+            // TODO: add an API hook here for implementing artifacts, and implement scrap magnet and endless tool 
+            //// find toolbox
+            //var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault() as EndlessToolbox;
+            //bool activateToolbox = ownedEndlessToolbox != null && ownedEndlessToolbox.counter > 0;
+            //if (activateToolbox)
+            //{
+            //    drawAmount = 2;
+            //    ownedEndlessToolbox.counter--;
+            //    ownedEndlessToolbox.Pulse();
+            //}
+
+            //// find scrap magnet
+            //if (index == 0 && !free)
+            //{
+            //    var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
+            //    bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
+            //    if (activateScrapMagnet)
+            //    {
+            //        free = true;
+            //        ownedScrapMagnet.counter--;
+            //        ownedScrapMagnet.Pulse();
+            //    }
+            //}
+
+            // subtract cost
+            int cost = 1;
+            foreach ((IRedrawCostHook, double) hook in apiImplementation.RedrawCostHooks) cost = hook.Item1.RedrawCost(cost, card, g.state, c);
+
+            var redrawAmount = g.state.ship.Get(ModEntry.Instance.RedrawStatus.Status);
+            g.state.ship.Set(ModEntry.Instance.RedrawStatus.Status, redrawAmount - 1);
+
+            // actually do the redraw
+            DiscardFromHand(g.state, card);
+            c.DrawCards(g.state, 1);
+
+            // tell the shout system what just happened
+            c.QueueImmediate(new ADummyAction()
             {
-                var drawAmount = 1;
+                dialogueSelector = ".JustDidRedraw"
+            });
 
-                // TODO: add an API hook here for implementing artifacts, and implement scrap magnet and endless tool 
-                //// find toolbox
-                //var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault() as EndlessToolbox;
-                //bool activateToolbox = ownedEndlessToolbox != null && ownedEndlessToolbox.counter > 0;
-                //if (activateToolbox)
-                //{
-                //    drawAmount = 2;
-                //    ownedEndlessToolbox.counter--;
-                //    ownedEndlessToolbox.Pulse();
-                //}
-
-                //// find scrap magnet
-                //if (index == 0 && !free)
-                //{
-                //    var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
-                //    bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
-                //    if (activateScrapMagnet)
-                //    {
-                //        free = true;
-                //        ownedScrapMagnet.counter--;
-                //        ownedScrapMagnet.Pulse();
-                //    }
-                //}
-
-                // subtract cost
-                var redrawAmount = g.state.ship.Get(ModEntry.Instance.RedrawStatus.Status);
-                if (!free) g.state.ship.Set(ModEntry.Instance.RedrawStatus.Status, redrawAmount - 1);
-
-                // actually do the redraw
-                DiscardFromHand(g.state, card);
-                c.DrawCards(g.state, drawAmount);
-
-                // tell the shout system what just happened
-                c.QueueImmediate(new ADummyAction()
-                {
-                    dialogueSelector = ".JustDidRedraw"
-                });
-            }
+            // notify all registered hooks that redraw just happened
+            foreach ((IOnRedrawHook, double) hook in apiImplementation.OnRedrawHooks) hook.Item1.OnRedraw(card, g.state, c);
         }
 
         // Modified from Combat.DiscardHand
@@ -76,13 +82,24 @@ namespace clay.PhilipTheMechanic.Controllers
             }
         }
 
-        // TODO: set up some sort of API to register ShouldDrawRedrawArrow hooks, and use it to implement hot chocolate and scrap magnet
         public static bool ShouldDrawRedrawArrow(Card card, State state)
         {
+            if (state.route is not Combat combat) return false;
+            if (combat == DB.fakeCombat) return false;
+
+            var apiImplementation = ((ApiImplementation)ModEntry.Instance.Api);
+            var anyHook = apiImplementation
+                .AllowRedrawHooks
+                .Select(hook => hook.AllowRedraw(card, state, combat))
+                .Any();
+
+            if (anyHook) return true;
+
             bool hasRedraw = state.ship.Get(ModEntry.Instance.RedrawStatus.Status) > 0;
             if (hasRedraw) return true;
             return false;
 
+            // TODO: implement hot chocolate and scrap magnet using the api hooks
             //bool isUnplayableModCard = __instance is ModifierCard && __instance.GetDataWithOverrides(state).unplayable;
 
             //bool HOT_CHOCOLATE_CONDITION = isUnplayableModCard;
@@ -110,16 +127,11 @@ namespace clay.PhilipTheMechanic.Controllers
         {
             State state = fakeState ?? g.state;
 
-            var s = state;
-            if (!ModifierCardsController.ModifiersCurrentlyApply(state, __instance)) return;
-            Combat c = (s.route as Combat)!;
-
-
+            if (!ModifierCardsController.ModifiersCurrentlyApply(state, __instance)) return; // check to make sure the game is in the right state to even be drawing these arrows to begin with
+            if (!ShouldDrawRedrawArrow(__instance, state)) return; // check to see if there's even a possibility we should draw the redraw arrow
+            
+            Combat c = (state.route as Combat)!;
             int cardIndex = c.hand.IndexOf(__instance);
-
-            // check to see if there's even a possibility we should draw the redraw arrow
-            if (!ShouldDrawRedrawArrow(__instance, state)) return;
-            bool redrawsForFree = false; // TODO: set up hooks for this too
 
             // Draw the button
 
@@ -141,7 +153,7 @@ namespace clay.PhilipTheMechanic.Controllers
             var cardHalfWidth = 59.0 / 2.0;
             var cardHeight = 82.0;
             Rect rect2 = new(cardHalfWidth - 19.0 / 2.0, cardHeight - 13.0 / 2.0 - hoverAnimOffset, 19, 13);
-            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance, redrawsForFree, cardIndex));
+            OnMouseDown omd = new MouseDownHandler(() => HandleRedraw(g, __instance, cardIndex));
             // 855026104 is a random int chosen to not overlap with custom button IDs from other mods
             ButtonSprite(g, vec2, rect2, new UIKey((UK)855026104, __instance.uuid, $"redraw_button_for_card_{cardIndex}"), ModEntry.Instance.sprites["button_redraw"].Sprite, ModEntry.Instance.sprites["button_redraw_on"].Sprite, onMouseDown: omd);
 

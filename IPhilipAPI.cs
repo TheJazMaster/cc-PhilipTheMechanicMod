@@ -13,6 +13,10 @@ namespace clay.PhilipTheMechanic
         IStatusEntry RedrawStatus { get; }
         IStatusEntry CustomPartsStatus { get; }
 
+        void RegisterAllowRedrawHook(IAllowRedrawHook hook); // Redraw will be enabled on a card if ANY hook allows it
+        void RegisterRedrawCostHook(IRedrawCostHook hook, double priority);
+        void RegisterOnRedrawHook(IOnRedrawHook hook, double priority);
+
         enum CardModifierTarget
         {
             Directional,
@@ -49,6 +53,19 @@ namespace clay.PhilipTheMechanic
         ICardModifier MakeMRecycle();
         ICardModifier MakeMSetEnergyCostToZero();
         ICardModifier MakeMReduceEnergyCost();
+    }
+
+    public interface IAllowRedrawHook
+    {
+        bool AllowRedraw(Card card, State state, Combat combat);
+    }
+    public interface IRedrawCostHook
+    {
+        int RedrawCost(int currentCost, Card card, State state, Combat combat);
+    }
+    public interface IOnRedrawHook
+    {
+        void OnRedraw(Card card, State state, Combat combat);
     }
 
     public interface ICardModifier
