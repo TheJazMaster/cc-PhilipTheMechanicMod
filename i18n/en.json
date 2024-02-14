@@ -15,6 +15,16 @@
       "description": "Gives you {0} redraw at the start of each turn."
     }
   },
+  "condition": {
+    "CCardCentered": {
+      "name": "Card Centered",
+      "description": "The following effects trigger if this card is at the center of your hand."
+    },
+    "CCardNotCentered": {
+      "name": "Card Not Centered",
+      "description": "The following effects trigger if this card is not at the center of your hand."
+    }
+  },
   "action": {
     "ANanobots": {
       "name": "Nanobots",

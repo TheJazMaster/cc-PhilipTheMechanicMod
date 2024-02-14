@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shockah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,15 @@ namespace clay.PhilipTheMechanic.Actions
                 .SelectMany(a => a.GetTooltips(s))
                 .ToList();
 
-            // // TODO: center of hand / noncenter tooltip
-            //tooltips.InsertRange(0, new()
-            //{
-            //
-            //});
+            tooltips.Insert(0, new CustomTTGlossary(
+                CustomTTGlossary.GlossaryType.action,
+                () => isCenter
+                    ? ModEntry.Instance.sprites["icon_card_is_centered"].Sprite
+                    : ModEntry.Instance.sprites["icon_card_is_not_centered"].Sprite,
+                () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "name"]),
+                () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "description"]),
+                key: GetType().FullName ?? GetType().Name
+            ));
 
             return tooltips;
         }
