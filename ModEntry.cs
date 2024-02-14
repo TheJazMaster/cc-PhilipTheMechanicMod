@@ -1,4 +1,5 @@
 ﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Artifacts;
 using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
@@ -359,8 +360,34 @@ public sealed class ModEntry : SimpleMod
             Art = ModEntry.Instance.sprites["card_Uh_Oh"].Sprite
         });
 
-        // one for every artifact
-        //AccessTools.DeclaredMethod(HotChocolate, nameof(IDemoArtifact.Register))?.Invoke(null, new() { helper });
+        // register artifacts
+        var artifactTypes = Assembly
+            .GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => String.Equals(t.Namespace, "clay.PhilipTheMechanic.Artifacts", StringComparison.Ordinal))
+            .ToList();
+        foreach (var artifactType in artifactTypes)
+        {
+            if (!typeof(IRegisterableCard).IsAssignableFrom(artifactType)) continue;
+
+            helper.Content.Artifacts.RegisterArtifact(artifactType.Name, new()
+            {
+                ArtifactType = artifactType,
+                Meta = new()
+                {
+                    owner = PhilipDeck.Deck,
+                    pools = (ArtifactPool[])AccessTools.DeclaredMethod(artifactType, nameof(IRegisterableArtifact.GetPools))?.Invoke(null, [])!
+                },
+                Sprite = (Spr)AccessTools.DeclaredMethod(artifactType, nameof(IRegisterableArtifact.GetSpriteForRegistering))?.Invoke(null, [])!,
+                Name = AnyLocalizations.Bind(["artifact", artifactType.Name, "name"]).Localize,
+                Description = AnyLocalizations.Bind(["artifact", artifactType.Name, "description"]).Localize
+            });
+        }
+        Api.RegisterOnRedrawHook(new EndlessToolboxHook(), 0);
+        Api.RegisterAllowRedrawHook(new HotChocolateHook());
+        Api.RegisterRedrawCostHook(new HotChocolateHook(), 0);
+        Api.RegisterAllowRedrawHook(new ScrapMagnetHook());
+        Api.RegisterRedrawCostHook(new ScrapMagnetHook(), 0);
 
         // TODO: register dialogue
     }

@@ -1,5 +1,4 @@
-﻿using Nickel;
-
+﻿
 namespace clay.PhilipTheMechanic;
 
 internal interface IRegisterableCard
@@ -10,5 +9,6 @@ internal interface IRegisterableCard
 
 internal interface IRegisterableArtifact
 {
-    static abstract void Register(IModHelper helper);
+    static abstract Spr GetSpriteForRegistering();
+    static abstract ArtifactPool[] GetPools();
 }

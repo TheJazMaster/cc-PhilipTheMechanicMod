@@ -20,30 +20,6 @@ namespace clay.PhilipTheMechanic.Controllers
 
             var apiImplementation = ((ApiImplementation)ModEntry.Instance.Api);
 
-            // TODO: add an API hook here for implementing artifacts, and implement scrap magnet and endless tool 
-            //// find toolbox
-            //var ownedEndlessToolbox = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(EndlessToolbox)).FirstOrDefault() as EndlessToolbox;
-            //bool activateToolbox = ownedEndlessToolbox != null && ownedEndlessToolbox.counter > 0;
-            //if (activateToolbox)
-            //{
-            //    drawAmount = 2;
-            //    ownedEndlessToolbox.counter--;
-            //    ownedEndlessToolbox.Pulse();
-            //}
-
-            //// find scrap magnet
-            //if (index == 0 && !free)
-            //{
-            //    var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
-            //    bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0;
-            //    if (activateScrapMagnet)
-            //    {
-            //        free = true;
-            //        ownedScrapMagnet.counter--;
-            //        ownedScrapMagnet.Pulse();
-            //    }
-            //}
-
             // subtract cost
             int cost = 1;
             foreach ((IRedrawCostHook, double) hook in apiImplementation.RedrawCostHooks) cost = hook.Item1.RedrawCost(cost, card, g.state, c);
@@ -98,27 +74,6 @@ namespace clay.PhilipTheMechanic.Controllers
             bool hasRedraw = state.ship.Get(ModEntry.Instance.RedrawStatus.Status) > 0;
             if (hasRedraw) return true;
             return false;
-
-            // TODO: implement hot chocolate and scrap magnet using the api hooks
-            //bool isUnplayableModCard = __instance is ModifierCard && __instance.GetDataWithOverrides(state).unplayable;
-
-            //bool HOT_CHOCOLATE_CONDITION = isUnplayableModCard;
-            //bool SCRAP_MAGNET_CONDITION = cardIndex == 0;
-
-            //if (!HOT_CHOCOLATE_CONDITION && !SCRAP_MAGNET_CONDITION) { return false; }
-
-            //// logic for Hot Chocolate artifact
-            //var ownedHotChocolate = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() as HotChocolate;
-            //int unplayableModCardCount = ownedHotChocolate == null ? 0 : (state.route as Combat).hand.Where(c => c is ModifierCard && c.GetDataWithOverrides(state).unplayable).Count();
-            //bool redrawsForFree = ownedHotChocolate != null && HOT_CHOCOLATE_CONDITION && unplayableModCardCount >= 3;
-
-            //// logic for Scrap Magnet artifact
-            //var ownedScrapMagnet = g.state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(ScrapMagnet)).FirstOrDefault() as ScrapMagnet;
-            //bool activateScrapMagnet = ownedScrapMagnet != null && ownedScrapMagnet.counter > 0 && SCRAP_MAGNET_CONDITION;
-            ////redrawsForFree = redrawsForFree || activateScrapMagnet;
-
-            //if (!redrawsForFree && !activateScrapMagnet) { return false; }
-            //return true;
         }
 
         [HarmonyPostfix]

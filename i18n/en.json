@@ -141,6 +141,30 @@
     }
   },
   "artifact": {
+    "WireClippers": {
+      "name": "Wire Clippers",
+      "description": "All unplayable cards become playable, and all trash gains exhaust."
+    },
+    "AngleGrinder": {
+      "name": "Angle Grinder",
+      "description": "Gain 3 redraw at the start of combat."
+    },
+    "EndlessToolbox": {
+      "name": "Endless Toolbox",
+      "description": "The first 2 times you redraw each turn, draw an extra card."
+    },
+    "SelfPropellingCannons": {
+      "name": "Self-Propelling Cannons",
+      "description": "Your cannons gain brittle. At the end of each turn, launch a missile from each cannon."
+    },
+    "HotChocolate": {
+      "name": "Hot Chocolate",
+      "description": "If you have 3 or more unplayable cards in your hand, they redraw for free."
+    },
+    "ScrapMagnet": {
+      "name": "Scrap Magnet",
+      "description": "Twice per turn, redraw the leftmost card in your hand for free."
+    }
   },
   "card": {
     "OverdriveMod": {
