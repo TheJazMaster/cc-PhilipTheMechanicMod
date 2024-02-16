@@ -242,5 +242,10 @@
     "OhNo": {
       "name": "Oh No"
     }
+  },
+  "dialogue": {
+    "shout": {
+      "EnemyHasWeakness": "Tsk, you really should've armored that weak point."
+    }
   }
 }

@@ -390,6 +390,14 @@ public sealed class ModEntry : SimpleMod
         Api.RegisterRedrawCostHook(new ScrapMagnetHook(), 0);
 
         // TODO: register dialogue
+        ShoutRegisterer.RegisterShout
+        (
+            StandardShoutHooks.Relevance7.EnemyHasWeakness, 
+            PhilipDeck.Deck, 
+            AnyLocalizations.Bind(["dialogue", "shout", "EnemyHasWeakness"]).Localize("en")!, 
+            looptag: "classy" // optional
+        );
+
     }
 
     private void RegisterSprite(IPluginPackage<IModManifest> package, string name)
