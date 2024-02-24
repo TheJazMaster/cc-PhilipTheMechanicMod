@@ -52,6 +52,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
                     () => GetIcon(s)!.Value!.path,
                     () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
                     () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                    values: new List<Func<object>>() { () => amount },
                     key: GetType().FullName ?? GetType().Name
                 )
             ];

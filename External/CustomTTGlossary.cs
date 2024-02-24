@@ -73,8 +73,16 @@ internal sealed class CustomTTGlossary : TTGlossary
 		if (!ContextStack.TryPeek(out var glossary) || glossary is not CustomTTGlossary custom)
 			return true;
 
-		object[] args = custom.Values.Select(v => "<c=boldPink>{0}</c>".FF(v().ToString() ?? "")).ToArray();
-		__result = string.Format(custom.Description(), args);
-		return false;
+		// note from clay: no idea what I did to make this crash, should probably fix that at some point
+		try
+		{
+			object[] args = custom.Values.Select(v => "<c=boldPink>{0}</c>".FF(v().ToString() ?? "")).ToArray();
+			__result = string.Format(custom.Description(), args);
+			return false;
+		} 
+		catch
+		{
+			return true;
+		}
 	}
 }
