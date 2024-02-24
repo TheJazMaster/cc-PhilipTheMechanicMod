@@ -389,15 +389,86 @@ public sealed class ModEntry : SimpleMod
         Api.RegisterAllowRedrawHook(new ScrapMagnetHook());
         Api.RegisterRedrawCostHook(new ScrapMagnetHook(), 0);
 
-        // TODO: register dialogue
-        ShoutRegisterer.RegisterShout
+        // 
+        // Register dialogue
+        //
+
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance3.ArtifactHardmode, "squint", true);
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.EnemyHasWeakness, "classy");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs, "squint");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop, "gameover");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.WeDidOverFiveDamage, "maniacal");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeAreCorroded, "unhappy");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.TheyGotCorroded, "squint");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.HandOnlyHasTrashCards, "sheepish");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.EmptyHandWithEnergy, "unhappy");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ArtifactTiderunner, "excited");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeGotHurtButNotTooBad, "classy");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.ArtifactJetThrusters, "excited");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance4.BlockedALotOfAttacksWithArmor, "classy");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance2.WeJustOverheated, "squint");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.EnemyHasBrittle, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeDidOverThreeDamage, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeGotShotButTookNoDamage, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeDontOverlapWithEnemyAtAll, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.JustHitGeneric, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ArtifactTridimensionalCockpit, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.ArtifactNanofiberHull1, "neutral");
+        RegisterSimplePhilipShout(StandardShoutHooks.Relevance4.ArtifactNanofiberHull2, "neutral");
+
+        RegisterSimplePhilipShout
         (
-            StandardShoutHooks.Relevance7.EnemyHasWeakness, 
-            PhilipDeck.Deck, 
-            AnyLocalizations.Bind(["dialogue", "shout", "EnemyHasWeakness"]).Localize("en")!, 
-            looptag: "classy" // optional
+            ("Custom_NewLoop", new StoryNode()
+            {
+                zones = ["zone_first"],
+                oncePerRun = true,
+                oncePerCombatTags = ["Philip_AimlessChatting"]
+            }),
+            looptag: "maniacal"
         );
 
+        RegisterSimplePhilipShout
+        (
+            ("Custom_GoingToOverheat", new StoryNode()
+            {
+                oncePerRun = true,
+                goingToOverheat = true,
+            })
+        );
+
+        RegisterSimplePhilipShout
+        (
+            ("Custom_DidntOverheat", new StoryNode()
+            {
+                oncePerRun = true,
+                wasGoingToOverheatButStopped = true,
+                requiredScenes = ["Custom_GoingToOverheat"],
+            }),
+            looptag: "classy"
+        );
+    }
+    private void RegisterSimplePhilipShout((string, StoryNode) node, string looptag = "neutral", bool isAimlessChatting = false)
+    {
+        var storyNode = Mutil.DeepCopy(node.Item2);
+        storyNode.oncePerCombat = true; // to make him not be so chatty
+        storyNode.allPresent = new() { PhilipDeck.Deck.Key() };
+        storyNode.lines = new()
+        {
+            new RandallMod.CustomSay()
+            {
+                who = PhilipDeck.Deck.Key(),
+                Text = AnyLocalizations.Bind(["dialogue", "shout", node.Item1]).Localize("en")!,
+                loopTag = looptag
+            }
+        };
+
+        if (isAimlessChatting)
+        {
+            storyNode.oncePerCombatTags = storyNode.oncePerCombatTags ?? new();
+            storyNode.oncePerCombatTags.Add("Philip_AimlessChatting");
+        }
+
+        DB.story.all[$"{node.Item1}_{PhilipDeck.Deck.Key()}"] = storyNode;
     }
 
     private void RegisterSprite(IPluginPackage<IModManifest> package, string name)

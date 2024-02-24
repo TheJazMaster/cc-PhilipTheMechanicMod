@@ -245,7 +245,33 @@
   },
   "dialogue": {
     "shout": {
-      "EnemyHasWeakness": "Tsk, you really should've armored that weak point."
+      "ArtifactHardmode": "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.",
+      "EnemyHasWeakness": "Tsk, you really should've armored that weak point.",
+      "EnemyHasBrittle": "Woah your ship, uh... That brittle part needs to be replaced.",
+      "ThatsALotOfDamageToUs": "Yeeeeeaaah we don't have enough spare parts to fix that.",
+      "Duo_AboutToDieAndLoop": "I hear whirring. Why do I hear whirring?",
+      "WeDidOverThreeDamage": "Woah ho!!",
+      "WeDidOverFiveDamage": "Everything's coming together!",
+      "WeGotShotButTookNoDamage": "Thank you shields!",
+      "WeDontOverlapWithEnemyAtAll": "Man, these engines are so good.",
+      "WeAreCorroded": "Aw man, why'd it have to be corrosion?",
+      "TheyGotCorroded": "Oooh... fixing that corrosion damage is not gonna be fun for you.",
+      "HandOnlyHasTrashCards": "I really gotta get better at organization.",
+      "EmptyHandWithEnergy": "Out of tools...",
+      "JustHitGeneric": "Solid hit!",
+      "ArtifactTridimensionalCockpit": "Woah... Max, who's your parts supplier?",
+      "ArtifactTiderunner": "And here I thought I'd never get to use that woodworking class!",
+      "WeGotHurtButNotTooBad": "Easy repair!",
+      "ArtifactNanofiberHull1": "This is great, I don't even need to fix that.",
+      "ArtifactNanofiberHull2": "Dang. Can we get extra nanofibers? No?",
+      "ArtifactJetThrusters": "Woah, I love these engines.",
+      "BlockedALotOfAttacksWithArmor": "And that's why you should always install armor on your ship.",
+      "WeJustOverheated": "That... cannot be a good noise I just heard.",
+      "ManyTurns": "The engines sound terrible, they've been running way too long.",
+
+      "Custom_NewLoop": "New loop, new ship to take apart!",
+      "Custom_GoingToOverheat": "Don't worry! I've got a fire extinguisher!",
+      "Custom_DidntOverheat": "I knew that fire extinguisher would help."
     }
   }
 }

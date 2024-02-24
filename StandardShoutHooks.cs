@@ -350,7 +350,6 @@ namespace clay.PhilipTheMechanic
                 type = NodeTypeCombat,
                 enemyShotJustHit = true,
                 maxDamageDealtToPlayerThisTurn = 0,
-               
             });
             public static (string, StoryNode) WeMissedOopsie => ("WeMissedOopsie", new StoryNode()
             {
