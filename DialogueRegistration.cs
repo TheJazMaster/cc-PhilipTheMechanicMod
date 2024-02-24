@@ -100,7 +100,7 @@ namespace clay.PhilipTheMechanic
             RegisterModifiedCardShout(
                 "dizzy",
                 characterText: "How'd you do that?",
-                characterLooptag: "surprised",
+                characterLooptag: "serious",
                 philipText: "Hopes, dreams, and a screwdriver.");
             RegisterModifiedCardShout(
                 "peri",
