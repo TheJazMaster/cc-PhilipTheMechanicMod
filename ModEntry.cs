@@ -72,16 +72,16 @@ public sealed class ModEntry : SimpleMod
         {
             ModifierCardsController.HandleFlimsyModifiers(card, state, combat, handPosition);
         }, 0);
-        
+
         helper.Events.RegisterBeforeArtifactsHook(nameof(Artifact.OnTurnStart), (State state, Combat combat) => Nanobots.Replicate(state, combat), 0);
 
         // sprites
-        RegisterSprite(package, "char_frame_philip");                
+        RegisterSprite(package, "char_frame_philip");
         RegisterSprite(package, "frame_philip");
         RegisterSprite(package, "floppable_fix_sticky_note");
         RegisterSprite(package, "floppable_fix_index_card");
         RegisterSprite(package, "card_art_override");
-            
+
         RegisterSprite(package, "philip_mini");
         RegisterSprite(package, "philip_classy_0");
         RegisterSprite(package, "philip_classy_1");
@@ -141,7 +141,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_card_is_not_centered_disabled");
         RegisterSprite(package, "icon_flimsy");
         RegisterSprite(package, "icon_nanobots");
-    
+
         RegisterSprite(package, "icon_2x_sticker");
         RegisterSprite(package, "icon_sticker_add_card");
         RegisterSprite(package, "icon_sticker_buff_attack");
@@ -172,14 +172,14 @@ public sealed class ModEntry : SimpleMod
 
         RegisterSprite(package, "button_redraw");
         RegisterSprite(package, "button_redraw_on");
-    
+
         RegisterSprite(package, "artifact_wire_clippers");
         RegisterSprite(package, "artifact_angle_grinder");
         RegisterSprite(package, "artifact_endless_toolbox");
         RegisterSprite(package, "artifact_self_propelling_cannons");
         RegisterSprite(package, "artifact_hot_chocolate");
         RegisterSprite(package, "artifact_electromagnet");
-        
+
         RegisterSprite(package, "card_philip_default");
         RegisterSprite(package, "card_Black_Market_Parts");
         RegisterSprite(package, "card_Last_Resort");
@@ -224,7 +224,8 @@ public sealed class ModEntry : SimpleMod
             StarterCardTypes = new List<Type>() { typeof(OverdriveMod), typeof(RecycleParts) },
             Description = this.AnyLocalizations.Bind(new List<String>() { "character", "Philip", "description" }).Localize,
             BorderSprite = sprites["char_frame_philip"].Sprite,
-            NeutralAnimation = new() {
+            NeutralAnimation = new()
+            {
                 Deck = PhilipDeck.Deck,
                 LoopTag = "neutral",
                 Frames = new[] { sprites[$"philip_neutral_0"].Sprite, sprites[$"philip_neutral_1"].Sprite, sprites[$"philip_neutral_0"].Sprite, sprites[$"philip_neutral_3"].Sprite, }
@@ -287,7 +288,7 @@ public sealed class ModEntry : SimpleMod
             .GetTypes()
             .Where(t => String.Equals(t.Namespace, "clay.PhilipTheMechanic.Cards", StringComparison.Ordinal))
             .ToList();
-        foreach(var cardType in cardTypes)
+        foreach (var cardType in cardTypes)
         {
             if (!typeof(IRegisterableCard).IsAssignableFrom(cardType)) continue;
 
@@ -389,86 +390,11 @@ public sealed class ModEntry : SimpleMod
         Api.RegisterAllowRedrawHook(new ScrapMagnetHook());
         Api.RegisterRedrawCostHook(new ScrapMagnetHook(), 0);
 
-        // 
-        // Register dialogue
+        //
+        // Register Dialogue
         //
 
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance3.ArtifactHardmode, "squint", true);
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.EnemyHasWeakness, "classy");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs, "squint");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop, "gameover");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.WeDidOverFiveDamage, "maniacal");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeAreCorroded, "unhappy");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.TheyGotCorroded, "squint");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.HandOnlyHasTrashCards, "sheepish");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.EmptyHandWithEnergy, "unhappy");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ArtifactTiderunner, "excited");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeGotHurtButNotTooBad, "classy");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.ArtifactJetThrusters, "excited");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance4.BlockedALotOfAttacksWithArmor, "classy");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance2.WeJustOverheated, "squint");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.EnemyHasBrittle, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeDidOverThreeDamage, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeGotShotButTookNoDamage, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeDontOverlapWithEnemyAtAll, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.JustHitGeneric, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ArtifactTridimensionalCockpit, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.ArtifactNanofiberHull1, "neutral");
-        RegisterSimplePhilipShout(StandardShoutHooks.Relevance4.ArtifactNanofiberHull2, "neutral");
-
-        RegisterSimplePhilipShout
-        (
-            ("Custom_NewLoop", new StoryNode()
-            {
-                zones = ["zone_first"],
-                oncePerRun = true,
-                oncePerCombatTags = ["Philip_AimlessChatting"]
-            }),
-            looptag: "maniacal"
-        );
-
-        RegisterSimplePhilipShout
-        (
-            ("Custom_GoingToOverheat", new StoryNode()
-            {
-                oncePerRun = true,
-                goingToOverheat = true,
-            })
-        );
-
-        RegisterSimplePhilipShout
-        (
-            ("Custom_DidntOverheat", new StoryNode()
-            {
-                oncePerRun = true,
-                wasGoingToOverheatButStopped = true,
-                requiredScenes = ["Custom_GoingToOverheat"],
-            }),
-            looptag: "classy"
-        );
-    }
-    private void RegisterSimplePhilipShout((string, StoryNode) node, string looptag = "neutral", bool isAimlessChatting = false)
-    {
-        var storyNode = Mutil.DeepCopy(node.Item2);
-        storyNode.oncePerCombat = true; // to make him not be so chatty
-        storyNode.allPresent = new() { PhilipDeck.Deck.Key() };
-        storyNode.lines = new()
-        {
-            new RandallMod.CustomSay()
-            {
-                who = PhilipDeck.Deck.Key(),
-                Text = AnyLocalizations.Bind(["dialogue", "shout", node.Item1]).Localize("en")!,
-                loopTag = looptag
-            }
-        };
-
-        if (isAimlessChatting)
-        {
-            storyNode.oncePerCombatTags = storyNode.oncePerCombatTags ?? new();
-            storyNode.oncePerCombatTags.Add("Philip_AimlessChatting");
-        }
-
-        DB.story.all[$"{node.Item1}_{PhilipDeck.Deck.Key()}"] = storyNode;
+        DialogueRegistration.LoadAll();
     }
 
     private void RegisterSprite(IPluginPackage<IModManifest> package, string name)

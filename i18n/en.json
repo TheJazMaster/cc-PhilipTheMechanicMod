@@ -271,7 +271,15 @@
 
       "Custom_NewLoop": "New loop, new ship to take apart!",
       "Custom_GoingToOverheat": "Don't worry! I've got a fire extinguisher!",
-      "Custom_DidntOverheat": "I knew that fire extinguisher would help."
+      "Custom_DidntOverheat": "I knew that fire extinguisher would help.",
+
+      "ShopKeepBattleInsult:Philip": "...",
+      "CrabFacts1_Multi_0:Philip": "Wow! Now I want to be a crabologist.",
+      "CrabFacts2_Multi_0:Philip": "I don't get it.",
+      "CrabFactsAreOverNow_Multi_0:Philip": "Guess I'll have to find my own now.",
+      "Soggins_Missile_Shout_1:Philip": "Reminds me of when I was an apprentice!",
+      "SogginsEscapeIntent_1:Philip": "Classic solution.",
+      "WeJustGainedHeatAndDrakeIsHere_Multi_0:Philip": "You're not making my job easy here, Drake."
     }
   }
 }
