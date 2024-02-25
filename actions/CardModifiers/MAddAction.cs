@@ -1,4 +1,5 @@
-﻿using System;
+﻿using clay.PhilipTheMechanic.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
     {
         public required CardAction action;
         public Spr? stickerSprite;
+
+        public double Priority => ModifierCardsController.Prioirites.ADD_ACTION;
 
         public bool RequestsStickyNote() 
         {

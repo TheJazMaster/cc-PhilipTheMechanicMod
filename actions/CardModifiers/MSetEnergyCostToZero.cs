@@ -1,4 +1,5 @@
-﻿using Shockah;
+﻿using clay.PhilipTheMechanic.Controllers;
+using Shockah;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MSetEnergyCostToZero : ICardModifier
     {
+        public double Priority => ModifierCardsController.Prioirites.MODIFY_ENERGY_LAST;
         public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_0_energy"].Sprite;

@@ -17,6 +17,21 @@ namespace clay.PhilipTheMechanic.Controllers
         // patch get actions and stuff like that
         internal static bool SuppressActionMods = false;
 
+        public sealed class Prioirites
+        {
+            public static readonly double REMOVE_ALL_ACTIONS = 999.0;
+
+            public static readonly double MODIFY_DATA_UNFAVORABLE = 51.0;
+            public static readonly double MODIFY_DATA_FAVORABLE = 50.0;
+
+            public static readonly double MODIFY_ENERGY_FIRST = 50.0;
+            public static readonly double MODIFY_ENERGY_LAST = 49.0;
+
+            public static readonly double ADD_ACTION = 10;
+            public static readonly double ADD_ACTION_LAST = 5;
+            public static readonly double MODIFY_ALL_ACTIONS = 0;
+        }
+
         public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c)
         {
             List<ICardModifier> modifiers = new List<ICardModifier>();
@@ -36,7 +51,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 }
             }
 
-            // TODO: sort CardModifiers by their wrappers' priority
+            modifiers.Sort((mod1, mod2) => mod1.Priority.CompareTo(mod2.Priority));
             return modifiers;
         }
 

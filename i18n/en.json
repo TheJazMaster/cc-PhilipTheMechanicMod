@@ -77,6 +77,10 @@
     "ANeighborsMod_Flimsy": {
       "name": "Modify Neighboring Cards (Flimsy)",
       "description": "Modify both adjacent cards. When a card modified by this is played, discard this card."
+    },
+    "AVariableHint_AttackIcon": {
+      "name": "Total Attack Value",
+      "description":  "Sum of all attack damage on the card"
     }
   },
   "modifier": {

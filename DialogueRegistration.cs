@@ -254,41 +254,46 @@ namespace clay.PhilipTheMechanic
                         who = ModEntry.Instance.PhilipDeck.Deck.Key(),
                         Text = "Hey, you guys don't need monitors on your command consoles, right?",
                     },
-                    // TODO: this needs to be in a sayswitch
-                    new RandallMod.CustomSay()
+                    new SaySwitch()
                     {
-                        who = "peri",
-                        Text = "Yes.",
-                        loopTag = "squint",
-                    },
-                    new RandallMod.CustomSay()
-                    {
-                        who = "shard",
-                        Text = "I don't think so!",
-                    },
-                    new RandallMod.CustomSay()
-                    {
-                        who = "hacker",
-                        Text = "Don't touch my console.",
-                        loopTag = "squint",
-                    },
-                    new RandallMod.CustomSay()
-                    {
-                        who = "goat",
-                        Text = "Please don't take my monitor.",
-                        loopTag = "squint",
-                    },
-                    new RandallMod.CustomSay()
-                    {
-                        who = "dizzy",
-                        Text = "Nah!",
-                    },
-                    new RandallMod.CustomSay()
-                    {
-                        who = "riggs",
-                        Text = "Ah... yeah I do.",
-                        loopTag = "squint",
-                    },
+                        lines = new()
+                        {
+                            new RandallMod.CustomSay()
+                            {
+                                who = "peri",
+                                Text = "Yes.",
+                                loopTag = "squint",
+                            },
+                            new RandallMod.CustomSay()
+                            {
+                                who = "shard",
+                                Text = "I don't think so!",
+                            },
+                            new RandallMod.CustomSay()
+                            {
+                                who = "hacker",
+                                Text = "Don't touch my console.",
+                                loopTag = "squint",
+                            },
+                            new RandallMod.CustomSay()
+                            {
+                                who = "goat",
+                                Text = "Please don't take my monitor.",
+                                loopTag = "squint",
+                            },
+                            new RandallMod.CustomSay()
+                            {
+                                who = "dizzy",
+                                Text = "Nah!",
+                            },
+                            new RandallMod.CustomSay()
+                            {
+                                who = "riggs",
+                                Text = "Ah... yeah I do.",
+                                loopTag = "squint",
+                            },
+                        }
+                    }
                 }
             };
         }

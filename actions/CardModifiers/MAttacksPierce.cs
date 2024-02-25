@@ -1,4 +1,5 @@
 ﻿using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+using clay.PhilipTheMechanic.Controllers;
 using Microsoft.Extensions.Logging;
 using Shockah;
 using System;
@@ -11,6 +12,8 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MAttacksPierce : ICardModifier
     {
+        public double Priority => ModifierCardsController.Prioirites.MODIFY_ALL_ACTIONS;
+
         public Spr? GetSticker(State s)
         {
             return ModEntry.Instance.sprites["icon_sticker_piercing"].Sprite;

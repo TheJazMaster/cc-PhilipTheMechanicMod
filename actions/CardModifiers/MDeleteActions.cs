@@ -1,4 +1,5 @@
-﻿using Shockah;
+﻿using clay.PhilipTheMechanic.Controllers;
+using Shockah;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MDeleteActions : ICardModifier
     {
+        public double Priority => ModifierCardsController.Prioirites.REMOVE_ALL_ACTIONS;
         public bool MandatesStickyNote() { return true; }
         public Spr? GetSticker(State s)
         {

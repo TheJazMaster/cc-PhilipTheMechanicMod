@@ -1,4 +1,5 @@
-﻿using Shockah;
+﻿using clay.PhilipTheMechanic.Controllers;
+using Shockah;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
     public class MShieldForAttackAmount : ICardModifier
     {
         public bool tempShield = true;
+
+        public double Priority => ModifierCardsController.Prioirites.ADD_ACTION;
         public bool RequestsStickyNote() 
         {
             return true;

@@ -10,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MPlayTwice : ICardModifier
     {
+        public double Priority => ModifierCardsController.Prioirites.ADD_ACTION_LAST;
         public bool RequestsStickyNote() 
         {
             return false;

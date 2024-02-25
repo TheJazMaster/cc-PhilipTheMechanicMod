@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shockah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,15 @@ namespace clay.PhilipTheMechanic.Actions
 
         public override List<Tooltip> GetTooltips(State s)
         {
-            // TODO: return something like "total attack value on card"
-            return new();
+            return [
+                new CustomTTGlossary(
+                    CustomTTGlossary.GlossaryType.action,
+                    () => Enum.Parse<Spr>("icons_attack"),
+                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHint_AttackIcon", "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHint_AttackIcon", "description"]),
+                    key: GetType().FullName ?? GetType().Name
+                )
+            ];
         }
     }
 }
