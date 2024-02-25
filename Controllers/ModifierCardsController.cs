@@ -32,12 +32,21 @@ namespace clay.PhilipTheMechanic.Controllers
             public static readonly double MODIFY_ALL_ACTIONS = 0;
         }
 
-        public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c)
+        public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c, bool recurse = true)
         {
             List<ICardModifier> modifiers = new List<ICardModifier>();
 
             foreach (Card card in c.hand)
             {
+                if (recurse)
+                {
+                    // check to see if `card` has its actions removed, if so, none of its modifiers should apply
+                    if (GetCardModifiers(card, s, c, false).Any(m => m is MDeleteActions))
+                    {
+                        continue;
+                    }
+                }
+
                 SuppressActionMods = true;
                 var actions = card.GetActionsOverridden(s, c);
                 SuppressActionMods = false;
@@ -51,7 +60,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 }
             }
 
-            modifiers.Sort((mod1, mod2) => mod1.Priority.CompareTo(mod2.Priority));
+            modifiers.Sort((mod1, mod2) => mod2.Priority.CompareTo(mod1.Priority));
             return modifiers;
         }
 
@@ -124,7 +133,6 @@ namespace clay.PhilipTheMechanic.Controllers
                 overridenCardActions = modifier.TransformActions(overridenCardActions, s, c, __instance, isDuringRender);
             }
 
-            // todo: make sure this still works
             try
             {
                 string dialogueSelector = $".{ModEntry.Instance.Helper.Content.Decks.LookupByDeck(__instance.GetMeta().deck)!.UniqueName}Card_ModifiedByPhilip";
