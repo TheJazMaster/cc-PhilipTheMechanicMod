@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhilipTheMechanic
+namespace clay.PhilipTheMechanic
 {
     // from https://github.com/Shockah/Cobalt-Core-Mods/blob/master/_Shared/MouseDownHandler.cs
     internal sealed class MouseDownHandler : OnMouseDown

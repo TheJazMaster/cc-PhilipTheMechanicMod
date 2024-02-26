@@ -1,0 +1,289 @@
+{
+  "character": {
+    "Philip": {
+      "name": "Philip",
+      "description": "<c=c9f000>PHILIP</c>\nYour ship engineering officer. His cards <c=keyword>modify other cards</c> in your hand, provide <c=status>REDRAW</c>, and are often <c=downside>unplayable</c>."
+    }
+  },
+  "status": {
+    "redraw": {
+      "name": "Redraw",
+      "description": "Lets you discard a card and draw a new one. Costs 1 redraw per discard."
+    },
+    "customParts": {
+      "name": "Custom Parts",
+      "description": "Gives you {0} redraw at the start of each turn."
+    }
+  },
+  "condition": {
+    "CCardCentered": {
+      "name": "Card Centered",
+      "description": "The following effects trigger if this card is at the center of your hand."
+    },
+    "CCardNotCentered": {
+      "name": "Card Not Centered",
+      "description": "The following effects trigger if this card is not at the center of your hand."
+    }
+  },
+  "action": {
+    "ANanobots": {
+      "name": "Nanobots",
+      "description": "On play, remove all other <c=card>Nanobots</c> from hand. If in hand at the end of turn, add a new <c=card>Nanobots</c> to hand."
+    },
+    "ADirectionalMod": {
+      "name": {
+        "left": "Modify Card to the Left",
+        "right": "Modify Card to the Right"
+      },
+      "description": {
+        "left": "Add the following effects to the card to the left. They do NOT trigger when this card is played.",
+        "right": "Add the following effects to the card to the right. They do NOT trigger when this card is played."
+      }
+    },
+    "ADirectionalMod_Flimsy": {
+      "name": {
+        "left": "Modify Card to the Left (Flimsy)",
+        "right": "Modify Card to the Right (Flimsy)"
+      },
+      "description": {
+        "left": "Modify the card to the left. When a card modified by this is played, discard this card.",
+        "right": "Modify the card to the right. When a card modified by this is played, discard this card."
+      }
+    },
+    "AWholeHandDirectionalMod": {
+      "name": {
+        "left": "Modify All Cards to the Left",
+        "right": "Modify All Cards to the Right"
+      },
+      "description": {
+        "left": "Add the following effects to all cards to the left. They do NOT trigger when this card is played.",
+        "right": "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
+      }
+    },
+    "AWholeHandDirectionalMod_Flimsy": {
+      "name": {
+        "left": "Modify All Cards to the Left (Flimsy)",
+        "right": "Modify All Cards to the Right (Flimsy)"
+      },
+      "description": {
+        "left": "Modify all cards to the left. When a card modified by this is played, discard this card.",
+        "right": "Modify all cards to the right. When a card modified by this is played, discard this card."
+      }
+    },
+    "ANeighborsMod": {
+      "name": "Modify Neighboring Cards",
+      "description": "Add the following effects to both adjacent cards. They do NOT trigger when this card is played."
+    },
+    "ANeighborsMod_Flimsy": {
+      "name": "Modify Neighboring Cards (Flimsy)",
+      "description": "Modify both adjacent cards. When a card modified by this is played, discard this card."
+    },
+    "AVariableHint_AttackIcon": {
+      "name": "Total Attack Value",
+      "description":  "Sum of all attack damage on the card"
+    }
+  },
+  "modifier": {
+    "MAttacksPierce": {
+      "name": "Attacks Pierce",
+      "description": "Makes all attacks on this card pierce."
+    },
+    "MBuffAttack": {
+      "name": "Buff Attack",
+      "description": "Increases the power of attacks on the target card by {0}."
+    },
+    "MDeleteActions": {
+      "name": "Remove Actions",
+      "description": "Removes all pre-existing actions on this card."
+    },
+    "MDontExhaust": {
+      "name": "Don't Exhaust",
+      "description": "Removes exhaust from this card, if it has it."
+    },
+    "MExhaust": {
+      "name": "Make Exhaust",
+      "description": "Adds exhaust to this card, if it doesn't have it already."
+    },
+    "MMakePlayable": {
+      "name": "Make Playable",
+      "description": "Makes this card playable, if it was not already."
+    },
+    "MPlayTwice": {
+      "name": "Play Twice",
+      "description": "Makes all pre-existing actions on this card take effect twice."
+    },
+    "MRecycle": {
+      "name": "Make Recycle",
+      "description": "Adds recycle to this card, if it doesn't have it already."
+    },
+    "MReduceEnergyCost": {
+      "name": "Reduce Energy Cost",
+      "description": "Reduces the energy cost of this card by 1."
+    },
+    "MRetain": {
+      "name": "Make Retain",
+      "description": "Adds retain to this card, if it doesn't have it already."
+    },
+    "MSetEnergyCostToZero": {
+      "name": "Set Energy Cost to Zero",
+      "description": "Sets the energy cost of this card to 0."
+    },
+    "MShieldForAttackAmount": {
+      "name": "Shield for Attack",
+      "description": {
+        "temp": "Sum the damage of all attack actions on this card. Add temp shield equal to that amount.",
+        "regular": "Sum the damage of all attack actions on this card. Add shield equal to that amount."
+      }
+    },
+    "MStun": {
+      "name": "Attacks Stun",
+      "description": "Makes all attacks on this card stun."
+    },
+    "MUnplayable": {
+      "name": "Make Unplayable",
+      "description": "Makes this card unplayable, if it wasn't already."
+    }
+  },
+  "artifact": {
+    "WireClippers": {
+      "name": "Wire Clippers",
+      "description": "All unplayable cards become playable, and all trash gains exhaust."
+    },
+    "AngleGrinder": {
+      "name": "Angle Grinder",
+      "description": "Gain 3 redraw at the start of combat."
+    },
+    "EndlessToolbox": {
+      "name": "Endless Toolbox",
+      "description": "The first 2 times you redraw each turn, draw an extra card."
+    },
+    "SelfPropellingCannons": {
+      "name": "Self-Propelling Cannons",
+      "description": "Your cannons gain brittle. At the end of each turn, launch a missile from each cannon."
+    },
+    "HotChocolate": {
+      "name": "Hot Chocolate",
+      "description": "If you have 3 or more unplayable cards in your hand, they redraw for free."
+    },
+    "ScrapMagnet": {
+      "name": "Scrap Magnet",
+      "description": "Twice per turn, redraw the leftmost card in your hand for free."
+    }
+  },
+  "card": {
+    "OverdriveMod": {
+      "name": "Overdrive Mod"
+    },
+    "RecycleParts": {
+      "name": "Recycle Parts"
+    },
+    "DuctTapeAndDreams": {
+      "name": "Duct Tape and Dreams"
+    },
+    "JettisonParts": {
+      "name": "Jettison Parts"
+    },
+    "Oops": {
+      "name": "Oops"
+    },
+    "OpenBayDoors": {
+      "name": "Open Bay Doors"
+    },
+    "ReduceReuse": {
+      "name": "Reduce, Reuse"
+    },
+    "StunMod": {
+      "name": "Stun Mod"
+    },
+    "FrenzyMod": {
+      "name": "Frenzy Mod"
+    },
+    "LoosenScrews": {
+      "name": "Loosen Screws"
+    },
+    "OverfueledEngines": {
+      "name": "Overfueled Engines"
+    },
+    "PiercingMod": {
+      "name": "Piercing Mod"
+    },
+    "InCaseOfEmergency": {
+      "name": "In Case Of Emergency"
+    },
+    "PrecisionMachining": {
+      "name": "Precision Machining"
+    },
+    "ShieldingMod": {
+      "name": "Shielding Mod"
+    },
+    "SpareParts": {
+      "name": "Spare Parts"
+    },
+    "BlackMarketParts": {
+      "name": "Black Market Parts"
+    },
+    "DisableSafeties": {
+      "name": "Disable Safeties"
+    },
+    "EmergencyTraining": {
+      "name": "Emergency Training"
+    },
+    "NanobotInfestation": {
+      "name": "Infestation"
+    },
+    "NoStockParts": {
+      "name": "No Stock Parts"
+    },
+    "Nanobots": {
+      "name": "Nanobots"
+    },
+    "UraniumRound": {
+      "name": "Uranium Round"
+    },
+    "ImpromptuBlastShield": {
+      "name": "Impromptu Blast Shield"
+    },
+    "OhNo": {
+      "name": "Oh No"
+    }
+  },
+  "dialogue": {
+    "shout": {
+      "ArtifactHardmode": "Hey, who installed this cockpit without combat-rated safety glass? They should have their license revoked.",
+      "EnemyHasWeakness": "Tsk, you really should've armored that weak point.",
+      "EnemyHasBrittle": "Woah your ship, uh... That brittle part needs to be replaced.",
+      "ThatsALotOfDamageToUs": "Yeeeeeaaah we don't have enough spare parts to fix that.",
+      "Duo_AboutToDieAndLoop": "I hear whirring. Why do I hear whirring?",
+      "WeDidOverThreeDamage": "Woah ho!!",
+      "WeDidOverFiveDamage": "Everything's coming together!",
+      "WeGotShotButTookNoDamage": "Thank you shields!",
+      "WeDontOverlapWithEnemyAtAll": "Man, these engines are so good.",
+      "WeAreCorroded": "Aw man, why'd it have to be corrosion?",
+      "TheyGotCorroded": "Oooh... fixing that corrosion damage is not gonna be fun for you.",
+      "HandOnlyHasTrashCards": "I really gotta get better at organization.",
+      "EmptyHandWithEnergy": "Out of tools...",
+      "JustHitGeneric": "Solid hit!",
+      "ArtifactTridimensionalCockpit": "Woah... Max, who's your parts supplier?",
+      "ArtifactTiderunner": "And here I thought I'd never get to use that woodworking class!",
+      "WeGotHurtButNotTooBad": "Easy repair!",
+      "ArtifactNanofiberHull1": "This is great, I don't even need to fix that.",
+      "ArtifactNanofiberHull2": "Dang. Can we get extra nanofibers? No?",
+      "ArtifactJetThrusters": "Woah, I love these engines.",
+      "BlockedALotOfAttacksWithArmor": "And that's why you should always install armor on your ship.",
+      "WeJustOverheated": "That... cannot be a good noise I just heard.",
+      "ManyTurns": "The engines sound terrible, they've been running way too long.",
+
+      "Custom_NewLoop": "New loop, new ship to take apart!",
+      "Custom_GoingToOverheat": "Don't worry! I've got a fire extinguisher!",
+      "Custom_DidntOverheat": "I knew that fire extinguisher would help.",
+
+      "ShopKeepBattleInsult:Philip": "...",
+      "CrabFacts1_Multi_0:Philip": "Wow! Now I want to be a crabologist.",
+      "CrabFacts2_Multi_0:Philip": "I don't get it.",
+      "CrabFactsAreOverNow_Multi_0:Philip": "Guess I'll have to find my own now.",
+      "Soggins_Missile_Shout_1:Philip": "Reminds me of when I was an apprentice!",
+      "SogginsEscapeIntent_1:Philip": "Classic solution.",
+      "WeJustGainedHeatAndDrakeIsHere_Multi_0:Philip": "You're not making my job easy here, Drake."
+    }
+  }
+}
