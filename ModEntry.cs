@@ -384,6 +384,7 @@ public sealed class ModEntry : SimpleMod
                 Description = AnyLocalizations.Bind(["artifact", artifactType.Name, "description"]).Localize
             });
         }
+        Api.RegisterOnRedrawHook(new RedrawStatusController.DefaultFunctionalityHook(), 0); // is a hook to allow people to do non-standard functionality, such as exhausting the card targeted for redraw
         Api.RegisterOnRedrawHook(new EndlessToolboxHook(), 0);
         Api.RegisterAllowRedrawHook(new HotChocolateHook());
         Api.RegisterRedrawCostHook(new HotChocolateHook(), 0);
