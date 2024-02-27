@@ -158,7 +158,7 @@ public sealed class ModEntry : SimpleMod
         RegisterSprite(package, "icon_sticker_evade");
         RegisterSprite(package, "icon_sticker_exhaust");
         RegisterSprite(package, "icon_sticker_dont_exhaust");
-        RegisterSprite(package, "icon_sticker_missile");
+        RegisterSprite(package, "icon_sticker_missile_normal");
         RegisterSprite(package, "icon_sticker_hermes");
         RegisterSprite(package, "icon_sticker_stun");
         RegisterSprite(package, "icon_sticker_recycle");

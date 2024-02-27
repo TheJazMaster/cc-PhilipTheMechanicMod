@@ -142,7 +142,7 @@ internal sealed class JettisonParts : Card, IRegisterableCard
         };
 
         if (upgrade == Upgrade.A) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.hermes, statusAmount = 1, targetPlayer = true }, ModEntry.Instance.sprites["icon_sticker_hermes"].Sprite));
-        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, ModEntry.Instance.sprites["icon_sticker_missile"].Sprite));
+        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, ModEntry.Instance.sprites["icon_sticker_missile_normal"].Sprite));
 
         return new()
         {
@@ -336,7 +336,7 @@ internal sealed class OpenBayDoors : Card, IRegisterableCard
                 ModEntry.Instance.Api.MakeMAddAction
                 (
                     new ASpawn() { thing = new Missile() { missileType = MissileType.normal } },
-                    ModEntry.Instance.sprites["icon_sticker_missile"].Sprite
+                    ModEntry.Instance.sprites["icon_sticker_missile_normal"].Sprite
                 )
             );
         }
