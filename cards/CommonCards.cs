@@ -216,14 +216,23 @@ internal sealed class Oops : Card, IRegisterableCard
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
+        var target = upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Neighboring;
+
         return new()
         {
             ModEntry.Instance.Api.MakeAModifierWrapper
             (
-                upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Neighboring,
+                target,
                 new()
                 {
-                    ModEntry.Instance.Api.MakeMBuffAttack(upgrade == Upgrade.A ? -2 : -1),
+                    ModEntry.Instance.Api.MakeMBuffAttack(upgrade == Upgrade.A ? -2 : -1)
+                }
+            ),
+            ModEntry.Instance.Api.MakeAModifierWrapper
+            (
+                target,
+                new()
+                {
                     ModEntry.Instance.Api.MakeMAddAction
                     (
                         new AStatus() {
@@ -234,7 +243,7 @@ internal sealed class Oops : Card, IRegisterableCard
                         ModEntry.Instance.sprites["icon_sticker_redraw"].Sprite
                     )
                 }
-            )
+            ),
         };
     }
 }
