@@ -18,14 +18,14 @@ namespace clay.PhilipTheMechanic.Controllers
         // Move below to new class ModifierRendererController?
         //
 
-        internal static bool RenderingActionsOnStickyNote = false;
+        internal static bool RenderingActionsOnMetalPlate = false;
         internal static bool SuppressMetalPlatingPatch = false;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
-        public static void SupportStickyNoteRendering(Card __instance, ref List<CardAction> __result, State s, Combat c)
+        public static void SupportMetalPlateRendering(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
-            if (!RenderingActionsOnStickyNote) return;
+            if (!RenderingActionsOnMetalPlate) return;
 
             // we're trying to draw only the active actions with icons rn
             __result = __result.Where((action) => action.GetIcon(s) != null && !action.disabled).ToList();
@@ -61,7 +61,7 @@ namespace clay.PhilipTheMechanic.Controllers
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.Render))]
-        public static void RenderStickersAndStickyNotes(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
+        public static void RenderStickers(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
         {
             ModifierCardsController.SuppressActionMods = false;
             State state = fakeState ?? g.state;
@@ -91,13 +91,9 @@ namespace clay.PhilipTheMechanic.Controllers
             var actions = __instance.GetActionsOverridden(state, c);
             if(ShouldStickyNote(__instance, state, actions, modifiers))
             {
-                //
-                // draw index card / sticky note fix for floppables
-                //
-
-                RenderingActionsOnStickyNote = true;
+                RenderingActionsOnMetalPlate = true;
                 __instance.MakeAllActionIcons(g, g.state);
-                RenderingActionsOnStickyNote = false;
+                RenderingActionsOnMetalPlate = false;
             }
             else
             {
