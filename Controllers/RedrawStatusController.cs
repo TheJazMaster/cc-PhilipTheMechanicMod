@@ -13,6 +13,16 @@ namespace clay.PhilipTheMechanic.Controllers
     [HarmonyPatch(typeof(Card))]
     public class RedrawStatusController
     {
+        public class DefaultFunctionalityHook : IOnRedrawHook
+        {
+            // is a hook to allow people to do non-standard functionality, such as exhausting the card targeted for redraw
+            public void OnRedraw(Card card, State state, Combat combat)
+            {
+                if (combat.hand.Contains(card)) RedrawStatusController.DiscardFromHand(state, card);
+                combat.DrawCards(state, 1);
+            }
+        }
+
         private static void HandleRedraw(G g, Card card, int index)
         {
             if (g.state.route is not Combat c) return;
@@ -26,10 +36,6 @@ namespace clay.PhilipTheMechanic.Controllers
 
             var redrawAmount = g.state.ship.Get(ModEntry.Instance.RedrawStatus.Status);
             g.state.ship.Set(ModEntry.Instance.RedrawStatus.Status, redrawAmount - 1);
-
-            // actually do the redraw
-            DiscardFromHand(g.state, card);
-            c.DrawCards(g.state, 1);
 
             // tell the shout system what just happened
             c.QueueImmediate(new ADummyAction()

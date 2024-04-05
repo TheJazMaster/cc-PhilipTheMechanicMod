@@ -1,19 +1,57 @@
 ﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using HarmonyLib;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace clay.PhilipTheMechanic.Controllers
 {
     [HarmonyPatch]
     public static class ModifierCardsController
     {
+        class Cache
+        {
+            static Dictionary<int, List<CardAction>> actionsCache = new();
+            static Dictionary<int, List<ICardModifier>> modifiersCache = new();
+            static double lastTime = -1;
+
+            static void CleanCache(State s)
+            {
+                if (lastTime == s.time) return;
+                lastTime = s.time;
+
+                actionsCache.Clear();
+                modifiersCache.Clear();
+            }
+
+            public static List<CardAction>? FetchActions(State s, Card c)
+            {
+                CleanCache(s);
+
+                if (!actionsCache.ContainsKey(c.uuid)) return null;
+                return actionsCache[c.uuid];
+            }
+
+            public static void StoreActions(Card c, List<CardAction> actions)
+            {
+                actionsCache[c.uuid] = actions;
+            }
+
+            public static List<ICardModifier>? FetchModifiers(State s, Card c)
+            {
+                CleanCache(s);
+
+                if (!modifiersCache.ContainsKey(c.uuid)) return null;
+                return modifiersCache[c.uuid];
+            }
+
+            public static void StoreModifiers(Card c, List<ICardModifier> modifiers)
+            {
+                modifiersCache[c.uuid] = modifiers;
+            }
+        }
+
         // patch get actions and stuff like that
         internal static bool SuppressActionMods = false;
 
@@ -34,8 +72,9 @@ namespace clay.PhilipTheMechanic.Controllers
 
         public static List<ICardModifier> GetCardModifiers(Card target, State s, Combat c, bool recurse = true)
         {
-            List<ICardModifier> modifiers = new List<ICardModifier>();
-
+            if (Cache.FetchModifiers(s, target) is List<ICardModifier> cached) return cached;
+            
+            List<ICardModifier> modifiers = new List<ICardModifier>(8);
             foreach (Card card in c.hand)
             {
                 if (recurse)
@@ -48,7 +87,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 }
 
                 SuppressActionMods = true;
-                var actions = card.GetActionsOverridden(s, c);
+                var actions = Cache.FetchActions(s, card) ?? card.GetActionsOverridden(s, c);
                 SuppressActionMods = false;
 
                 foreach (CardAction action in actions)
@@ -61,6 +100,7 @@ namespace clay.PhilipTheMechanic.Controllers
             }
 
             modifiers.Sort((mod1, mod2) => mod2.Priority.CompareTo(mod1.Priority));
+            Cache.StoreModifiers(target, modifiers);
             return modifiers;
         }
 
@@ -118,6 +158,8 @@ namespace clay.PhilipTheMechanic.Controllers
             isDuringRender = false;
         }
 
+
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
         public static void ApplyActionModifiers(Card __instance, ref List<CardAction> __result, State s, Combat c)
@@ -125,6 +167,9 @@ namespace clay.PhilipTheMechanic.Controllers
             if (SuppressActionMods) return;
             if (s.route is Combat combat && combat.routeOverride != null && !combat.eyeballPeek) { return; }
             if (s.route is not Combat) { return; }
+
+            // if the cache doesn't return null, just use what it has
+            if (Cache.FetchActions(s, __instance) is List<CardAction> actions) { __result = actions; return; }
 
             List<CardAction> overridenCardActions = __result;
             var modifiers = GetCardModifiers(__instance, s, c);
@@ -142,6 +187,8 @@ namespace clay.PhilipTheMechanic.Controllers
             catch (Exception e) { }
 
             __result = overridenCardActions;
+
+            Cache.StoreActions(__instance, overridenCardActions);
         }
 
         [HarmonyPostfix]
