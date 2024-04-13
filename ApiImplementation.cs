@@ -31,6 +31,7 @@ public sealed class ApiImplementation : IPhilipAPI
             if (RedrawCostHooks[i].Item2 < priority)
             {
                 RedrawCostHooks.Insert(i, (hook, priority));
+                return;
             }
         }
 
@@ -44,6 +45,7 @@ public sealed class ApiImplementation : IPhilipAPI
             if (OnRedrawHooks[i].Item2 < priority)
             {
                 OnRedrawHooks.Insert(i, (hook, priority));
+                return;
             }
         }
 
