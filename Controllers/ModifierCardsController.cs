@@ -169,7 +169,7 @@ namespace clay.PhilipTheMechanic.Controllers
             if (s.route is not Combat) { return; }
 
             // if the cache doesn't return null, just use what it has
-            if (Cache.FetchActions(s, __instance) is List<CardAction> actions) { __result = actions; return; }
+            //if (Cache.FetchActions(s, __instance) is List<CardAction> actions) { __result = actions; return; }
 
             List<CardAction> overridenCardActions = __result;
             var modifiers = GetCardModifiers(__instance, s, c);
@@ -188,7 +188,7 @@ namespace clay.PhilipTheMechanic.Controllers
 
             __result = overridenCardActions;
 
-            Cache.StoreActions(__instance, overridenCardActions);
+            //Cache.StoreActions(__instance, overridenCardActions);
         }
 
         [HarmonyPostfix]
