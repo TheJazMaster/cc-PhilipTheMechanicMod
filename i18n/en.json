@@ -88,6 +88,10 @@
       "name": "Attacks Pierce",
       "description": "Makes all attacks on this card pierce."
     },
+    "MShieldForAttackAmount": {
+      "name": "Shield for Attack Value",
+      "description": "Gain (temp) shield equal to this card's total attack."
+    },
     "MBuffAttack": {
       "name": "Buff Attack",
       "description": "Increases the power of attacks on the target card by {0}."
