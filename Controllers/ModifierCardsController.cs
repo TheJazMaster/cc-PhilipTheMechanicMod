@@ -12,7 +12,6 @@ namespace clay.PhilipTheMechanic.Controllers
     {
         class Cache
         {
-            static Dictionary<int, List<CardAction>> actionsCache = new();
             static Dictionary<int, List<ICardModifier>> modifiersCache = new();
             static double lastTime = -1;
 
@@ -21,21 +20,7 @@ namespace clay.PhilipTheMechanic.Controllers
                 if (lastTime == s.time) return;
                 lastTime = s.time;
 
-                actionsCache.Clear();
                 modifiersCache.Clear();
-            }
-
-            public static List<CardAction>? FetchActions(State s, Card c)
-            {
-                CleanCache(s);
-
-                if (!actionsCache.ContainsKey(c.uuid)) return null;
-                return actionsCache[c.uuid];
-            }
-
-            public static void StoreActions(Card c, List<CardAction> actions)
-            {
-                actionsCache[c.uuid] = actions;
             }
 
             public static List<ICardModifier>? FetchModifiers(State s, Card c)
@@ -75,25 +60,26 @@ namespace clay.PhilipTheMechanic.Controllers
             if (Cache.FetchModifiers(s, target) is List<ICardModifier> cached) return cached;
             
             List<ICardModifier> modifiers = new List<ICardModifier>(8);
-            foreach (Card card in c.hand)
+            foreach (Card possibleModifierCard in c.hand)
             {
                 if (recurse)
                 {
-                    // check to see if `card` has its actions removed, if so, none of its modifiers should apply
-                    if (GetCardModifiers(card, s, c, false).Any(m => m is MDeleteActions))
+                    // check to see if `possibleModifierCard` has its actions removed, if so, none of its modifiers should apply
+                    if (GetCardModifiers(possibleModifierCard, s, c, false).Any(m => m is MDeleteActions))
                     {
                         continue;
                     }
                 }
 
+                // get the raw actions from the possibleModifierCard, before any modifiers are applied to it
                 SuppressActionMods = true;
-                var actions = Cache.FetchActions(s, card) ?? card.GetActionsOverridden(s, c);
+                var actions = possibleModifierCard.GetActionsOverridden(s, c);
                 SuppressActionMods = false;
 
                 foreach (CardAction action in actions)
                 {
                     if (action is not AModifierWrapper wrapper) continue;
-                    if (!wrapper.IsTargeting(target, card, c)) continue;
+                    if (!wrapper.IsTargeting(target, possibleModifierCard, c)) continue;
 
                     modifiers.AddRange(wrapper.modifiers);
                 }
@@ -168,9 +154,6 @@ namespace clay.PhilipTheMechanic.Controllers
             if (s.route is Combat combat && combat.routeOverride != null && !combat.eyeballPeek) { return; }
             if (s.route is not Combat) { return; }
 
-            // if the cache doesn't return null, just use what it has
-            //if (Cache.FetchActions(s, __instance) is List<CardAction> actions) { __result = actions; return; }
-
             List<CardAction> overridenCardActions = __result;
             var modifiers = GetCardModifiers(__instance, s, c);
             foreach (ICardModifier modifier in modifiers)
@@ -187,20 +170,12 @@ namespace clay.PhilipTheMechanic.Controllers
             catch (Exception e) { }
 
             __result = overridenCardActions;
-
-            //Cache.StoreActions(__instance, overridenCardActions);
         }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
         public static void ApplyDataModifiers(Card __instance, ref CardData __result, State state)
         {
-            // change how this is handled
-            //if (state.ship.Get(Enum.Parse<Status>("tableFlip")) > 0 && __instance is ModifierCard)
-            //{
-            //    __result.flippable = true;
-            //}
-
             var s = state;
             if (!ModifiersCurrentlyApply(state, __instance)) return;
             Combat c = (s.route as Combat)!;
