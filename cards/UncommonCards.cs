@@ -240,7 +240,7 @@ internal sealed class ShieldingMod : Card, IRegisterableCard
 
 internal sealed class SpareParts : Card, IRegisterableCard
 {
-    public static Rarity GetRarity() => Rarity.uncommon;
+    public static Rarity GetRarity() => Rarity.common;
     public static Spr GetArt() => ModEntry.Instance.sprites["card_philip_default"].Sprite;
 
     public override CardData GetData(State state)
