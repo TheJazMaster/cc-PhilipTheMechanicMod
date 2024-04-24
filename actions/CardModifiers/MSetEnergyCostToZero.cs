@@ -10,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MSetEnergyCostToZero : ICardModifier
     {
+        public string DialogueTag => "Philip";
         public double Priority => ModifierCardsController.Prioirites.MODIFY_ENERGY_LAST;
         public Spr? GetSticker(State s)
         {

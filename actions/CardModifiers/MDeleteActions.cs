@@ -10,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MDeleteActions : ICardModifier
     {
+        public string DialogueTag => "Philip";
         public double Priority => ModifierCardsController.Prioirites.REMOVE_ALL_ACTIONS;
         public bool MandatesStickyNote() { return true; }
         public Spr? GetSticker(State s)

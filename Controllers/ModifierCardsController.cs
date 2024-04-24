@@ -163,9 +163,20 @@ namespace clay.PhilipTheMechanic.Controllers
 
             try
             {
-                string dialogueSelector = $".{ModEntry.Instance.Helper.Content.Decks.LookupByDeck(__instance.GetMeta().deck)!.UniqueName}Card_ModifiedByPhilip";
-                overridenCardActions.Add(new ADummyAction() { dialogueSelector = dialogueSelector });
-                overridenCardActions.Insert(0, new ADummyAction() { });
+                HashSet<string> tags = new(modifiers.Select(m => m.DialogueTag));
+                foreach(string tag in tags)
+                {
+                    string dialogueSelector = $".{ModEntry.Instance.Helper.Content.Decks.LookupByDeck(__instance.GetMeta().deck)!.UniqueName}Card_ModifiedBy_{tag}";
+                    var dialogueAction = new ADummyAction() { dialogueSelector = dialogueSelector };
+
+                    if (ModEntry.Instance.KokoroApi != null) overridenCardActions.Add(ModEntry.Instance.KokoroApi.Actions.MakeHidden(dialogueAction));
+                    else
+                    {
+                        overridenCardActions.Add(dialogueAction);
+                        overridenCardActions.Insert(0, new ADummyAction() { });
+                    }
+
+                }
             }
             catch (Exception e) { }
 

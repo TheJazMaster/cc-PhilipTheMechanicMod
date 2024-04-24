@@ -12,6 +12,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
         public required CardAction action;
         public Spr? stickerSprite;
 
+        public string DialogueTag => "Philip";
         public double Priority => ModifierCardsController.Prioirites.ADD_ACTION;
 
         public bool RequestsStickyNote() 

@@ -9,7 +9,8 @@ public partial interface IKokoroApi
 
 	public interface IActionApi
 	{
-		List<CardAction> GetWrappedCardActionsRecursively(CardAction action, bool includingWrapperActions);
+        CardAction MakeHidden(CardAction action, bool showTooltips = false);
+        List<CardAction> GetWrappedCardActionsRecursively(CardAction action, bool includingWrapperActions);
 		void RegisterWrappedActionHook(IWrappedActionHook hook, double priority);
     }
 }

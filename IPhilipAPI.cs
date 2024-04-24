@@ -70,6 +70,7 @@ namespace clay.PhilipTheMechanic
 
     public interface ICardModifier
     {
+        string DialogueTag { get; }
         double Priority { get; }
         bool RequestsStickyNote() { return false; }
         bool MandatesStickyNote() { return false; }

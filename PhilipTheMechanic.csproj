@@ -13,6 +13,7 @@
 		<ModZipPath>$(MSBuildProjectDirectory)\.release\$(MSBuildProjectName)-$(Version).zip</ModZipPath>
 		<EnableDllExtract>false</EnableDllExtract>
 		<GameDllPath>./CobaltCore.dll</GameDllPath>
+		<IsLegacyMod>False</IsLegacyMod>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Nickel.ModBuildConfig" Version="0.4.0" />

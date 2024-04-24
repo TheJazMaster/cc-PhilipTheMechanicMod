@@ -10,6 +10,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MExhaust : ICardModifier
     {
+        public string DialogueTag => "Philip";
         public double Priority => ModifierCardsController.Prioirites.MODIFY_DATA_UNFAVORABLE;
         public Spr? GetSticker(State s)
         {

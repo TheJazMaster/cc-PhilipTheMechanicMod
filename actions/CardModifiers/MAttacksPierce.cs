@@ -12,6 +12,7 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers
 {
     public class MAttacksPierce : ICardModifier
     {
+        public string DialogueTag => "Philip";
         public double Priority => ModifierCardsController.Prioirites.MODIFY_ALL_ACTIONS;
 
         public Spr? GetSticker(State s)
