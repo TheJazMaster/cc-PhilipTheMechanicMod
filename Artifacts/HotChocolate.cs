@@ -1,46 +1,40 @@
-﻿using clay.PhilipTheMechanic.Cards;
-using Nickel;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Artifacts;
 
 internal sealed class HotChocolate : Artifact, IRegisterableArtifact
 {
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
-    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_hot_chocolate"].Sprite;
-    public override int? GetDisplayNumber(State s)
-    {
-        if (s.route is Combat c)
-        {
-            return c.hand.Where(c => c.GetDataWithOverrides(s).unplayable).Count();
-        }
-
-        return null;
-    }
+    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_hot_chocolate"];
 }
 
-public class HotChocolateHook : IAllowRedrawHook, IRedrawCostHook
-{
-    public bool AllowRedraw(Card card, State state, Combat combat)
-    {
-        var ownedHotChocolate = state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() as HotChocolate;
-        if (ownedHotChocolate == null) return false;
+// public class HotChocolateHook : IRedrawStatusHook
+// {
+//     static int recursionLevel = 0;
+//     private static bool ConditionMet(State state, Combat combat) {
+//         recursionLevel++;
+//         if (recursionLevel >= 2) return combat.hand.Where(c => c.GetData(state).unplayable).Count() > 3;
+//         else return combat.hand.Where(c => c.GetDataWithOverrides(state).unplayable).Count() > 3;
+//     }
+//     public bool? CanRedraw(State state, Combat combat, Card card)
+//     {
+// 		if (state.EnumerateAllArtifacts().Where((Artifact a) => a.GetType() == typeof(HotChocolate)).FirstOrDefault() is not HotChocolate ownedHotChocolate) return null;
 
-        var cardIsUnplayable = card.GetDataWithOverrides(state).unplayable;
-        if (!cardIsUnplayable) return false;
+//         CardData data;
+//         recursionLevel++;
+//         if (recursionLevel >= 2) data = card.GetData(state);
+//         else data = card.GetDataWithOverrides(state);
+//         recursionLevel = 0;
 
-        int unplayableModCardCount = ownedHotChocolate == null ? 0 : combat.hand.Where(c => c.GetDataWithOverrides(state).unplayable).Count();
-        if (unplayableModCardCount >= 3) return false;
+// 		if (!data.unplayable) return null;
 
-        return true;
-    }
+//         if (!ConditionMet(state, combat)) return null;
 
-    public int RedrawCost(int currentCost, Card card, State state, Combat combat)
-    {
-        if (this.AllowRedraw(card, state, combat)) return 0;
-        return currentCost;
-    }
-}
+//         return true;
+//     }
+
+//     public bool PayForRedraw(State state, Combat combat, Card card, IRedrawStatusHook possibilityHook) {
+//         return possibilityHook is HotChocolateHook;
+//     }
+// }

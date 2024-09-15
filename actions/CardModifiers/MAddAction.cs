@@ -1,41 +1,27 @@
-﻿using clay.PhilipTheMechanic.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace clay.PhilipTheMechanic.Actions.CardModifiers
+namespace clay.PhilipTheMechanic.Actions.CardModifiers;
+    
+public class MAddAction : CardModifier, ICardActionModifier
 {
-    public class MAddAction : ICardModifier
+    public bool goLast = false;
+    public static readonly string IsModActionKey = "IsModAction";
+    public required CardAction action;
+    public Spr? stickerSprite;
+
+    public override bool RequestsStickyNote() => true;
+
+	public override double Priority => goLast ? Priorities.ADD_ACTION_LAST : Priorities.ADD_ACTION;
+
+    public override Spr? GetSticker(State s) => stickerSprite;
+
+    public override CardAction GetActionForRendering(State s) => action;
+
+    public override List<Tooltip> GetTooltips(State s) => action.GetTooltips(s); 
+
+    public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {
-        public required CardAction action;
-        public Spr? stickerSprite;
-
-        public string DialogueTag => "Philip";
-        public double Priority => ModifierCardsController.Prioirites.ADD_ACTION;
-
-        public bool RequestsStickyNote() 
-        {
-            return true;
-        }
-
-        public Spr? GetSticker(State s)
-        {
-            return stickerSprite;
-        }
-        public Icon? GetIcon(State s)
-        {
-            return action.GetIcon(s);
-        }
-        List<Tooltip> GetTooltips(State s) 
-        {
-            return action.GetTooltips(s); 
-        }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
-        {
-            actions.Add(Mutil.DeepCopy(action));
-            return actions;
-        }
+        actions.Add(Mutil.DeepCopy(action));
+        return actions;
     }
 }

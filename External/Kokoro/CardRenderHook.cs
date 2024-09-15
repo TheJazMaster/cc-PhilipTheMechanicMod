@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Shockah.Kokoro;
+namespace clay.PhilipTheMechanic;
 
 public partial interface IKokoroApi
 {

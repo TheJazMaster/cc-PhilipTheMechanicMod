@@ -1,4 +1,6 @@
-﻿using Nickel;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+using Nickel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +12,7 @@ namespace clay.PhilipTheMechanic
     public interface IPhilipAPI
     {
         IDeckEntry PhilipDeck { get; }
-        IStatusEntry RedrawStatus { get; }
         IStatusEntry CustomPartsStatus { get; }
-
-        void RegisterAllowRedrawHook(IAllowRedrawHook hook); // Redraw will be enabled on a card if ANY hook allows it
-        void RegisterRedrawCostHook(IRedrawCostHook hook, double priority);
-        void RegisterOnRedrawHook(IOnRedrawHook hook, double priority);
 
         enum CardModifierTarget
         {
@@ -36,48 +33,43 @@ namespace clay.PhilipTheMechanic
             public CardModifierTargetDirection direction;
         }
 
-        CardAction MakeAModifierWrapper(CardModifierTarget target, List<ICardModifier> modifiers, AModifierWrapperMeta meta = default);
+        AModifierWrapper MakeAModifierWrapper(CardModifierTarget target, List<CardModifier> modifiers, bool isFlimsy = false, bool left = false);
 
-        ICardModifier MakeMAddAction(CardAction action, Spr? stickerSprite);
-        ICardModifier MakeMBuffAttack(int amount);
-        ICardModifier MakeMAttacksPierce();
-        ICardModifier MakeMStun();
-        ICardModifier MakeMDeleteActions();
-        ICardModifier MakeMPlayTwice();
+        CardModifier MakeMAddAction(CardAction action, Spr? stickerSprite);
+        CardModifier MakeMBuffAttack(int amount);
+        CardModifier MakeMAttacksPierce();
+        CardModifier MakeMStun();
+        CardModifier MakeMDeleteActions();
+        CardModifier MakeMPlayTwice();
 
-        ICardModifier MakeMExhaust();
-        ICardModifier MakeMRetain();
-        ICardModifier MakeMUnplayable();
-        ICardModifier MakeMMakePlayable();
-        ICardModifier MakeMDontExhaust();
-        ICardModifier MakeMRecycle();
-        ICardModifier MakeMSetEnergyCostToZero();
-        ICardModifier MakeMReduceEnergyCost();
+        CardModifier MakeMExhaust();
+        CardModifier MakeMRetain();
+        CardModifier MakeMPlayable();
+        CardModifier MakeMDontExhaust();
+        CardModifier MakeMRecycle();
+        CardModifier MakeMSetEnergyCostToZero();
+        CardModifier MakeMReduceEnergyCost();
     }
 
-    public interface IAllowRedrawHook
+    public abstract class CardModifier
     {
-        bool AllowRedraw(Card card, State state, Combat combat);
-    }
-    public interface IRedrawCostHook
-    {
-        int RedrawCost(int currentCost, Card card, State state, Combat combat);
-    }
-    public interface IOnRedrawHook
-    {
-        void OnRedraw(Card card, State state, Combat combat);
+        public List<int> flimsyUuids = [];
+        public abstract double Priority { get; }
+        virtual public bool RequestsStickyNote() { return false; }
+        virtual public bool MandatesStickyNote() { return false; }
+        virtual public Spr? GetSticker(State s) { return null; }
+        // virtual public Icon? GetIcon(State s) { return null; }
+        public abstract CardAction GetActionForRendering(State s);
+        virtual public List<Tooltip> GetTooltips(State s) { return []; }
     }
 
-    public interface ICardModifier
+    public interface ICardActionModifier
     {
-        string DialogueTag { get; }
-        double Priority { get; }
-        bool RequestsStickyNote() { return false; }
-        bool MandatesStickyNote() { return false; }
-        Spr? GetSticker(State s) { return null; }
-        Icon? GetIcon(State s) { return null; }
-        List<Tooltip> GetTooltips(State s) { return new(); }
         List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering) { return actions; }
+    }
+
+    public interface ICardDataModifier
+    {
         CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering) { return data; }
     }
 }

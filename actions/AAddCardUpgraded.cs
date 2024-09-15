@@ -11,7 +11,7 @@ namespace clay.PhilipTheMechanic.Actions
     {
         public override Icon? GetIcon(State s)
         {
-            return new Icon(ModEntry.Instance.sprites["icon_addUpgradedCard"].Sprite, base.amount, Colors.textBold);
+            return new Icon(ModEntry.Instance.sprites["icon_addUpgradedCard"], base.amount, Colors.textBold);
         }
     }
 }

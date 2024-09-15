@@ -2,7 +2,6 @@
 using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
 using Microsoft.Xna.Framework;
-using Shockah.Kokoro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +21,14 @@ internal class KokoroHooksImplementation : IWrappedActionHook, ICardRenderHook
     public bool ShouldDisableCardRenderingTransformations(G g, Card card) 
     {
         var s = g.state;
-        if (s.route is not Combat c) { return false; }
-        if (c.routeOverride != null && !c.eyeballPeek) { return false; }
-        if (card.drawAnim != 1) { return false; }
+        if (s.route is not Combat c) return false;
+        if (c.routeOverride != null && !c.eyeballPeek) return false;
+        if (card.drawAnim != 1) return false;
+        int index = c.hand.IndexOf(card);
+        if (index < 0 || index >= c.hand.Count) return false;
 
-        return ModifierCardsRenderingController.ShouldStickyNote
-        (
-            card, 
-            s, 
-            card.GetActionsOverridden(s, c), 
-            ModifierCardsController.GetCardModifiers(card, s, c)
-        );
+        ModifierCardsController.CalculateCardModifiers(s, c);
+        return ModifierCardsRenderingController.ShouldStickyNote(card, s, c, ModifierCardsController.LastCachedModifiers[index], index);
     }
 
     public Matrix ModifyNonTextCardRenderMatrix(G g, Card card, List<CardAction> actions)

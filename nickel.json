@@ -1,7 +1,18 @@
 {
   "UniqueName": "clay.PhilipTheMechanic",
-  "Version": "2.0.3",
+  "Version": "3.0.0",
   "RequiredApiVersion": "0.6.0",
   "EntryPointAssembly": "PhilipTheMechanic.dll",
-  "LoadPhase": "AfterDbInit"
+  "LoadPhase": "AfterDbInit",
+  "Dependencies": [
+      {
+          "UniqueName": "Shockah.Kokoro",
+          "Version": "1.2.0"
+      },
+      {
+          "UniqueName": "TheJazMaster.MoreDifficulties",
+          "Version": "1.3.0",
+          "IsRequired": false
+      }
+  ]
 }

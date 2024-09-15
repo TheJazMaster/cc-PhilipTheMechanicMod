@@ -10,13 +10,13 @@ namespace clay.PhilipTheMechanic.Artifacts;
 internal sealed class AngleGrinder : Artifact, IRegisterableArtifact
 {
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
-    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_angle_grinder"].Sprite;
+    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_angle_grinder"];
 
     public override void OnCombatStart(State state, Combat combat)
     {
         combat.QueueImmediate(new AStatus
         {
-            status = ModEntry.Instance.Api.RedrawStatus.Status,
+            status = ModEntry.Instance.RedrawStatus,
             targetPlayer = true,
             statusAmount = 3,
             artifactPulse = Key()

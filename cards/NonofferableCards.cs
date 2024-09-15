@@ -1,24 +1,23 @@
 ﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.CardModifiers;
+using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Cards;
 
 [HarmonyPatch]
 internal sealed class Nanobots : Card
 {
+
     public override List<CardAction> GetActions(State s, Combat c) 
     { 
-        return new() 
-        {
-            new ANanobots() { thisCardUuid = this.uuid },
+        return [
+			new ANanobots() { thisCardUuid = uuid },
             new ADummyAction(),
-        }; 
+        ]; 
     }
 
     public static void Replicate(State state, Combat combat)
@@ -34,13 +33,9 @@ internal sealed class Nanobots : Card
     {
         retain = true,
         temporary = true,
-        cost = upgrade switch
-        {
-            Upgrade.None => 3,
-            Upgrade.A => 2,
-            Upgrade.B => 1,
-        },
-        infinite = upgrade == Upgrade.B, // yes this is worse unless you like expensive trash, that's intentional because you can only get this upgrade through weird trickery, like with Johnson
+        cost = upgrade == Upgrade.A ? 2 : 3,
+        exhaust = upgrade == Upgrade.B
+
         //description = ModEntry.Instance.Localizations.Localize(["card", "Nanobots", "description", upgrade.ToString()])
     };
 }
@@ -49,29 +44,29 @@ internal sealed class UraniumRound : Card
 {
     public override CardData GetData(State state)
     {
-        return new()
-        {
-            cost = upgrade == Upgrade.A ? 1 : 0,
+        return new() {
+            cost = upgrade == Upgrade.B ? 1 : 0,
             temporary = true,
-            exhaust = upgrade != Upgrade.B,
+            exhaust = upgrade == Upgrade.B
         };
     }
 
     public override List<CardAction> GetActions(State s, Combat c)
     {
-        return new()
-        {
-            new AAttack()
+        return [
+			new AAttack()
             {
                 damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1),
                 piercing = true,
-                stunEnemy = true
+                stunEnemy = true,
+                status = upgrade == Upgrade.B ? Status.corrode : null,
+                statusAmount = 1
             }
-        };
+        ];
     }
 }
 
-internal sealed class ImpromptuBlastShield : Card
+internal sealed class ImpromptuBlastShield : ModifierCard
 {
     public override CardData GetData(State state)
     {
@@ -79,39 +74,34 @@ internal sealed class ImpromptuBlastShield : Card
         {
             cost = 0,
             temporary = true,
-            unplayable = true,
+            unplayable = true
         };
     }
 
-    public override List<CardAction> GetActions(State s, Combat c)
+    public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
-        return new()
-        {
-            ModEntry.Instance.Api.MakeAModifierWrapper
-            (
-                IPhilipAPI.CardModifierTarget.Directional_WholeHand,
-                new()
-                {
-                    ModEntry.Instance.Api.MakeMAddAction(
-                        new AStatus() { status = upgrade == Upgrade.B ? Status.shield : Status.tempShield, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 3 : 1 },
-                        ModEntry.Instance.sprites[upgrade == Upgrade.B ? "icon_sticker_shield" : "icon_sticker_temp_shield"].Sprite
-                    )
-                },
-                new()
-                {
-                    isFlimsy = upgrade == Upgrade.A
-                }
+        List<CardModifier> modifiers = [
+            ModEntry.Instance.Api.MakeMAddAction(
+                new AStatus() { status = upgrade == Upgrade.B ? Status.shield : Status.tempShield, targetPlayer = true, statusAmount = 1 },
+                ModEntry.Instance.sprites[upgrade == Upgrade.B ? "icon_sticker_shield" : "icon_sticker_temp_shield"]
             )
-        };
+        ];
+        return [
+			upgrade == Upgrade.A ? new AWholeHandCardsModifierWrapper {
+                modifiers = modifiers
+            } :
+            new AWholeHandDirectionalCardsModifierWrapper {
+                modifiers = modifiers
+            }
+        ];
     }
 }
 
-internal sealed class OhNo : Card
+internal sealed class OhNo : ModifierCard
 {
     public override CardData GetData(State state)
     {
-        return new()
-        {
+        return new() {
             cost = 0,
             retain = true,
             temporary = true,
@@ -119,34 +109,51 @@ internal sealed class OhNo : Card
         };
     }
 
-    public override List<CardAction> GetActions(State s, Combat c)
+    public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
-        return new()
-        {
-            ModEntry.Instance.Api.MakeAModifierWrapper
-            (
-                IPhilipAPI.CardModifierTarget.Directional_WholeHand,
-                new()
-                {
+        return [
+            new AWholeHandDirectionalCardsModifierWrapper {
+                modifiers = [
+                    new MDeleteActions(),
+                    new MPlayable(),
+                    new MExhaust()
+                ]
+            },
+			new AWholeHandDirectionalCardsModifierWrapper {
+                modifiers = [
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AStatus() { status = Status.evade, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 2 : 1 },
-                        ModEntry.Instance.sprites["icon_sticker_evade"].Sprite
+                        ModEntry.Instance.sprites["icon_sticker_evade"]
                     ),
                     ModEntry.Instance.Api.MakeMAddAction(
-                        new AStatus() { status = ModEntry.Instance.Api.RedrawStatus.Status, targetPlayer = true, statusAmount = upgrade == Upgrade.B ? 3 : 2 },
-                        ModEntry.Instance.sprites["icon_sticker_redraw"].Sprite
+                        new AStatus() { status = ModEntry.Instance.RedrawStatus, targetPlayer = true, statusAmount = upgrade == Upgrade.B ? 2 : 1 },
+                        ModEntry.Instance.sprites["icon_sticker_redraw"]
                     ),
-                }
-            ),
-            ModEntry.Instance.Api.MakeAModifierWrapper
-            (
-                IPhilipAPI.CardModifierTarget.Directional_WholeHand,
-                new()
-                {
-                    ModEntry.Instance.Api.MakeMDeleteActions(),
-                    ModEntry.Instance.Api.MakeMExhaust(),
-                }
-            ),
-        };
+                ]
+            },
+        ];
     }
+}
+
+// Effect is hardcoded
+internal sealed class ExtenderMod : ModifierCard
+{
+    public override CardData GetData(State state) => new() {
+        cost = 1,
+        unplayable = upgrade != Upgrade.A,
+        floppable = true,
+        recycle = upgrade == Upgrade.A,
+        description = ModEntry.Instance.Localizations.Localize(["card", "ExtenderMod", "description", flipped ? "flipped" : "normal", upgrade.ToString()]),
+        art = ModEntry.Instance.sprites[flipped ? "card_Extender_Mod_Flipped" : "card_Extender_Mod_Normal"]
+    };
+
+    public bool ExtendsMods() => !flipped;
+
+    public bool SaveFlimsy() => upgrade == Upgrade.B && flipped;
+
+	public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
+        new AWholeHandCardsModifierWrapper() {
+            modifiers = [new MExtendModifiers()]
+        }
+    ];
 }

@@ -1,64 +1,45 @@
-﻿using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
-using clay.PhilipTheMechanic.Controllers;
-using Microsoft.Extensions.Logging;
-using Shockah;
-using System;
+﻿using Shockah;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace clay.PhilipTheMechanic.Actions.CardModifiers
+namespace clay.PhilipTheMechanic.Actions.CardModifiers;
+
+public class MAttacksPierce : BasicCardModifier, ICardActionModifier
 {
-    public class MAttacksPierce : ICardModifier
+
+    public override Spr? GetSticker(State s) => ModEntry.Instance.sprites["icon_sticker_piercing"];
+
+    public override Icon? GetIcon() => new Icon(StableSpr.icons_attackPiercing, null, Colors.textMain);
+
+	public override double Priority => Priorities.MODIFY_ACTIONS;
+    
+    public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {
-        public string DialogueTag => "Philip";
-        public double Priority => ModifierCardsController.Prioirites.MODIFY_ALL_ACTIONS;
+        foreach (var action in actions)
+        {
+            var actionsLevel2 = ModEntry.Instance.KokoroApi.Actions.GetWrappedCardActionsRecursively(action, true);
+            foreach (var action2 in actionsLevel2) ModifyAction(action2);
+        }
+        return actions;
+    }
 
-        public Spr? GetSticker(State s)
+    private static void ModifyAction(CardAction action)
+    {
+        if (action is AAttack aattack)
         {
-            return ModEntry.Instance.sprites["icon_sticker_piercing"].Sprite;
+            aattack.piercing = true;
         }
-        public Icon? GetIcon(State s)
-        {
-            return new Icon(Enum.Parse<Spr>("icons_attackPiercing"), null, Colors.textMain);
-        }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
-        {
-            foreach (var action in actions)
-            {
-                if (ModEntry.Instance.KokoroApi != null)
-                {
-                    var actionsLevel2 = ModEntry.Instance.KokoroApi.Actions.GetWrappedCardActionsRecursively(action, true);
-                    foreach (var action2 in actionsLevel2) ModifyAction(action2);
-                }
-                else
-                {
-                    ModifyAction(action);
-                }
-            }
-            return actions;
-        }
+    }
 
-        private void ModifyAction(CardAction action)
-        {
-            if (action is AAttack aattack)
-            {
-                aattack.piercing = true;
-            }
-        }
-
-        public List<Tooltip> GetTooltips(State s)
-        {
-            return [
-                new CustomTTGlossary(
-                    CustomTTGlossary.GlossaryType.actionMisc,
-                    () => GetIcon(s)!.Value!.path,
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-                    key: GetType().FullName ?? GetType().Name
-                )
-            ];
-        }
+    public override List<Tooltip> GetTooltips(State s)
+    {
+        return [
+            new CustomTTGlossary(
+                CustomTTGlossary.GlossaryType.actionMisc,
+                () => GetIcon()!.Value!.path,
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                key: GetType().FullName ?? GetType().Name
+            )
+        ];
     }
 }

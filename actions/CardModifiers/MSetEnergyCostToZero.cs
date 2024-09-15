@@ -1,42 +1,32 @@
-﻿using clay.PhilipTheMechanic.Controllers;
-using Shockah;
-using System;
+﻿using Shockah;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace clay.PhilipTheMechanic.Actions.CardModifiers
+namespace clay.PhilipTheMechanic.Actions.CardModifiers;
+
+public class MSetEnergyCostToZero : BasicCardModifier, ICardDataModifier
 {
-    public class MSetEnergyCostToZero : ICardModifier
-    {
-        public string DialogueTag => "Philip";
-        public double Priority => ModifierCardsController.Prioirites.MODIFY_ENERGY_LAST;
-        public Spr? GetSticker(State s)
-        {
-            return ModEntry.Instance.sprites["icon_sticker_0_energy"].Sprite;
-        }
-        public Icon? GetIcon(State s)
-        {
-            return new Icon(ModEntry.Instance.sprites["icon_0_energy"].Sprite, null, Colors.textMain);
-        }
-        public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
-        {
-            data.cost = 0;
-            return data;
-        }
+    public override Spr? GetSticker(State s) => ModEntry.Instance.sprites["icon_sticker_0_energy"];
 
-        public List<Tooltip> GetTooltips(State s)
-        {
-            return [
-                new CustomTTGlossary(
-                    CustomTTGlossary.GlossaryType.actionMisc,
-                    () => GetIcon(s)!.Value!.path,
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-                    key: GetType().FullName ?? GetType().Name
-                )
-            ];
-        }
+    public override Icon? GetIcon() => new Icon(ModEntry.Instance.sprites["icon_0_energy"], null, Colors.textMain);
+
+	public override double Priority => Priorities.MODIFY_DATA_FAVORABLE;
+
+    public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
+    {
+        data.cost = 0;
+        return data;
+    }
+
+    public override List<Tooltip> GetTooltips(State s)
+    {
+        return [
+            new CustomTTGlossary(
+                CustomTTGlossary.GlossaryType.actionMisc,
+                () => GetIcon()!.Value!.path,
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                key: GetType().FullName ?? GetType().Name
+            )
+        ];
     }
 }

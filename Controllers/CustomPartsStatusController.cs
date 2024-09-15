@@ -16,12 +16,13 @@ namespace clay.PhilipTheMechanic.Controllers
         [HarmonyPatch(nameof(Ship.OnBeginTurn))]
         public static void HarmonyPostfix_Ship_OnBeginTurn(Ship __instance, State s, Combat c)
         {
-            if (__instance.Get(ModEntry.Instance.CustomPartsStatus.Status) > 0)
+            int amt = __instance.Get(ModEntry.Instance.CustomPartsStatus.Status);
+            if (amt > 0)
             {
                 c.QueueImmediate(new AStatus
                 {
-                    status = ModEntry.Instance.RedrawStatus.Status,
-                    statusAmount = __instance.Get(ModEntry.Instance.CustomPartsStatus.Status),
+                    status = ModEntry.Instance.RedrawStatus,
+                    statusAmount = amt,
                     targetPlayer = __instance.isPlayerShip
                 });
             }

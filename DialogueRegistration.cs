@@ -9,6 +9,8 @@ namespace clay.PhilipTheMechanic
 {
     public static class DialogueRegistration
     {
+        static Deck PhilipDeck = ModEntry.Instance.PhilipDeck.Deck;
+
         public static void LoadAll()
         {
             LoadCombatShouts();
@@ -107,7 +109,7 @@ namespace clay.PhilipTheMechanic
                 characterText: "Good work, Philip.");
             RegisterModifiedCardShout(
                 "comp",
-                characterText: "I don't remember giving you write privlidges...",
+                characterText: "I don't remember giving you write priviledges...",
                 characterLooptag: "squint",
                 philipText: "Please don't eject me.",
                 philiploopTag: "sheepish");
@@ -122,13 +124,13 @@ namespace clay.PhilipTheMechanic
                 priority = false,
                 oncePerRun = true,
                 lookup = new() { "JustDidRedraw" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key() },
+                allPresent = new() { PhilipDeck.Key() },
                 hasArtifacts = new() { "HotChocolate" },
                 lines = new()
                 {
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Ahhh, hot chocolate makes reorganizing so much easier.",
                         loopTag = "hotchocolate"
                     },
@@ -141,42 +143,42 @@ namespace clay.PhilipTheMechanic
 
             (DB.story.all["ShopKeepBattleInsult"].lines[0] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "ShopKeepBattleInsult:Philip"]).Localize("en")!,
                 loopTag = "whatisthat"
             });
 
             (DB.story.all["CrabFacts1_Multi_0"].lines[1] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "CrabFacts1_Multi_0:Philip"]).Localize("en")!
             });
             (DB.story.all["CrabFacts2_Multi_0"].lines[1] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "CrabFacts2_Multi_0:Philip"]).Localize("en")!,
                 loopTag = "squint"
             });
             (DB.story.all["CrabFactsAreOverNow_Multi_0"].lines[1] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "CrabFactsAreOverNow_Multi_0:Philip"]).Localize("en")!,
                 loopTag = "classy"
             });
             (DB.story.all["Soggins_Missile_Shout_1"].lines[1] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "Soggins_Missile_Shout_1:Philip"]).Localize("en")!,
                 loopTag = "laugh"
             });
             (DB.story.all["SogginsEscapeIntent_1"].lines[1] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "SogginsEscapeIntent_1:Philip"]).Localize("en")!,
             });
             (DB.story.all["WeJustGainedHeatAndDrakeIsHere_Multi_0"].lines[0] as SaySwitch)!.lines.Add(new RandallMod.CustomSay()
             {
-                who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                who = PhilipDeck.Key(),
                 Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", "WeJustGainedHeatAndDrakeIsHere_Multi_0:Philip"]).Localize("en")!,
                 loopTag = "unhappy"
             });
@@ -191,7 +193,7 @@ namespace clay.PhilipTheMechanic
                 priority = false,
                 playerShotJustHit = true,
                 minDamageDealtToEnemyThisAction = 1,
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "shard" },
+                allPresent = new() { PhilipDeck.Key(), "shard" },
                 lines = new() {
                     new RandallMod.CustomSay()
                     {
@@ -201,7 +203,7 @@ namespace clay.PhilipTheMechanic
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Yeah, you tell 'em Books!!",
                         loopTag = "excited"
                     },
@@ -213,7 +215,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@combat,
                 priority = false,
                 oncePerRun = true,
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "goat" },
+                allPresent = new() { PhilipDeck.Key(), "goat" },
                 hasArtifacts = new() { "clay.PhilipTheMechanic.Artifacts.SelfPropellingCannons" },
                 lines = new()
                 {
@@ -225,14 +227,14 @@ namespace clay.PhilipTheMechanic
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Secure the...",
                         delay = 1,
                         loopTag = "squint"
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Oh. Uh oh.",
                         delay = 2,
                         loopTag = "gameover"
@@ -245,13 +247,13 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@combat,
                 priority = false,
                 oncePerRun = true,
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key() },
+                allPresent = new() { PhilipDeck.Key() },
                 oncePerCombatTags = ["Philip_AimlessChatting"],
                 lines = new()
                 {
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Hey, you guys don't need monitors on your command consoles, right?",
                     },
                     new SaySwitch()
@@ -301,12 +303,12 @@ namespace clay.PhilipTheMechanic
         {
             var storyNode = Mutil.DeepCopy(node.Item2);
             storyNode.oncePerCombat = true; // to make him not be so chatty
-            storyNode.allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key() };
+            storyNode.allPresent = new() { PhilipDeck.Key() };
             storyNode.lines = new()
             {
                 new RandallMod.CustomSay()
                 {
-                    who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                    who = PhilipDeck.Key(),
                     Text = ((JsonLocalizationProvider)ModEntry.Instance.AnyLocalizations).Bind(["dialogue", "shout", node.Item1]).Localize("en")!,
                     loopTag = looptag
                 }
@@ -318,7 +320,7 @@ namespace clay.PhilipTheMechanic
                 storyNode.oncePerCombatTags.Add("Philip_AimlessChatting");
             }
 
-            DB.story.all[$"{node.Item1}_{ModEntry.Instance.PhilipDeck.Deck.Key()}"] = storyNode;
+            DB.story.all[$"{node.Item1}_{PhilipDeck.Key()}"] = storyNode;
         }
 
         private static void RegisterModifiedCardShout(string character, string? characterText = null, string? characterLooptag = null, string? philipText = null, string? philiploopTag = null)
@@ -335,7 +337,7 @@ namespace clay.PhilipTheMechanic
             if (philipText != null)
                 instructions.Add(new RandallMod.CustomSay()
                 {
-                    who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                    who = PhilipDeck.Key(),
                     Text = philipText,
                     loopTag = philiploopTag
                 });
@@ -344,9 +346,9 @@ namespace clay.PhilipTheMechanic
             {
                 type = NodeType.@combat,
                 priority = false,
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), character },
+                allPresent = [PhilipDeck.Key(), character],
                 oncePerRun = true,
-                lookup = new() { $"{character}Card_ModifiedByPhilip" },
+                lookup = [$"{character}Card_ModifiedBy_{PhilipDeck.Key()}"],
                 lines = instructions
             };
         }
@@ -358,7 +360,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 lookup = new HashSet<string>() { "shopBefore" },
                 bg = "BGShop",
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key() },
+                allPresent = new() { PhilipDeck.Key() },
                 lines = new()
                 {
                     new RandallMod.CustomSay()
@@ -369,7 +371,7 @@ namespace clay.PhilipTheMechanic
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Ahahahaha.... no?",
                         loopTag = "sheepish"
                     },
@@ -385,12 +387,12 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 lookup = new HashSet<string>() { "shopBefore" },
                 bg = "BGShop",
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key() },
+                allPresent = new() { PhilipDeck.Key() },
                 lines = new()
                 {
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Hey Cleo! Got any parts for me?",
                     },
                     new RandallMod.CustomSay()
@@ -422,7 +424,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 oncePerRun = true,
                 lookup = new HashSet<string>() { "after_any" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "goat" },
+                allPresent = new() { PhilipDeck.Key(), "goat" },
                 lines = new()
                     {
                     new RandallMod.CustomSay()
@@ -433,7 +435,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Nothing falls when you've got the gravity off!",
                     },
                     new RandallMod.CustomSay()
@@ -450,7 +452,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 oncePerRun = true,
                 lookup = new HashSet<string>() { "after_any" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "goat" },
+                allPresent = new() { PhilipDeck.Key(), "goat" },
                 lines = new()
                     {
                     new RandallMod.CustomSay()
@@ -461,7 +463,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Certain!",
                         loopTag = "classy"
                     },
@@ -474,7 +476,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "... oh... I see.",
                         loopTag = "whatisthat"
                     },
@@ -486,7 +488,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 oncePerRun = true,
                 lookup = new HashSet<string>() { "after_any" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "peri" },
+                allPresent = new() { PhilipDeck.Key(), "peri" },
                 lines = new()
                     {
                     new RandallMod.CustomSay()
@@ -497,13 +499,13 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Yep, I'm 80% confident it won't explode this time."
                     },
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Wait I misunderstood your question.",
                         loopTag = "squint"
                     },
@@ -516,7 +518,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "My answer's still the same though.",
                         loopTag = "classy"
                     },
@@ -528,12 +530,12 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 oncePerRun = true,
                 lookup = new HashSet<string>() { "after_any" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "dizzy" },
+                allPresent = new() { PhilipDeck.Key(), "dizzy" },
                 lines = new()
                     {
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Hey Dizzy! Want to see a phosphorus explosion?"
                     },
                     new RandallMod.CustomSay()
@@ -544,13 +546,13 @@ namespace clay.PhilipTheMechanic
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "... from behind the observation window.",
                         loopTag = "squint"
                     },
                     new RandallMod.CustomSay()
                     {
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "I'm in here because I'm certified to have my fur burnt off.",
                         loopTag = "maniacal"
                     },
@@ -562,7 +564,7 @@ namespace clay.PhilipTheMechanic
                 type = NodeType.@event,
                 oncePerRun = true,
                 lookup = new HashSet<string>() { "after_any" },
-                allPresent = new() { ModEntry.Instance.PhilipDeck.Deck.Key(), "shard" },
+                allPresent = new() { PhilipDeck.Key(), "shard" },
                 lines = new()
                     {
                     new RandallMod.CustomSay()
@@ -573,7 +575,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Sure do!",
                     },
                     new RandallMod.CustomSay()
@@ -584,7 +586,7 @@ namespace clay.PhilipTheMechanic
                     new RandallMod.CustomSay()
                     {
                         flipped = true,
-                        who = ModEntry.Instance.PhilipDeck.Deck.Key(),
+                        who = PhilipDeck.Key(),
                         Text = "Sure! Here take... this one.",
                     },
                     new RandallMod.CustomSay()

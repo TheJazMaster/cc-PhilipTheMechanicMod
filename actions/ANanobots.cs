@@ -28,7 +28,7 @@ namespace clay.PhilipTheMechanic.Actions
 
         public override Icon? GetIcon(State s)
         {
-            return new Icon(ModEntry.Instance.sprites["icon_nanobots"].Sprite, null, Colors.redd);
+            return new Icon(ModEntry.Instance.sprites["icon_nanobots"], null, Colors.redd);
         }
 
         public override List<Tooltip> GetTooltips(State s)
@@ -36,7 +36,7 @@ namespace clay.PhilipTheMechanic.Actions
             return [
                 new CustomTTGlossary(
                     CustomTTGlossary.GlossaryType.action,
-                    () => ModEntry.Instance.sprites["icon_nanobots"].Sprite,
+                    () => ModEntry.Instance.sprites["icon_nanobots"],
                     () => ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "name"]),
                     () => ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "description"]),
                     key: typeof(ANanobots).FullName ?? typeof(ANanobots).Name

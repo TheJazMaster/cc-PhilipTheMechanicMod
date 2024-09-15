@@ -1,31 +1,25 @@
-﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 {
-    public class AModifierWrapper : ATooltipDummy
+    public abstract class AModifierWrapper : AMultiIconAction
     {
-        public required List<ICardModifier> modifiers;
+        public required List<CardModifier> modifiers;
         public bool isFlimsy;
         public int priority;
 
-        public override List<Icon> GetIcons(State s) 
+		public override List<CardAction> GetActionsForRendering(State s) 
         { 
-            var icons = modifiers
-                .Select(modifier => modifier.GetIcon(s))
-                .Where(icon => icon != null)
-                .Select(icon => icon!.Value)
-                .ToList() 
-                ?? new();
-
+            List<CardAction> actions = [];
             var ownIcon = GetIcon(s);
-            if (ownIcon.HasValue) icons.Insert(0, ownIcon.Value);
-
-            return icons;
+            if (ownIcon.HasValue) {
+                actions.Add(new AIconDummy {
+                    icon = ownIcon.Value
+                });
+            }
+            actions.AddRange(modifiers.Select(modifier => modifier.GetActionForRendering(s)));
+            return actions;
         }
 
         public override List<Tooltip> GetTooltips(State s) 
@@ -34,7 +28,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
                 .Select(modifier => modifier.GetTooltips(s))
                 .SelectMany(m => m) // flatten
                 .ToList()
-                ?? new();
+                ?? [];
 
             var ownTooltip = GetTooltip(s);
             if (ownTooltip != null) tooltips.Insert(0, ownTooltip);
@@ -42,7 +36,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
             return tooltips;
         }
 
-        public virtual bool IsTargeting(Card potetialTarget, Card myOwnerCard, Combat c)
+        public virtual bool IsTargeting(Card ownerCard, int originIndex, int affectingIndex, Combat c, int range = 1)
         {
             return false;
         }

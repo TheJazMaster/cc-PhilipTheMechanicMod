@@ -7,10 +7,10 @@ using System.Reflection;
 
 namespace clay.PhilipTheMechanic.Artifacts;
 
-internal sealed class SelfPropellingCannons : Artifact, IRegisterableArtifact
+internal sealed class SelfPropellingCannons : Artifact
 {
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
-    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_self_propelling_cannons"].Sprite;
+    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_self_propelling_cannons"];
 
     // should be OnCombatStart, but then GlassCannons overrides this effect
     public override void OnTurnStart(State state, Combat combat)

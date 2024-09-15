@@ -1,49 +1,39 @@
-﻿using clay.PhilipTheMechanic.Controllers;
-using Shockah;
-using System;
+﻿using Shockah;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace clay.PhilipTheMechanic.Actions.CardModifiers
+namespace clay.PhilipTheMechanic.Actions.CardModifiers;
+
+public class MStun : BasicCardModifier, ICardActionModifier
 {
-    public class MStun : ICardModifier
+
+    public override Spr? GetSticker(State s) => ModEntry.Instance.sprites["icon_sticker_stun"];
+
+    public override Icon? GetIcon() => new Icon(StableSpr.icons_stun, null, Colors.textMain);
+
+	public override double Priority => Priorities.MODIFY_ACTIONS;
+
+    public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {
-        public string DialogueTag => "Philip";
-        public double Priority => ModifierCardsController.Prioirites.MODIFY_ALL_ACTIONS;
-
-        public Spr? GetSticker(State s)
+        foreach (var action in actions)
         {
-            return ModEntry.Instance.sprites["icon_sticker_stun"].Sprite;
-        }
-        public Icon? GetIcon(State s)
-        {
-            return new Icon(Enum.Parse<Spr>("icons_stun"), null, Colors.textMain);
-        }
-        public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
-        {
-            foreach (var action in actions)
+            if (action is AAttack aattack)
             {
-                if (action is AAttack aattack)
-                {
-                    aattack.stunEnemy = true;
-                }
+                aattack.stunEnemy = true;
             }
-            return actions;
         }
+        return actions;
+    }
 
-        public List<Tooltip> GetTooltips(State s)
-        {
-            return [
-                new CustomTTGlossary(
-                    CustomTTGlossary.GlossaryType.actionMisc,
-                    () => GetIcon(s)!.Value!.path,
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-                    key: GetType().FullName ?? GetType().Name
-                )
-            ];
-        }
+    public override List<Tooltip> GetTooltips(State s)
+    {
+        return [
+            new CustomTTGlossary(
+                CustomTTGlossary.GlossaryType.actionMisc,
+                () => GetIcon()!.Value!.path,
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+                key: GetType().FullName ?? GetType().Name
+            )
+        ];
     }
 }

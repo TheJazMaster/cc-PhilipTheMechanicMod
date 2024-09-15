@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Actions
 {
-    internal class AVariableHint_AttackIcon : AVariableHint
+    internal class AVariableHintAttack : AVariableHint
     {
+        public AVariableHintAttack() {
+            hand = true;
+        }
+        
         public override Icon? GetIcon(State s)
         {
-            return new Icon(Enum.Parse<Spr>("icons_attack"), null, Colors.textMain);
+            return new Icon(StableSpr.icons_attack, null, Colors.textMain);
         }
 
         public override List<Tooltip> GetTooltips(State s)
@@ -19,9 +23,9 @@ namespace clay.PhilipTheMechanic.Actions
             return [
                 new CustomTTGlossary(
                     CustomTTGlossary.GlossaryType.action,
-                    () => Enum.Parse<Spr>("icons_attack"),
-                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHint_AttackIcon", "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHint_AttackIcon", "description"]),
+                    () => StableSpr.icons_attack,
+                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "name"]),
+                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "description"]),
                     key: GetType().FullName ?? GetType().Name
                 )
             ];

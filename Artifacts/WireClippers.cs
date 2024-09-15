@@ -9,10 +9,10 @@ using System.Reflection;
 namespace clay.PhilipTheMechanic.Artifacts;
 
 [HarmonyPatch]
-internal sealed class WireClippers : Artifact, IRegisterableArtifact
+internal sealed class WireClippers : Artifact
 {
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
-    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_wire_clippers"].Sprite;
+    public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_wire_clippers"];
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
@@ -22,6 +22,6 @@ internal sealed class WireClippers : Artifact, IRegisterableArtifact
         if (!owned) { return; }
 
         __result.unplayable = false;
-        if (__instance.GetMeta().deck == Enum.Parse<Deck>("trash")) __result.exhaust = true;
+        if (__instance.GetMeta().deck == Deck.trash) __result.exhaust = true;
     }
 }

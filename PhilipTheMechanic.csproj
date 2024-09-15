@@ -1,27 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>clay.PhilipTheMechanic</RootNamespace>
-		<Version>2.0.3</Version>
-		<IsNickelMod>True</IsNickelMod>
-		<IncludedModProjectPaths>i18n;assets</IncludedModProjectPaths>
-		<LangVersion>12.0</LangVersion>
 		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<WarningsAsErrors>Nullable</WarningsAsErrors>
-		<CheckEolTargetFramework>false</CheckEolTargetFramework>
+
+		<IncludedModProjectPaths>i18n;assets</IncludedModProjectPaths>
 		<ModZipPath>$(MSBuildProjectDirectory)\.release\$(MSBuildProjectName)-$(Version).zip</ModZipPath>
-		<EnableDllExtract>false</EnableDllExtract>
-		<GameDllPath>./CobaltCore.dll</GameDllPath>
-		<IsLegacyMod>False</IsLegacyMod>
+
+		<ModLoaderPath>..\..</ModLoaderPath>
+		<GameExePath>/home/thejazmaster/.steam/steam/steamapps/common/Cobalt Core/CobaltCore.exe</GameExePath>
+		<GameDllPath>$(ModLoaderPath)/Extract/CobaltCore.dll</GameDllPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Nickel.ModBuildConfig" Version="0.4.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Project Include="Configuration.props.user" Condition="Exists('Configuration.props.user')" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="External\Kokoro\" />
+		<PackageReference Include="Nickel.ModBuildConfig" Version="1.2.3" />
+		<PackageReference Include="EnumByNameSourceGenerator" Version="1.1.2" PrivateAssets="All" ExcludeAssets="All" />
 	</ItemGroup>
 </Project>
