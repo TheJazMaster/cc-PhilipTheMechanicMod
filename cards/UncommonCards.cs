@@ -258,11 +258,11 @@ internal sealed class PrecisionMachining : Card, IRegisterableCard
                 isCentered && c != DB.fakeCombat
             ),
             ACenterOfHandWrapper.Make(true, [
-					new ADrawCard() { count = 2 },
+					new ADrawCard() { count = upgrade == Upgrade.B ? 3 : 2 },
                     new AStatus() {
                         status = ModEntry.Instance.RedrawStatus,
                         targetPlayer = true,
-                        statusAmount = upgrade == Upgrade.B ? 4 : 2
+                        statusAmount = 2
                     },
                 ],
                 !isCentered && c != DB.fakeCombat

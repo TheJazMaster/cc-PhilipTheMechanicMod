@@ -27,7 +27,7 @@ namespace clay.PhilipTheMechanic
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance3.ArtifactHardmode, "squint", true);
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.EnemyHasWeakness, "classy");
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.ThatsALotOfDamageToUs, "squint");
-            RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop, "gameover");
+            RegisterSimplePhilipShout(StandardShoutHooks.Relevance8.Duo_AboutToDieAndLoop, "surprise");
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance7.WeDidOverFiveDamage, "maniacal");
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance6.WeAreCorroded, "unhappy");
             RegisterSimplePhilipShout(StandardShoutHooks.Relevance5.TheyGotCorroded, "squint");

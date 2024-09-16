@@ -52,7 +52,7 @@ public sealed class ModEntry : SimpleMod
 
         KokoroApi = helper.ModRegistry.GetApi<IKokoroApi>("Shockah.Kokoro")!;
         KokoroApi.Actions.RegisterWrappedActionHook(new KokoroHooksImplementation(), 0);
-        KokoroApi.RegisterCardRenderHook(new KokoroHooksImplementation(), 1000);
+        // KokoroApi.RegisterCardRenderHook(new KokoroHooksImplementation(), 1000);
 
         MoreDifficultiesApi = helper.ModRegistry.GetApi<IMoreDifficultiesApi>("TheJazMaster.MoreDifficulties");
 
@@ -124,7 +124,8 @@ public sealed class ModEntry : SimpleMod
             Definition = new()
             {
                 icon = sprites["icon_customParts"],
-                color = new("777777")
+                color = new("777777"),
+                isGood = true
             },
             Name = AnyLocalizations.Bind(["status", "customParts", "name"]).Localize,
             Description = AnyLocalizations.Bind(["status", "customParts", "description"]).Localize

@@ -38,20 +38,20 @@ internal sealed class OverdriveMod : ModifierCard, IRegisterableCard
 internal sealed class TinkerShot : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Stun_Mod"];
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Piercing_Mod"];
 	public override CardData GetData(State state) => new() {
-		cost = upgrade == Upgrade.A ? 0 : 1
+		cost = upgrade == Upgrade.B ? 0 : 1
 	};
 
 	public override List<CardAction> GetActions(State s, Combat c) => [
 		new AAttack
 		{
-			damage = GetDmg(s, upgrade == Upgrade.B ? 2 : 1)
+			damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1)
 		},
 		new AStatus
 		{
 			status = ModEntry.Instance.RedrawStatus,
-			statusAmount = upgrade == Upgrade.A ? 1 : 2,
+			statusAmount = upgrade == Upgrade.B ? 1 : 2,
 			targetPlayer = true
 		}
 	];

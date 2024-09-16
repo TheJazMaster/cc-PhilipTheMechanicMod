@@ -17,6 +17,7 @@ internal sealed class Nanobots : Card
         return [
 			new ANanobots() { thisCardUuid = uuid },
             new ADummyAction(),
+            new ADummyAction(),
         ]; 
     }
 

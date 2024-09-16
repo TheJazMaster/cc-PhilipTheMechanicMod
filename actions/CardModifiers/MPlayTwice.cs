@@ -5,6 +5,8 @@ namespace clay.PhilipTheMechanic.Actions.CardModifiers;
 
 public class MPlayTwice : BasicCardModifier, ICardActionModifier
 {
+    private bool ignoreDouble = false;
+    
     public override bool RequestsStickyNote() => false;
 
     public override Spr? GetSticker(State s) => ModEntry.Instance.sprites["icon_2x_sticker"];
@@ -15,12 +17,16 @@ public class MPlayTwice : BasicCardModifier, ICardActionModifier
 
     public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {
+        if (ignoreDouble) return actions;
         if (isRendering) {
             actions.Add(new APlayTwiceDummy());
             return actions;
         }
 
-        actions.AddRange(Mutil.DeepCopy(actions));
+        ignoreDouble = true;
+        var newActions = card.GetActionsOverridden(s, c);
+        actions.AddRange(newActions[0..actions.Count]);
+        ignoreDouble = false;
         return actions;
     }
 

@@ -1,16 +1,10 @@
 ﻿using clay.PhilipTheMechanic.Actions;
-using clay.PhilipTheMechanic.Cards;
 using clay.PhilipTheMechanic.Controllers;
-using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic;
 
-internal class KokoroHooksImplementation : IWrappedActionHook, ICardRenderHook
+internal class KokoroHooksImplementation : IWrappedActionHook//, ICardRenderHook
 {
     public List<CardAction>? GetWrappedCardActions(CardAction action)
     {
@@ -31,9 +25,9 @@ internal class KokoroHooksImplementation : IWrappedActionHook, ICardRenderHook
         return ModifierCardsRenderingController.ShouldStickyNote(card, s, c, ModifierCardsController.LastCachedModifiers[index], index);
     }
 
-    public Matrix ModifyNonTextCardRenderMatrix(G g, Card card, List<CardAction> actions)
-    {
-        if (card is not Nanobots) return Matrix.Identity;
-        return Matrix.CreateScale(1.5f);
-    }
+    // public Matrix ModifyNonTextCardRenderMatrix(G g, Card card, List<CardAction> actions)
+    // {
+    //     if (card is not Nanobots) return Matrix.Identity;
+    //     return Matrix.CreateScale(1.5f);
+    // }
 }
