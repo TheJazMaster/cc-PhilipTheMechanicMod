@@ -1,11 +1,7 @@
 ﻿using clay.PhilipTheMechanic.Actions;
 using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Cards;
 
@@ -25,10 +21,6 @@ internal sealed class BlackMarketParts : ModifierCard, IRegisterableCard
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
-        var addCardAction = upgrade == Upgrade.B
-            ? new AAddCardUpgraded() { card = new UraniumRound() { upgrade = Upgrade.B }, destination = CardDestination.Hand }
-            : new AAddCard() { amount = upgrade == Upgrade.A ? 2 : 1, card = new UraniumRound(), destination = CardDestination.Hand };
-
         return [
 			new ASingleDirectionalCardModifierWrapper {
                 modifiers = [
@@ -40,7 +32,9 @@ internal sealed class BlackMarketParts : ModifierCard, IRegisterableCard
 			new ASingleDirectionalCardModifierWrapper {
                 modifiers = [
                     new MAddAction {
-                        action = addCardAction,
+                        action = new AAddCardUpgraded() {
+                            card = new UraniumRound() { upgrade = upgrade }, destination = CardDestination.Hand
+                        },
                         stickerSprite = ModEntry.Instance.sprites["icon_sticker_add_card"]
                     }
                 ]

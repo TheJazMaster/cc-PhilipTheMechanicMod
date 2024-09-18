@@ -38,7 +38,7 @@ internal sealed class OverdriveMod : ModifierCard, IRegisterableCard
 internal sealed class TinkerShot : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Piercing_Mod"];
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Stun_Mod"];
 	public override CardData GetData(State state) => new() {
 		cost = upgrade == Upgrade.B ? 0 : 1
 	};
