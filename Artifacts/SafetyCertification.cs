@@ -17,6 +17,8 @@ internal sealed class SafetyCertification : Artifact, IRegisterableArtifact
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
     public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_safety_cert"];
 
+	public override int? GetDisplayNumber(State s) => triggers;
+
 	public override Spr GetSprite() =>
 		triggers >= MAX_TRIGGERS ? ModEntry.Instance.sprites["artifact_safety_cert_off"] : ModEntry.Instance.sprites["artifact_safety_cert"];
 

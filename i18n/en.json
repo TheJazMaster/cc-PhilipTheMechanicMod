@@ -178,7 +178,7 @@
 		},
 		"SafetyCertification": {
 			"name": "SAFETY CERT",
-			"description": "If your rightmost card is a <c=card>mod</c>, draw 1 card.\n<c=downside>Caps at 2 per turn.</c>"
+			"description": "If your rightmost card is a <c=card>mod</c>, draw 1 card.\n<c=downside>Caps at 3 per turn.</c>"
 		},
 		"TopMarks": {
 			"name": "TOP MARKS",
