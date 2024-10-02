@@ -21,6 +21,8 @@ namespace clay.PhilipTheMechanic.Controllers
         [HarmonyPatch(typeof(Card), nameof(Card.GetActionsOverridden))]
         public static void SupportMetalPlateRendering(Card __instance, ref List<CardAction> __result, State s, Combat c)
         {
+            if (!ModifierCardsController.isDuringRender) return;
+
             ModifierCardsController.CalculateCardModifiers(s, c);
             int index = c.hand.IndexOf(__instance);
             if(index >= 0 && index < c.hand.Count && ShouldStickyNote(__instance, s, c, ModifierCardsController.LastCachedModifiers[index], index)) {
@@ -33,13 +35,16 @@ namespace clay.PhilipTheMechanic.Controllers
         public static void ConditionallyReplaceArtWithMetalPlate(Card __instance, ref CardData __result, State state)
         {
             if (SuppressMetalPlatingPatch) return;
+            if (!ModifierCardsController.isDuringRender) return;
 
             var s = state;
             if (s.route is not Combat c) return;
+
+            ModifierCardsController.CalculateCardModifiers(s, c);
+
             int index = c.hand.IndexOf(__instance);
             if (index < 0 || index >= c.hand.Count || !ModifierCardsController.ModifiersCurrentlyApply(s,  c, __instance)) return;
 
-            ModifierCardsController.CalculateCardModifiers(s, c);
             List<CardModifier> modifiers = ModifierCardsController.LastCachedModifiers[index];
             if (modifiers.Count == 0) { return; }
 

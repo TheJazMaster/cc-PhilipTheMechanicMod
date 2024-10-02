@@ -21,6 +21,9 @@ public class MAddAction : CardModifier, ICardActionModifier
 
     public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {
+        if (!isRendering && action is AAddCard addCard) {
+            addCard.card = addCard.card.CopyWithNewId();
+        }
         actions.Add(Mutil.DeepCopy(action));
         return actions;
     }

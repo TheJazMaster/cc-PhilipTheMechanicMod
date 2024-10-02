@@ -47,6 +47,9 @@ public static class ModifierCardsController
         int latestDeleteIndex = -1;
         for (ind = 0; ind < c.hand.Count; ind++) {
             Card card = c.hand[ind];
+
+            if (StatusMeta.deckToMissingStatus.TryGetValue(card.GetMeta().deck, out var status) && s.ship.Get(status) > 0) continue;
+
             int skip = 0;
             if (card is ExtenderMod emod) {
                 extendMods |= emod.ExtendsMods();
@@ -138,7 +141,7 @@ public static class ModifierCardsController
     }
 
 
-    private static bool isDuringRender = false;
+    internal static bool isDuringRender = false;
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Card), nameof(Card.Render))]
     public static void TrackRenderingPre(Card __instance, G g, Vec? posOverride = null, State? fakeState = null, bool ignoreAnim = false, bool ignoreHover = false, bool hideFace = false, bool hilight = false, bool showRarity = false, bool autoFocus = false, UIKey? keyOverride = null, OnMouseDown? onMouseDown = null, OnMouseDownRight? onMouseDownRight = null, OnInputPhase? onInputPhase = null, double? overrideWidth = null, UIKey? leftHint = null, UIKey? rightHint = null, UIKey? upHint = null, UIKey? downHint = null, int? renderAutopilot = null, bool? forceIsInteractible = null, bool reportTextBoxesForLocTest = false, bool isInCombatHand = false)
@@ -158,10 +161,11 @@ public static class ModifierCardsController
     public static void ApplyActionModifiers(Card __instance, ref List<CardAction> __result, State s, Combat c)
     {
         if (!ModifiersCurrentlyApply(s, c, __instance)) return;
+        CalculateCardModifiers(s, c);
+
         int index = c.hand.IndexOf(__instance);
         if (index < 0 || index >= LastCachedModifiers.Count) return;
 
-        CalculateCardModifiers(s, c);
         foreach (CardModifier modifier in LastCachedModifiers[index]) {
             if (modifier is ICardActionModifier ca) {
                 __result = ca.TransformActions(__result, s, c, __instance, isDuringRender);

@@ -1,4 +1,6 @@
-﻿using Shockah;
+﻿using Microsoft.Extensions.Logging;
+using Shockah;
+using System;
 using System.Collections.Generic;
 
 namespace clay.PhilipTheMechanic.Actions.CardModifiers;
@@ -25,7 +27,17 @@ public class MPlayTwice : BasicCardModifier, ICardActionModifier
 
         ignoreDouble = true;
         var newActions = card.GetActionsOverridden(s, c);
-        actions.AddRange(newActions[0..actions.Count]);
+        ModEntry.Instance.Logger.LogInformation("aaaaa " + newActions.Count + " " + actions.Count);
+        ModEntry.Instance.Logger.LogInformation("NEW");
+        foreach(CardAction na in newActions) {
+            ModEntry.Instance.Logger.LogInformation(na.Key());
+        }
+        ModEntry.Instance.Logger.LogInformation("OLD");
+        foreach(CardAction aa in actions) {
+            ModEntry.Instance.Logger.LogInformation(aa.Key());
+        }
+        if (newActions.Count > 0)
+            actions.AddRange(newActions[0..Math.Min(newActions.Count, actions.Count)]);
         ignoreDouble = false;
         return actions;
     }
