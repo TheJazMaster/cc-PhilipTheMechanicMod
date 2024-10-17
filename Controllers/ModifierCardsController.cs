@@ -72,7 +72,7 @@ public static class ModifierCardsController
                                 skip += c.hand.Count;
                             } else if (wrapper is ASingleDirectionalCardModifierWrapper sd) {
                                 if (sd.left && ind > 0) modifierSources[ind-1] = [];
-                                else if (!sd.left && ind < c.hand.Count - 1) modifierSources[ind+1] = [];
+                                else if (!sd.left && ind < c.hand.Count - 1) skip++;
                             } else if (wrapper is AWholeHandDirectionalCardsModifierWrapper wh) {
                                 if (wh.left) {
                                     for (int j = 0; j < ind; j++) modifierSources[j] = [];
@@ -185,10 +185,12 @@ public static class ModifierCardsController
     private static void ApplyDataModifiers(Card __instance, ref CardData __result, State state)
     {
         if (state.route is not Combat c || !ModifiersCurrentlyApply(state, c, __instance)) return;
+
+        CalculateCardModifiers(state, c);
+
         int index = c.hand.IndexOf(__instance);
         if (index < 0 || index >= LastCachedModifiers.Count) return;
 
-        CalculateCardModifiers(state, c);
         foreach (CardModifier modifier in LastCachedModifiers[index]) {
             if (modifier is ICardDataModifier cd) {
                 __result = cd.TransformData(__result, state, c, __instance, isDuringRender);

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Shockah;
 
 namespace clay.PhilipTheMechanic.Actions.CardModifiers;
     
@@ -17,7 +19,16 @@ public class MAddAction : CardModifier, ICardActionModifier
 
     public override CardAction GetActionForRendering(State s) => action;
 
-    public override List<Tooltip> GetTooltips(State s) => action.GetTooltips(s); 
+    public override List<Tooltip> GetTooltips(State s) => [
+        new CustomTTGlossary(
+            CustomTTGlossary.GlossaryType.actionMisc,
+            () => action.GetIcon(s)!.Value!.path,
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+            key: GetType().FullName ?? GetType().Name
+        ),
+        .. action.GetTooltips(s)
+    ];
 
     public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
     {

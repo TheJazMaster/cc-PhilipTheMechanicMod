@@ -46,22 +46,17 @@ public class ACenterOfHandWrapper : AMultiIconAction
         return ret;
     }
 
-    public override List<Tooltip> GetTooltips(State s)
-    {
-        var tooltips = actions
-            .SelectMany(a => a.GetTooltips(s))
-            .ToList();
-
-        tooltips.Insert(0, new CustomTTGlossary(
+    public override List<Tooltip> GetTooltips(State s) => [
+        new CustomTTGlossary(
             CustomTTGlossary.GlossaryType.action,
             () => isCenter
                 ? ModEntry.Instance.sprites["icon_card_is_centered"]
                 : ModEntry.Instance.sprites["icon_card_is_not_centered"],
             () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "name"]),
             () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "description"]),
-            key: GetType().FullName ?? GetType().Name
-        ));
-
-        return tooltips;
-    }
+            key: (GetType().FullName ?? GetType().Name) + isCenter.ToString()
+        ),
+        .. actions.SelectMany(a => a.GetTooltips(s)).ToList()
+        
+    ];
 }

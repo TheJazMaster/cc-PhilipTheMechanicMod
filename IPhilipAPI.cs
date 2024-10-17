@@ -45,7 +45,6 @@ namespace clay.PhilipTheMechanic
         CardModifier MakeMExhaust();
         CardModifier MakeMRetain();
         CardModifier MakeMPlayable();
-        CardModifier MakeMDontExhaust();
         CardModifier MakeMRecycle();
         CardModifier MakeMSetEnergyCostToZero();
         CardModifier MakeMReduceEnergyCost();

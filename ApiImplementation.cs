@@ -53,7 +53,6 @@ public sealed class ApiImplementation : IPhilipAPI
     public CardModifier MakeMExhaust() { return new MExhaust(); }
     public CardModifier MakeMRetain() { return new MRetain(); }
     public CardModifier MakeMPlayable() { return new MPlayable(); }
-    public CardModifier MakeMDontExhaust() { return new MDontExhaust(); }
     public CardModifier MakeMRecycle() { return new MRecycle(); }
     public CardModifier MakeMSetEnergyCostToZero() { return new MSetEnergyCostToZero(); }
     public CardModifier MakeMReduceEnergyCost() { return new MReduceEnergyCost(); }

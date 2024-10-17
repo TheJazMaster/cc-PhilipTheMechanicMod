@@ -19,16 +19,14 @@ public class MExhaust : BasicCardModifier, ICardDataModifier
         return data;
     }
 
-    public override List<Tooltip> GetTooltips(State s)
-    {
-        return [
-            new CustomTTGlossary(
-                CustomTTGlossary.GlossaryType.actionMisc,
-                () => GetIcon()!.Value!.path,
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "name"]),
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "description"]),
-                key: GetType().FullName ?? GetType().Name
-            )
-        ];
-    }
+    public override List<Tooltip> GetTooltips(State s) => [
+        new CustomTTGlossary(
+            CustomTTGlossary.GlossaryType.actionMisc,
+            () => GetIcon()!.Value!.path,
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "name"]),
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "description"]),
+            key: GetType().FullName ?? GetType().Name
+        ),
+        new TTGlossary("cardtrait.exhaust")
+    ];
 }

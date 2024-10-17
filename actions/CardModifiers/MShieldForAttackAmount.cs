@@ -42,16 +42,13 @@ public class MShieldForAttackAmount : BasicCardModifier, ICardActionModifier
         return actions;
     }
 
-    public override List<Tooltip> GetTooltips(State s)
-    {
-        return [
-            new CustomTTGlossary(
-                CustomTTGlossary.GlossaryType.actionMisc,
-                () => GetIcon()!.Value!.path,
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name", tempShield ? "temp" : "regular"]),
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description", tempShield ? "temp" : "regular"]),
-                key: GetType().FullName ?? GetType().Name
-            )
-        ];
-    }
+    public override List<Tooltip> GetTooltips(State s) => [
+        new CustomTTGlossary(
+            CustomTTGlossary.GlossaryType.actionMisc,
+            () => GetIcon()!.Value!.path,
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name", tempShield ? "temp" : "regular"]),
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description", tempShield ? "temp" : "regular"]),
+            key: GetType().FullName ?? GetType().Name
+        )
+    ];
 }

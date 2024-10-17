@@ -85,7 +85,10 @@ internal sealed class LoosenScrews : ModifierCard, IRegisterableCard
 			new ANeighboringCardsModifierWrapper {
                 modifiers = [
                     energyReductionMod,
-                    penaltyMod
+                    penaltyMod,
+                    new MInfinite {
+                        value = false
+                    }
                 ]
             }
         ];

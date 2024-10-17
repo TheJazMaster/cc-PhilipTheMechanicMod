@@ -102,7 +102,7 @@
 		},
 		"MBuffAttack": {
 			"name": "Buff Attack",
-			"description": "Increases the power of attacks on the target card by {0}."
+			"description": "Increases the power of <c=attack>attacks</c> on the target card by {0}."
 		},
 		"MDeleteActions": {
 			"name": "Remove Actions",
@@ -111,12 +111,16 @@
 		"MExhaust": {
 			"True": {
 				"name": "Make Exhaust",
-				"description": "Adds exhaust to this card."
+				"description": "Adds <c=cardtrait>exhaust</c> to this card."
 			},
 			"False": {
 				"name": "Don't Exhaust",
-				"description": "Removes exhaust from this card."
+				"description": "Removes <c=cardtrait>exhaust</c> from this card."
 			}
+		},
+		"MAddAction": {
+			"name": "Add Action",
+			"description": "The modified card also does this action."
 		},
 		"MExtendModifiers": {
 			"name": "Extend Modifiers",
@@ -128,11 +132,17 @@
 		},
 		"MRecycle": {
 			"name": "Make Recycle",
-			"description": "Adds recycle to this card."
+			"description": "Adds <c=cardtrait>recycle</c> to this card."
 		},
 		"MInfinite": {
-			"name": "Make Infinite",
-			"description": "Adds infinite to this card."
+			"True": {
+				"name": "Make Infinite",
+				"description": "Adds <c=cardtrait>infinite</c> to this card."
+			},
+			"False": {
+				"name": "Remove Infinite",
+				"description": "Removes <c=cardtrait>infinite</c> from this card."
+			}
 		},
 		"MReduceEnergyCost": {
 			"name": "Reduce Energy Cost",
@@ -140,7 +150,7 @@
 		},
 		"MRetain": {
 			"name": "Make Retain",
-			"description": "Adds retain to this card."
+			"description": "Adds <c=cardtrait>retain</c> to this card."
 		},
 		"MSetEnergyCostToZero": {
 			"name": "Set Energy Cost to Zero",
@@ -148,22 +158,22 @@
 		},
 		"MShieldForAttackAmount": {
 			"name": {
-				"temp": "     Temp shield for Attack",
+				"temp": "      Temp shield for Attack",
 				"regular": "      Shield for Attack"
 			},
 			"description": {
-				"temp": "Sum the damage of all attack actions on this card. Add temp shield equal to that amount.",
-				"regular": "Sum the damage of all attack actions on this card. Add shield equal to that amount."
+				"temp": "Sum the damage of all attack actions on this card. Add <c=status>temp shield</c> equal to that amount.",
+				"regular": "Sum the damage of all attack actions on this card. Add <c=status>shield</c> equal to that amount."
 			}
 		},
 		"MStun": {
 			"name": "Attacks Stun",
-			"description": "Makes all attacks on this card stun."
+			"description": "Makes all attacks on this card <c=action>stun</c>."
 		},
 		"MPlayable": {
 			"True": {
 				"name": "Make Playable",
-				"description": "Makes this card playable."
+				"description": "Makes this card playable (if it's <c=cardtrait>unplayable</c>)."
 			},
 			"False": {
 				"name": "Make Unplayable",

@@ -32,17 +32,14 @@ public class MBuffAttack : BasicCardModifier, ICardActionModifier
         }
     }
 
-    public override List<Tooltip> GetTooltips(State s)
-    {
-        return [
-            new CustomTTGlossary(
-                CustomTTGlossary.GlossaryType.actionMisc,
-                () => GetIcon()!.Value!.path,
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-                () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-                values: new List<Func<object>>() { () => amount },
-                key: GetType().FullName ?? GetType().Name
-            )
-        ];
-    }
+    public override List<Tooltip> GetTooltips(State s) => [
+        new CustomTTGlossary(
+            CustomTTGlossary.GlossaryType.actionMisc,
+            () => GetIcon()!.Value!.path,
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+            values: new List<Func<object>>() { () => amount },
+            key: GetType().FullName ?? GetType().Name
+        )
+    ];
 }
