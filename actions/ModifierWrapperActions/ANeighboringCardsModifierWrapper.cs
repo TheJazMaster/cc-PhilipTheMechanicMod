@@ -37,7 +37,7 @@ public class ANeighboringCardsModifierWrapper : AModifierWrapper
                 () => ModEntry.Instance.sprites["icon_Flimsy_Neighbors_Card_Mod"],
                 () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod_Flimsy", "name"]),
                 () => ModEntry.Instance.Localizations.Localize(["action", "ANeighborsMod_Flimsy", "description"]),
-                key: typeof(ANeighboringCardsModifierWrapper).FullName ?? typeof(ANeighboringCardsModifierWrapper).Name
+                key: (typeof(ANeighboringCardsModifierWrapper).FullName ?? typeof(ANeighboringCardsModifierWrapper).Name) + "Flimsy"
             );
         }
         else

@@ -29,7 +29,7 @@ public class AWholeHandCardsModifierWrapper : AModifierWrapper
                 () => ModEntry.Instance.sprites["icon_Flimsy_All_Other_Cards_Mod"],
                 () => ModEntry.Instance.Localizations.Localize(["action", "AWholeHandMod_Flimsy", "name"]),
                 () => ModEntry.Instance.Localizations.Localize(["action", "AWholeHandMod_Flimsy", "description"]),
-                key: typeof(AWholeHandCardsModifierWrapper).FullName ?? typeof(AWholeHandCardsModifierWrapper).Name
+                key: (typeof(AWholeHandCardsModifierWrapper).FullName ?? typeof(AWholeHandCardsModifierWrapper).Name) + "Flimsy"
             );
         }
         else

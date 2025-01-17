@@ -126,7 +126,7 @@ internal sealed class MarauderMod : ModifierCard, IRegisterableCard
 			new ASingleDirectionalCardModifierWrapper {
                 modifiers = [new MAddAction {
                     action = new AMove {
-                        dir = 1,
+                        dir = flipped ? -1 : 1,
                         targetPlayer = true
                     }
                 }]

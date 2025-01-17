@@ -1,5 +1,6 @@
 ﻿using Shockah;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 {
@@ -41,7 +42,7 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
                     () => ModEntry.Instance.sprites[left ? "icon_Flimsy_Left_Card_Mod" : "icon_Flimsy_Right_Card_Mod"],
                     () => ModEntry.Instance.Localizations.Localize(["action", "ADirectionalMod_Flimsy", "name", left ? "left" : "right"]),
                     () => ModEntry.Instance.Localizations.Localize(["action", "ADirectionalMod_Flimsy", "description", left ? "left" : "right"]),
-                    key: typeof(ADirectionalCardModifierWrapper).FullName ?? typeof(ADirectionalCardModifierWrapper).Name
+                    key: (typeof(ADirectionalCardModifierWrapper).FullName ?? typeof(ADirectionalCardModifierWrapper).Name) + "Flimsy"
                 );
             }
             else

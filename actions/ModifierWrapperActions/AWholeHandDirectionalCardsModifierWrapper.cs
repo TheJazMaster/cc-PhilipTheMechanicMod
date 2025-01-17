@@ -43,7 +43,7 @@ public class AWholeHandDirectionalCardsModifierWrapper : ADirectionalCardModifie
                 () => ModEntry.Instance.sprites[left ? "icon_Flimsy_All_Left_Card_Mod" : "icon_Flimsy_All_Right_Card_Mod"],
                 () => ModEntry.Instance.Localizations.Localize(["action", "AWholeHandDirectionalMod_Flimsy", "name", left ? "left" : "right"]),
                 () => ModEntry.Instance.Localizations.Localize(["action", "AWholeHandDirectionalMod_Flimsy", "description", left ? "left" : "right"]),
-                key: typeof(AWholeHandDirectionalCardsModifierWrapper).FullName ?? typeof(AWholeHandDirectionalCardsModifierWrapper).Name
+                key: (typeof(AWholeHandDirectionalCardsModifierWrapper).FullName ?? typeof(AWholeHandDirectionalCardsModifierWrapper).Name) + "Flimsy"
             );
         }
         else

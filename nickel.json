@@ -1,6 +1,6 @@
 {
   "UniqueName": "clay.PhilipTheMechanic",
-  "Version": "3.0.2",
+  "Version": "3.0.3",
   "RequiredApiVersion": "0.6.0",
   "EntryPointAssembly": "PhilipTheMechanic.dll",
   "LoadPhase": "AfterDbInit",
