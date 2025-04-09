@@ -5,7 +5,7 @@ namespace clay.PhilipTheMechanic.Artifacts;
 
 internal sealed class StepLadder : Artifact, IRegisterableArtifact
 {
-    public static ArtifactPool[] GetPools() => [ArtifactPool.Boss];
+    public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
     public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_step_ladder"];
 
 	public override void OnReceiveArtifact(State state)

@@ -1,4 +1,5 @@
-﻿using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using clay.PhilipTheMechanic.Controllers;
 using Nickel;
 using System;
@@ -17,8 +18,15 @@ internal abstract class ModifierCard : Card
         if (!flipped) return;
 
         foreach (AModifierWrapper wrapper in list) {
-            if (wrapper is ADirectionalCardModifierWrapper dir)
+            if (wrapper.selector is DirectionalSelector dir)
                 dir.left = !dir.left;
+        }
+    }
+
+    public static void SetSource(AModifierWrapper wrapper, Deck sourceDeck, int sourceUuid) {
+        foreach (CardModifier modifier in wrapper.GetCardModifiers()) {
+            modifier.sourceDeck = sourceDeck;
+            modifier.sourceUuid = sourceUuid;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using System.Collections.Generic;
 
@@ -18,7 +19,8 @@ internal sealed class OverdriveMod : ModifierCard, IRegisterableCard
     }
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
-        new ASingleDirectionalCardModifierWrapper {
+        new AModifierWrapper {
+            selector = new SingleDirectionalSelector(),
             modifiers = [
                 new MBuffAttack() { amount = upgrade == Upgrade.B ? 3 : 1 },
             ],
@@ -69,44 +71,27 @@ internal sealed class DrawMod : ModifierCard, IRegisterableCard
         };
     }
 
-    public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
-        Upgrade.A => [
-            new AWholeHandDirectionalCardsModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new ADrawCard() { count = 1 }
-                    },
-                ],
-                left = true
-            },
-            new ASingleDirectionalCardModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new ADrawCard() { count = 1 }
-                    },
-                ],
-                isFlimsy = true
-            },
-        ],
-        _ => [
-            new ASingleDirectionalCardModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new ADrawCard() { count = 1 }
-                    },
-                ],
-                left = true
-            },
-            new ASingleDirectionalCardModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new ADrawCard() { count = upgrade == Upgrade.B ? 3 : 1 }
-                    },
-                ],
-                isFlimsy = true
-            },
-        ]
-    };
+    public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
+        new AModifierWrapper {
+            selector = upgrade == Upgrade.A ? new WholeHandDirectionalSelector { left = true } : new SingleDirectionalSelector { left = true },
+            modifiers = [
+                new MAddAction() {
+                    action = new ADrawCard() { count = 1 },
+                    stickerSprite = ModEntry.Instance.sprites["icon_sticker_draw"]
+                },
+            ],
+        },
+        new AModifierWrapper {
+            selector = new SingleDirectionalSelector(),
+            modifiers = [
+                new MAddAction() {
+                    action = new ADrawCard() { count = 1 },
+                    stickerSprite = ModEntry.Instance.sprites["icon_sticker_draw"]
+                },
+            ],
+            isFlimsy = true
+        }
+    ];
 }
 
 internal sealed class DuctTapeAndDreams : ModifierCard, IRegisterableCard
@@ -126,12 +111,14 @@ internal sealed class DuctTapeAndDreams : ModifierCard, IRegisterableCard
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
         Upgrade.B => [
-            new ANeighboringCardsModifierWrapper {
+            new AModifierWrapper {
+                selector = new NeighboringSelector(),
                 modifiers = [new MRetain(), new MPlayable { value = false }]
             }
         ],
         _ => [
-            new ASingleDirectionalCardModifierWrapper {
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [new MRetain()]
             }
         ],
@@ -155,7 +142,7 @@ internal sealed class JettisonParts : ModifierCard, IRegisterableCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) {
         List<CardModifier> modifiers = [
             new MAddAction {
-                action = new AStatus() { status = Status.evade, statusAmount = 2, targetPlayer = true },
+                action = new AStatus() { status = Status.evade, statusAmount = 1, targetPlayer = true },
                 stickerSprite = ModEntry.Instance.sprites["icon_sticker_evade"]
             }
         ];
@@ -164,15 +151,16 @@ internal sealed class JettisonParts : ModifierCard, IRegisterableCard
         if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, ModEntry.Instance.sprites["icon_sticker_missile_normal"]));
 
         return [
-			new ASingleDirectionalCardModifierWrapper {
-                modifiers = [
-                    new MDeleteActions(),
-                    new MPlayable(),
-                    new MExhaust(),
-                ]
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = modifiers,
+                overwrites = true
             },
-			new ASingleDirectionalCardModifierWrapper {
-                modifiers = modifiers
+            new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
+                modifiers = [
+                    new MExhaust()
+                ]
             }
         ];
     }
@@ -251,15 +239,22 @@ internal sealed class ReduceReuse : ModifierCard, IRegisterableCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch
     {
         Upgrade.B => [
-            new ASingleDirectionalCardModifierWrapper {
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MRecycle(),
-                    new MPlayable()
-                ]
+                    new MAddAction {
+                        action = new ADrawCard {
+                            count = 1
+                        }
+                    }
+                ],
+                isFlimsy = true
             }
         ],
         _ => [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [new MRecycle()]
             }
         ]
@@ -307,61 +302,43 @@ internal sealed class Hotwire : ModifierCard, IRegisterableCard
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
         Upgrade.A => [
-            new ASingleDirectionalCardModifierWrapper {
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MAddAction() {
                         action = new AMove() {
                             dir = flipped ? -1 : 1,
                             targetPlayer = true
-                        }
+                        },
+                        stickerSprite = ModEntry.Instance.sprites[flipped ? "icon_sticker_move_left" : "icon_sticker_move_right"]
                     }
                 ],
-            }
-        ],
-        Upgrade.B => [
-            new AWholeHandDirectionalCardsModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new AMove() {
-                            dir = flipped ? -1 : 1,
-                            targetPlayer = true
-                        }
-                    }
-                ],
-            },
-            new AWholeHandDirectionalCardsModifierWrapper {
-                modifiers = [
-                    new MAddAction() {
-                        action = new AMove() {
-                            dir = flipped ? 1 : -1,
-                            targetPlayer = true
-                        }
-                    }
-                ],
-                left = true
             }
         ],
         _ => [
-            new ASingleDirectionalCardModifierWrapper {
+            new AModifierWrapper {
+                selector = upgrade == Upgrade.B ? new WholeHandDirectionalSelector() : new SingleDirectionalSelector(),
                 modifiers = [
                     new MAddAction() {
                         action = new AMove() {
                             dir = flipped ? -1 : 1,
                             targetPlayer = true
-                        }
+                        },
+                        stickerSprite = ModEntry.Instance.sprites[flipped ? "icon_sticker_move_left" : "icon_sticker_move_right"]
                     }
                 ],
             },
-            new ASingleDirectionalCardModifierWrapper {
+            new AModifierWrapper {
+                selector = upgrade == Upgrade.B ? new WholeHandDirectionalSelector { left = true } : new SingleDirectionalSelector { left = true },
                 modifiers = [
                     new MAddAction() {
                         action = new AMove() {
                             dir = flipped ? 1 : -1,
                             targetPlayer = true
-                        }
+                        },
+                        stickerSprite = ModEntry.Instance.sprites[flipped ? "icon_sticker_move_right" : "icon_sticker_move_left"]
                     }
                 ],
-                left = true
             }
         ],
     };

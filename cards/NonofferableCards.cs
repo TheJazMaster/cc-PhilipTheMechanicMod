@@ -3,6 +3,7 @@ using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using clay.PhilipTheMechanic.Controllers;
 using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -88,10 +89,8 @@ internal sealed class ImpromptuBlastShield : ModifierCard
             )
         ];
         return [
-			upgrade == Upgrade.A ? new AWholeHandCardsModifierWrapper {
-                modifiers = modifiers
-            } :
-            new AWholeHandDirectionalCardsModifierWrapper {
+			new AModifierWrapper {
+                selector = upgrade == Upgrade.A ? new WholeHandSelector() : new WholeHandDirectionalSelector(), 
                 modifiers = modifiers
             }
         ];
@@ -113,14 +112,8 @@ internal sealed class OhNo : ModifierCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
         return [
-            new AWholeHandDirectionalCardsModifierWrapper {
-                modifiers = [
-                    new MDeleteActions(),
-                    new MPlayable(),
-                    new MExhaust()
-                ]
-            },
-			new AWholeHandDirectionalCardsModifierWrapper {
+			new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
                 modifiers = [
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AStatus() { status = Status.evade, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 2 : 1 },
@@ -130,31 +123,38 @@ internal sealed class OhNo : ModifierCard
                         new AStatus() { status = ModEntry.Instance.RedrawStatus, targetPlayer = true, statusAmount = upgrade == Upgrade.B ? 2 : 1 },
                         ModEntry.Instance.sprites["icon_sticker_redraw"]
                     ),
-                ]
+                ],
+                overwrites = true
             },
+            new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
+                modifiers = [
+                    new MExhaust()
+                ]
+            }
         ];
     }
 }
 
-// Effect is hardcoded
+
 internal sealed class ExtenderMod : ModifierCard
 {
     public override CardData GetData(State state) => new() {
-        cost = 1,
-        unplayable = upgrade != Upgrade.A,
-        floppable = true,
-        recycle = upgrade == Upgrade.A,
-        description = ModEntry.Instance.Localizations.Localize(["card", "ExtenderMod", "description", flipped ? "flipped" : "normal", upgrade.ToString()]),
-        art = ModEntry.Instance.sprites[flipped ? "card_Extender_Mod_Flipped" : "card_Extender_Mod_Normal"]
+        cost = 0,
+        unplayable = true,
+        art = StableSpr.cards_colorless,
+        retain = upgrade == Upgrade.B
     };
 
-    public bool ExtendsMods() => !flipped;
-
-    public bool SaveFlimsy() => upgrade == Upgrade.B && flipped;
-
 	public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
-        new AWholeHandCardsModifierWrapper() {
-            modifiers = [new MExtendModifiers()]
+        new AModifierWrapper() {
+            selector = new WholeHandSelector(),
+            modifiers = [
+                new MExtendModifiers {
+                    flimsyOverride = upgrade != Upgrade.A
+				}
+            ],
+            isFlimsy = upgrade == Upgrade.A
         }
     ];
 }

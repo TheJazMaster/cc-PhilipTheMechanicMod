@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Shockah;
+using Nickel;
 using System;
 using System.Collections.Generic;
 
@@ -17,8 +17,9 @@ public class MPlayTwice : BasicCardModifier, ICardActionModifier
 
 	public override double Priority => Priorities.MANIPULATE_ACTIONS;
 
-    public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering)
+    public List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering, out bool success)
     {
+        success = true;
         if (ignoreDouble) return actions;
         if (isRendering) {
             actions.Add(new APlayTwiceDummy());
@@ -27,15 +28,6 @@ public class MPlayTwice : BasicCardModifier, ICardActionModifier
 
         ignoreDouble = true;
         var newActions = card.GetActionsOverridden(s, c);
-        ModEntry.Instance.Logger.LogInformation("aaaaa " + newActions.Count + " " + actions.Count);
-        ModEntry.Instance.Logger.LogInformation("NEW");
-        foreach(CardAction na in newActions) {
-            ModEntry.Instance.Logger.LogInformation(na.Key());
-        }
-        ModEntry.Instance.Logger.LogInformation("OLD");
-        foreach(CardAction aa in actions) {
-            ModEntry.Instance.Logger.LogInformation(aa.Key());
-        }
         if (newActions.Count > 0)
             actions.AddRange(newActions[0..Math.Min(newActions.Count, actions.Count)]);
         ignoreDouble = false;
@@ -43,12 +35,11 @@ public class MPlayTwice : BasicCardModifier, ICardActionModifier
     }
 
     public override List<Tooltip> GetTooltips(State s) => [
-        new CustomTTGlossary(
-            CustomTTGlossary.GlossaryType.actionMisc,
-            () => GetIcon()!.Value!.path,
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-            key: GetType().FullName ?? GetType().Name
-        )
+        new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}") {
+            TitleColor = Colors.keyword,
+            Icon = GetIcon()!.Value!.path,
+            Title = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+            Description = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+        }
     ];
 }

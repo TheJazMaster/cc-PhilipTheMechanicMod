@@ -1,5 +1,5 @@
 ﻿using clay.PhilipTheMechanic.Cards;
-using Shockah;
+using Nickel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +34,12 @@ namespace clay.PhilipTheMechanic.Actions
         public override List<Tooltip> GetTooltips(State s)
         {
             return [
-                new CustomTTGlossary(
-                    CustomTTGlossary.GlossaryType.action,
-                    () => ModEntry.Instance.sprites["icon_nanobots"],
-                    () => ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "description"]),
-                    key: typeof(ANanobots).FullName ?? typeof(ANanobots).Name
-                )
+                new GlossaryTooltip($"action.{GetType().Namespace!}::{GetType().Name}") {
+                    TitleColor = Colors.action,
+                    Icon = ModEntry.Instance.sprites["icon_nanobots"],
+                    Title = ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "name"]),
+                    Description = ModEntry.Instance.Localizations.Localize(["action", "ANanobots", "description"]),
+                }
             ];
         }
     }

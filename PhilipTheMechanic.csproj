@@ -4,7 +4,6 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 
-		<IncludedModProjectPaths>i18n;assets</IncludedModProjectPaths>
 		<ModZipPath>$(MSBuildProjectDirectory)\.release\$(MSBuildProjectName)-$(Version).zip</ModZipPath>
 
 		<ModLoaderPath>..\..</ModLoaderPath>
@@ -12,7 +11,11 @@
 		<GameDllPath>$(ModLoaderPath)/Extract/CobaltCore.dll</GameDllPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Nickel.ModBuildConfig" Version="1.2.3" />
+		<PackageReference Include="Nickel.ModBuildConfig" Version="2.0.2" />
 		<PackageReference Include="EnumByNameSourceGenerator" Version="1.1.2" PrivateAssets="All" ExcludeAssets="All" />
+	</ItemGroup>
+	<ItemGroup>
+		<ModFiles Include="i18n/**" />
+		<ModFiles Include="assets/**" />
 	</ItemGroup>
 </Project>

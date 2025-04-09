@@ -22,24 +22,19 @@ internal sealed class BlackMarketParts : ModifierCard, IRegisterableCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
         return [
-			new ASingleDirectionalCardModifierWrapper {
-                modifiers = [
-                    new MDeleteActions(),
-                    new MPlayable(),
-                    new MExhaust(),
-                ]
-            },
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MAddAction {
                         action = new AAddCardUpgraded() {
                             card = new UraniumRound() { upgrade = upgrade }, destination = CardDestination.Hand
                         },
                         stickerSprite = ModEntry.Instance.sprites["icon_sticker_add_card"]
-                    }
-                ]
+                    },
+                    new MExhaust(),
+                ],
+                overwrites = true
             }
-
         ];
     }
 }
@@ -127,7 +122,8 @@ internal sealed class NanobotInfestation : ModifierCard, IRegisterableCard
         };
 
         List<AModifierWrapper> actions = [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = upgrade == Upgrade.B ? [
                     ModEntry.Instance.Api.MakeMPlayTwice(),
                     ModEntry.Instance.Api.MakeMPlayTwice(),
@@ -138,7 +134,8 @@ internal sealed class NanobotInfestation : ModifierCard, IRegisterableCard
                 ],
                 isFlimsy = true
             },
-            new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MAddAction {
                         action = addCardAction,
@@ -171,7 +168,8 @@ internal sealed class Repeater : ModifierCard, IRegisterableCard
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
         Upgrade.B => [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MInfinite(),
                     new MAddAction {
@@ -182,7 +180,8 @@ internal sealed class Repeater : ModifierCard, IRegisterableCard
             }
         ],
         _ => [
-            new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MInfinite()
                 ],

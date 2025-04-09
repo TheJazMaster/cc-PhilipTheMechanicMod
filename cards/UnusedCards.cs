@@ -1,4 +1,5 @@
-﻿using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using Nickel;
 using System;
 using System.Collections.Generic;
@@ -70,9 +71,9 @@ internal sealed class OpenBayDoors : ModifierCard
         }
 
         return [
-            new AWholeHandDirectionalCardsModifierWrapper {
+            new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector { left = upgrade != Upgrade.A },
                 modifiers = modifiers,
-                left = upgrade != Upgrade.A
             }
         ];
     }
@@ -105,12 +106,18 @@ internal sealed class StunMod : ModifierCard
     };
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
-        Upgrade.A => [new ASingleDirectionalCardModifierWrapper {
-            modifiers = [ModEntry.Instance.Api.MakeMStun(), ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.stunCharge, targetPlayer = true, statusAmount = 1 }, ModEntry.Instance.sprites["icon_sticker_stun"])]
-        }],
-        _ => [new ASingleDirectionalCardModifierWrapper {
-            modifiers = [ModEntry.Instance.Api.MakeMStun()]
-        }]
+        Upgrade.A => [
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = [ModEntry.Instance.Api.MakeMStun(), ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.stunCharge, targetPlayer = true, statusAmount = 1 }, ModEntry.Instance.sprites["icon_sticker_stun"])]
+            }
+        ],
+        _ => [
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = [ModEntry.Instance.Api.MakeMStun()]
+            }
+        ]
     };
 }
 
@@ -138,7 +145,8 @@ internal sealed class PiercingMod : ModifierCard
         if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMBuffAttack(1));
 
         return [
-			new ANeighboringCardsModifierWrapper {
+			new AModifierWrapper {
+                selector = new NeighboringSelector(),
                 modifiers = modifiers
             }
         ];
@@ -163,14 +171,16 @@ internal sealed class DisableSafeties : ModifierCard
         if (upgrade == Upgrade.B)
         {
             return [
-				new ANeighboringCardsModifierWrapper {
+				new AModifierWrapper {
+                    selector = new NeighboringSelector(),
                     modifiers = [ModEntry.Instance.Api.MakeMAddAction(
                             new AAttack() { damage = GetDmg(s, 1) },
                             ModEntry.Instance.sprites["icon_sticker_attack"]
                         )
                     ]
                 },
-                new ANeighboringCardsModifierWrapper {
+                new AModifierWrapper {
+                    selector = new NeighboringSelector(),
                     modifiers = [
                         ModEntry.Instance.Api.MakeMAddAction(
                             new AStatus() { status = Status.heat, targetPlayer = true, statusAmount = 1 },
@@ -182,7 +192,8 @@ internal sealed class DisableSafeties : ModifierCard
         }
 
         return [
-			new AWholeHandDirectionalCardsModifierWrapper {
+			new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
                 modifiers = [
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AAttack() { damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1) },
@@ -191,7 +202,8 @@ internal sealed class DisableSafeties : ModifierCard
                 ],
                 isFlimsy = true
             },
-            new AWholeHandDirectionalCardsModifierWrapper {
+            new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
                 modifiers = [
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AAttack() { damage = GetDmg(s, upgrade == Upgrade.A ? 2 : 1) },
@@ -200,7 +212,8 @@ internal sealed class DisableSafeties : ModifierCard
                 ],
                 isFlimsy = true
             },
-            new AWholeHandDirectionalCardsModifierWrapper {
+            new AModifierWrapper {
+                selector = new WholeHandDirectionalSelector(),
                 modifiers = [
                     ModEntry.Instance.Api.MakeMAddAction(
                         new AStatus() { status = Status.heat, targetPlayer = true, statusAmount = upgrade == Upgrade.A ? 3 : 2 },

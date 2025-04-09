@@ -1,4 +1,5 @@
-﻿using clay.PhilipTheMechanic.Actions.CardModifiers;
+﻿using clay.PhilipTheMechanic.Actions;
+using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using clay.PhilipTheMechanic.Artifacts;
 using clay.PhilipTheMechanic.Cards;
@@ -21,18 +22,24 @@ public static class ModifierCardsController
     static IModHelper Helper => ModEntry.Instance.Helper;
     internal static bool SuppressActionMods = false;
 
-    internal static readonly string FlimsyIdsKey = "FlimsyIds";
-
     private static List<(int, Upgrade)> cardCache = [];
+
     private static List<List<CardModifier>> _LastCachedModifiers = [[]];
     public static List<List<CardModifier>> LastCachedModifiers {
         get { return _LastCachedModifiers; }
         private set { _LastCachedModifiers = value; }
     }
 
+    private static Dictionary<int, Dictionary<int, bool>> _ModifierUsage = [];
+    public static Dictionary<int, Dictionary<int, bool>> ModifierUsage {
+        get { return _ModifierUsage; }
+        private set { _ModifierUsage = value; }
+    }
+
 
     public static void InvalidateCache() {
-        cardCache = [];
+        cardCache.Clear();
+        ModifierUsage.Clear();
     }
 
     public static List<List<CardModifier>> CalculateCardModifiers(State s, Combat c)
@@ -41,66 +48,89 @@ public static class ModifierCardsController
 
         List<List<AModifierWrapper>> modifierSources = Enumerable.Range(0, c.hand.Count).Select(l => new List<AModifierWrapper>()).ToList();
         List<List<CardModifier>> modificationList = Enumerable.Range(0, c.hand.Count).Select(l => new List<CardModifier>()).ToList();
+        ModifierUsage.Clear();
+        for (int i = 0; i < c.hand.Count; i++) ModifierUsage[i] = [];
         
-        bool extendMods = false; bool saveFlimsy = false;
         int ind;
-        int latestDeleteIndex = -1;
+        // int latestDeleteIndex = -1;
+
+        bool hasHotChocolate = s.EnumerateAllArtifacts().Any(artifact => artifact is HotChocolate);
+        int range = hasHotChocolate ? 2 : 1;
+
         for (ind = 0; ind < c.hand.Count; ind++) {
             Card card = c.hand[ind];
+            Deck deck = card.GetMeta().deck;
 
             if (StatusMeta.deckToMissingStatus.TryGetValue(card.GetMeta().deck, out var status) && s.ship.Get(status) > 0) continue;
 
-            int skip = 0;
-            if (card is ExtenderMod emod) {
-                extendMods |= emod.ExtendsMods();
-                saveFlimsy |= emod.SaveFlimsy();
-                if (latestDeleteIndex != -1) {
-                    for (int j = 0; j < ind; j++) {
-                        if (j != latestDeleteIndex) modifierSources[j] = [];
-                        skip += c.hand.Count;
-                    }
-                }
-            } else if (card is ModifierCard modifierCard) {
+            // int skip = 0;
+            if (card is ModifierCard modifierCard) {
                 foreach (AModifierWrapper wrapper in modifierCard.GetModifierActionsOverriden(s, c))
                 {
+                    ModifierCard.SetSource(wrapper, deck, card.uuid);
                     modifierSources[ind].Add(wrapper);
-                    foreach (CardModifier modifier in wrapper.modifiers) {
-                        if (modifier is MDeleteActions) {
-                            latestDeleteIndex = ind;
-                            if (extendMods || wrapper is AWholeHandCardsModifierWrapper w) {
-                                for (int j = 0; j < ind; j++) modifierSources[j] = [];
-                                skip += c.hand.Count;
-                            } else if (wrapper is ASingleDirectionalCardModifierWrapper sd) {
-                                if (sd.left && ind > 0) modifierSources[ind-1] = [];
-                                else if (!sd.left && ind < c.hand.Count - 1) skip++;
-                            } else if (wrapper is AWholeHandDirectionalCardsModifierWrapper wh) {
-                                if (wh.left) {
-                                    for (int j = 0; j < ind; j++) modifierSources[j] = [];
-                                }
-                                else if (!wh.left && ind < c.hand.Count - 1) skip += c.hand.Count;
-                            } else if (wrapper is ANeighboringCardsModifierWrapper) {
-                                if (ind > 0) modifierSources[ind-1] = [];
-                                skip++;
-                            }
-                        }
-                    }
+                    // Removes modifiers from overwritten cards
+                //     if (wrapper.overwrites) {
+                //         latestDeleteIndex = ind;
+                //         if (extendMods || wrapper is AWholeHandCardsModifierWrapper w) {
+                //             for (int j = 0; j < ind; j++) modifierSources[j] = [];
+                //             skip += c.hand.Count;
+                //         } else if (wrapper is ASingleDirectionalCardModifierWrapper sd) {
+                //             if (sd.left && ind > 0) {
+                //                 if (hasHotChocolate && ind-1 > 0) modifierSources[ind-2] = [];
+                //                 modifierSources[ind-1] = [];
+                //             }
+                //             else if (!sd.left && ind < c.hand.Count - 1) {
+                //                 if (hasHotChocolate) skip++;
+                //                 skip++;
+                //             }
+                //         } else if (wrapper is AWholeHandDirectionalCardsModifierWrapper wh) {
+                //             if (wh.left) {
+                //                 for (int j = 0; j < ind; j++) modifierSources[j] = [];
+                //             }
+                //             else if (!wh.left && ind < c.hand.Count - 1) skip += c.hand.Count;
+                //         } else if (wrapper is ANeighboringCardsModifierWrapper) {
+                //             if (ind > 0) modifierSources[ind-1] = [];
+                //             skip++;
+                //             if (hasHotChocolate) {
+                //                 if (ind-1 > 0) modifierSources[ind-2] = [];
+                //                 skip++;
+                //             }
+                //         }
+                //     }
                 }
             }
-            ind += skip;
+            // ind += skip;
         }
 
-        bool hasHotChocolate = s.EnumerateAllArtifacts().Any(artifact => artifact is HotChocolate);
-
+        List<(int i, AModifierWrapper wrapper, CardModifier modifier)> flattened = [];
+        for (ind = 0; ind < c.hand.Count; ind++) {
+            flattened.AddRange(modifierSources[ind].SelectMany(item => item.GetCardModifiers().Where(m => m is IModifierModifier).Select<CardModifier, (int, AModifierWrapper, CardModifier)>(i => (ind, item, i))));
+        }
+        flattened = [.. flattened.OrderByDescending(item => item.modifier.Priority)];
+        foreach ((int i, AModifierWrapper wrapper, CardModifier modifier) in flattened) {
+            Card card = c.hand[i];
+            for (int j = 0; j < c.hand.Count; j++) {
+                if (wrapper.selector.IsTargeting(card, i, j, c, range)) {
+                    (modifier as IModifierModifier)!.TransformModifiers(modifierSources[j], s, c, card, null);
+                }
+            }
+        }
         for (ind = 0; ind < c.hand.Count; ind++) {
             Card card = c.hand[ind];
+            int sourceUuid = card.uuid;
             foreach (AModifierWrapper wrapper in modifierSources[ind])
             {
+                List<CardModifier> modifiers = wrapper.GetCardModifiers();
+                modifiers.ForEach(mod => mod.sourceUuid = sourceUuid);
+                if (wrapper.isFlimsy) modifiers.ForEach(mod => mod.fromFlimsy = mod.IgnoresFlimsy);
+
                 for (int j = 0; j < c.hand.Count; j++) {
-                    if ((extendMods && ind != j) || (wrapper.IsTargeting(card, ind, j, c, hasHotChocolate ? 2 : 1) && wrapper.modifiers.Count > 0)) {
-                        modificationList[j].AddRange(wrapper.modifiers);
-                        if (!saveFlimsy && wrapper.isFlimsy) {
-                            modificationList[j].Last().flimsyUuids.Add(card.uuid);
-                        }
+                    if (wrapper.selector.IsTargeting(card, ind, j, c, range) && modifiers.Count > 0) {
+                        modificationList[j].AddRange(modifiers);
+                        // if (wrapper.isFlimsy) {
+                        //     modificationList[j].Last().flimsyUuids.Add(card.uuid);
+                        // }
                     }
                 }
             }
@@ -108,6 +138,19 @@ public static class ModifierCardsController
 
         for (ind = 0; ind < modificationList.Count; ind++) {
             modificationList[ind].Sort((mod1, mod2) => mod2.Priority.CompareTo(mod1.Priority));
+        }
+
+        // Dummy modification to description cards to apply stickers
+        for (ind = 0; ind < c.hand.Count; ind++) {
+            Card card = c.hand[ind];
+            if (!ModifierCardsRenderingController.IsDescriptionCard(card, s, c)) continue;
+
+            foreach (CardModifier modifier in modificationList[ind]) {
+                if (modifier is ICardActionModifier ca) {
+                    ca.TransformActions(card.GetActions(s, c), s, c, card, true, out bool success);
+                    if (success) MarkModified(ind, modifier.sourceUuid, modifier.fromFlimsy);
+                }
+            }
         }
 
         LastCachedModifiers = modificationList;
@@ -130,14 +173,25 @@ public static class ModifierCardsController
         .PointerMatcher(SequenceMatcherRelativeElement.Last)
         .Advance(1)
         .ExtractLabels(out var extractedLabels).AddLabel(label)
-        .Insert(SequenceMatcherPastBoundsDirection.Before, SequenceMatcherInsertionResultingBounds.IncludingInsertion, new List<CodeInstruction> {
+        .Insert(SequenceMatcherPastBoundsDirection.Before, SequenceMatcherInsertionResultingBounds.IncludingInsertion, [
             new CodeInstruction(OpCodes.Dup).WithLabels(extractedLabels),
-            new(OpCodes.Isinst, typeof(ADirectionalCardModifierWrapper)),
+            new(OpCodes.Call, AccessTools.DeclaredMethod(typeof(ModifierCardsController), nameof(IsFlippableMod))),
             new(OpCodes.Brfalse, label),
             new(OpCodes.Ldc_I4_1),
             stLoc
-        })
+        ])
         .AllElements();
+    }
+
+    private static bool IsFlippableMod(CardAction action) {
+        return action is AModifierWrapper wrapper && wrapper.selector is DirectionalSelector;
+    }
+
+    private static void MarkModified(int handIndex, int sourceUuid, bool flimsy) {
+        if (handIndex < 0 || handIndex >= ModifierUsage.Count) return;
+
+        var value = ModifierUsage[handIndex];
+        value[sourceUuid] = flimsy || value.GetValueOrDefault(sourceUuid, false);
     }
 
 
@@ -164,16 +218,24 @@ public static class ModifierCardsController
         CalculateCardModifiers(s, c);
 
         int index = c.hand.IndexOf(__instance);
-        if (index < 0 || index >= LastCachedModifiers.Count) return;
+        if (index < 0 || index >= LastCachedModifiers.Count || LastCachedModifiers[index].Count == 0) return;
+
+        List<AModifierWrapper>? wrappers = null;
 
         foreach (CardModifier modifier in LastCachedModifiers[index]) {
+            if (modifier is IModifierModifier mo) {
+                wrappers ??= __result.TakeWhile(a => a is AModifierWrapper).Cast<AModifierWrapper>().ToList();
+                mo.TransformModifiers(wrappers, s, c, __instance, index, out bool success);
+                if (success) MarkModified(index, modifier.sourceUuid, modifier.fromFlimsy);
+            }
             if (modifier is ICardActionModifier ca) {
-                __result = ca.TransformActions(__result, s, c, __instance, isDuringRender);
+                __result = ca.TransformActions(__result, s, c, __instance, isDuringRender, out bool success);
+                if (success) MarkModified(index, modifier.sourceUuid, modifier.fromFlimsy);
             }
         }
 
-        if (!isDuringRender) {
-            string dialogueSelector = $".{__instance.GetMeta().deck.Key()}Card_ModifiedBy_{__instance.GetMeta().deck.Key()}";
+        if (!isDuringRender && LastCachedModifiers[index].Count > 0) {
+            string dialogueSelector = $".{__instance.GetMeta().deck.Key()}Card_ModifiedBy_{LastCachedModifiers[index].Last().sourceDeck.Key()}";
 
             __result.Add(ModEntry.Instance.KokoroApi.Actions.MakeHidden(new ADummyAction { dialogueSelector = dialogueSelector }));
         }
@@ -184,7 +246,7 @@ public static class ModifierCardsController
     [HarmonyPatch(typeof(Card), nameof(Card.GetDataWithOverrides))]
     private static void ApplyDataModifiers(Card __instance, ref CardData __result, State state)
     {
-        if (state.route is not Combat c || !ModifiersCurrentlyApply(state, c, __instance)) return;
+        if (MG.inst.g.metaRoute != null || state.route is not Combat c || !ModifiersCurrentlyApply(state, c, __instance)) return;
 
         CalculateCardModifiers(state, c);
 
@@ -193,31 +255,40 @@ public static class ModifierCardsController
 
         foreach (CardModifier modifier in LastCachedModifiers[index]) {
             if (modifier is ICardDataModifier cd) {
-                __result = cd.TransformData(__result, state, c, __instance, isDuringRender);
+                __result = cd.TransformData(__result, state, c, __instance, isDuringRender, out bool success);
+                if (success) MarkModified(index, modifier.sourceUuid, modifier.fromFlimsy);
             }
         }
     }
 
     public static bool ModifiersCurrentlyApply(State s, Combat c, Card card)
     {
-        return !(c == DB.fakeCombat || (isDuringRender && card.drawAnim != 1));
+        return !(s.routeOverride != null || c == DB.fakeCombat || (isDuringRender && card.drawAnim != 1));
     }
 
     public static void HandleFlimsyModifiers(Card playedCard, State s, Combat c, int handPosition)
     {
-        if (handPosition < 0 || handPosition >= LastCachedModifiers.Count) return;
+        if (handPosition < 0 || handPosition >= ModifierUsage.Count) return;
 
-        List<Card> cardsToDiscard = [];
-        foreach (CardModifier modifier in LastCachedModifiers[handPosition]) {
-            foreach (int uuid in modifier.flimsyUuids) {
-                Card? foundCard = s.FindCard(uuid);
-                if (foundCard != null) cardsToDiscard.Add(foundCard);
-            }
-        }
+        // List<Card> cardsToDiscard = [];
+        // foreach (CardModifier modifier in LastCachedModifiers[handPosition]) {
+        //     foreach (int uuid in modifier.flimsyUuids) {
+        //         Card? foundCard = s.FindCard(uuid);
+        //         if (foundCard != null) cardsToDiscard.Add(foundCard);
+        //     }
+        // }
 
-        foreach (Card card in cardsToDiscard)
+        // foreach (Card card in cardsToDiscard)
+        // {
+        //     if (c.hand.Contains(card)) {
+        //         s.RemoveCardFromWhereverItIs(card.uuid);
+        //         c.SendCardToDiscard(s, card);
+        //     }
+        // }
+        foreach ((int uuid, bool flimsy) in ModifierUsage[handPosition])
         {
-            if (c.hand.Contains(card)) {
+            if (!flimsy) continue;
+            if (c.hand.First(card => card.uuid == uuid) is { } card) {
                 s.RemoveCardFromWhereverItIs(card.uuid);
                 c.SendCardToDiscard(s, card);
             }

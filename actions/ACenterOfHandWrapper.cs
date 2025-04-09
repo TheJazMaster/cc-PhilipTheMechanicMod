@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Shockah;
+using Nickel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,15 +47,14 @@ public class ACenterOfHandWrapper : AMultiIconAction
     }
 
     public override List<Tooltip> GetTooltips(State s) => [
-        new CustomTTGlossary(
-            CustomTTGlossary.GlossaryType.action,
-            () => isCenter
+        new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}{isCenter}") {
+            TitleColor = Colors.action,
+            Icon = isCenter
                 ? ModEntry.Instance.sprites["icon_card_is_centered"]
                 : ModEntry.Instance.sprites["icon_card_is_not_centered"],
-            () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "name"]),
-            () => ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "description"]),
-            key: (GetType().FullName ?? GetType().Name) + isCenter.ToString()
-        ),
+            Title = ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "name"]),
+            Description = ModEntry.Instance.Localizations.Localize(["condition", isCenter ? "CCardCentered" : "CCardNotCentered", "description"]),
+        },
         .. actions.SelectMany(a => a.GetTooltips(s)).ToList()
         
     ];

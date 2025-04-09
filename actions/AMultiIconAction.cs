@@ -14,11 +14,9 @@ namespace clay.PhilipTheMechanic.Actions;
 [HarmonyPatch(typeof(Card))]
 public abstract class AMultiIconAction : CardAction
 {
-    public List<Tooltip>? tooltips;
-    public bool renderVarAssignment;
     public override List<Tooltip> GetTooltips(State s)
     {
-        return tooltips ?? [];
+        return [];
     }
 
     public override Icon? GetIcon(State s)
@@ -65,7 +63,7 @@ public abstract class AMultiIconAction : CardAction
 
     [HarmonyTranspiler]
     [HarmonyPatch(nameof(Card.RenderAction))]
-    public static IEnumerable<CodeInstruction> MakeModifierCardsFlippable(IEnumerable<CodeInstruction> instructions, ILGenerator il, MethodBase originalMethod)
+    public static IEnumerable<CodeInstruction> AdjustRenderingOffset(IEnumerable<CodeInstruction> instructions, ILGenerator il, MethodBase originalMethod)
     {
         Label label = il.DefineLabel();
         return new SequenceBlockMatcher<CodeInstruction>(instructions).Find(SequenceBlockMatcherFindOccurence.First, SequenceMatcherRelativeBounds.WholeSequence,

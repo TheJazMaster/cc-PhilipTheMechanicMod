@@ -18,7 +18,8 @@ namespace clay.PhilipTheMechanic
         {
             Directional,
             Directional_WholeHand,
-            Neighboring
+            Neighboring,
+            All
         }
 
         enum CardModifierTargetDirection
@@ -33,7 +34,7 @@ namespace clay.PhilipTheMechanic
             public CardModifierTargetDirection direction;
         }
 
-        AModifierWrapper MakeAModifierWrapper(CardModifierTarget target, List<CardModifier> modifiers, bool isFlimsy = false, bool left = false);
+        AModifierWrapper MakeAModifierWrapper(CardModifierTarget target, List<CardModifier> modifiers, bool left = false, bool isFlimsy = false, bool overwrites = false);
 
         CardModifier MakeMAddAction(CardAction action, Spr? stickerSprite);
         CardModifier MakeMBuffAttack(int amount);
@@ -52,8 +53,12 @@ namespace clay.PhilipTheMechanic
 
     public abstract class CardModifier
     {
-        public List<int> flimsyUuids = [];
+        public Deck sourceDeck = Deck.colorless;
+        // public List<int> flimsyUuids = [];
+        public int sourceUuid;
+        public bool fromFlimsy;
         public abstract double Priority { get; }
+        public abstract bool IgnoresFlimsy { get; }
         virtual public bool RequestsStickyNote() { return false; }
         virtual public bool MandatesStickyNote() { return false; }
         virtual public Spr? GetSticker(State s) { return null; }
@@ -64,11 +69,22 @@ namespace clay.PhilipTheMechanic
 
     public interface ICardActionModifier
     {
-        List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering) { return actions; }
+        List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering) 
+            => TransformActions(actions, s, c, card, isRendering, out _);
+        List<CardAction> TransformActions(List<CardAction> actions, State s, Combat c, Card card, bool isRendering, out bool success);
     }
 
     public interface ICardDataModifier
     {
-        CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering) { return data; }
+        CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
+            => TransformData(data, s, c, card, isRendering, out _);
+        CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering, out bool success);
+    }
+
+    public interface IModifierModifier
+    {
+        void TransformModifiers(List<AModifierWrapper> wrappers, State s, Combat c, Card card, int? index)
+            => TransformModifiers(wrappers, s, c, card, index, out _);
+        void TransformModifiers(List<AModifierWrapper> wrappers, State s, Combat c, Card card, int? index, out bool success);
     }
 }

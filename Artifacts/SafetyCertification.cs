@@ -11,8 +11,8 @@ namespace clay.PhilipTheMechanic.Artifacts;
 
 internal sealed class SafetyCertification : Artifact, IRegisterableArtifact
 {
-    int lastHandCount = -1;
-    int triggers = 0;
+    public int lastHandCount = -1;
+    public int triggers = 0;
     static readonly int MAX_TRIGGERS = 3;
     public static ArtifactPool[] GetPools() => [ArtifactPool.Common];
     public static Spr GetSpriteForRegistering() => ModEntry.Instance.sprites["artifact_safety_cert"];

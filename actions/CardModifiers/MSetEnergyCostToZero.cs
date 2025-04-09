@@ -1,5 +1,5 @@
-﻿using Shockah;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Nickel;
 
 namespace clay.PhilipTheMechanic.Actions.CardModifiers;
 
@@ -11,19 +11,19 @@ public class MSetEnergyCostToZero : BasicCardModifier, ICardDataModifier
 
 	public override double Priority => Priorities.MODIFY_DATA_FAVORABLE;
 
-    public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
+    public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering, out bool success)
     {
+        success = data.cost != 0;
         data.cost = 0;
         return data;
     }
 
     public override List<Tooltip> GetTooltips(State s) => [
-        new CustomTTGlossary(
-            CustomTTGlossary.GlossaryType.actionMisc,
-            () => GetIcon()!.Value!.path,
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
-            key: GetType().FullName ?? GetType().Name
-        )
+        new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}") {
+            TitleColor = Colors.keyword,
+            Icon = GetIcon()!.Value!.path,
+            Title = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+            Description = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description"]),
+        }
     ];
 }

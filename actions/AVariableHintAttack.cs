@@ -1,9 +1,9 @@
-﻿using Shockah;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nickel;
 
 namespace clay.PhilipTheMechanic.Actions
 {
@@ -21,13 +21,12 @@ namespace clay.PhilipTheMechanic.Actions
         public override List<Tooltip> GetTooltips(State s)
         {
             return [
-                new CustomTTGlossary(
-                    CustomTTGlossary.GlossaryType.action,
-                    () => StableSpr.icons_attack,
-                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "name"]),
-                    () => ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "description"]),
-                    key: GetType().FullName ?? GetType().Name
-                )
+                new GlossaryTooltip($"action.{GetType().Namespace!}::{GetType().Name}") {
+                    TitleColor = Colors.action,
+                    Icon = StableSpr.icons_attack,
+                    Title = ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "name"]),
+                    Description = ModEntry.Instance.Localizations.Localize(["action", "AVariableHintAttack", "description"]),
+                }
             ];
         }
     }

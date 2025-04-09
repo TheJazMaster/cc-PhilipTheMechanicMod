@@ -3,9 +3,6 @@ using clay.PhilipTheMechanic.Actions.CardModifiers;
 using clay.PhilipTheMechanic.Actions.ModifierWrapperActions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace clay.PhilipTheMechanic.Cards;
 
@@ -46,7 +43,8 @@ internal sealed class FrenzyMod : ModifierCard, IRegisterableCard
             );
 
         return [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = modifiers,
                 isFlimsy = true
             }
@@ -82,7 +80,8 @@ internal sealed class LoosenScrews : ModifierCard, IRegisterableCard
             stickerSprite = ModEntry.Instance.sprites["icon_sticker_add_card"]
         };
         return [
-			new ANeighboringCardsModifierWrapper {
+			new AModifierWrapper {
+                selector = new NeighboringSelector(),
                 modifiers = [
                     energyReductionMod,
                     penaltyMod,
@@ -120,15 +119,18 @@ internal sealed class MarauderMod : ModifierCard, IRegisterableCard
         if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMBuffAttack(1));
 
         return [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = modifiers
             },
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [new MAddAction {
                     action = new AMove {
                         dir = flipped ? -1 : 1,
                         targetPlayer = true
-                    }
+                    },
+                    stickerSprite = ModEntry.Instance.sprites[flipped ? "icon_sticker_move_left" : "icon_sticker_move_right"]
                 }]
             }
         ];
@@ -152,7 +154,8 @@ internal sealed class SignalBoost : ModifierCard, IRegisterableCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
     {
         return [
-			new ASingleDirectionalCardModifierWrapper {
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
                 modifiers = [
                     ModEntry.Instance.Api.MakeMPlayTwice(),
                     new MAddAction {

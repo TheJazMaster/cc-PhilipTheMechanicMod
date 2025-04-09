@@ -32,7 +32,15 @@
 		},
 		"APlayTwiceDummy": {
 			"name": "Double Actions",
-			"description": "All previous actions will activate again."
+			"description": "All previous actions will play again."
+		},
+		"Flimsy": {
+			"name": "Flimsy",
+			"description": "<c=downside>When a card modified by this is played, discard this card.</c>"
+		},
+		"Overwrite": {
+			"name": "Overwrite",
+			"description": "<c=downside>Also replaces all pre-existing actions</c> and makes the card playable, if it wasn't already."
 		},
 		"ADirectionalMod": {
 			"name": {
@@ -40,18 +48,8 @@
 				"right": "Modify Card to the Right"
 			},
 			"description": {
-				"left": "Add the following effects to the card to the left. They do NOT trigger when this card is played.",
-				"right": "Add the following effects to the card to the right. They do NOT trigger when this card is played."
-			}
-		},
-		"ADirectionalMod_Flimsy": {
-			"name": {
-				"left": "Modify Card to the Left (Flimsy)",
-				"right": "Modify Card to the Right (Flimsy)"
-			},
-			"description": {
-				"left": "Modify the card to the left. When a card modified by this is played, discard this card.",
-				"right": "Modify the card to the right. When a card modified by this is played, discard this card."
+				"left": "While this card is in your hand, add the following effects to the card to the <c=keyword>left</c>.",
+				"right": "While this card is in your hand, add the following effects to the card to the <c=keyword>right</c>."
 			}
 		},
 		"AWholeHandDirectionalMod": {
@@ -60,39 +58,21 @@
 				"right": "  Modify All Cards to the Right"
 			},
 			"description": {
-				"left": "Add the following effects to all cards to the left. They do NOT trigger when this card is played.",
-				"right": "Add the following effects to all cards to the right. They do NOT trigger when this card is played."
-			}
-		},
-		"AWholeHandDirectionalMod_Flimsy": {
-			"name": {
-				"left": "  Modify All Cards to the Left (Flimsy)",
-				"right": "  Modify All Cards to the Right (Flimsy)"
-			},
-			"description": {
-				"left": "Modify all cards to the left. When a card modified by this is played, discard this card.",
-				"right": "Modify all cards to the right. When a card modified by this is played, discard this card."
+				"left": "While this card is in your hand, add the following effects to <c=keyword>all</c> cards to the <c=keyword>left</c>.",
+				"right": "While this card is in your hand, add the following effects to <c=keyword>all</c> cards to the <c=keyword>right</c>."
 			}
 		},
 		"AWholeHandMod": {
 			"name": "     Modify All Other Cards",
-			"description": "Add the following effects to all other cards. They do NOT trigger when this card is played."
-		},
-		"AWholeHandMod_Flimsy": {
-			"name": "     Modify All Other Cards (Flimsy)",
-			"description": "Modify all other cards. When a card modified by this is played, discard this card."
+			"description": "While this card is in your hand, add the following effects to <c=keyword>all</c> other hand cards."
 		},
 		"ANeighborsMod": {
 			"name": "  Modify Neighboring Cards",
-			"description": "Add the following effects to both adjacent cards. They do NOT trigger when this card is played."
-		},
-		"ANeighborsMod_Flimsy": {
-			"name": "  Modify Neighboring Cards (Flimsy)",
-			"description": "Modify both adjacent cards. When a card modified by this is played, discard this card."
+			"description": "While this card is in your hand, add the following effects to <c=keyword>both adjacent</c> cards."
 		},
 		"AVariableHintAttack": {
 			"name": "Total Attack Value",
-			"description": "Sum of all attack damage on the card"
+			"description": "Sum of all attack damage on the card."
 		}
 	},
 	"modifier": {
@@ -106,7 +86,7 @@
 		},
 		"MDeleteActions": {
 			"name": "Remove Actions",
-			"description": "Removes all pre-existing actions on this card."
+			"description": "Removes all pre-existing actions on this card. Also makes it playable (if it's <c=cardtrait>unplayable</c>)."
 		},
 		"MExhaust": {
 			"True": {
@@ -124,11 +104,15 @@
 		},
 		"MExtendModifiers": {
 			"name": "Extend Modifiers",
-			"description": "The modified cards' modifiers affect ALL other cards."
+			"description": {
+				"None": "The modified cards' modifiers affect ALL other cards.",
+				"True": "The modified cards' modifiers affect ALL other cards and are <c=downside>flimsy</c>.",
+				"False": "The modified cards' modifiers affect ALL other cards and lose <c=downside>flimsy</c>."
+			} 
 		},
 		"MPlayTwice": {
 			"name": "Play Twice",
-			"description": "Makes all pre-existing actions on this card take effect twice."
+			"description": "All pre-existing actions on this card get played again."
 		},
 		"MRecycle": {
 			"name": "Make Recycle",
@@ -198,25 +182,25 @@
 			"name": "ANGLE GRINDER",
 			"description": "Gain 3 <c=status>REDRAW</c> at the start of combat."
 		},
+		"HotChocolate": {
+			"name": "HOT CHOCOLATE",
+			"description": "<c=card>Mods</c> that only affect adjacent cards now also affect cards <c=keyword>2</c> positions away."
+		},
 		"EndlessToolbox": {
 			"name": "ENDLESS TOOLBOX",
 			"description": "The first 2 times you redraw each turn, draw an extra card."
+		},
+		"StepLadder": {
+			"name": "STEP LADDER",
+			"description": "On pickup, add an <c=card>Extender Mod</c> to your deck."
 		},
 		"SelfPropellingCannons": {
 			"name": "SELF-PROPELLING CANNONS",
 			"description": "Your cannons gain brittle. At the end of each turn, launch a missile from each cannon."
 		},
-		"HotChocolate": {
-			"name": "HOT CHOCOLATE",
-			"description": "<c=card>Mods</c> that only affect adjacent cards now also affect cards <c=keyword>2</c> positions away."
-		},
 		"ScrapMagnet": {
 			"name": "SCRAP MAGNET",
 			"description": "Twice per turn, redraw the leftmost card in your hand for free."
-		},
-		"StepLadder": {
-			"name": "STEP LADDER",
-			"description": "On pickup, add an <c=card>Extender Mod</c> to your deck."
 		}
 	},
 	"card": {

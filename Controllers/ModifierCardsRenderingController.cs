@@ -66,45 +66,47 @@ namespace clay.PhilipTheMechanic.Controllers
 
             ModifierCardsController.CalculateCardModifiers(s, c);
             List<CardModifier> modifiers = ModifierCardsController.LastCachedModifiers[index];
+            Dictionary<int, bool> successfulMod = ModifierCardsController.ModifierUsage[index];
                 
             //
             // draw stickers
             //
-            if (!ShouldStickyNote(__instance, s, c, modifiers, index))
-            {
+            // if (!ShouldStickyNote(__instance, s, c, modifiers, index))
+            // {
                 // sticker goes at (50, 8) - 0.5*sticker.dimensions
                 //var DEG_60 = 1.0472;
-                Vec vec = posOverride ?? __instance.pos;
-                Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
-                Rect value = rect;
-                if (overrideWidth.HasValue)
-                {
-                    rect.w = overrideWidth.Value;
-                }
-
-                Box box = g.Push(null, rect);
-                Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
-                var DEG_30 = 0.5236;
-                int stickerCount = 0;
-                double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
-                double stickerOriginY = 8 - 7.5 + 5;
-
-                var stickers = modifiers
-                    .Select(modifier => modifier.GetSticker(s))
-                    .Where(sticker => sticker != null)
-                    .Select(sticker => sticker!.Value);
-
-                foreach (var sticker in stickers)
-                {
-                    var seed = __instance.uuid + stickerCount * 700;
-                    var xRandOff = UuidToRandRange(seed, -6, 6);
-                    var yRandOff = UuidToRandRange(seed + 37, -3, 10);
-                    var randRotation = UuidToRandRange(seed, -DEG_30, DEG_30);
-                    Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
-                    stickerCount++;
-                }
-                g.Pop();
+            Vec vec = posOverride ?? __instance.pos;
+            Rect rect = (__instance.GetScreenRect() + vec + new Vec(0.0, __instance.hoverAnim * -2.0 + Mutil.Parabola(__instance.flipAnim) * -10.0 + Mutil.Parabola(Math.Abs(__instance.flopAnim)) * -10.0 * Math.Sign(__instance.flopAnim))).round();
+            Rect value = rect;
+            if (overrideWidth.HasValue)
+            {
+                rect.w = overrideWidth.Value;
             }
+
+            var stickers = modifiers
+                .Where(modifier => !modifier.MandatesStickyNote() && successfulMod.ContainsKey(modifier.sourceUuid))
+                .Select(modifier => modifier.GetSticker(s))
+                .Where(sticker => sticker != null)
+                .Select(sticker => sticker!.Value);
+
+            Box box = g.Push(null, rect);
+            Vec vec2 = box.rect.xy + new Vec(0.0, 1.0);
+            var DEG_30 = 0.5236;
+            int stickerCount = 0;
+            double stickerOriginX = 50 - 7.5; // sticker radius is 7.5, center should be at 50, relative to card pos
+            double stickerOriginY = 8 - 7.5 + 5;
+
+            foreach (var sticker in stickers)
+            {
+                var seed = __instance.uuid + stickerCount * 700;
+                var xRandOff = UuidToRandRange(seed, -6, 0) + 4*stickerCount;
+                var yRandOff = UuidToRandRange(seed + 37, -3, 10);
+                var randRotation = UuidToRandRange(seed, -DEG_30, DEG_30);
+                Draw.Sprite(sticker, vec2.x + stickerOriginX + xRandOff, vec2.y + stickerOriginY + yRandOff, rotation: randRotation, originPx: new Vec() { x = 7, y = 7 });
+                stickerCount++;
+            }
+            g.Pop();
+        // }
 
         }
 
@@ -147,7 +149,7 @@ namespace clay.PhilipTheMechanic.Controllers
 
         // Cache whether a card is a description card forever
         private static readonly Dictionary<(int, Upgrade), bool> descriptionCard = [];
-        private static bool IsDescriptionCard(Card card, State s, Combat c) {
+        internal static bool IsDescriptionCard(Card card, State s, Combat c) {
             if (descriptionCard.TryGetValue((card.uuid, card.upgrade), out bool value)) return value;
 
             if (recursion) return false;

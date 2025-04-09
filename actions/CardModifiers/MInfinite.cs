@@ -1,5 +1,5 @@
-﻿using Shockah;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Nickel;
 
 namespace clay.PhilipTheMechanic.Actions.CardModifiers;
 
@@ -13,20 +13,20 @@ public class MInfinite : BasicCardModifier, ICardDataModifier
 
 	public override double Priority => value ? Priorities.MODIFY_DATA_FAVORABLE : Priorities.MODIFY_DATA_UNFAVORABLE;
 
-    public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering)
+    public CardData TransformData(CardData data, State s, Combat c, Card card, bool isRendering, out bool success)
     {
+        success = data.infinite != value;
         data.infinite = value;
         return data;
     }
 
     public override List<Tooltip> GetTooltips(State s) => [
-        new CustomTTGlossary(
-            CustomTTGlossary.GlossaryType.actionMisc,
-            () => GetIcon()!.Value!.path,
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "name"]),
-            () => ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "description"]),
-            key: GetType().FullName ?? GetType().Name
-        ),
+        new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}") {
+            TitleColor = Colors.keyword,
+            Icon = GetIcon()!.Value!.path,
+            Title = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "name"]),
+            Description = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, value.ToString(), "description"]),
+        },
         new TTGlossary("cardtrait.infinite")
     ];
 }
