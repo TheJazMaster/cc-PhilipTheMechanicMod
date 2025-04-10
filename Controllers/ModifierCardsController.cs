@@ -59,14 +59,16 @@ public static class ModifierCardsController
 
         for (ind = 0; ind < c.hand.Count; ind++) {
             Card card = c.hand[ind];
-            Deck deck = card.GetMeta().deck;
-
-            if (StatusMeta.deckToMissingStatus.TryGetValue(card.GetMeta().deck, out var status) && s.ship.Get(status) > 0) continue;
 
             // int skip = 0;
             if (card is ModifierCard modifierCard) {
+                Deck deck = card.GetMeta().deck;
+
+                if (StatusMeta.deckToMissingStatus.TryGetValue(deck, out var status) && s.ship.Get(status) > 0) continue;
                 foreach (AModifierWrapper wrapper in modifierCard.GetModifierActionsOverriden(s, c))
                 {
+                    if (wrapper.disabled) continue;
+                    
                     ModifierCard.SetSource(wrapper, deck, card.uuid);
                     modifierSources[ind].Add(wrapper);
                     // Removes modifiers from overwritten cards
@@ -123,7 +125,7 @@ public static class ModifierCardsController
             {
                 List<CardModifier> modifiers = wrapper.GetCardModifiers();
                 modifiers.ForEach(mod => mod.sourceUuid = sourceUuid);
-                if (wrapper.isFlimsy) modifiers.ForEach(mod => mod.fromFlimsy = mod.IgnoresFlimsy);
+                if (wrapper.isFlimsy) modifiers.ForEach(mod => mod.fromFlimsy = !mod.IgnoresFlimsy);
 
                 for (int j = 0; j < c.hand.Count; j++) {
                     if (wrapper.selector.IsTargeting(card, ind, j, c, range) && modifiers.Count > 0) {

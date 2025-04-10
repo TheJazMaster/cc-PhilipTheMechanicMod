@@ -140,10 +140,10 @@ internal sealed class OhNo : ModifierCard
 internal sealed class ExtenderMod : ModifierCard
 {
     public override CardData GetData(State state) => new() {
-        cost = 0,
-        unplayable = true,
-        art = StableSpr.cards_colorless,
-        retain = upgrade == Upgrade.B
+        cost = 1,
+        art = ModEntry.Instance.sprites[flipped ? "card_Extender_Mod_Flipped" : "card_Extender_Mod_Normal"],
+        recycle = upgrade == Upgrade.A,
+        floppable = true
     };
 
 	public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
@@ -151,10 +151,21 @@ internal sealed class ExtenderMod : ModifierCard
             selector = new WholeHandSelector(),
             modifiers = [
                 new MExtendModifiers {
-                    flimsyOverride = upgrade != Upgrade.A
+                    flimsyOverride = upgrade != Upgrade.B
 				}
             ],
-            isFlimsy = upgrade == Upgrade.A
+            isFlimsy = upgrade == Upgrade.B,
+            disabled = flipped
+        }
+    ];
+
+	public override List<CardAction> GetOtherActions(State s, Combat c) => [
+        new ADummyAction(),
+        new AStatus {
+            status = ModEntry.Instance.RedrawStatus,
+            statusAmount = 2,
+            targetPlayer = true,
+            disabled = !flipped
         }
     ];
 }

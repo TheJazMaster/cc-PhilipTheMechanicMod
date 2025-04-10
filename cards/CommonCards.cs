@@ -166,47 +166,23 @@ internal sealed class JettisonParts : ModifierCard, IRegisterableCard
     }
 }
 
-internal sealed class Oops : ModifierCard, IRegisterableCard
+internal sealed class Oops : Card, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.common;
     public static Spr GetArt() => ModEntry.Instance.sprites["card_Oops"];
 
     public override CardData GetData(State state) => new() {
         cost = 0,
-        unplayable = true,
-        flippable = upgrade == Upgrade.B
+        retain = upgrade == Upgrade.B
     };
 
-    private Spr GetSticker() => ModEntry.Instance.sprites[upgrade switch {
-        Upgrade.B => flipped ? "icon_sticker_move_left" : "icon_sticker_move_right",
-        _ => "icon_sticker_move_random"
-    }];
-
-    public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
-        ModEntry.Instance.Api.MakeAModifierWrapper
-        (
-            upgrade == Upgrade.A ? IPhilipAPI.CardModifierTarget.Directional_WholeHand : IPhilipAPI.CardModifierTarget.Neighboring,
-            [
-                ModEntry.Instance.Api.MakeMAddAction
-                (
-                    new AStatus() {
-                        status = ModEntry.Instance.RedrawStatus,
-                        targetPlayer = true,
-                        statusAmount = upgrade == Upgrade.A ? 2 : 1,
-                    },
-                    ModEntry.Instance.sprites["icon_sticker_redraw"]
-                ),
-                ModEntry.Instance.Api.MakeMAddAction
-                (
-                    new AMove() {
-                        dir = (upgrade == Upgrade.B && flipped) ? -1 : 1,
-                        isRandom = upgrade != Upgrade.B,
-                        targetPlayer = true
-                    },
-                    GetSticker()
-                )
-            ]
-        )
+	public override List<CardAction> GetActions(State s, Combat c) => [
+        new AMove {
+            dir = upgrade == Upgrade.A ? 3 : 2,
+            isRandom = true,
+            targetPlayer = true
+        },
+        new AShuffleHand()
     ];
 }
 
@@ -243,13 +219,10 @@ internal sealed class ReduceReuse : ModifierCard, IRegisterableCard
                 selector = new SingleDirectionalSelector(),
                 modifiers = [
                     new MRecycle(),
-                    new MAddAction {
-                        action = new ADrawCard {
-                            count = 1
-                        }
-                    }
+                    new MSetEnergyCostToZero(),
+                    new MExhaust { value = false }
                 ],
-                isFlimsy = true
+                overwrites = true
             }
         ],
         _ => [

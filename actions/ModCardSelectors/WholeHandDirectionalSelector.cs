@@ -53,6 +53,6 @@ public sealed class WholeHandDirectionalSelector : DirectionalSelector
                 Description = ModEntry.Instance.Localizations.Localize(["action", "AWholeHandDirectionalMod", "description", left ? "left" : "right"]),
             }
         ];
-        return AddAdditionalTooltips(ret, sprite, isFlimsy, overwrites);
+        return AddAdditionalTooltips(ret, sprite, isFlimsy, overwrites, "  ");
     }
 }

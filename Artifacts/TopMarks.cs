@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using clay.PhilipTheMechanic.Controllers;
 
 namespace clay.PhilipTheMechanic.Artifacts;
@@ -18,15 +19,18 @@ internal sealed class TopMarks : Artifact, IRegisterableArtifact
         if (handPosition < 0 || handPosition >= ModifierCardsController.LastCachedModifiers.Count) return;
 
         foreach (Artifact item in s.EnumerateAllArtifacts()) {
-            if (item is TopMarks artifact && artifact.active)
-            if (ModifierCardsController.LastCachedModifiers[handPosition].Count > 0) {
-                c.Queue(new AStatus {
-                    status = Status.drawNextTurn,
-                    statusAmount = 1,
-                    targetPlayer = true,
-                    artifactPulse = artifact.Key()
-                });
-                artifact.active = false;
+            if (item is TopMarks artifact && artifact.active) {
+                List<CardModifier> modifiers = ModifierCardsController.LastCachedModifiers[handPosition];
+                Dictionary<int, bool> successfulMod = ModifierCardsController.ModifierUsage[handPosition];
+                if (modifiers.Any(modifier => successfulMod.ContainsKey(modifier.sourceUuid))) {
+                    c.Queue(new AStatus {
+                        status = Status.drawNextTurn,
+                        statusAmount = 1,
+                        targetPlayer = true,
+                        artifactPulse = artifact.Key()
+                    });
+                    artifact.active = false;
+                }
             }
         }
     }

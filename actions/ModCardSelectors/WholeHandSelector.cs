@@ -35,6 +35,6 @@ public sealed class WholeHandSelector : ModCardSelector
                 Description = ModEntry.Instance.Localizations.Localize(["action", "AWholeHandMod", "description"]),
             }
         ];
-        return AddAdditionalTooltips(ret, sprite, isFlimsy, overwrites);
+        return AddAdditionalTooltips(ret, sprite, isFlimsy, overwrites, "     ");
     }
 }

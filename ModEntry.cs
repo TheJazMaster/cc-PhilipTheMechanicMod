@@ -70,10 +70,8 @@ public sealed class ModEntry : SimpleMod
         helper.Events.RegisterBeforeArtifactsHook(nameof(Artifact.OnPlayerPlayCard), (int energyCost, Deck deck, Card card, State state, Combat combat, int handPosition, int handCount) =>
         {
             // This is where hooks would trigger, if I knew how to make APIs  - Jaz
-
-            // TODO: make this check if the mod was actually meaningfully applied first. Make flimsy mods mark mod data on the card
-            ModifierCardsController.HandleFlimsyModifiers(card, state, combat, handPosition);
             TopMarks.CheckTrigger(state, combat, card, handPosition);
+            ModifierCardsController.HandleFlimsyModifiers(card, state, combat, handPosition);
 
             ModifierCardsController.CalculateCardModifiers(state, combat);
         }, 0);
@@ -198,7 +196,7 @@ public sealed class ModEntry : SimpleMod
             Meta = new()
             {
                 deck = PhilipDeck.Deck,
-                rarity = Rarity.common,
+                rarity = Rarity.rare,
                 upgradesTo = [Upgrade.A, Upgrade.B],
                 dontOffer = true
             },

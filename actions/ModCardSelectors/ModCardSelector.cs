@@ -12,19 +12,19 @@ namespace clay.PhilipTheMechanic.Actions.ModifierWrapperActions
 
         public virtual List<Tooltip> GetTooltips(State s, bool isFlimsy, bool overwrites) => [];
 
-        public List<Tooltip> AddAdditionalTooltips(List<Tooltip> existingTooltips, Spr sprite, bool isFlimsy, bool overwrites) {
+        public List<Tooltip> AddAdditionalTooltips(List<Tooltip> existingTooltips, Spr sprite, bool isFlimsy, bool overwrites, string padding = "") {
             if (isFlimsy)
                 existingTooltips.Add(new GlossaryTooltip($"modifier.{GetType().Namespace!}::Flimsy") {// + "FlimsyOverwrite"
                     TitleColor = Colors.downside,
                     Icon = sprite,
-                    Title = ModEntry.Instance.Localizations.Localize(["action", "Flimsy", "name"]),
+                    Title = padding + ModEntry.Instance.Localizations.Localize(["action", "Flimsy", "name"]),
                     Description = ModEntry.Instance.Localizations.Localize(["action", "Flimsy", "description"]),
                 });
             if (overwrites)
                 existingTooltips.Add(new GlossaryTooltip($"modifier.{GetType().Namespace!}::Overwrite") {// + "FlimsyOverwrite"
                     TitleColor = Colors.downside,
                     Icon = sprite,
-                    Title = ModEntry.Instance.Localizations.Localize(["action", "Overwrite", "name"]),
+                    Title = padding + ModEntry.Instance.Localizations.Localize(["action", "Overwrite", "name"]),
                     Description = ModEntry.Instance.Localizations.Localize(["action", "Overwrite", "description"]),
                 }); 
             return existingTooltips;

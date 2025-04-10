@@ -26,12 +26,21 @@ public class MExtendModifiers : BasicCardModifier, IModifierModifier
 
 	public override double Priority => Priorities.MODIFY_ACTIONS;
 
-    public override List<Tooltip> GetTooltips(State s) => [
-        new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}") {
-            TitleColor = Colors.keyword,
-            Icon = GetIcon()!.Value!.path,
-            Title = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
-            Description = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description", flimsyOverride?.ToString() ?? "None"]),
-        }
-    ];
+    public override List<Tooltip> GetTooltips(State s) {
+        List<Tooltip> ret = [
+            new GlossaryTooltip($"modifier.{GetType().Namespace!}::{GetType().Name}") {
+                TitleColor = Colors.keyword,
+                Icon = GetIcon()!.Value!.path,
+                Title = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "name"]),
+                Description = ModEntry.Instance.Localizations.Localize(["modifier", GetType().Name, "description", flimsyOverride?.ToString() ?? "None"]),
+            },
+        ];
+        if (flimsyOverride != null) ret.Add(new GlossaryTooltip($"modifier.{GetType().Namespace!}::Flimsy") {
+            TitleColor = Colors.downside,
+            Icon = ModEntry.Instance.sprites["icon_Flimsy_Right_Card_Mod"],
+            Title = ModEntry.Instance.Localizations.Localize(["action", "Flimsy", "name"]),
+            Description = ModEntry.Instance.Localizations.Localize(["action", "Flimsy", "description"]),
+        });
+        return ret;
+    }
 }

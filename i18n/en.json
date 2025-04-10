@@ -40,7 +40,7 @@
 		},
 		"Overwrite": {
 			"name": "Overwrite",
-			"description": "<c=downside>Also replaces all pre-existing actions</c> and makes the card playable, if it wasn't already."
+			"description": "Also replaces all pre-existing actions and makes the card <c=cardtrait>playable</c>, if it wasn't already."
 		},
 		"ADirectionalMod": {
 			"name": {

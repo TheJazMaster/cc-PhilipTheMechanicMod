@@ -39,6 +39,7 @@ public abstract class AMultiIconAction : CardAction
         {
             overrideIconWidth = true;
             var actions = multiIconAction.GetActionsForRendering(state);
+            actions.ForEach(a => a.disabled = action.disabled);
 
             int width = -SPACING;
             if (dontDraw) {

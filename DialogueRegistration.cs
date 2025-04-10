@@ -422,7 +422,7 @@ namespace clay.PhilipTheMechanic
             DB.story.all[$"Philip.IsaacHardhat"] = new StoryNode()
             {
                 type = NodeType.@event,
-                oncePerRun = true,
+                once = true,
                 lookup = new HashSet<string>() { "after_any" },
                 allPresent = new() { PhilipDeck.Key(), "goat" },
                 lines = new()
@@ -450,7 +450,7 @@ namespace clay.PhilipTheMechanic
             DB.story.all[$"Philip.IsaacCannonStruts"] = new StoryNode()
             {
                 type = NodeType.@event,
-                oncePerRun = true,
+                once = true,
                 lookup = new HashSet<string>() { "after_any" },
                 allPresent = new() { PhilipDeck.Key(), "goat" },
                 lines = new()
@@ -486,7 +486,7 @@ namespace clay.PhilipTheMechanic
             DB.story.all[$"Philip.PeriEfficiency"] = new StoryNode()
             {
                 type = NodeType.@event,
-                oncePerRun = true,
+                once = true,
                 lookup = new HashSet<string>() { "after_any" },
                 allPresent = new() { PhilipDeck.Key(), "peri" },
                 lines = new()
@@ -528,7 +528,7 @@ namespace clay.PhilipTheMechanic
             DB.story.all[$"Philip.DizzyExplosion"] = new StoryNode()
             {
                 type = NodeType.@event,
-                oncePerRun = true,
+                once = true,
                 lookup = new HashSet<string>() { "after_any" },
                 allPresent = new() { PhilipDeck.Key(), "dizzy" },
                 lines = new()
@@ -562,7 +562,7 @@ namespace clay.PhilipTheMechanic
             DB.story.all[$"Philip.BooksSticker"] = new StoryNode()
             {
                 type = NodeType.@event,
-                oncePerRun = true,
+                once = true,
                 lookup = new HashSet<string>() { "after_any" },
                 allPresent = new() { PhilipDeck.Key(), "shard" },
                 lines = new()

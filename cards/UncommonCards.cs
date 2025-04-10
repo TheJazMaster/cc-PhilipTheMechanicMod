@@ -92,6 +92,12 @@ internal sealed class LoosenScrews : ModifierCard, IRegisterableCard
             }
         ];
     }
+
+	public override List<CardAction> GetOtherActions(State s, Combat c) => [
+        new ADrawCard {
+            count = 2
+        }
+    ];
 }
 
 internal sealed class MarauderMod : ModifierCard, IRegisterableCard
