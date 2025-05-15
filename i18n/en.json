@@ -12,7 +12,7 @@
 		},
 		"customParts": {
 			"name": "Custom Parts",
-			"description": "Gives you {0} redraw at the start of each turn."
+			"description": "Gives you {0} <c=status>REDRAW</c> at the start of each turn."
 		}
 	},
 	"condition": {
@@ -82,7 +82,7 @@
 		},
 		"MBuffAttack": {
 			"name": "Buff Attack",
-			"description": "Increases the power of <c=attack>attacks</c> on the target card by {0}."
+			"description": "Increases the power of <c=attack>attacks</c> on the target card by <c=keyword>{{Amount}}</c>."
 		},
 		"MDeleteActions": {
 			"name": "Remove Actions",
