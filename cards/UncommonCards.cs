@@ -6,47 +6,43 @@ using System.Collections.Generic;
 
 namespace clay.PhilipTheMechanic.Cards;
 
-internal sealed class FrenzyMod : ModifierCard, IRegisterableCard
+internal sealed class JettisonParts : ModifierCard, IRegisterableCard
 {
     public static Rarity GetRarity() => Rarity.uncommon;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Frenzy_Mod"];
-
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"];
     public override CardData GetData(State state)
     {
-        return new() {
+        return new()
+        {
             cost = 0,
             unplayable = true,
             flippable = true
         };
     }
 
-    public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
-    {
+    public override List<AModifierWrapper> GetModifierActions(State s, Combat c) {
         List<CardModifier> modifiers = [
-			ModEntry.Instance.Api.MakeMAddAction(
-                new AAttack() { damage = GetDmg(s, 1) },
-                ModEntry.Instance.sprites["icon_sticker_attack"]
-            )
+            new MAddAction {
+                action = new AStatus() { status = Status.evade, statusAmount = 1, targetPlayer = true },
+                stickerSprite = ModEntry.Instance.sprites["icon_sticker_evade"]
+            }
         ];
 
-        if (upgrade == Upgrade.A)
-            modifiers.Add(
-                ModEntry.Instance.Api.MakeMAddAction(
-                    new AAttack() { damage = GetDmg(s, 1) },
-                    ModEntry.Instance.sprites["icon_sticker_attack"]
-                )
-            );
-
-        if (upgrade == Upgrade.B)
-            modifiers.Add(
-                new MBuffAttack() { amount = 1 }
-            );
+        if (upgrade == Upgrade.A) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.hermes, statusAmount = 1, targetPlayer = true }, ModEntry.Instance.sprites["icon_sticker_hermes"]));
+        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, ModEntry.Instance.sprites["icon_sticker_missile_normal"]));
 
         return [
 			new AModifierWrapper {
                 selector = new SingleDirectionalSelector(),
                 modifiers = modifiers,
+                overwrites = true,
                 isFlimsy = true
+            },
+            new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = [
+                    new MExhaust()
+                ]
             }
         ];
     }
@@ -270,7 +266,7 @@ internal sealed class PrecisionMachining : Card, IRegisterableCard
                 isCentered && c != DB.fakeCombat
             ),
             ACenterOfHandWrapper.Make(true, [
-					new ADrawCard() { count = upgrade == Upgrade.B ? 3 : 2 },
+					new ADrawCard() { count = upgrade == Upgrade.B ? 2 : 1 },
                     new AStatus() {
                         status = ModEntry.Instance.RedrawStatus,
                         targetPlayer = true,

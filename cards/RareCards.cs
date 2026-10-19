@@ -14,8 +14,8 @@ internal sealed class BlackMarketParts : ModifierCard, IRegisterableCard
     {
         return new() {
             cost = 1,
-            unplayable = true,
-            flippable = true
+            // unplayable = true,
+            // flippable = true
         };
     }
 
@@ -30,10 +30,15 @@ internal sealed class BlackMarketParts : ModifierCard, IRegisterableCard
                             card = new UraniumRound() { upgrade = upgrade }, destination = CardDestination.Hand
                         },
                         stickerSprite = ModEntry.Instance.sprites["icon_sticker_add_card"]
-                    },
-                    new MExhaust(),
+                    }
                 ],
                 overwrites = true
+            },
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = [
+                    new MExhaust(),
+                ]
             }
         ];
     }
@@ -169,7 +174,9 @@ internal sealed class Repeater : ModifierCard, IRegisterableCard
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => upgrade switch {
         Upgrade.B => [
 			new AModifierWrapper {
-                selector = new SingleDirectionalSelector(),
+                selector = new SingleDirectionalSelector {
+                    left = true
+                },
                 modifiers = [
                     new MInfinite(),
                     new MAddAction {
@@ -181,7 +188,9 @@ internal sealed class Repeater : ModifierCard, IRegisterableCard
         ],
         _ => [
 			new AModifierWrapper {
-                selector = new SingleDirectionalSelector(),
+                selector = new SingleDirectionalSelector {
+                    left = true
+                },
                 modifiers = [
                     new MInfinite()
                 ],

@@ -66,14 +66,14 @@ internal sealed class DrawMod : ModifierCard, IRegisterableCard
     public override CardData GetData(State state)
     {
         return new() {
-            cost = 0,
+            cost = 1,
             unplayable = true
         };
     }
 
     public override List<AModifierWrapper> GetModifierActions(State s, Combat c) => [
         new AModifierWrapper {
-            selector = upgrade == Upgrade.A ? new WholeHandDirectionalSelector { left = true } : new SingleDirectionalSelector { left = true },
+            selector = upgrade == Upgrade.B ? new WholeHandDirectionalSelector { left = true } : new SingleDirectionalSelector { left = true },
             modifiers = [
                 new MAddAction() {
                     action = new ADrawCard() { count = 1 },
@@ -85,13 +85,59 @@ internal sealed class DrawMod : ModifierCard, IRegisterableCard
             selector = new SingleDirectionalSelector(),
             modifiers = [
                 new MAddAction() {
-                    action = new ADrawCard() { count = 1 },
+                    action = new ADrawCard() { count = upgrade == Upgrade.A ? 3 : 1 },
                     stickerSprite = ModEntry.Instance.sprites["icon_sticker_draw"]
                 },
             ],
             isFlimsy = true
         }
     ];
+}
+
+internal sealed class FrenzyMod : ModifierCard, IRegisterableCard
+{
+    public static Rarity GetRarity() => Rarity.common;
+    public static Spr GetArt() => ModEntry.Instance.sprites["card_Frenzy_Mod"];
+
+    public override CardData GetData(State state)
+    {
+        return new() {
+            cost = 0,
+            unplayable = true,
+            flippable = true
+        };
+    }
+
+    public override List<AModifierWrapper> GetModifierActions(State s, Combat c)
+    {
+        List<CardModifier> modifiers = [
+			ModEntry.Instance.Api.MakeMAddAction(
+                new AAttack() { damage = GetDmg(s, 1) },
+                ModEntry.Instance.sprites["icon_sticker_attack"]
+            )
+        ];
+
+        if (upgrade == Upgrade.A)
+            modifiers.Add(
+                ModEntry.Instance.Api.MakeMAddAction(
+                    new AAttack() { damage = GetDmg(s, 1) },
+                    ModEntry.Instance.sprites["icon_sticker_attack"]
+                )
+            );
+
+        if (upgrade == Upgrade.B)
+            modifiers.Add(
+                new MBuffAttack() { amount = 1 }
+            );
+
+        return [
+			new AModifierWrapper {
+                selector = new SingleDirectionalSelector(),
+                modifiers = modifiers,
+                isFlimsy = true
+            }
+        ];
+    }
 }
 
 internal sealed class DuctTapeAndDreams : ModifierCard, IRegisterableCard
@@ -123,47 +169,6 @@ internal sealed class DuctTapeAndDreams : ModifierCard, IRegisterableCard
             }
         ],
     };
-}
-
-internal sealed class JettisonParts : ModifierCard, IRegisterableCard
-{
-    public static Rarity GetRarity() => Rarity.common;
-    public static Spr GetArt() => ModEntry.Instance.sprites["card_Last_Resort"];
-    public override CardData GetData(State state)
-    {
-        return new()
-        {
-            cost = 0,
-            unplayable = true,
-            flippable = true
-        };
-    }
-
-    public override List<AModifierWrapper> GetModifierActions(State s, Combat c) {
-        List<CardModifier> modifiers = [
-            new MAddAction {
-                action = new AStatus() { status = Status.evade, statusAmount = 1, targetPlayer = true },
-                stickerSprite = ModEntry.Instance.sprites["icon_sticker_evade"]
-            }
-        ];
-
-        if (upgrade == Upgrade.A) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new AStatus() { status = Status.hermes, statusAmount = 1, targetPlayer = true }, ModEntry.Instance.sprites["icon_sticker_hermes"]));
-        if (upgrade == Upgrade.B) modifiers.Add(ModEntry.Instance.Api.MakeMAddAction(new ASpawn() { thing = new Missile() { missileType = MissileType.normal } }, ModEntry.Instance.sprites["icon_sticker_missile_normal"]));
-
-        return [
-			new AModifierWrapper {
-                selector = new SingleDirectionalSelector(),
-                modifiers = modifiers,
-                overwrites = true
-            },
-            new AModifierWrapper {
-                selector = new WholeHandDirectionalSelector(),
-                modifiers = [
-                    new MExhaust()
-                ]
-            }
-        ];
-    }
 }
 
 internal sealed class Oops : Card, IRegisterableCard
